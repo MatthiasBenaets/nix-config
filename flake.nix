@@ -35,16 +35,9 @@
       nixosConfigurations = (
         import ./hosts {
           inherit (nixpkgs) lib;
-          inherit inputs system;
+          inherit inputs system home-manager;
         }
       );
-
-  #   homeConfigurations = (
-  #      import ./hosts/home.nix {
-  #       inherit (nixpkgs) lib;
-  #       inherit system nixpkgs home-manager;
-  #     }
-  #   );
 
       #devShell.${system} = (
       #  import ./outputs/installation.nix {

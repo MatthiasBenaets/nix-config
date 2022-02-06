@@ -74,21 +74,21 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  #nix = {
-  #  autoOptimiseStore = true;
-  #  gc = {
-  #    automatic = true;
-  #    dates = "weekly";
-  #    options = "--delete-older-than 7d";
-  #  };
-  #  package = pkgs.nixFlakes;
-   # registery.nixpkgs.flake = inputs.nixpkgs;
-  #  extraOptions = ''
-  #    experimental-features = nix-command flakes
-  #    keep-outputs          = true
-  #    keep-derivations      = true
-  #  '';
-  #};
+  nix = {
+    autoOptimiseStore = true;
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+    package = pkgs.nixFlakes;
+    registry.nixpkgs.flake = inputs.nixpkgs;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+      keep-outputs          = true
+      keep-derivations      = true
+    '';
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
