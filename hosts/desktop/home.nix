@@ -3,6 +3,10 @@
 
 {
 
+  imports = [
+    ../../config/rofi
+  ];
+
   home = {
     username = "matthias";
     homeDirectory = "/home/matthias";
@@ -37,6 +41,12 @@
       #  emulate zsh -c "$(direnv hook zsh)"
       '';
     };
+    #rofi = {
+    #  enable = true;
+    #  terminal = "${pkgs.alacritty}/bin/alacritty";
+    #  theme = #../../config/rofi/theme.rasi;
+    #  configPath = "../../config/rofi/config.rasi";
+    #};
   };
 
   services = {

@@ -1,0 +1,19 @@
+# Open Terminal
+super + Return
+  alacritty
+
+# Open rofi
+super + @space
+  rofi -show drun #-theme theme.rasi 
+
+# Close or Kill
+super + {q,k}
+  bspc node -{c,k}  
+
+# Exit WM
+super + Escape
+  bspc quit
+
+# Reload WM
+super + r
+  bspc wm -r
