@@ -1,14 +1,3 @@
-configuration {
-  display-drun: "Applications:";
-  display-window: "Windows:";
-  drun-display-format: "{name}";
-  font: "FiraCode 10";
-  modi: "window,run,drun";
-  icon-theme: "Papirus";
-}
-
-@theme "/dev/null"
-
 * {
   bg: #11121D;
   bg-alt: #444b6a;

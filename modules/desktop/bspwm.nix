@@ -29,11 +29,10 @@
         };
         defaultSession = "none+bspwm";
       };
-
       windowManager.bspwm = {
         enable = true;
       };
-    };
+    }; 
   };
 
   hardware.bluetooth = {
