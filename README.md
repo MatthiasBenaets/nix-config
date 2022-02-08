@@ -3,6 +3,7 @@
 Build with:
 
 ```sudo nixos-rebuild switch --flake .#$DEVICE```
+on nixos-unstable
 
 |||
 |---|---|

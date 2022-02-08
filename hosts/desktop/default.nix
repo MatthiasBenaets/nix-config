@@ -1,24 +1,33 @@
+#
+#  Specific system configuration settings for desktop
+#
+#  flake.nix
+#   └─ ./hosts
+#       └─ ./desktop
+#            ├─ default.nix *
+#            └─ hardware-configuration.nix       
+#
+
 { config, pkgs, ... }:
 
 {
-  imports =  [
-    ./hardware-configuration.nix
+  imports =  [								# For now, if applying to other system, swap files
+    ./hardware-configuration.nix					  # Current system hardware config @ /etc/nixos/hardware-configuration.nix
   ];
 
-  boot = {
+  boot = {								# Boot options
     kernelPackages = pkgs.linuxPackages_latest;
 
-    # Use the systemd-boot EFI boot loader.
-#    loader.systemd-boot.enable = true;
+#    loader.systemd-boot.enable = true;					# For UEFI-boot use these settings.
 #    loader.efi.canTouchEfiVariables = true;
 
-#    initrd.kernelModules = [ "amdgpu" ];
+#    initrd.kernelModules = [ "amdgpu" ];				# Video drivers
     
-    loader = {
+    loader = {								# For legacy boot:
       grub = {
         enable = true;
         version = 2;
-        device = "/dev/sda";
+        device = "/dev/sda";						  # Name of harddrive
       };
     };
   };
@@ -26,7 +35,7 @@
   networking = {
     hostName = "nixos";
     interfaces = {
-      enp0s3.useDHCP = true;
+      enp0s3.useDHCP = true;						  # Change to correct network driver.
     };
   };
 
@@ -35,8 +44,8 @@
 #   fsType = "ext4";
 # };
 
-  services.xserver = {
-#   VideoDrivers = [ "amdgpu" ];
+  services.xserver = {							# In case, multi monitor support
+#   VideoDrivers = [ "amdgpu" ];					# Keeping this here for the future.
 
 #   xrandrHeads = [
 #     { output = "HDMI-A-0";

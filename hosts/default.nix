@@ -1,14 +1,26 @@
+#
+#  There are the different profiles that can be used when building the flake.
+#
+#  flake.nix 
+#   └─ ./hosts  
+#       ├─ default.nix *
+#       ├─ configuration.nix
+#       └─ ./desktop
+#            ├─ ./default.nix
+#            └─ ./home.nix 
+#
+
 { lib, inputs, system, home-manager, ... }:
 
 {
-  desktop = lib.nixosSystem {
+  desktop = lib.nixosSystem {						# Desktop profile
     inherit system;
     specialArgs = { inherit inputs; };
-    modules = [
+    modules = [								# Modules that are used.
       ./desktop
       ./configuration.nix
 
-      home-manager.nixosModules.home-manager {
+      home-manager.nixosModules.home-manager {				# Home-Manager module that is used.
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.users.matthias = import ./desktop/home.nix;

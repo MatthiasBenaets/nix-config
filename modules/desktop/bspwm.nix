@@ -1,18 +1,29 @@
+#
+#  Bspwm configuration
+#
+#  flake.nix
+#   ├─ ./hosts
+#   │   └─ configuration.nix
+#   └─ ./modules
+#       └─ ./desktop
+#           └─ bspwm.nix *
+#
+
 { config, lib, pkgs, ... }:
 
 {
   programs.dconf.enable = true;
 
   services = {
-    upower.enable = true;
+    upower.enable = true;						# Power Manager
 
     xserver = {
       enable = true;
 
-      layout = "be";
+      layout = "be";							# Keyboard layout & €-sign
       xkbOptions = "eurosign:e";
 
-      libinput = {
+      libinput = {							# Trackpad support
         enable = true;
         touchpad.disableWhileTyping = true;
       };
@@ -23,21 +34,21 @@
         Option "OffTime"     "0"
       '';
 
-      displayManager = {
+      displayManager = {						# Display Manager
         lightdm = {
           enable = true;
         };
-        defaultSession = "none+bspwm";
+        defaultSession = "none+bspwm";					  # none+bspwm -> no real display manager
       };
-      windowManager.bspwm = {
+      windowManager.bspwm = {						# Window Manager
         enable = true;
       };
     }; 
   };
 
-  hardware.bluetooth = {
+  hardware.bluetooth = {						# Bluetooth
     enable = true;
-    hsphfpd.enable = true;
+    hsphfpd.enable = true;						  # HSP & HFP daemon
     settings = {
       General = {
         Enable = "Source,Sink,Media,Socket";
@@ -45,14 +56,11 @@
     };
   };
 
-  services.blueman.enable = true;
+  services.blueman.enable = true;					# Bluetooth daemon
 
   systemd.services.upower.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    vim
-    git
-    wget
+  environment.systemPackages = with pkgs; [				# Packages installed
     xorg.xev
     xorg.xkill    
     

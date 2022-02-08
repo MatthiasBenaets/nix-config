@@ -1,7 +1,23 @@
+#
+#  Home-manager configuration for desktop
+#
+#  flake.nix
+#   ├─ ./hosts
+#   │   └─ ./desktop
+#   │       └─ home.nix *
+#   └─ ./modules
+#       ├─ ./menu 
+#       │   └─ default.nix
+#       ├─ ./services
+#       │   └─ default.nix
+#       └─ ./shell
+#           └─ default.nix
+#
+
 { pkgs, ... }:
 
 {
-  imports = (import ../../modules/menu) ++ (import ../../modules/services) ++ (import ../../modules/shell); # ++ (import ...
+  imports = (import ../../modules/menu) ++ (import ../../modules/services) ++ (import ../../modules/shell);	# Importing all the different modules 
 
   home = {
     username = "matthias";
@@ -15,14 +31,15 @@
 
   programs = {
     home-manager.enable = true;
+    zsh.enable = true;
   };
 
   nixpkgs.config.allowUnfree = true;
 
-  xsession = {
+  xsession = {								# Session settings
     enable = true;
     numlock.enable = true;
-    initExtra = ''
+    initExtra = ''							# Until I find a better solution, start polybar from here.
       polybar mybar &
     '';
 
@@ -32,7 +49,7 @@
     };
   };
 
-  gtk = {
+  gtk = {								# Theming
     enable = true;
     theme = {
       name = "Dracula";

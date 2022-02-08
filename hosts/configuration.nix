@@ -1,47 +1,54 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+#
+#  Main system configuration. More information available in configuration.nix(5) man page.
+#
+#  flake.nix
+#   ├─ ./hosts
+#   │   └─ configuration.nix *
+#   └─ ./modules
+#       └─ ./desktop
+#           └─ bspwm.nix
+#             
 
 { config, lib, pkgs, inputs, ... }:
 
 {
-  imports =
+  imports =								# Import window or display manager.
     [
       ../modules/desktop/bspwm.nix
     ];
 
-  networking.useDHCP = false; #deprecated but needed
+  networking.useDHCP = false; 						# Deprecated but needed in config.
 
-  time.timeZone = "Europe/Brussels";
+  time.timeZone = "Europe/Brussels";					# Time zone and internationalisation
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
     font = "Lat2-Terminus16";
     keyMap = "azerty";
   };
 
-  sound = {
+  sound = {								# Sound settings
     enable = true;
     mediaKeys.enable = true;
   };
 
-  hardware.pulseaudio = {
+  hardware.pulseaudio = {						# Hardware audio
     enable = true;
-#   extraModules = [ pkgs.pulseaudio-modules-bt ];
+    extraModules = [ pkgs.pulseaudio-modules-bt ];
     package = pkgs.pulseaudioFull;
   };
 
-# hardware.sane = {
+# hardware.sane = {							# Used for scanning
 #   enable = true,
-#   extraBackends = [ pkgs.<<canon> ];
+#   extraBackends = [ pkgs.<<canon>> ];
 # };
 
   services = {
-#   printing = {
+#   printing = {							# Printing service
 #     enable = true;
 #     drivers = [ pkgs.<<canon>> ];
 #   };
 #
-#   openssh = {
+#   openssh = {								# SSH
 #     enable = true;
 #     allowSFTP = true;
 #   };
@@ -49,9 +56,9 @@
 #   sshd.enable = true;
   };
 
-# services.xserver.libinput.enable = true; #trackpad, better add in hosts default
+# services.xserver.libinput.enable = true; 				# Trackpad. Maybe better to enable in host profile
 
-  fonts.fonts = with pkgs; [
+  fonts.fonts = with pkgs; [						# Fonts
     source-code-pro
     (nerdfonts.override {
       fonts = [
@@ -60,28 +67,30 @@
     })
   ];
 
-  programs.zsh.enable = true; 
-
-  users.users.matthias = {
+  users.users.matthias = {						# System User
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "lp" "scanner"];
-    shell = pkgs.zsh;
+    shell = pkgs.zsh;							  # Default shell
   };
-  
-  security = {
+ 
+  programs = {								# Shell. Weirdly need to be enable here to add user to lightdm by default.
+    zsh.enable = true;
+  };  
+ 
+  security = {								# User does not need to give password when using sudo.
     sudo.wheelNeedsPassword = false;
   };
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfree = true;					# Allow proprietary software.
 
-  nix = {
-    autoOptimiseStore = true;
-    gc = {
+  nix = {								# Nix Package Manager settings
+    autoOptimiseStore = true;						  # Optimize symlinks
+    gc = {								  # Automatic garbage collection
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 7d";
     };
-    package = pkgs.nixFlakes;
+    package = pkgs.nixFlakes;						  # Enable nixFlakes on system
     registry.nixpkgs.flake = inputs.nixpkgs;
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -89,6 +98,12 @@
       keep-derivations      = true
     '';
   };
+
+  environment.systemPackages = with pkgs; [				# Default packages install system-wide
+    vim
+    git
+    wget
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -110,8 +125,8 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system = {
-    autoUpgrade = {
+  system = {								# NixOS settings
+    autoUpgrade = {							  # Allow auto update
       enable = true;
       channel = "https://nixos.org/channels/nixos-unstable";
     };
