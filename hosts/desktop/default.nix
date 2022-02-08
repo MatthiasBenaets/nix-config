@@ -39,6 +39,11 @@
     };
   };
 
+  services.dbus.packages = with pkgs;[					# No DisplayManager so enable services here.
+    polybar
+    dunst
+  ];
+
 # fileSystems."/data" = {
 #   device = "/dev/nvme0n1p3";
 #   fsType = "ext4";

@@ -25,7 +25,10 @@
 
     packages = with pkgs; [
       neofetch
-      polybar
+      #polybar
+      #dunst
+      libnotify # for dunst
+      firefox
     ];
   };
 
@@ -39,9 +42,9 @@
   xsession = {								# Session settings
     enable = true;
     numlock.enable = true;
-    initExtra = ''							# Until I find a better solution, start polybar from here.
-      polybar mybar &
-    '';
+    #initExtra = ''							# Until I find a better solution, start polybar from here.
+    #  polybar mybar &
+    #'';
 
     pointerCursor = {
       name = "Numix-Snow";

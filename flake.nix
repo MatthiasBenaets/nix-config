@@ -41,7 +41,7 @@
       lib = nixpkgs.lib;
     in									# Use above variables in ...
     {
-      nixosConfigurations = {                         			  # Location of the available configurations
+      nixosConfigurations = (                         			  # Location of the available configurations
         import ./hosts {						  # Imports ./hosts/default.nix
           inherit (nixpkgs) lib;
           inherit inputs system home-manager;				  # Also inherit home-manager so it does not need to be defined here.
