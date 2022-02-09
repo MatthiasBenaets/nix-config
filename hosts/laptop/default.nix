@@ -19,7 +19,7 @@
     kernelPackages = pkgs.linuxPackages_latest;
 
 #   loader.systemd-boot.enable = true;					# For UEFI-boot use these settings.
-#   loader.efi.canTouchEfiVariables = true;
+    loader.efi.canTouchEfiVariables = true;
 
     initrd.kernelModules = [ "amdgpu" ];				# Video drivers
     
@@ -27,7 +27,10 @@
       grub = {
         enable = true;
         version = 2;
-        device = "/dev/sda";						  # Name of harddrive
+        device = [ "nodev" ];						  # Name of harddrive
+        efiInstallAsRemovable = true;
+        efiSupport = true;
+        useOSProber = true;
       };
     };
   };
@@ -36,7 +39,8 @@
     hostName = "nixos";
     networkmanager.enable = true;
     interfaces = {
-      enp0s3.useDHCP = true;						  # Change to correct network driver.
+      enp0s25.useDHCP = true;						  # Change to correct network driver.
+      wlo1.useDHCP = true;
     };
   };
 
@@ -64,7 +68,7 @@
       dunst
     ];
     xserver = {							        # In case, multi monitor support
-      videoDrivers = [ "amdgpu" ];					# Keeping this here for the future.
+      #videoDrivers = [ "amdgpu" ];					# Keeping this here for the future.
 
 #     xrandrHeads = [
 #       { output = "HDMI-A-0";
