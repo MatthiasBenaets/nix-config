@@ -19,18 +19,21 @@
     kernelPackages = pkgs.linuxPackages_latest;
 
 #   loader.systemd-boot.enable = true;					# For UEFI-boot use these settings.
-    loader.efi.canTouchEfiVariables = true;
+#   loader.efi.canTouchEfiVariables = true;
 
-    initrd.kernelModules = [ "amdgpu" ];				# Video drivers
+    #initrd.kernelModules = [ "amdgpu" ];				# Video drivers
     
-    loader = {								# For legacy boot:
-      grub = {
+    loader = {								# EFI Boot
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot";
+      };
+      grub = {								# Most of grub is set up for dual boot
         enable = true;
         version = 2;
-        device = [ "nodev" ];						  # Name of harddrive
-        efiInstallAsRemovable = true;
+        devices = [ "nodev" ];
         efiSupport = true;
-        useOSProber = true;
+        useOSProber = true; 						  # Find all boot options
       };
     };
   };
@@ -67,38 +70,20 @@
       polybar								# systemctl status --user $*.service
       dunst
     ];
-    xserver = {							        # In case, multi monitor support
-      #videoDrivers = [ "amdgpu" ];					# Keeping this here for the future.
-
-#     xrandrHeads = [
-#       { output = "HDMI-A-0";
-#         primary = true;
-#         monitorConfig = ''
-#           Modeline "3840x2160_30.00"  338.75  3840 4080 4488 5136  2160 2163 2168 2200 -hsync +vsync
-#           Option "PreferredMode" "3840x2160_30.00"
-#           Option "Position" "0 0"
-#         '';
-#       }
-#       { output = "eDP";
-#         primary = false;
-#         monitorConfig = ''
-#           Option "PreferredMode" "1920x1080"
-#           Option "Position" "0 0"
-#         '';
-#       }
-#     ];
-#
-#     resolutions = [
-#       { x = 2048; y = 1152; }
-#       { x = 1920; y = 1080; }
-#       { x = 2560; y = 1440; }
-#       { x = 3072; y = 1728; }
-#       { x = 3840; y = 2160; }
-#     ];
+    xserver = {
+      libinput = {							# Trackpad support & gestures
+        enable = true;
+        touchpad.naturalScrolling = true;				# The correct way of scrolling
+      };
+      videoDrivers = [							# Monitor settings 
+        "ati"
+        "amdgpu"
+        "radeon"
+      ];
+      resolutions = [
+        { x = 1600; y = 920; }
+        { x = 1280; y = 720; }
+      ];
     };
-  };
-  
-  programs = {
-    nm-applet.enable = true;
   };
 }

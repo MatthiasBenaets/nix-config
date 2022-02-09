@@ -34,12 +34,18 @@
     ];
   };
 
+  nixpkgs.config.allowUnfree = true;
+
   programs = {
     home-manager.enable = true;
     zsh.enable = true;
   };
 
-  nixpkgs.config.allowUnfree = true;
+  services = {
+    blueman-applet.enable = true;
+    network-manager-applet.enable = true;
+    pasystray.enable = true;
+  };
 
   xsession = {								# Session settings
     enable = true;

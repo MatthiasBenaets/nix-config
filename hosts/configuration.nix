@@ -56,8 +56,6 @@
 #   sshd.enable = true;
   };
 
-# services.xserver.libinput.enable = true; 				# Trackpad. Maybe better to enable in host profile
-
   fonts.fonts = with pkgs; [						# Fonts
     source-code-pro
     (nerdfonts.override {
@@ -103,6 +101,7 @@
     vim
     git
     wget
+    pciutils
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
