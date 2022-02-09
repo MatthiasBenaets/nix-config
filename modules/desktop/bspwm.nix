@@ -15,8 +15,6 @@
   programs.dconf.enable = true;
 
   services = {
-    upower.enable = true;						# Power Manager
-
     xserver = {
       enable = true;
 
@@ -45,20 +43,6 @@
       };
     }; 
   };
-
-  hardware.bluetooth = {						# Bluetooth
-    enable = true;
-    hsphfpd.enable = true;						  # HSP & HFP daemon
-    settings = {
-      General = {
-        Enable = "Source,Sink,Media,Socket";
-      };
-    };
-  };
-
-  services.blueman.enable = true;					# Bluetooth daemon
-
-  systemd.services.upower.enable = true;
 
   environment.systemPackages = with pkgs; [				# Packages installed
     xorg.xev
