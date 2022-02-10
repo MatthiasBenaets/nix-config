@@ -34,6 +34,7 @@
         devices = [ "nodev" ];
         efiSupport = true;
         useOSProber = true; 						  # Find all boot options
+        configurationLimit = 2;
       };
     };
   };
@@ -75,11 +76,11 @@
         enable = true;
         touchpad.naturalScrolling = true;				# The correct way of scrolling
       };
-      videoDrivers = [							# Video settings 
-        "ati"
-        "amdgpu"
-        "radeon"
-      ];
+#     videoDrivers = [							# Video settings 
+#       "ati"
+#       "amdgpu"
+#       "radeon"
+#     ];
       resolutions = [
         { x = 1600; y = 920; }
         { x = 1280; y = 720; }
