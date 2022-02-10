@@ -1,5 +1,5 @@
 #
-#  Home-manager configuration for desktop
+#  Home-manager configuration for laptop
 #
 #  flake.nix
 #   ├─ ./hosts
@@ -29,8 +29,8 @@
       #dunst
       libnotify # for dunst
       firefox
-      auto-cpufreq
-      tlp
+      #auto-cpufreq
+      #tlp
     ];
   };
 
@@ -41,7 +41,7 @@
     zsh.enable = true;
   };
 
-  services = {
+  services = {								# System tray services
     blueman-applet.enable = true;
     network-manager-applet.enable = true;
     pasystray.enable = true;
@@ -50,9 +50,6 @@
   xsession = {								# Session settings
     enable = true;
     numlock.enable = true;
-    #initExtra = ''							# Until I find a better solution, start polybar from here.
-    #  polybar mybar &
-    #'';
 
     pointerCursor = {
       name = "Numix-Snow";

@@ -31,20 +31,23 @@
       firefox
     ];
   };
+ 
+  nixpkgs.config.allowUnfree = true;
 
   programs = {
     home-manager.enable = true;
     zsh.enable = true;
   };
 
-  nixpkgs.config.allowUnfree = true;
+  services = {								# System tray services
+#   blueman-applet.enable = true;
+    network-manager-applet.enable = true;
+    pasystray.enable = true;
+  };
 
   xsession = {								# Session settings
     enable = true;
     numlock.enable = true;
-    #initExtra = ''							# Until I find a better solution, start polybar from here.
-    #  polybar mybar &
-    #'';
 
     pointerCursor = {
       name = "Numix-Snow";

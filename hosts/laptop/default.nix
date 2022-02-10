@@ -21,7 +21,7 @@
 #   loader.systemd-boot.enable = true;					# For UEFI-boot use these settings.
 #   loader.efi.canTouchEfiVariables = true;
 
-    #initrd.kernelModules = [ "amdgpu" ];				# Video drivers
+#   initrd.kernelModules = [ "amdgpu" ];				# Video drivers
     
     loader = {								# EFI Boot
       efi = {
@@ -75,7 +75,7 @@
         enable = true;
         touchpad.naturalScrolling = true;				# The correct way of scrolling
       };
-      videoDrivers = [							# Monitor settings 
+      videoDrivers = [							# Video settings 
         "ati"
         "amdgpu"
         "radeon"

@@ -39,20 +39,34 @@
     };
   };
 
+# hardware.bluetooth = {                                                # Bluetooth
+#   enable = true;
+#   hsphfpd.enable = true;                                                # HSP & HFP daemon
+#   settings = {
+#     General = {
+#       Enable = "Source,Sink,Media,Socket";
+#     };
+#   };
+# };
+
   services.dbus.packages = with pkgs;[					# No DisplayManager so enable services here.
     polybar
     dunst
   ];
 
-# fileSystems."/data" = {
-#   device = "/dev/nvme0n1p3";
-#   fsType = "ext4";
-# };
+  services =
+    xserver = {								# In case, multi monitor support
+#     blueman.enable = true;
+      dbus.packages = with pkgs; [					# Systemctl status --user *.service
+        polybar
+        dunst
+      ];
+#     videoDrivers = [ 							# Video Settings
+#       "amdgpu"
+#       "radeon"
+#     ];
 
-  services.xserver = {							# In case, multi monitor support
-#   VideoDrivers = [ "amdgpu" ];					# Keeping this here for the future.
-
-#   xrandrHeads = [
+#   xrandrHeads = [							# Dual screen setting placeholder
 #     { output = "HDMI-A-0";
 #       primary = true;
 #       monitorConfig = ''
@@ -70,12 +84,10 @@
 #     }
 #   ];
 #
-#   resolutions = [
-#     { x = 2048; y = 1152; }
-#     { x = 1920; y = 1080; }
-#     { x = 2560; y = 1440; }
-#     { x = 3072; y = 1728; }
-#     { x = 3840; y = 2160; }
-#   ];
+    resolutions = [
+      { x = 1920; y = 1080; }
+      { x = 1600; y = 900; }
+      { x = 3840; y = 2160; }
+    ];
   };
 }
