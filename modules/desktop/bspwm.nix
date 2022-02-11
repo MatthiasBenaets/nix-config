@@ -46,7 +46,8 @@
 
   environment.systemPackages = with pkgs; [				# Packages installed
     xorg.xev
-    xorg.xkill    
+    xorg.xkill
+    xorg.xrandr
     
     #alacritty
     sxhkd

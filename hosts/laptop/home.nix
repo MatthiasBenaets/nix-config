@@ -3,7 +3,7 @@
 #
 #  flake.nix
 #   ├─ ./hosts
-#   │   ├─ ./desktop
+#   │   ├─ ./laptop
 #   │   │   └─ home.nix *
 #   │   └─ home.nix
 #   └─ ./modules
@@ -33,13 +33,15 @@
     ];
   };
   
-  xsession.pointerCursor.size = 16;
-
-  services = {
+  services = {								# Applets
+    blueman-applet.enable = true;                                         # Bluetooth
+    network-manager-applet.enable = true;                                 # Network
     cbatticon = {
       enable = true;
       criticalLevelPercent = 10;
       lowLevelPercent = 20;
     };
   };
+
+  programs.alacritty.settings.font.size = 8;
 }

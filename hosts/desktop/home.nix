@@ -19,7 +19,7 @@
 
 {
   imports =				# Importing all the different modules
-    (import ../home.nix) ++
+    [(import ../home.nix)] ++
     (import ../../modules/apps) ++ 
     (import ../../modules/services) ++
     (import ../../modules/shell); 
@@ -28,5 +28,16 @@
     packages = with pkgs; [
       firefox
     ];
+  };
+
+  xsession.windowManager.bspwm = {
+    monitors = {
+      VGA-1 = [ "term" "web" "code" "music" "V" ];
+    };
+    rules = {
+      "test.py" = {
+        focus = true;
+      };
+    };
   };
 }

@@ -54,40 +54,37 @@
     dunst
   ];
 
-  services =
+  services = {
     xserver = {								# In case, multi monitor support
 #     blueman.enable = true;
-      dbus.packages = with pkgs; [					# Systemctl status --user *.service
-        polybar
-        dunst
-      ];
 #     videoDrivers = [ 							# Video Settings
 #       "amdgpu"
 #       "radeon"
 #     ];
 
-#   xrandrHeads = [							# Dual screen setting placeholder
-#     { output = "HDMI-A-0";
-#       primary = true;
-#       monitorConfig = ''
-#         Modeline "3840x2160_30.00"  338.75  3840 4080 4488 5136  2160 2163 2168 2200 -hsync +vsync
-#         Option "PreferredMode" "3840x2160_30.00"
-#         Option "Position" "0 0"
-#       '';
-#     }
-#     { output = "eDP";
-#       primary = false;
-#       monitorConfig = ''
-#         Option "PreferredMode" "1920x1080"
-#         Option "Position" "0 0"
-#       '';
-#     }
-#   ];
+#     xrandrHeads = [							# Dual screen setting placeholder
+#       { output = "HDMI-A-0";
+#         primary = true;
+#         monitorConfig = ''
+#           Modeline "3840x2160_30.00"  338.75  3840 4080 4488 5136  2160 2163 2168 2200 -hsync +vsync
+#           Option "PreferredMode" "3840x2160_30.00"
+#           Option "Position" "0 0"
+#         '';
+#       }
+#       { output = "eDP";
+#         primary = false;
+#         monitorConfig = ''
+#           Option "PreferredMode" "1920x1080"
+#           Option "Position" "0 0"
+#         '';
+#       }
+#     ];
 #
-    resolutions = [
-      { x = 1920; y = 1080; }
-      { x = 1600; y = 900; }
-      { x = 3840; y = 2160; }
-    ];
+      resolutions = [
+        { x = 1920; y = 1080; }
+        { x = 1600; y = 900; }
+        { x = 3840; y = 2160; }
+      ];
+    };
   };
 }

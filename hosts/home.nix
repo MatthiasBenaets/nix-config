@@ -23,6 +23,7 @@
       btop
       feh
       ranger
+      pavucontrol
       mpv
       vlc
       qbittorrent
@@ -52,9 +53,6 @@
   };
   
   services = {                                                          # System tray services
-    blueman-applet.enable = true;					  # Bluetooth
-    network-manager-applet.enable = true;				  # Network
-    pasystray.enable = true;						  # Sound
     udiskie = {								  # Auto mount USB
       enable = true;
       tray = "always";
@@ -68,6 +66,7 @@
     pointerCursor = {
       name = "Dracula-cursors";
       package = pkgs.dracula-theme;
+      size = 16;
     };   	
   };
 

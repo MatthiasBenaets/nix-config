@@ -8,7 +8,7 @@
         font = rec {
           normal.family = "Source Code Pro";
           bold = { style = "Bold"; };
-          size = 8;
+          #size = 8;
         };
         offset = {
           x = -1;
