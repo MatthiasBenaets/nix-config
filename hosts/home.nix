@@ -16,11 +16,31 @@
     homeDirectory = "/home/matthias";
 
     packages = with pkgs; [
-      lxappearance
-      neofetch
+      pfetch
       libnotify # for dunst
       #dunst
-      #polybar
+      #polybar 
+      btop
+      feh
+      ranger
+      mpv
+      vlc
+      qbittorrent
+      obs-studio
+
+      #vim
+      #git
+      #wget
+      #pciutils
+      #xorg.xkill
+      #xorg.xev
+      #alacritty
+      #xshkd
+      #zsh
+      #rofi
+      #picom
+      #pulseaudio
+      #blueman
     ];
   };
 
@@ -46,9 +66,9 @@
     numlock.enable = true;
 
     pointerCursor = {
-      name = "Numix-Snow";
-      package = pkgs.numix-cursor-theme;
-    };
+      name = "Dracula-cursors";
+      package = pkgs.dracula-theme;
+    };   	
   };
 
   gtk = {                                                               # Theming
@@ -62,7 +82,7 @@
       package = pkgs.papirus-icon-theme;
     };
     font = {
-      name = "Source Code Pro 11";  
+      name = "FiraCode Nerd Font Mono Medium";  
     };
   };
 

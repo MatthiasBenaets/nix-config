@@ -48,7 +48,7 @@
     xorg.xev
     xorg.xkill    
     
-    alacritty
+    #alacritty
     sxhkd
   ];
 }

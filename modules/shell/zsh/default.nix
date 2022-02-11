@@ -22,6 +22,8 @@
 #       source $HOME/.config/shell/shell_init
         # Hook direnv
 #       emulate zsh -c "$(direnv hook zsh)"
+        # Swag
+        pfetch
       '';
     };
   };

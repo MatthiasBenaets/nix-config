@@ -97,12 +97,18 @@
     '';
   };
 
-  environment.systemPackages = with pkgs; [				# Default packages install system-wide
-    vim
-    git
-    wget
-    pciutils
-  ];
+  environment = {
+    variables = {
+      EDITOR = "vim";
+      VISUAL = "vim";
+    };
+    systemPackages = with pkgs; [				# Default packages install system-wide
+      vim
+      git
+      wget
+      pciutils
+    ];
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

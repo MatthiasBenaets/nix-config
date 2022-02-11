@@ -20,7 +20,7 @@
 {
   imports =				# Importing all the different modules
     (import ../home.nix) ++
-    (import ../../modules/menu) ++ 
+    (import ../../modules/apps) ++ 
     (import ../../modules/services) ++
     (import ../../modules/shell); 
 
