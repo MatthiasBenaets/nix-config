@@ -58,6 +58,7 @@
 
   fonts.fonts = with pkgs; [						# Fonts
     source-code-pro
+    font-awesome
     (nerdfonts.override {
       fonts = [
         "FiraCode"
@@ -67,7 +68,7 @@
 
   users.users.matthias = {						# System User
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "lp" "scanner"];
+    extraGroups = [ "wheel" "video" "networkmanager" "lp" "scanner"];
     shell = pkgs.zsh;							  # Default shell
   };
  

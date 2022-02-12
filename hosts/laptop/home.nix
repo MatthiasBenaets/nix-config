@@ -27,7 +27,6 @@
   home = {
     packages = with pkgs; [
       firefox
-      #alacritty
       #auto-cpufreq
       #tlp
     ];
@@ -40,6 +39,7 @@
       enable = true;
       criticalLevelPercent = 10;
       lowLevelPercent = 20;
+      iconType = null;
     };
   };
 
