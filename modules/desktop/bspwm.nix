@@ -50,6 +50,6 @@
     xorg.xrandr
     
     #alacritty
-    sxhkd
+    #sxhkd
   ];
 }

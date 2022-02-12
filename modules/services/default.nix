@@ -2,4 +2,5 @@
   ./dunst
   ./picom
   ./polybar 
+  ./sxhkd
 ]
