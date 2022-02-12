@@ -107,6 +107,7 @@
       git
       wget
       pciutils
+      killall
     ];
   };
 

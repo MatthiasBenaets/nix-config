@@ -29,15 +29,4 @@
       firefox
     ];
   };
-
-  xsession.windowManager.bspwm = {
-    monitors = {
-      VGA-1 = [ "term" "web" "code" "music" "V" ];
-    };
-    rules = {
-      "test.py" = {
-        focus = true;
-      };
-    };
-  };
 }

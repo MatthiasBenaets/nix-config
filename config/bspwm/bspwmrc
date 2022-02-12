@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Startup
+#$HOME/.config/polybar/launch.sh
+
 # Monitor
 bspc monitor -d I II III IV V 
 

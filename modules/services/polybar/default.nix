@@ -11,7 +11,9 @@ in
     polybar = {
       enable = true;
       script = ''
-        polybar top &
+        killall -q polybar
+        while pgrep -x polybar >/dev/null; do sleep 1; done
+        sleep 1; polybar top 2>~/log &
       '';
       package = mypolybar;
       config = {
@@ -33,28 +35,7 @@ in
           modules-left = "bspwm";
           modules-right = "volume date";
         };
-        "bar/bottom" = {
-#monitor = "monitor";
-bottom = "true";
-width = "100%";
-height = 27;
-
-background = "#00000000";
-foreground = "#ccffffff";
-line-color = "#00000000";
-line-size = 2;
-
-spacing = 3;
-padding-right = 4;
-module-margin-left = 0;
-module-margin-right = 6;
-
-font-0 = "SourceCodePro:size=8";
-font-1 = "Fira Code Nerd Font:size=10";
-
-modules-left = "bspwm";
-         };
-        "module/volume" = {
+        "module/volume" = {  
           type = "internal/pulseaudio";
           interval = 2;
           use-ui-max = "false";
