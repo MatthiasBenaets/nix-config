@@ -13,7 +13,7 @@
   home = {								# Specific packages for laptop
     packages = with pkgs; [
       firefox
-      xbacklight
+      #light								# xorg.xbacklight not supported. Other option is just use xrandr.
       #auto-cpufreq
       #tlp
     ];
@@ -30,5 +30,7 @@
     };
   };
 
-  programs.alacritty.settings.font.size = 8;
+  programs = {
+    alacritty.settings.font.size = 8;
+  };
 }
