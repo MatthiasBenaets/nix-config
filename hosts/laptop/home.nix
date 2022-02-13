@@ -2,31 +2,18 @@
 #  Home-manager configuration for laptop
 #
 #  flake.nix
-#   ├─ ./hosts
-#   │   ├─ ./laptop
-#   │   │   └─ home.nix *
-#   │   └─ home.nix
-#   └─ ./modules
-#       ├─ ./apps 
-#       │   └─ default.nix
-#       ├─ ./services
-#       │   └─ default.nix
-#       └─ ./shell
-#           └─ default.nix
+#   └─ ./hosts
+#       └─ ./laptop
+#           └─ home.nix *
 #
 
 { pkgs, ... }:
 
 {
-  imports =								# Importing all the different modules 
-    [(import ../home.nix)] ++
-    (import ../../modules/apps) ++
-    (import ../../modules/services) ++
-    (import ../../modules/shell); 
-
-  home = {
+  home = {								# Specific packages for laptop
     packages = with pkgs; [
       firefox
+      xbacklight
       #auto-cpufreq
       #tlp
     ];

@@ -2,29 +2,15 @@
 #  Home-manager configuration for desktop
 #
 #  flake.nix
-#   ├─ ./hosts
-#   │   ├─ ./desktop
-#   │   │   └─ home.nix *
-#   │   └─ home.nix
-#   └─ ./modules
-#       ├─ ./apps
-#       │   └─ default.nix
-#       ├─ ./services
-#       │   └─ default.nix
-#       └─ ./shell
-#           └─ default.nix
-
+#   └─ ./hosts
+#       └─ ./desktop
+#           └─ home.nix *
+#
 
 { pkgs, ... }:
 
 {
-  imports =				# Importing all the different modules
-    [(import ../home.nix)]; #++
-  #  (import ../../modules/apps) ++ 
-  #  (import ../../modules/services) ++
-  #  (import ../../modules/shell); 
-
-  home = {
+  home = {							# Specific packages for desktop
     packages = with pkgs; [
       firefox
     ];

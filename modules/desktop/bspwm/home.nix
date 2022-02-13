@@ -1,3 +1,14 @@
+#
+#  Bspwm Home manager configuration
+#
+#  flake.nix
+#   ├─ ./hosts
+#   │   └─ home.nix
+#   └─ ./modules
+#       └─ ./desktop
+#           └─ home.nix *
+#
+
 { pkgs, ... }:
 
 {
@@ -5,10 +16,10 @@
     windowManager = {
       bspwm = {
         enable = true;
-#       monitors = {
+#       monitors = {										# Multiple monitors
 #          eDP-1 = [ "1" "2" "3" "4" "5" ];
 #	};
-#       rules = {
+#       rules = {										# Specific rules for apps
 #         "Gimp" = {
 #           desktop = "^8";
 #           state = "floating";
@@ -22,7 +33,7 @@
 #         };
 #       };
 	extraConfig = ''
-          bspc monitor -d 1 2 3 4 5
+          bspc monitor -d 1 2 3 4 5		# Workspace tag names (need to be the same as the polybar config to work)
 
           bspc config border_width	2
           bspc config window_gaps      12

@@ -2,65 +2,72 @@
 #  General Home-manager configuration
 #
 #  flake.nix
-#   └─ ./hosts
-#       ├─ ./desktop
-#       │   └─ home.nix
-#       └─ home.nix *
+#   ├─ ./hosts
+#   │   ├─ ./desktop
+#   │   │   └─ ./bspwm
+#   │   │       └─ home.nix
+#   │   └─ home.nix *
+#   └─ ./modules
+#       └─./apps & ./services & ./shell
+#          └─ default.nix
 #
 
 { pkgs, ... }:
 
 { 
-  imports = 								# Window Manager home config
-       [(import ../modules/desktop/bspwm/home.nix)] ++
-       ( import ../modules/apps) ++
-       ( import ../modules/services) ++
-       ( import ../modules/shell);
+  imports =   								# Home Manager Modules	
+    [(import ../modules/desktop/bspwm/home.nix)] ++
+    (import ../modules/apps) ++
+    (import ../modules/services) ++
+    (import ../modules/shell);
 
   home = {
     username = "matthias";
     homeDirectory = "/home/matthias";
 
     packages = with pkgs; [
-      pfetch
-      libnotify 
-      btop
-      feh
-      ranger
-      pavucontrol
-      mpv
-      vlc
-      qbittorrent
-      obs-studio
-      pcmanfm
+      # Terminal
+      btop		# Resource Manager
+      pfetch		# Minimal fetch
+      ranger		# File Manager
+      # Video/Audio
+      feh		# Image Viewer
+      mpv		# Media Player
+      obs-studio	# Broadcasting
+      pavucontrol	# Audio control
+      vlc		# Media Player
+      # Dependencies
+      libnotify		# Notifications need for Dunst
+      # Apps
+      qbittorrent	# Torrents
+      pcmanfm		# File Manager
 
       # General configuration
-      #zsh
-      #pulseaudio
-      #vim
-      #git
-      #wget
-      #pciutils
-      #killall
+      #git		# Repositories
+      #killall		# Stop Applications
+      #pciutils		# Computer utility info
+      #pulseaudio	# Sound
+      #vim		# Text Editor
+      #wget		# Downloader
+      #zsh		# Shell
       #
       # Imports General home-manager
-      #firefox
-      #alacritty
-      #sxhkd
-      #rofi
-      #picom
-      #dunst
-      #polybar
-      #flameshot
-      #udiskie
+      #alacritty	# Terminal Emulator
+      #dunst		# Notifications
+      #flameshot	# Screenshot
+      #picom		# Compositer
+      #polybar		# Bar
+      #rofi		# Menu
+      #sxhkd		# Shortcuts
+      #udiskie		# Auto Mounting
       #
       # WM/DM
-      #xorg.xkill
-      #xorg.xev
-      #xorg.xrandr
+      #xorg.xev		# Input viewer
+      #xorg.xkill	# Kill Applications
+      #xorg.xrandr	# Screen settings
       #
       # Laptop
-      #blueman
+      #blueman		# Bluetooth
     ];
   };
 

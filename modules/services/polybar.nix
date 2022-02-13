@@ -1,7 +1,11 @@
+#
+# Bar
+#
+
 { pkgs, ... }:
 
 let
-  mypolybar = pkgs.polybar.override {
+  mypolybar = pkgs.polybar.override {						# Extra packages to run polybar (mostly sound atm)
     alsaSupport = true;
     pulseSupport = true;
   };
@@ -10,12 +14,12 @@ in
   services = {
     polybar = {
       enable = true;
-      script = ''
-        polybar top &
-      '';
+      script = ''								# Running polybar on startup
+        polybar top &								# Does some issues with the workspaces not loading
+      '';									# Gets fixed in the bspwmrc file
       package = mypolybar;
       config = {
-        "bar/top" = {
+        "bar/top" = {								# Bar name = Top
           width = "100%";
           height = 15;
           background = "#00000000";
@@ -28,7 +32,7 @@ in
           module-margin-left = 3;
           module-margin-right = 3;
 
-          font-0 = "SourceCodePro:size=10";
+          font-0 = "SourceCodePro:size=10";					# Icons
           font-1 = "FontAwesome5Free:style=Solid:size=8";
           font-2 = "FontAwesome5Free:style=Regular:size=8";
           font-3 = "FontAwesome5Brands:style=Regular:size=8";
@@ -38,13 +42,13 @@ in
           tray-position = "right";
           tray-detached = "false";
         };
-        "module/memory" = {
+        "module/memory" = {							# RAM
           type = "internal/memory";
           format = "<label>"; #<bar-used>";
           format-foreground = "#999";
           label = "  %percentage_used%%";
 
-#         bar-used-width = 30;
+#         bar-used-width = 30;							# Add visual usage
 #         bar-used-foreground-0 = "#aaff77";
 #         bar-used-foreground-1 = "#aaff77";
 #         bar-used-foreground-2 = "#fba922";
@@ -58,14 +62,14 @@ in
 #         bar-used-empty-font = 6;
 #         bar-used-empty-foreground = "#444444";
         };
-        "module/cpu" = {
+        "module/cpu" = {							# CPU
           type = "internal/cpu";
           interval = 1;
           format = "<label>"; # <ramp-coreload>";
           format-foreground = "#999";
           label = "  %percentage%%";
 
-#         ramp-coreload-0 = "▁";
+#         ramp-coreload-0 = "▁";						# Add visual usage
 #         ramp-coreload-0-font = 2;
 #         ramp-coreload-0-foreground = "#aaff77";
 #         ramp-coreload-1 = "▂";
@@ -90,7 +94,7 @@ in
 #         ramp-coreload-7-font = 2;
 #         ramp-coreload-7-foreground = "#ff5555";
         };
-        "module/volume" = {
+        "module/volume" = {							# Volume
           type = "internal/pulseaudio";
           interval = 2;
           use-ui-max = "false";
@@ -102,10 +106,10 @@ in
           ramp-volume-1 = "";
           ramp-volume-2 = "";
 
-          click-right = "${pkgs.pavucontrol}/bin/pavucontrol";
+          click-right = "${pkgs.pavucontrol}/bin/pavucontrol";			# Right click opens pavucontrol, left click mutes, scroll changes levels
         };
-#       "module/backlight" = {
-#         type = "internal/backlight";
+#       "module/backlight" = {							# Keeping for the futur when i have a screen that supports xbacklight
+#         type = "internal/backlight";						# Now doen with sxhkb shortcuts
 #         card = "inter_backlight";
 #         #use-actual-brightness = "false";
 #         format = "<ramp> <bar>";
@@ -125,7 +129,7 @@ in
 #         bar-empty-font = 3;
 #         bar-empty-foreground = "#44";
 #       };
-#       "module/wireless-network" = {
+#       "module/wireless-network" = {						# Internet connection, not using since nm-applet is installed
 #         type = "internal/network";
 #         interface = "wlo1";
 #         interval = "3.0";
@@ -144,7 +148,7 @@ in
 #         animation-packetloss-1-foreground = "#00000000";
 #         animation-packetloss-framerate = 500;
 #       };
-#       "module/wired-network" = {
+#       "module/wired-network" = {						# Ditto module above
 #         type = "internal/network";
 #         interface = "enp0s25";
 #         interval = "3.0";
@@ -152,7 +156,7 @@ in
 #         label-connected = "  %{T3}%local_ip%%{T-}";
 #         label-disconnected-foreground = "#66";
 #       };
-        "module/battery" = {
+        "module/battery" = {							# Show battery (only when exist)
           type = "internal/battery";
           full-at = 98;
 
@@ -177,30 +181,30 @@ in
           bar-capacity-empty-font = 3;
           bar-capacity-empty-foreground = "#44ffffff";
 
-          animation-charging-0 = "";
+          animation-charging-0 = "";						# Animation when charging
           animation-charging-1 = "";
           animation-charging-2 = "";
           animation-charging-3 = "";
           animation-charging-4 = "";
           animation-charging-framerate = 750;
         };
-        "module/date" = {
+        "module/date" = {							# Time/Date  Day-Month-Year Hour:Minute
           type = "internal/date";
           date = "  %%{F#999}%d-%m-%Y%%{F-} %%{F#fff}%H:%M%%{F-}";
         };
-        "module/bspwm" = {
+        "module/bspwm" = {							# Workspaces
           type = "internal/bspwm";
 
-          ws-icon-0 = "1;";
+          ws-icon-0 = "1;";							# Needs to be the same amount and same name as bswmrc 
           ws-icon-1 = "2;";
           ws-icon-2 = "3;";
           ws-icon-3 = "4;";
           ws-icon-4 = "5;";
-          #ws-icon-default = "";
+          #ws-icon-default = "";						# Can have more workspaces availabe but enable default icon
 
           format = "<label-state> <label-mode>";
 
-          label-dimmed-underline = "#ccffffff";
+          label-dimmed-underline = "#ccffffff";					# Colors in use, active or inactive
 
           label-focused = "%icon%";
           label-focused-foreground = "#fff";
@@ -246,8 +250,8 @@ in
           label-private-foreground = "#bd2c40";
           label-private-underline = "#c9665e";
           label-private-padding = 2;
-        };
-        "module/title" = {
+        };	
+        "module/title" = {								# Show title of active screen
           type = "internal/xwindow";
           format = "<label>";
           format-background = "#00000000";

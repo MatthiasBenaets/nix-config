@@ -1,7 +1,11 @@
+#
+# System Menu
+#
+
 { config, lib, pkgs, ... }:
 
 let
-  inherit (config.lib.formats.rasi) mkLiteral;
+  inherit (config.lib.formats.rasi) mkLiteral;				# Theme.rasi alternative. Add Theme here
   rofi-theme = {    
         "*" = {
           bg = mkLiteral "#11121D";
@@ -75,9 +79,9 @@ in
   programs = {
     rofi = { 
       enable = true;
-      terminal = "${pkgs.alacritty}/bin/alacritty";
-      location = "center"; 
-      theme = rofi-theme; 
+      terminal = "${pkgs.alacritty}/bin/alacritty";				# Alacritty is default terminal emulator
+      location = "center";
+      theme = rofi-theme; 							# Use theme from above
     };
   };
 }

@@ -6,7 +6,8 @@
 #   │   └─ configuration.nix *
 #   └─ ./modules
 #       └─ ./desktop
-#           └─ bspwm.nix
+#           └─ ./bspwm
+#               └─ bspwm.nix
 #             
 
 { config, lib, pkgs, inputs, ... }:
@@ -103,7 +104,7 @@
       EDITOR = "vim";
       VISUAL = "vim";
     };
-    systemPackages = with pkgs; [				# Default packages install system-wide
+    systemPackages = with pkgs; [					# Default packages install system-wide
       vim
       git
       wget

@@ -1,3 +1,7 @@
+#
+# Keyboard shortcuts
+#
+
 { pkgs, ... }:
 
 {
@@ -30,6 +34,14 @@
         # Control - Resize
         "control + {Left, Right, Up, Down}" = "bspc node -z {left -20 0, right 20 0, top 0 -20, bottom 0 20}";		# Expand window by moving one of its sides outwards
 	"control + shift + {Left, Right, Up, Down}" = "bspc node -z { right -20 0, left 20 0, bottom 0 -20, top 0 20}";	# Contract window my moving one of its sides inwards
+
+        # XF86 Keys
+        "XF86AudioMute" = "pactl list sinks | grep -q Mute:.no && pactl set-sink-mute 0 1 || pactl set-sink-mute 0 0";  # Toggle mute audio
+        "XF86AudioRaiseVolume" = "pactl -- set-sink-volume 0 +10%";							# Raise volume
+        "XF86AudioLowerVolume" = "pactl -- set-sink-volume 0 -10%";							# Lower volume
+    	"XF86AudioMicMute" = "pactl set-source-mute 1 toggle";								# Toggle mute mic audio
+        "XF86MonBrightnessDown" = "xbacklight -dec 10%";								# Brightness down
+        "XF86MonBrightnessUp" = "xbacklight -inc 10%";									# Brightness up 
       };
     };
   };

@@ -1,18 +1,22 @@
+#
+# System notifications
+#
+
 { config, pkgs, ... }:
 
 let
-  colors = import ../themes/helios.nix;
+  colors = import ../themes/helios.nix;				# Import colors theme
 in
 {
   xdg.dataFile."dbus-1/services/org.knopwob.dunst.service".source = "${pkgs.dunst}/share/dbus-1/services/org.knopwob.dunst.service";
   services.dunst = {
     enable = true;
-    iconTheme = {
+    iconTheme = {						# Icons (not used atm)
       name = "Papirus Dark";
       package = pkgs.papirus-icon-theme;
       size = "16x16";
     };
-    settings = with colors.scheme.helios; {
+    settings = with colors.scheme.helios; {			# Settings
       global = {
         monitor = 0;
         # geometry [{width}x{height}][+/-{x}+/-{y}]
@@ -44,7 +48,7 @@ in
         # startup_notification = false;
         hide_duplicate_count = true;
       };
-      urgency_low = {
+      urgency_low = {						# Colors
         background = "#${base00}";
         foreground = "#${base05}";
         timeout = 4;
@@ -55,8 +59,8 @@ in
         timeout = 4;
       };
       urgency_critical = {
-        background = "#${base0A}";
-        foreground = "#${base0D}";
+        background = "#${base00}";
+        foreground = "#${base05}";
         frame_color = "#${base08}";
         timeout = 10;
       };

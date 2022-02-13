@@ -21,7 +21,7 @@ On fresh NixOs-unstable install:
 
 - Do your partitioning/formatting
 - ```sudo su```
-- ```nix-env -ia```
+- ```nix-env -ia git```
 - ```mount /dev/disk/by-label/nixos /mnt```
   - If UEFI:
   - ```mkdir -p /mnt/boot```
@@ -29,7 +29,7 @@ On fresh NixOs-unstable install:
 - ```nixos-generate-config --root /mnt```
 - ```git clone https://github.com/matthiasbenaets/nix-dotfiles /mnt/etc/nixos/dotfiles```
 - ```cp /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/dotfiles/hosts/$HOST/hardware-configuration.nix```
-- Edit /mnt/etc/nixos/dotfiles/hosts/$HOST/default/default.nix
+- Edit /mnt/etc/nixos/dotfiles/hosts/$HOST/default.nix
   - Change loader settings depending on Legacy Boot vs. UEFI
   - Edit networking interfaces
      - Either ```ip a``` or look in /mnt/etc/nixos/configuration.nix
@@ -38,7 +38,6 @@ On fresh NixOs-unstable install:
 - Set root password and Reboot
 - Log into tty with root ```Ctrl - Alt - F1```
 - ```passwd $USER```
-- Set .config symlinks. Script will come or will get fully migrated to flake.
 - ```Ctrl - Alt - F7```
 - Log in with LightDM
 - Enjoy

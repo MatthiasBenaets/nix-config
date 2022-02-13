@@ -5,6 +5,7 @@
 #   └─ ./hosts  
 #       ├─ default.nix *
 #       ├─ configuration.nix
+#       ├─ home.nix
 #       └─ ./desktop OR ./laptop
 #            ├─ ./default.nix
 #            └─ ./home.nix 
@@ -23,12 +24,14 @@
       home-manager.nixosModules.home-manager {				# Home-Manager module that is used.
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.users.matthias = import ./desktop/home.nix;
+        home-manager.users.matthias = {
+          imports = [(import ./home.nix)] ++ [(import ./desktop/home.nix)];
+        };
       }
     ];
   };
 
-  laptop = lib.nixosSystem {
+  laptop = lib.nixosSystem {						# Laptop profile
     inherit system;
     specialArgs = { inherit inputs; };
     modules = [
@@ -38,7 +41,9 @@
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.users.matthias = import ./laptop/home.nix;
+        home-manager.users.matthias = {
+          imports = [(import ./home.nix)] ++ [(import ./laptop/home.nix)];
+        };
       }
     ];
   };

@@ -1,3 +1,7 @@
+#
+# Just a basic theme template I found
+#
+
 {
   scheme = {
     helios = {
