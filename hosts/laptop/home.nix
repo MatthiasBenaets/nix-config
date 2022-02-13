@@ -7,7 +7,7 @@
 #   │   │   └─ home.nix *
 #   │   └─ home.nix
 #   └─ ./modules
-#       ├─ ./menu 
+#       ├─ ./apps 
 #       │   └─ default.nix
 #       ├─ ./services
 #       │   └─ default.nix

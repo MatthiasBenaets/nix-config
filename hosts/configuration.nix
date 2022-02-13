@@ -14,7 +14,7 @@
 {
   imports =								# Import window or display manager.
     [
-      ../modules/desktop/bspwm.nix
+      ../modules/desktop/bspwm/bspwm.nix
     ];
 
   networking.useDHCP = false; 						# Deprecated but needed in config.
@@ -68,7 +68,7 @@
 
   users.users.matthias = {						# System User
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "networkmanager" "lp" "scanner"];
+    extraGroups = [ "wheel" "video" "audio" "kvm" "networkmanager" "lp" "scanner"];
     shell = pkgs.zsh;							  # Default shell
   };
  

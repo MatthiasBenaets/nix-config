@@ -9,6 +9,7 @@
         # Apps
         "super + Return" = "alacritty";											# Open Terminal
         "super + space" = "rofi -show drun";										# Open Rofi (custome theme " -theme theme.rasi")
+        "Print" = "flameshot gui";											# Start flameshot gui
 
         # Bspwm
         "super + {q,k}" = "bspc node -{c,k}";										# Close or Kill
@@ -18,6 +19,8 @@
         # Super - Nodes
         "super + {_,shift +}{Left, Right, Up, Down}" = "bspc node -{f,s} {west,east,north,south}";			# Focus or move node in given direction
         "super + m" = "bspc desktop -l next";										# Alternate between the tiled and monocle layout
+        "super + {t,f}" = "bspc node -t {tiled, fullscreen}";								# Alternate between the tiles and fullscreen layout
+        "super + shift + f" = "bspc node -t floating";									# Put node in floating
         "super + g" = "bspc node -s biggest.window";									# Swap current node and the biggest window
    
         # Alt - Move workspaces

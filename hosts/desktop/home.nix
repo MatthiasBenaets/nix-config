@@ -7,7 +7,7 @@
 #   │   │   └─ home.nix *
 #   │   └─ home.nix
 #   └─ ./modules
-#       ├─ ./menu
+#       ├─ ./apps
 #       │   └─ default.nix
 #       ├─ ./services
 #       │   └─ default.nix
@@ -19,10 +19,10 @@
 
 {
   imports =				# Importing all the different modules
-    [(import ../home.nix)] ++
-    (import ../../modules/apps) ++ 
-    (import ../../modules/services) ++
-    (import ../../modules/shell); 
+    [(import ../home.nix)]; #++
+  #  (import ../../modules/apps) ++ 
+  #  (import ../../modules/services) ++
+  #  (import ../../modules/shell); 
 
   home = {
     packages = with pkgs; [

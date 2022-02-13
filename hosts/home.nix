@@ -10,16 +10,20 @@
 
 { pkgs, ... }:
 
-{
+{ 
+  imports = 								# Window Manager home config
+       [(import ../modules/desktop/bspwm/home.nix)] ++
+       ( import ../modules/apps) ++
+       ( import ../modules/services) ++
+       ( import ../modules/shell);
+
   home = {
     username = "matthias";
     homeDirectory = "/home/matthias";
 
     packages = with pkgs; [
       pfetch
-      libnotify # for dunst
-      #dunst
-      #polybar 
+      libnotify 
       btop
       feh
       ranger
@@ -28,19 +32,34 @@
       vlc
       qbittorrent
       obs-studio
+      pcmanfm
 
+      # General configuration
+      #zsh
+      #pulseaudio
       #vim
       #git
       #wget
       #pciutils
-      #xorg.xkill
-      #xorg.xev
+      #killall
+      #
+      # Imports General home-manager
+      #firefox
       #alacritty
-      #xshkd
-      #zsh
+      #sxhkd
       #rofi
       #picom
-      #pulseaudio
+      #dunst
+      #polybar
+      #flameshot
+      #udiskie
+      #
+      # WM/DM
+      #xorg.xkill
+      #xorg.xev
+      #xorg.xrandr
+      #
+      # Laptop
       #blueman
     ];
   };
@@ -50,13 +69,6 @@
   programs = {
     home-manager.enable = true;
     zsh.enable = true;
-  };
-  
-  services = {                                                          # System tray services
-    udiskie = {								  # Auto mount USB
-      enable = true;
-      tray = "always";
-    };
   };
 
   xsession = {                                                          # Session settings

@@ -8,6 +8,7 @@
     fadeDelta = 5;
     opacityRule = [ 
       "100:name *= 'Firefox'"
+      "100:name *= 'feh'"
       "95:name *= 'Rofi'"
     ];
     shadow = true;

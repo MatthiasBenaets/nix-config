@@ -1,5 +1,5 @@
 #
-#  There are the different profiles that can be used when building the flake.
+#  These are the different profiles that can be used when building the flake.
 #
 #  flake.nix 
 #   └─ ./hosts  
