@@ -15,9 +15,16 @@
     opacityRule = [ 						# Opacity rules
       "100:name *= 'Firefox'"
       "100:name *= 'feh'"
-      "95:name *= 'Rofi'"
+      "95:class_i ?= 'pcmanfm'"
+      "95:class_i ?= 'rofi'"
     ];
     shadow = true;						# Shadows
     shadowOpacity = "0.75";
+    menuOpacity = "0.95";
+#   blur = true;
+#   blurExclude = [
+#     "class_i = 'polybar'"
+#     "class_i = 'alacritty'"
+#   ];
   };
 }

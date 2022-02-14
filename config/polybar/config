@@ -1,0 +1,111 @@
+[bar/top]
+background=#00000000
+font-0=SourceCodePro:size=10
+font-1=FontAwesome5Free:style=Solid:size=8
+font-2=FontAwesome5Free:style=Regular:size=8
+font-3=FontAwesome5Brands:style=Regular:size=8
+foreground=#ccffffff
+height=15
+module-margin-left=3
+module-margin-right=3
+modules-left=bspwm title
+modules-right=memory cpu volume date battery
+offset-y=2
+padding-right=2
+spacing=1.5
+tray-detached=false
+tray-position=right
+width=100%
+
+[module/battery]
+full-at=98
+label-charging=|  %percentage%%
+label-discharging=|  %percentage%%
+label-full=|  %percentage%%
+type=internal/battery
+
+[module/bspwm]
+format=<label-state> <label-mode>
+label-dimmed-underline=#ccffffff
+label-empty=%icon%
+label-empty-font=4
+label-empty-foreground=#55
+label-empty-padding=2
+label-focused=%icon%
+label-focused-background=#773f3f3f
+label-focused-font=4
+label-focused-foreground=#fff
+label-focused-padding=2
+label-focused-underline=#c9665e
+label-locked=L
+label-locked-foreground=#bd2c40
+label-locked-padding=2
+label-locked-underline=#c9665e
+label-monocle=M
+label-monocle-background=#33ffffff
+label-monocle-padding=2
+label-monocle-underline=#c9665e
+label-occupied=%icon%
+label-occupied-font=4
+label-occupied-foreground=#ddd
+label-occupied-padding=2
+label-occupied-underline=#666
+label-private=P
+label-private-foreground=#bd2c40
+label-private-padding=2
+label-private-underline=#c9665e
+label-sticky=S
+label-sticky-foreground=#fba922
+label-sticky-padding=2
+label-sticky-underline=#c9665e
+label-urgent=%icon%
+label-urgent-background=#bd2c40
+label-urgent-font=4
+label-urgent-foreground=#000000
+label-urgent-padding=2
+label-urgent-underline=#9b0a20
+type=internal/bspwm
+ws-icon-0=1;
+ws-icon-1=2;
+ws-icon-2=3;
+ws-icon-3=4;
+ws-icon-4=5;
+
+[module/cpu]
+format=<label>
+format-foreground=#999
+interval=1
+label=  %percentage%%
+type=internal/cpu
+
+[module/date]
+date=  %%{F#999}%d-%m-%Y%%{F-} %%{F#fff}%H:%M%%{F-}
+type=internal/date
+
+[module/memory]
+format=<label>
+format-foreground=#999
+label=  %percentage_used%%
+type=internal/memory
+
+[module/title]
+format=<label>
+format-background=#00000000
+format-foreground=#ccffffff
+label=%title%
+label-empty=
+label-empty-foreground=#ccffffff
+label-maxlen=75
+type=internal/xwindow
+
+[module/volume]
+click-right=/nix/store/2dd5rl0qclzfr66kz4q1ryskbl2mrd62-pavucontrol-5.0/bin/pavucontrol
+format-volume=<ramp-volume> <label-volume>
+interval=2
+label-muted=  muted
+label-muted-foreground=#66
+ramp-volume-0=
+ramp-volume-1=
+ramp-volume-2=
+type=internal/pulseaudio
+use-ui-max=false

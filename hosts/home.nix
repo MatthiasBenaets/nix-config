@@ -12,7 +12,7 @@
 #          └─ default.nix
 #
 
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 { 
   imports =   								# Home Manager Modules	
@@ -103,6 +103,8 @@
       name = "FiraCode Nerd Font Mono Medium";  
     };
   };
+
+  home.file.".config/wall".source = config.lib.file.mkOutOfStoreSymlink ../modules/themes/wall;
 
   home.stateVersion = "22.05";
 }

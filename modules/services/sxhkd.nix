@@ -33,7 +33,7 @@
 
         # Control - Resize
         "control + {Left, Right, Up, Down}" = "bspc node -z {left -20 0, right 20 0, top 0 -20, bottom 0 20}";		# Expand window by moving one of its sides outwards
-	"control + shift + {Left, Right, Up, Down}" = "bspc node -z { right -20 0, left 20 0, bottom 0 -20, top 0 20}";	# Contract window my moving one of its sides inwards
+	"control + shift + {Left, Right, Up, Down}" = "bspc node -z { right -20 0, left 20 0, bottom 0 -20, top 0 20}";	# Contract window by moving one of its sides inwards
 
         # XF86 Keys
         "XF86AudioMute" = "pactl list sinks | grep -q Mute:.no && pactl set-sink-mute 0 1 || pactl set-sink-mute 0 0";  # Toggle mute audio

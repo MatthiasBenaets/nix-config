@@ -1,3 +1,10 @@
+#configuration {
+#  modi: "window,run,drun,ssh,combi";
+#  terminal: "/usr/bin/alacritty";
+#  font: "Fira Code Nerd Font 10";
+#  combi-modi: "window,drun,ssh";
+#}
+@theme "/dev/null"
 * {
   bg: #11121D;
   bg-alt: #444b6a;

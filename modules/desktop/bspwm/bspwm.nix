@@ -34,7 +34,21 @@
 
       displayManager = {						# Display Manager
         lightdm = {
-          enable = true;
+          enable = true;						  # Wallpaper and gtk theme
+          background = pkgs.nixos-artwork.wallpapers.nineish-dark-gray.gnomeFilePath;
+          greeters = {
+            gtk = {
+	      theme = {
+		name = "Dracula";
+		package = pkgs.dracula-theme;
+              };
+              cursorTheme = {
+                name = "Dracula-cursors";
+                package = pkgs.dracula-theme;
+                size = 16;
+              };
+            };
+          };
         };
         defaultSession = "none+bspwm";					  # none+bspwm -> no real display manager
       };

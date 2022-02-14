@@ -14,7 +14,7 @@ let
           fg = mkLiteral "#FFFFFF";
           fg-alt = mkLiteral "#787c99";
 
-          background-color = mkLiteral "#11121D";
+          background-color = mkLiteral "@bg";
 
           border = 0;
           margin = 0;
@@ -28,11 +28,11 @@ let
 
         "element" = {
           padding = mkLiteral "8 0";
-          text-color = mkLiteral "#787c99";
+          text-color = mkLiteral "@fg-alt";
         };
 
         "element selected" = {
-          text-color = mkLiteral "#FFFFFF";
+          text-color = mkLiteral "@fg";
         };
 
         "element-text" = {
@@ -46,9 +46,9 @@ let
         };
 
         "entry" = {
-          background-color = mkLiteral "#787c98";
+          background-color = mkLiteral "@bg-alt";
           padding = 12;
-          text-color = mkLiteral "#FFFFFF";
+          text-color = mkLiteral "fg";
         };
         
         "inputbar" = {
@@ -57,21 +57,21 @@ let
 
         "listview" = {
           padding = mkLiteral "8 12";
-          background-color = mkLiteral "#11121d";
+          background-color = mkLiteral "@bg";
           columns = 1;
           lines = 8;
         };
 
         "mainbox" = {
-          background-color = mkLiteral "#11121d";
+          background-color = mkLiteral "@bg";
           children = mkLiteral "[inputbar, listview]";
         };
 
         "prompt" = {
-          background-color = mkLiteral "#444b6a";
+          background-color = mkLiteral "@bg-alt";
           enabled = true;
           padding = mkLiteral "12 0 0 12";
-          text-color = mkLiteral "#FFFFFF";
+          text-color = mkLiteral "@fg";
         };
      };
 in
