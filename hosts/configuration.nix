@@ -84,13 +84,15 @@
   nixpkgs.config.allowUnfree = true;					# Allow proprietary software.
 
   nix = {								# Nix Package Manager settings
-    autoOptimiseStore = true;						  # Optimize symlinks
-    gc = {								  # Automatic garbage collection
+    settings ={
+      auto-optimise-store = true;					# Optimise syslinks
+    };
+    gc = {								# Automatic garbage collection
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 7d";
     };
-    package = pkgs.nixFlakes;						  # Enable nixFlakes on system
+    package = pkgs.nixFlakes;						# Enable nixFlakes on system
     registry.nixpkgs.flake = inputs.nixpkgs;
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -101,11 +103,11 @@
 
   environment = {
     variables = {
-      EDITOR = "vim";
-      VISUAL = "vim";
+      EDITOR = "nvim";
+      VISUAL = "nvim";
     };
     systemPackages = with pkgs; [					# Default packages install system-wide
-      vim
+      neovim
       git
       wget
       pciutils

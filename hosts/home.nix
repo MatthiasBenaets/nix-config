@@ -45,9 +45,9 @@
       # General configuration
       #git		# Repositories
       #killall		# Stop Applications
+      #neovim		# Text Editor
       #pciutils		# Computer utility info
       #pulseaudio	# Sound
-      #vim		# Text Editor
       #wget		# Downloader
       #zsh		# Shell
       #

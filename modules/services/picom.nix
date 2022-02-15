@@ -13,8 +13,10 @@
     fade = true;
     fadeDelta = 5;
     opacityRule = [ 						# Opacity rules
+      "100:class_i ?= 'google-chrome'"
       "100:name *= 'Firefox'"
       "100:name *= 'feh'"
+      "100:name *?= 'vlc'"
       "95:class_i ?= 'pcmanfm'"
       "95:class_i ?= 'rofi'"
     ];

@@ -27,8 +27,9 @@
       grub = {
         enable = true;
         version = 2;
-        device = "/dev/sda";						  # Name of harddrive
+        device = "/dev/sda";						# Name of harddrive
       };
+      timeout = 1;							# Grub auto select time
     };
   };
 

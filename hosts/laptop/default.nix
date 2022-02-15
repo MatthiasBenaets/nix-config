@@ -22,7 +22,8 @@
 #   loader.efi.canTouchEfiVariables = true;
 
 #   initrd.kernelModules = [ "amdgpu" ];				# Video drivers
-    
+#   kernelParams = [ "radeon.si_support=0" "amdgpu.si_support=1" ];     # Needed because GCN1 architecture    
+
     loader = {								# EFI Boot
       efi = {
         canTouchEfiVariables = true;
@@ -36,6 +37,7 @@
         useOSProber = true; 						  # Find all boot options
         configurationLimit = 2;
       };
+      timeout = 1;							# Grub auto select time
     };
   };
 
@@ -80,7 +82,7 @@
         enable = true;
         touchpad.naturalScrolling = true;				# The correct way of scrolling
       };
-#     videoDrivers = [							# Video settings 
+#     videoDrivers = [							# Video drivers 
 #       "ati"
 #       "amdgpu"
 #       "radeon"

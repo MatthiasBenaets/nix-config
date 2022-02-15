@@ -23,6 +23,9 @@
           "Firefox" = {
 	    desktop = "^2";
           };
+          "Google-chrome" = {
+            desktop = "^2";
+          };
           "Pcmanfm" = {
 	    state = "floating";
           };

@@ -13,6 +13,13 @@
   home = {							# Specific packages for desktop
     packages = with pkgs; [
       firefox
+
+      # Gimp Inkscape Krita
+      # Steam Discord
+      # Plex Handbrake MKVtoolnix
+      # Kdenlive
+      # LibreOffice
+      # VSCode Emacs Nvim
     ];
   };
 }

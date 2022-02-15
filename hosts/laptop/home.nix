@@ -12,7 +12,7 @@
 {
   home = {								# Specific packages for laptop
     packages = with pkgs; [
-      firefox
+      google-chrome
       #light								# xorg.xbacklight not supported. Other option is just use xrandr.
       #auto-cpufreq
       #tlp

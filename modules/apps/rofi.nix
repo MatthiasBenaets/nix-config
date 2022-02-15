@@ -48,7 +48,7 @@ let
         "entry" = {
           background-color = mkLiteral "@bg-alt";
           padding = 12;
-          text-color = mkLiteral "fg";
+          text-color = mkLiteral "@fg";
         };
         
         "inputbar" = {
