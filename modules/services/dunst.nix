@@ -5,7 +5,7 @@
 { config, pkgs, ... }:
 
 let
-  colors = import ../themes/helios.nix;				# Import colors theme
+  colors = import ../themes/base16.nix;				# Import colors theme
 in
 {
   xdg.dataFile."dbus-1/services/org.knopwob.dunst.service".source = "${pkgs.dunst}/share/dbus-1/services/org.knopwob.dunst.service";
@@ -16,7 +16,7 @@ in
       package = pkgs.papirus-icon-theme;
       size = "16x16";
     };
-    settings = with colors.scheme.helios; {			# Settings
+    settings = with colors.scheme.dracula; {			# Settings
       global = {
         monitor = 0;
         # geometry [{width}x{height}][+/-{x}+/-{y}]

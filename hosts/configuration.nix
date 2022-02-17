@@ -107,7 +107,7 @@
       VISUAL = "nvim";
     };
     systemPackages = with pkgs; [					# Default packages install system-wide
-      neovim
+      #vim
       git
       wget
       pciutils

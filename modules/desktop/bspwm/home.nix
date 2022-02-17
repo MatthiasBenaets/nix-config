@@ -29,6 +29,9 @@
           "Pcmanfm" = {
 	    state = "floating";
           };
+	  "Emacs" = {
+	    state = "tiled";
+	  };
 #         "Gimp" = {
 #           desktop = "^8";
 #           state = "floating";
@@ -48,14 +51,22 @@
           bspc config window_gaps      12
           bspc config split_ratio     0.5
           
+	  bspc config focus_follows_pointer    true
           #bspc config borderless_monocle	true
           #bspc config gapless_monocle		true
+
+          #bspc config normal_border_color  "#44475a"
+	  #bspc config focused_border_color "#bd93f9"
+
+	  #bspc rule -a vlc state=fullscreen
+
+          #pgrep -x sxhkd > /dev/null || sxhkd &
 
           feh --bg-scale $HOME/.config/wall
 
           killall -q polybar & 			# Reboot polybar to correctly show workspaces
-          sleep 0.5; polybar top #2>~/log &	# To lazy to figure out systemd service order
-        '';
+          sleep 0.5; polybar top & #2>~/log &	# To lazy to figure out systemd service order
+	'';
       };
     };
   };

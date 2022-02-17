@@ -17,6 +17,7 @@
 { 
   imports =   								# Home Manager Modules	
     [(import ../modules/desktop/bspwm/home.nix)] ++
+    (import ../modules/editors) ++
     (import ../modules/apps) ++
     (import ../modules/services) ++
     (import ../modules/shell);
@@ -41,6 +42,8 @@
       # Apps
       qbittorrent	# Torrents
       pcmanfm		# File Manager
+      # Editor
+      emacs
 
       # General configuration
       #git		# Repositories
@@ -68,6 +71,7 @@
       #
       # Laptop
       #blueman		# Bluetooth
+
     ];
   };
 

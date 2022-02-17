@@ -5,7 +5,7 @@
 |**Shell:**|zsh|
 |**DM:**|lightdm|
 |**WM:**|bspwm + polybar|
-|**Editor:**|vim|
+|**Editor:**|nvim|
 |**Terminal:**|alacritty|
 |**Launcher:**|rofi|
 |**GTK Theme:**|Dracula|

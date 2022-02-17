@@ -16,7 +16,7 @@
 
       # Gimp Inkscape Krita
       # Steam Discord
-      # Plex Handbrake MKVtoolnix
+      # Plex Handbrake MKVtoolnix Sonarr Radarr
       # Kdenlive
       # LibreOffice
       # VSCode Emacs Nvim

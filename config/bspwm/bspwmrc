@@ -18,6 +18,8 @@ bspc rule -a 'Pcmanfm' 'state=floating'
 
 # Startup
 
+#pgrep -x sxhkd > /dev/null || sxhkd &
+
 feh --bg-scale $HOME/.config/wall
 
 killall -q polybar &						# Reboot polybar to correctly show workspaces
