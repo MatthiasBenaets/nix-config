@@ -42,8 +42,6 @@
       # Apps
       qbittorrent	# Torrents
       pcmanfm		# File Manager
-      # Editor
-      emacs
 
       # General configuration
       #git		# Repositories
@@ -57,12 +55,14 @@
       # Imports General home-manager
       #alacritty	# Terminal Emulator
       #dunst		# Notifications
+      #emacs            # Text Editor
       #flameshot	# Screenshot
       #picom		# Compositer
       #polybar		# Bar
       #rofi		# Menu
       #sxhkd		# Shortcuts
       #udiskie		# Auto Mounting
+      #vim              # Text Editor
       #
       # WM/DM
       #xorg.xev		# Input viewer

@@ -1,0 +1,53 @@
+#+TITLE: Doom Emacs For Noobs
+
+* Installation
+** Installing dependencies
++ Git 2.23+
++ Emacs 26.1+ (27.x is recommended)
++ ripgrep 11.0+
++ GNU Find
++ (Optional) fd 7.3.0+ (known as fd-find on Debian, Ubuntu & derivatives) – improves performance for many file indexing commands
+** Installing Doom Emacs
++ git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
++ ~/.emacs.d/bin/doom install
+      /doom install/ will set up your DOOMDIR at ~/.doom.d (if it doesn’t already exist) and will work you through the first-time setup of Doom Emacs. Carefully follow any instructions it puts out. If this is your first time, you should run /doom doctor/. This will diagnose common issues with your system or config.
+* Utilities found in bin/doom
+** doom sync:
+This synchronizes your config with Doom Emacs. It ensures that needed packages are installed, orphaned packages are removed and necessary metadata correctly generated. Run this whenever you modify your doom! block or packages.el file. You’ll need doom sync -u if you override the recipe of package installed by another module.
+** doom upgrade:
+Updates Doom Emacs (if available) and all its packages. Doom is an active project and many of its 300+ packages are in active development as well. It is wise to occasionally update
+** doom upgrade --packages
+To update only your packages (and not Doom itself)
+** doom doctor:
+If Doom misbehaves, the doc will diagnose common issues with your installation, system and environment.
+** doom purge:
+Over time, the repositories for Doom’s plugins will accumulate. Run this command from time to time to delete old, orphaned packages, and with the -g switch to compact existing package repos.
+** doom env:
+(Re)generates an “envvar file”, which is a snapshot of your shell environment that Doom loads at startup. If your app launcher or OS launches Emacs in the wrong environment you will need this. **This is required for GUI Emacs users on MacOS.**
+** doom help:
+An overview of the available commands that doom provides. Use /doom help COMMAND/ to display documentation for a particular COMMAND.
+** NOTE: I recommend you add your .emacs.d/bin to your PATH so you can call doom directly and from anywhere. Accomplish this by adding this to your .bashrc or .zshrc file: ~export PATH=”$HOME/.emacs.d/bin:$PATH”~
+* DOOMDIR
+You can configure Doom by tweaking the files found in your DOOMDIR. Doom expects this directory to be found in one of:
+** ~/.config/doom (respects $XDG_CONFIG_HOME)
+** or ~/.doom.d
+This directory is referred to as your DOOMDIR. Only one of these directories should exist (Doom will only recognize one).
+* Configuration Files
+** init.el
+Where you’ll find your doom! block, which controls what Doom modules are enabled and in what order they will be loaded. This file is evaluated early when Emacs is starting up; before any other module has loaded. You generally shouldn’t add code to this file unless you’re targeting Doom’s CLI or something that needs to be configured very early in the startup process.
+** config.el
+Here is where 99.99% of your private configuration should go. Anything in here is evaluated after all other modules have loaded, when starting up Emacs.
+** packages.el
+Package management is done from this file; where you’ll declare what packages to install and where from.
+* Package management
+**Doom Emacs does not use package.el** (the package manager built into Emacs). Packages are declared in packages.el files (in DOOMDIR).
+** To install a package, add a package! declaration for it to DOOMDIR/packages.el:
+
+#+BEGIN_SRC elisp
+;; Install a package named "example" from ELPA, MELPA, or Emacsmirror
+(package! example)
+#+END_SRC
+
+** IMPORTANT: New packages won’t be installed until you run doom sync.
+** DO NOT configure packages here (definitely no use-package! or after! in here!). This file is read in an isolated environment and will have no lasting effect.
+
