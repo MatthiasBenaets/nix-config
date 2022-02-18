@@ -103,6 +103,7 @@
 
   environment = {
     variables = {
+      TERMINAL = "alacrity";
       EDITOR = "nvim";
       VISUAL = "nvim";
     };
@@ -112,6 +113,7 @@
       wget
       pciutils
       killall
+      xterm
     ];
   };
 

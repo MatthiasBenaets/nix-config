@@ -3,7 +3,9 @@ DOOM="$HOME/.emacs.d"
 
 if [ ! -d "$DOOM" ]; then
 	git clone https://github.com/hlissner/doom-emacs.git $DOOM
-	$DOOM/bin/doom -y install
+	xterm -e $DOOM/bin/doom -y install & disown
+else
+	xterm -e $DOOM/bin/doom sync
 fi
 
-$DOOM/bin/doom sync
+#$DOOM/bin/doom sync
