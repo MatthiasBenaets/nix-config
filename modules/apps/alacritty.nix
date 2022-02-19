@@ -2,6 +2,8 @@
 # Terminal Emulator
 #
 
+# Hardcoded as terminal for rofi and doom emacs
+
 { pkgs, ... }:
 
 {
@@ -9,12 +11,12 @@
     alacritty = {
       enable = true;
       settings = {
-        font = rec {						# Font - Laptop has size manually changed at home.nix
+        font = rec {                          # Font - Laptop has size manually changed at home.nix
           normal.family = "Source Code Pro";
           bold = { style = "Bold"; };
           #size = 8;
         };
-        offset = {						# Positioning
+        offset = {                            # Positioning
           x = -1;
           y = 0;
         };

@@ -14,14 +14,14 @@
 { lib, inputs, system, home-manager, ... }:
 
 {
-  desktop = lib.nixosSystem {						# Desktop profile
+  desktop = lib.nixosSystem {                           # Desktop profile
     inherit system;
     specialArgs = { inherit inputs; };
-    modules = [								# Modules that are used.
+    modules = [                                         # Modules that are used.
       ./desktop
       ./configuration.nix
 
-      home-manager.nixosModules.home-manager {				# Home-Manager module that is used.
+      home-manager.nixosModules.home-manager {          # Home-Manager module that is used.
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.users.matthias = {
@@ -31,7 +31,7 @@
     ];
   };
 
-  laptop = lib.nixosSystem {						# Laptop profile
+  laptop = lib.nixosSystem {                            # Laptop profile
     inherit system;
     specialArgs = { inherit inputs; };
     modules = [

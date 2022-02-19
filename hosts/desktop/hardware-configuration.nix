@@ -14,17 +14,20 @@
 {
   imports = [ ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ata_piix" "sd_mod" "sr_mod" ];
+  boot.initrd.availableKernelModules = [ "ata_pixx" "ohci_pci" "ehci_pci" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/27457925-cb4b-4020-83a8-023d66dc0eaa";
+    { device = "/dev/disk/by-uuid/1ccf8779-ffa8-4f26-ad17-83037f1ee7c0";
       fsType = "ext4";
     };
 
   swapDevices = [ ];
+
+  networking.useDHCP = lib.mkDefault false;
+  netowrking.interfaces.enp0s3.useDHCP = lib.mkDefault true;
 
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   virtualisation.virtualbox.guest.enable = true;

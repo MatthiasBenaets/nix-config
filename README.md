@@ -5,10 +5,10 @@
 |**Shell:**|zsh|
 |**DM:**|lightdm|
 |**WM:**|bspwm + polybar|
-|**Editor:**|nvim|
+|**Editor:**|nvim + doom emacs|
 |**Terminal:**|alacritty|
 |**Launcher:**|rofi|
-|**GTK Theme:**|Dracula|
+|**GTK Theme:**|dracula|
 
 ## THIS README IS A PLACEHOLDER
 
@@ -21,7 +21,7 @@ On fresh NixOs-unstable install:
 
 - Do your partitioning/formatting
 - ```sudo su```
-- ```nix-env -ia git```
+- ```nix-env -iA nixos.git```
 - ```mount /dev/disk/by-label/nixos /mnt```
   - If UEFI:
   - ```mkdir -p /mnt/boot```
@@ -33,6 +33,8 @@ On fresh NixOs-unstable install:
   - Change loader settings depending on Legacy Boot vs. UEFI
   - Edit networking interfaces
      - Either ```ip a``` or look in /mnt/etc/nixos/configuration.nix
+  - Uncomment emacs in modules/editors/default.nix 
+     - Better to rebuild with it uncomment after installation to correctly install doom emacs.
 - ```cd /mnt/etc/nixos/dotfiles/```
 - ```nixos-install --flake .#$HOST```
 - Set root password and Reboot

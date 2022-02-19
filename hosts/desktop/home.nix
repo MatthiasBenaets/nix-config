@@ -10,7 +10,7 @@
 { pkgs, ... }:
 
 {
-  home = {							# Specific packages for desktop
+  home = {                                # Specific packages for desktop
     packages = with pkgs; [
       firefox
 

@@ -13,43 +13,43 @@
 { config, lib, pkgs, inputs, ... }:
 
 {
-  imports =								# Import window or display manager.
+  imports =                                 # Import window or display manager.
     [
       ../modules/desktop/bspwm/bspwm.nix
     ];
 
-  networking.useDHCP = false; 						# Deprecated but needed in config.
+  networking.useDHCP = false;               # Deprecated but needed in config.
 
-  time.timeZone = "Europe/Brussels";					# Time zone and internationalisation
+  time.timeZone = "Europe/Brussels";        # Time zone and internationalisation
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
     font = "Lat2-Terminus16";
     keyMap = "azerty";
   };
 
-  sound = {								# Sound settings
+  sound = {                                 # Sound settings
     enable = true;
     mediaKeys.enable = true;
   };
 
-  hardware.pulseaudio = {						# Hardware audio
+  hardware.pulseaudio = {                   # Hardware audio
     enable = true;
     extraModules = [ pkgs.pulseaudio-modules-bt ];
     package = pkgs.pulseaudioFull;
   };
 
-# hardware.sane = {							# Used for scanning
+# hardware.sane = {                         # Used for scanning
 #   enable = true,
 #   extraBackends = [ pkgs.<<canon>> ];
 # };
 
   services = {
-#   printing = {							# Printing service
+#   printing = {                            # Printing service
 #     enable = true;
 #     drivers = [ pkgs.<<canon>> ];
 #   };
 #
-#   openssh = {								# SSH
+#   openssh = {                             # SSH
 #     enable = true;
 #     allowSFTP = true;
 #   };
@@ -57,7 +57,7 @@
 #   sshd.enable = true;
   };
 
-  fonts.fonts = with pkgs; [						# Fonts
+  fonts.fonts = with pkgs; [                # Fonts
     source-code-pro
     font-awesome
     (nerdfonts.override {
@@ -67,32 +67,32 @@
     })
   ];
 
-  users.users.matthias = {						# System User
+  users.users.matthias = {                  # System User
     isNormalUser = true;
     extraGroups = [ "wheel" "video" "audio" "kvm" "networkmanager" "lp" "scanner"];
-    shell = pkgs.zsh;							  # Default shell
+    shell = pkgs.zsh;                       # Default shell
   };
  
-  programs = {								# Shell. Weirdly need to be enable here to add user to lightdm by default.
+  programs = {                              # Shell. Weirdly need to be enable here to add user to lightdm by default.
     zsh.enable = true;
   };  
  
-  security = {								# User does not need to give password when using sudo.
+  security = {                              # User does not need to give password when using sudo.
     sudo.wheelNeedsPassword = false;
   };
 
-  nixpkgs.config.allowUnfree = true;					# Allow proprietary software.
+  nixpkgs.config.allowUnfree = true;        # Allow proprietary software.
 
-  nix = {								# Nix Package Manager settings
+  nix = {                                   # Nix Package Manager settings
     settings ={
-      auto-optimise-store = true;					# Optimise syslinks
+      auto-optimise-store = true;           # Optimise syslinks
     };
-    gc = {								# Automatic garbage collection
+    gc = {                                  # Automatic garbage collection
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 7d";
     };
-    package = pkgs.nixFlakes;						# Enable nixFlakes on system
+    package = pkgs.nixFlakes;               # Enable nixFlakes on system
     registry.nixpkgs.flake = inputs.nixpkgs;
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -103,11 +103,11 @@
 
   environment = {
     variables = {
-      TERMINAL = "alacrity";
+      TERMINAL = "alacritty";
       EDITOR = "nvim";
       VISUAL = "nvim";
     };
-    systemPackages = with pkgs; [					# Default packages install system-wide
+    systemPackages = with pkgs; [           # Default packages install system-wide
       #vim
       git
       wget
@@ -137,8 +137,8 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system = {								# NixOS settings
-    autoUpgrade = {							  # Allow auto update
+  system = {                              # NixOS settings
+    autoUpgrade = {                       # Allow auto update
       enable = true;
       channel = "https://nixos.org/channels/nixos-unstable";
     };

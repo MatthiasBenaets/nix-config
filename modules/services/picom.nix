@@ -7,20 +7,21 @@
 { 
   services.picom = {
     enable = true;
-    activeOpacity = "0.8";					# Node transparency
+    activeOpacity = "0.8";                        # Node transparency
     inactiveOpacity = "0.75";
-    backend = "glx";						# Rendering
+    backend = "glx";                              # Rendering
     fade = true;
     fadeDelta = 5;
-    opacityRule = [ 						# Opacity rules
+    opacityRule = [                               # Opacity rules
       "100:class_i ?= 'google-chrome'"
       "100:name *= 'Firefox'"
       "100:name *= 'feh'"
       "100:name *?= 'vlc'"
       "95:class_i ?= 'pcmanfm'"
       "95:class_i ?= 'rofi'"
+      "75:class_i *= 'Alacritty'"
     ];
-    shadow = true;						# Shadows
+    shadow = true;                                # Shadows
     shadowOpacity = "0.75";
     menuOpacity = "0.95";
 #   blur = true;

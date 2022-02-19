@@ -18,10 +18,10 @@
     xserver = {
       enable = true;
 
-      layout = "be";							# Keyboard layout & €-sign
+      layout = "be";                              # Keyboard layout & €-sign
       xkbOptions = "eurosign:e";
 
-      libinput = {							# Trackpad support
+      libinput = {                                # Trackpad support
         enable = true;
         touchpad.disableWhileTyping = true;
       };
@@ -32,15 +32,15 @@
         Option "OffTime"     "0"
       '';
 
-      displayManager = {						# Display Manager
+      displayManager = {                          # Display Manager
         lightdm = {
-          enable = true;						  # Wallpaper and gtk theme
+          enable = true;                          # Wallpaper and gtk theme
           background = pkgs.nixos-artwork.wallpapers.nineish-dark-gray.gnomeFilePath;
           greeters = {
             gtk = {
-	      theme = {
-		name = "Dracula";
-		package = pkgs.dracula-theme;
+              theme = {
+                name = "Dracula";
+                package = pkgs.dracula-theme;
               };
               cursorTheme = {
                 name = "Dracula-cursors";
@@ -50,15 +50,15 @@
             };
           };
         };
-        defaultSession = "none+bspwm";					  # none+bspwm -> no real display manager
+        defaultSession = "none+bspwm";            # none+bspwm -> no real display manager
       };
-      windowManager.bspwm = {						# Window Manager
+      windowManager.bspwm = {                     # Window Manager
         enable = true;
       };
     }; 
   };
 
-  environment.systemPackages = with pkgs; [				# Packages installed
+  environment.systemPackages = with pkgs; [       # Packages installed
     xorg.xev
     xorg.xkill
     xorg.xrandr

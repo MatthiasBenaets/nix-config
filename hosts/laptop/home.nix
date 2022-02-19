@@ -10,18 +10,18 @@
 { pkgs, ... }:
 
 {
-  home = {								# Specific packages for laptop
+  home = {                                # Specific packages for laptop
     packages = with pkgs; [
       google-chrome
-      #light								# xorg.xbacklight not supported. Other option is just use xrandr.
+      #light                              # xorg.xbacklight not supported. Other option is just use xrandr.
       #auto-cpufreq
       #tlp
     ];
   };
   
-  services = {								# Applets
-    blueman-applet.enable = true;                                         # Bluetooth
-    network-manager-applet.enable = true;                                 # Network
+  services = {                            # Applets
+    blueman-applet.enable = true;         # Bluetooth
+    network-manager-applet.enable = true; # Network
     cbatticon = {
       enable = true;
       criticalLevelPercent = 10;

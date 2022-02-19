@@ -11,38 +11,38 @@
 { config, pkgs, ... }:
 
 {
-  imports =  [								# For now, if applying to other system, swap files
-    ./hardware-configuration.nix					  # Current system hardware config @ /etc/nixos/hardware-configuration.nix
+  imports =  [                                  # For now, if applying to other system, swap files
+    ./hardware-configuration.nix                # Current system hardware config @ /etc/nixos/hardware-configuration.nix
   ];
 
-  boot = {								# Boot options
+  boot = {                                      # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
 
-#    loader.systemd-boot.enable = true;					# For UEFI-boot use these settings.
+#    loader.systemd-boot.enable = true;         # For UEFI-boot use these settings.
 #    loader.efi.canTouchEfiVariables = true;
 
-#    initrd.kernelModules = [ "amdgpu" ];				# Video drivers
+#    initrd.kernelModules = [ "amdgpu" ];       # Video drivers
     
-    loader = {								# For legacy boot:
+    loader = {                                  # For legacy boot:
       grub = {
         enable = true;
         version = 2;
-        device = "/dev/sda";						# Name of harddrive
+        device = "/dev/sda";                    # Name of harddrive
       };
-      timeout = 1;							# Grub auto select time
+      timeout = 1;                              # Grub auto select time
     };
   };
 
   networking = {
     hostName = "nixos";
     interfaces = {
-      enp0s3.useDHCP = true;						  # Change to correct network driver.
+      enp0s3.useDHCP = true;                    # Change to correct network driver.
     };
   };
 
-# hardware.bluetooth = {                                                # Bluetooth
+# hardware.bluetooth = {                        # Bluetooth
 #   enable = true;
-#   hsphfpd.enable = true;                                                # HSP & HFP daemon
+#   hsphfpd.enable = true;                      # HSP & HFP daemon
 #   settings = {
 #     General = {
 #       Enable = "Source,Sink,Media,Socket";
@@ -50,20 +50,20 @@
 #   };
 # };
 
-  services.dbus.packages = with pkgs;[					# No DisplayManager so enable services here.
+  services.dbus.packages = with pkgs;[          # No DisplayManager so enable services here.
     polybar
     dunst
   ];
 
   services = {
-    xserver = {								# In case, multi monitor support
+    xserver = {                                 # In case, multi monitor support
 #     blueman.enable = true;
-#     videoDrivers = [ 							# Video Settings
+#     videoDrivers = [                          # Video Settings
 #       "amdgpu"
 #       "radeon"
 #     ];
 
-#     xrandrHeads = [							# Dual screen setting placeholder
+#     xrandrHeads = [                           # Dual screen setting placeholder
 #       { output = "HDMI-A-0";
 #         primary = true;
 #         monitorConfig = ''

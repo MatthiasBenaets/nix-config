@@ -22,5 +22,5 @@ bspc rule -a 'Pcmanfm' 'state=floating'
 
 feh --bg-scale $HOME/.config/wall
 
-killall -q polybar &						# Reboot polybar to correctly show workspaces
-sleep 0.5; polybar top & #2>~/log &				# To lazy to figure out systemd service order
+killall -q polybar &                                # Reboot polybar to correctly show workspaces
+sleep 0.5; polybar top & #2>~/log &                 # To lazy to figure out systemd service order

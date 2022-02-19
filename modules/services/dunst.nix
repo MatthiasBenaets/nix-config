@@ -5,23 +5,23 @@
 { config, pkgs, ... }:
 
 let
-  colors = import ../themes/base16.nix;				# Import colors theme
+  colors = import ../themes/base16.nix;                 # Import colors theme
 in
 {
   xdg.dataFile."dbus-1/services/org.knopwob.dunst.service".source = "${pkgs.dunst}/share/dbus-1/services/org.knopwob.dunst.service";
   services.dunst = {
     enable = true;
-    iconTheme = {						# Icons (not used atm)
+    iconTheme = {                                       # Icons
       name = "Papirus Dark";
       package = pkgs.papirus-icon-theme;
       size = "16x16";
     };
-    settings = with colors.scheme.dracula; {			# Settings
+    settings = with colors.scheme.dracula; {            # Settings
       global = {
         monitor = 0;
         # geometry [{width}x{height}][+/-{x}+/-{y}]
         # geometry = "600x50-50+65";
- 	width = 300;
+        width = 300;
         height = 100;
         origin = "top-right";
         offset = "50x50";
@@ -48,7 +48,7 @@ in
         # startup_notification = false;
         hide_duplicate_count = true;
       };
-      urgency_low = {						# Colors
+      urgency_low = {                                   # Colors
         background = "#${base00}";
         foreground = "#${base05}";
         timeout = 4;

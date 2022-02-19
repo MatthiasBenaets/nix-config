@@ -24,9 +24,9 @@
 	
         # Customization 
         wombat256-vim         # Color scheme for lightline
-        #vim-code-dark        # Alternative Color scheme: codedark
-        #vim-hybrid
-        gruvbox
+        #gruvbox              # Color scheme for text:  gruvbox
+        srcery-vim            #                         srcery
+
 
         lightline-vim         # Info bar at bottom
 	indent-blankline-nvim # Indentation lines
@@ -34,13 +34,14 @@
 
       extraConfig = ''
         syntax enable
-        colorscheme gruvbox
+        colorscheme srcery
 
         let g:lightline = {
           \ 'colorscheme': 'wombat',
           \ }
 
         highlight Comment cterm=italic gui=italic
+        hi Normal guibg=NONE ctermbg=NONE
 
         nmap <F6> :NERDTreeToggle<CR>
       '';
