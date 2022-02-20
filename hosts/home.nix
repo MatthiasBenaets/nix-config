@@ -28,51 +28,51 @@
 
     packages = with pkgs; [
       # Terminal
-      btop        # Resource Manager
-      pfetch      # Minimal fetch
-      ranger      # File Manager
+      btop              # Resource Manager
+      pfetch            # Minimal fetch
+      ranger            # File Manager
       # Video/Audio
-      feh         # Image Viewer
-      mpv         # Media Player
-      obs-studio  # Broadcasting
-      pavucontrol # Audio control
-      vlc         # Media Player
+      feh               # Image Viewer
+      mpv               # Media Player
+      obs-studio        # Broadcasting
+      pavucontrol       # Audio control
+      plex-media-player # Media Player
+      vlc               # Media Player
       # Dependencies
-      libnotify   # Notifications need for Dunst
+      libnotify         # Notifications need for Dunst
       # Apps
-      qbittorrent # Torrents
-      pcmanfm     # File Manager
+      qbittorrent       # Torrents
+      pcmanfm           # File Manager
 
       # General configuration
-      #git          # Repositories
-      #killall      # Stop Applications
-      #neovim       # Text Editor
-      #pciutils     # Computer utility info
-      #pulseaudio   # Sound
-      #wget         # Downloader
-      #zsh          # Shell
+      #git              # Repositories
+      #killall          # Stop Applications
+      #neovim           # Text Editor
+      #pciutils         # Computer utility info
+      #pulseaudio       # Sound
+      #wget             # Downloader
+      #zsh              # Shell
       #
       # Imports General home-manager
-      #alacritty    # Terminal Emulator
-      #dunst        # Notifications
-      #doom emacs   # Text Editor
-      #flameshot    # Screenshot
-      #nano         # Text Editor
-      #picom        # Compositer
-      #polybar      # Bar
-      #rofi         # Menu
-      #sxhkd        # Shortcuts
-      #udiskie      # Auto Mounting
-      #vim          # Text Editor
+      #alacritty        # Terminal Emulator
+      #dunst            # Notifications
+      #doom emacs       # Text Editor
+      #flameshot        # Screenshot
+      #nano             # Text Editor
+      #picom            # Compositer
+      #polybar          # Bar
+      #rofi             # Menu
+      #sxhkd            # Shortcuts
+      #udiskie          # Auto Mounting
+      #vim              # Text Editor
       #
       # WM/DM
-      #xorg.xev     # Input viewer
-      #xorg.xkill   # Kill Applications
-      #xorg.xrandr  # Screen settings
+      #xorg.xev         # Input viewer
+      #xorg.xkill       # Kill Applications
+      #xorg.xrandr      # Screen settings
       #
       # Laptop
-      #blueman      # Bluetooth
-
+      #blueman          # Bluetooth
     ];
   };
 

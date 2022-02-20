@@ -33,7 +33,15 @@
           };
           "Emacs" = {
             desktop = "^3";
+            follow = true;
             state = "tiled";
+          };
+          "plexmediaplayer" = {
+            desktop = "^5";
+            state = "fullscreen";
+          };
+          "libreoffice" ={
+            desktop = "^4";
           };
         };
         extraConfig = ''

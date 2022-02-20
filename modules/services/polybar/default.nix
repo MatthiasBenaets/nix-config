@@ -10,7 +10,11 @@ let
     pulseSupport = true;
   };
 in
-{
+{ 
+  home.file.".config/polybar/script/mic.sh" ={
+    source = ./mic.sh;
+    executable = true;
+  };
   services = {
     polybar = {
       enable = true;
@@ -29,15 +33,15 @@ in
           spacing = "1.5";
           padding-right = 2;
 
-          module-margin-left = 3;
-          module-margin-right = 3;
+          module-margin-left = 1;
+          #module-margin-right = "0.5";
 
           font-0 = "SourceCodePro:size=10";     # Icons
           font-1 = "FontAwesome5Free:style=Solid:size=8";
           font-2 = "FontAwesome5Free:style=Regular:size=8";
           font-3 = "FontAwesome5Brands:style=Regular:size=8";
-          modules-left = "bspwm title";
-          modules-right = "memory cpu volume date battery";
+          modules-left = "bspwm";
+          modules-right = "memory cpu pad backlight pad mic volume pad battery pad date"; #wired-network wireless-network bluetooth";
          
           tray-position = "right";
           tray-detached = "false";
@@ -108,41 +112,42 @@ in
 
           click-right = "${pkgs.pavucontrol}/bin/pavucontrol";  # Right click opens pavucontrol, left click mutes, scroll changes levels
         };
-#       "module/backlight" = {                  # Keeping for the futur when i have a screen that supports xbacklight
-#         type = "internal/backlight";          # Now doen with sxhkb shortcuts
-#         card = "inter_backlight";
-#         #use-actual-brightness = "false";
-#         format = "<ramp> <bar>";
-#
-#         ramp-0 = "";
-#         ramp-1 = "";
-#         ramp-2 = "";
-#
-#         bar-width = 10;
-#         bar-indicator = "|";
-#         bar-indicator-font = 3;
-#         bar-indicator-foreground = "#ff";
-#         bar-fill = "─";
-#         bar-fill-font = 3;
-#         bar-fill-foreground = "#c9665e";
-#         bar-empty = "─";
-#         bar-empty-font = 3;
-#         bar-empty-foreground = "#44";
-#       };
-#       "module/wireless-network" = {           # Internet connection, not using since nm-applet is installed
+        "module/backlight" = {                  # Keeping for the futur when i have a screen that supports xbacklight
+          type = "internal/backlight";          # Now doen with sxhkb shortcuts
+          card = "intel_backlight";
+          #use-actual-brightness = "false";
+          format = "<ramp> <bar>";
+ 
+          ramp-0 = "";
+          ramp-1 = "";
+          ramp-2 = "";
+ 
+          bar-width = 10;
+          bar-indicator = "|";
+          bar-indicator-font = 3;
+          bar-indicator-foreground = "#ff";
+          bar-fill = "─";
+          bar-fill-font = 3;
+          bar-fill-foreground = "ff"; #"#c9665e";
+          bar-empty = "─";
+          bar-empty-font = 3;
+          bar-empty-foreground = "#44";
+        };
+#       "module/wireless-network" = {           # Show either wired or wireless
 #         type = "internal/network";
 #         interface = "wlo1";
 #         interval = "3.0";
 #         ping-interval = 10;
 #
+##        format-connected = "<ramp-signal>";
 #         format-connected = "<ramp-signal> <label-connected>";
 #         label-connected = "%essid%";
-#         label-disconnected = "  not connected";
+#         label-disconnected = "";
 #         label-disconnected-foreground = "#66";
 #
 #         ramp-signal-0 = "";
 #
-#         animation-packetloss-0 = "";
+#         animation-packetloss-0 = "";
 #         animation-packetloss-0-foreground = "#ffa64c";
 #         animation-packetloss-1 = "";
 #         animation-packetloss-1-foreground = "#00000000";
@@ -154,43 +159,44 @@ in
 #         interval = "3.0";
 #
 #         label-connected = "  %{T3}%local_ip%%{T-}";
+##        label-connected = "";
 #         label-disconnected-foreground = "#66";
 #       };
         "module/battery" = {                    # Show battery (only when exist), uncomment to show battery and animations
           type = "internal/battery";
           full-at = 98;
 
-          label-full = "|  %percentage%%";
-          label-charging = "|  %percentage%%";
-          label-discharging = "|  %percentage%%";
+          label-full = "%percentage%%";
+          label-charging = "%percentage%%";
+          label-discharging = "%percentage%%";
 
-#         format-charging = "<animation-charging> <label-charging>";
-#         format-discharging = "<ramp-capacity> <label-discharging>";
-#         format-full = "<ramp-capacity> <label-full>";
-#
-#         ramp-capacity-0 = "";
-#         ramp-capacity-0-foreground = "#f53c3c";
-#         ramp-capacity-1 = "";
-#         ramp-capacity-1-foreground = "#ffa900";
-#         ramp-capacity-2 = "";
-#         ramp-capacity-3 = "";
-#         ramp-capacity-4 = "";
-#
-#         bar-capacity-width = 10;
-#         bar-capacity-format = "%{+u}%{+o}%fill%%empty%%{-u}%{-o}";
-#         bar-capacity-fill = "█";
-#         bar-capacity-fill-foreground = "#ddffffff";
-#         bar-capacity-fill-font = 3;
-#         bar-capacity-empty = "█";
-#         bar-capacity-empty-font = 3;
-#         bar-capacity-empty-foreground = "#44ffffff";
-#
-#         animation-charging-0 = "";          # Animation when charging
-#         animation-charging-1 = "";
-#         animation-charging-2 = "";
-#         animation-charging-3 = "";
-#         animation-charging-4 = "";
-#         animation-charging-framerate = 750;
+          format-charging = "<animation-charging> <label-charging>";
+          format-discharging = "<ramp-capacity> <label-discharging>";
+          format-full = "<ramp-capacity> <label-full>";
+ 
+          ramp-capacity-0 = "";
+          ramp-capacity-0-foreground = "#f53c3c";
+          ramp-capacity-1 = "";
+          ramp-capacity-1-foreground = "#ffa900";
+          ramp-capacity-2 = "";
+          ramp-capacity-3 = "";
+          ramp-capacity-4 = "";
+ 
+          bar-capacity-width = 10;
+          bar-capacity-format = "%{+u}%{+o}%fill%%empty%%{-u}%{-o}";
+          bar-capacity-fill = "█";
+          bar-capacity-fill-foreground = "#ddffffff";
+          bar-capacity-fill-font = 3;
+          bar-capacity-empty = "█";
+          bar-capacity-empty-font = 3;
+          bar-capacity-empty-foreground = "#44ffffff";
+ 
+          animation-charging-0 = "";          # Animation when charging
+          animation-charging-1 = "";
+          animation-charging-2 = "";
+          animation-charging-3 = "";
+          animation-charging-4 = "";
+          animation-charging-framerate = 750;
         };
         "module/date" = {                       # Time/Date  Day-Month-Year Hour:Minute
           type = "internal/date";
@@ -264,6 +270,24 @@ in
           label-maxlen = 75;
           label-empty = "";
           label-empty-foreground = "#ccffffff";
+        };
+        
+        # CUSTOM
+        "module/pad" = {
+          type = "custom/text";
+          content = "    ";
+        };
+        "module/mic" = {
+          type = "custom/script";
+          interval = 1;
+          tail = "true";
+          exec = "~/.config/polybar/script/mic.sh";
+          click-left= "pactl list sources | grep -qi 'Mute: yes' && pactl set-source-mute 1 false || pactl set-source-mute 1 true ";
+        };
+        "module/bluetooth"= {
+          type = "custom/text";
+          content = "";
+          click-left = "${pkgs.blueman}/bin/blueman-manager";
         };
       };
     };
