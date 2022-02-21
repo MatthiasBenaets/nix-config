@@ -19,30 +19,36 @@
 #       monitors = {                            # Multiple monitors
 #          eDP-1 = [ "1" "2" "3" "4" "5" ];
 #       };
-        rules = {                               # Specific rules for apps - use xprop
-          "Firefox" = {
-           desktop = "^2";
-          };
-          "Google-chrome" = {
-            desktop = "^2";
-            #focus = true;
-            #manage = false;
-          };
-          "Pcmanfm" = {
-            state = "floating";
-          };
+        rules = {                               # Specific rules for apps - use xprop 
           "Emacs" = {
             desktop = "^3";
             follow = true;
             state = "tiled";
           };
+          "blueman-manager" ={
+            state = "floating";
+            sticky = true;
+          };
+          "Google-chrome" = {
+            desktop = "^2";
+            #focus = true;
+            #manage = false;
+          }; 
+          "libreoffice" ={
+            desktop = "^4";
+          };
+          "Pavucontrol" = {
+            state = "floating";
+            sticky= true;
+          };
+          "Pcmanfm" = {
+            state = "floating";
+          };
           "plexmediaplayer" = {
             desktop = "^5";
             state = "fullscreen";
           };
-          "libreoffice" ={
-            desktop = "^4";
-          };
+
         };
         extraConfig = ''
           bspc monitor -d 1 2 3 4 5             # Workspace tag names (need to be the same as the polybar config to work)

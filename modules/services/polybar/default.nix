@@ -33,7 +33,7 @@ in
           spacing = "1.5";
           padding-right = 2;
 
-          module-margin-left = 1;
+          #module-margin-left = 1;
           #module-margin-right = "0.5";
 
           font-0 = "SourceCodePro:size=10";     # Icons
@@ -41,7 +41,7 @@ in
           font-2 = "FontAwesome5Free:style=Regular:size=8";
           font-3 = "FontAwesome5Brands:style=Regular:size=8";
           modules-left = "bspwm";
-          modules-right = "memory cpu pad backlight pad mic volume pad battery pad date"; #wired-network wireless-network bluetooth";
+          modules-right = "memory cpu backlight mic volume battery date"; #wired-network wireless-network bluetooth";
          
           tray-position = "right";
           tray-detached = "false";
@@ -71,7 +71,7 @@ in
           interval = 1;
           format = "<label>"; # <ramp-coreload>";
           format-foreground = "#999";
-          label = "  %percentage%%";
+          label = "   %percentage%%";
 
 #         ramp-coreload-0 = "▁";                # Add visual usage
 #         ramp-coreload-0-font = 2;
@@ -103,12 +103,12 @@ in
           interval = 2;
           use-ui-max = "false";
           format-volume = "<ramp-volume> <label-volume>";
-          label-muted = "  muted";
+          label-muted = "   muted";
           label-muted-foreground = "#66";
 
-          ramp-volume-0 = "";
-          ramp-volume-1 = "";
-          ramp-volume-2 = "";
+          ramp-volume-0 = " ";
+          ramp-volume-1 = " ";
+          ramp-volume-2 = " ";
 
           click-right = "${pkgs.pavucontrol}/bin/pavucontrol";  # Right click opens pavucontrol, left click mutes, scroll changes levels
         };
@@ -116,7 +116,7 @@ in
           type = "internal/backlight";          # Now doen with sxhkb shortcuts
           card = "intel_backlight";
           #use-actual-brightness = "false";
-          format = "<ramp> <bar>";
+          format = "    <ramp> <bar>";
  
           ramp-0 = "";
           ramp-1 = "";
@@ -174,13 +174,13 @@ in
           format-discharging = "<ramp-capacity> <label-discharging>";
           format-full = "<ramp-capacity> <label-full>";
  
-          ramp-capacity-0 = "";
+          ramp-capacity-0 = "    ";
           ramp-capacity-0-foreground = "#f53c3c";
-          ramp-capacity-1 = "";
+          ramp-capacity-1 = "    ";
           ramp-capacity-1-foreground = "#ffa900";
-          ramp-capacity-2 = "";
-          ramp-capacity-3 = "";
-          ramp-capacity-4 = "";
+          ramp-capacity-2 = "    ";
+          ramp-capacity-3 = "    ";
+          ramp-capacity-4 = "    ";
  
           bar-capacity-width = 10;
           bar-capacity-format = "%{+u}%{+o}%fill%%empty%%{-u}%{-o}";
@@ -191,16 +191,16 @@ in
           bar-capacity-empty-font = 3;
           bar-capacity-empty-foreground = "#44ffffff";
  
-          animation-charging-0 = "";          # Animation when charging
-          animation-charging-1 = "";
-          animation-charging-2 = "";
-          animation-charging-3 = "";
-          animation-charging-4 = "";
+          animation-charging-0 = "    ";          # Animation when charging
+          animation-charging-1 = "    ";
+          animation-charging-2 = "    ";
+          animation-charging-3 = "    ";
+          animation-charging-4 = "    ";
           animation-charging-framerate = 750;
         };
         "module/date" = {                       # Time/Date  Day-Month-Year Hour:Minute
           type = "internal/date";
-          date = "  %%{F#999}%d-%m-%Y%%{F-} %%{F#fff}%H:%M%%{F-}";
+          date = "      %%{F#999}%d-%m-%Y%%{F-} %%{F#fff}%H:%M%%{F-}";
         };
         "module/bspwm" = {                      # Workspaces
           type = "internal/bspwm";
