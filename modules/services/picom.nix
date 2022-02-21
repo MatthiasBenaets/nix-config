@@ -13,14 +13,15 @@
     fade = true;
     fadeDelta = 5;
     opacityRule = [                               # Opacity rules
-      "100:class_i ?= 'google-chrome'"
+      "100:class_i *= '.blueman-manager-wrapped'"
       "100:name *= 'feh'"
+      "100:class_i ?= 'google-chrome'"
       "100:class_i *= 'libreoffice'"
-      "100:class_i *= 'vlc'"
       "100:class_i *= 'pavucontrol'"
       "100:class_i *= 'plexmediaplayer'"
+      "100:class_i *= 'vlc'"
       "95:class_i ?= 'pcmanfm'"
-      "85:class_i ?= 'rofi'"
+      "95:class_i ?= 'rofi'"
       "75:class_i *= 'Alacritty'"
     ];
     shadow = true;                                # Shadows

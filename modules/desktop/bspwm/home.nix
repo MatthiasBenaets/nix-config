@@ -25,8 +25,9 @@
             follow = true;
             state = "tiled";
           };
-          "blueman-manager" ={
+          ".blueman-manager-wrapped" ={
             state = "floating";
+            center = true;
             sticky = true;
           };
           "Google-chrome" = {
@@ -39,7 +40,8 @@
           };
           "Pavucontrol" = {
             state = "floating";
-            sticky= true;
+            center = true;
+            sticky = true;
           };
           "Pcmanfm" = {
             state = "floating";

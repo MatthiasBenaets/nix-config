@@ -3,7 +3,7 @@
 MUTED=$(pacmd list-sources | awk '/\*/,EOF {print}' | awk '/muted/ {print $2; exit}')
 
 if [[ $MUTED = "no" ]]; then
-  echo '    '
+  echo ''
 else
-  echo '    '
+  echo ''
 fi
