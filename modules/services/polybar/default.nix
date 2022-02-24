@@ -40,7 +40,8 @@ in
           font-1 = "FontAwesome5Free:style=Solid:size=8";
           font-2 = "FontAwesome5Free:style=Regular:size=8";
           font-3 = "FontAwesome5Brands:style=Regular:size=8";
-          modules-left = "bspwm";
+          font-4 = "FiraCodeNerdFont:size=11"; 
+          modules-left = "logo bspwm";
           modules-right = "backlight pad memory cpu pad mic volume pad battery pad date"; #wired-network wireless-network bluetooth";
          
           tray-position = "right";
@@ -282,9 +283,15 @@ in
           interval = 1;
           tail = "true";
           exec = "~/.config/polybar/script/mic.sh";
-          click-left= "pactl list sources | grep -qi 'Mute: yes' && pactl set-source-mute 1 false || pactl set-source-mute 1 true ";
+          click-left = "pactl list sources | grep -qi 'Mute: yes' && pactl set-source-mute 1 false || pactl set-source-mute 1 true ";
         };
-        "module/bluetooth"= {
+        "module/logo" = {
+          type = "custom/text";
+          content = " %{F#a7c7e7} ";
+          format-foreground = "#a7c7e7";
+          click-right = "bspc quit";
+        };
+        "module/bluetooth" = {
           type = "custom/text";
           content = "";
           click-left = "${pkgs.blueman}/bin/blueman-manager";

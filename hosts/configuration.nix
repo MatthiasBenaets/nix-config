@@ -69,7 +69,7 @@
 
   users.users.matthias = {                  # System User
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "kvm" "networkmanager" "lp" "scanner"];
+    extraGroups = [ "wheel" "video" "audio" "kvm" "networkmanager" "lp" "scanner" "kvm" "libvirtd" ];
     shell = pkgs.zsh;                       # Default shell
   };
  
@@ -110,9 +110,9 @@
     systemPackages = with pkgs; [           # Default packages install system-wide
       #vim
       git
-      wget
-      pciutils
       killall
+      pciutils
+      wget
       xterm
     ];
   };

@@ -19,6 +19,7 @@
       "100:class_i *= 'libreoffice'"
       "100:class_i *= 'pavucontrol'"
       "100:class_i *= 'plexmediaplayer'"
+      "100:class_i *= 'virt-manager'"
       "100:class_i *= 'vlc'"
       "95:class_i ?= 'pcmanfm'"
       "95:class_i ?= 'rofi'"
