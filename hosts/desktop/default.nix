@@ -17,23 +17,17 @@
 {
   imports =                                 # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
-    [(import ../../modules/desktop/qemu)] ++              # Virtual Machines
-    (import ../../modules/hardware/dslr.nix);             # Hardware devices
+#   (import ../../modules/desktop/qemu) ++                # Virtual Machines
+    (import ../../modules/hardware);                      # Hardware devices
 
   boot = {                                      # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
 
-#    loader.systemd-boot.enable = true;         # For UEFI-boot use these settings.
-#    loader.efi.canTouchEfiVariables = true;
-
-#    initrd.kernelModules = [ "amdgpu" ];       # Video drivers
+    initrd.kernelModules = [ "amdgpu" ];       # Video drivers
     
     loader = {                                  # For legacy boot:
-      grub = {
-        enable = true;
-        version = 2;
-        device = "/dev/sda";                    # Name of harddrive
-      };
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
       timeout = 1;                              # Grub auto select time
     };
   };
@@ -41,7 +35,8 @@
   networking = {
     hostName = "nixos";
     interfaces = {
-      enp0s3.useDHCP = true;                    # Change to correct network driver.
+      enp3s0.useDHCP = true;                    # Change to correct network driver.
+      wlp2s0.useDHCP = true;
     };
   };
 
@@ -51,12 +46,11 @@
   ];
 
   services = {
+    blueman.enable = true;
     xserver = {                                 # In case, multi monitor support
-#     blueman.enable = true;
-#     videoDrivers = [                          # Video Settings
-#       "amdgpu"
-#       "radeon"
-#     ];
+      videoDrivers = [                          # Video Settings
+        "amdgpu"
+      ];
 
 #     xrandrHeads = [                           # Dual screen setting placeholder
 #       { output = "HDMI-A-0";
