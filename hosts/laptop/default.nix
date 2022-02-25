@@ -24,9 +24,6 @@
   boot = {                                  # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
 
-#   loader.systemd-boot.enable = true;      # For UEFI-boot use these settings.
-#   loader.efi.canTouchEfiVariables = true;
-
 #   initrd.kernelModules = [ "amdgpu" ];    # Video drivers
 #   kernelParams = [ "radeon.si_support=0" "amdgpu.si_support=1" ];     # Needed because GCN1 architecture    
 
@@ -56,11 +53,6 @@
     };
   };
 
-# fileSystems."/data" = {
-#   device = "/dev/nvme0n1p3";
-#   fsType = "ext4";
-# };
-
   programs = {                              # No xbacklight, this is the alterantive
     dconf.enable = true;
     light.enable = true;
@@ -80,9 +72,7 @@
         touchpad.naturalScrolling = true;   # The correct way of scrolling
       };
 #     videoDrivers = [                      # Video drivers
-#       "ati"
 #       "amdgpu"
-#       "radeon"
 #     ];
       resolutions = [
         { x = 1600; y = 920; }

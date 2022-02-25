@@ -34,6 +34,7 @@
 
   networking = {
     hostName = "nixos";
+    networkmanager.enable = true;
     interfaces = {
       enp3s0.useDHCP = true;                    # Change to correct network driver.
       wlp2s0.useDHCP = true;

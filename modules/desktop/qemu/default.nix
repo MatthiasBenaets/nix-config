@@ -17,7 +17,7 @@
   boot ={
     kernelParams = [ "intel_iommu=on" ];      # or amd_iommu
     kernelModules = [ "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" ];
-    extraModprobeConfig = "options vfio-pci ids=1002:6601,1002:aab0"; # grep PCI_ID /sys/bus/pci/devices/*uevent
+    extraModprobeConfig = "options vfio-pci ids=1002:67DF,1002:AAF0"; # grep PCI_ID /sys/bus/pci/devices/*/uevent
   };
 
   environment = {
