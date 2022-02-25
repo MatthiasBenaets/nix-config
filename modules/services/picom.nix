@@ -17,6 +17,7 @@
       "100:name *= 'feh'"
       "100:class_i ?= 'google-chrome'"
       "100:class_i *= 'libreoffice'"
+      "100:class_i *= 'obs'"
       "100:class_i *= 'pavucontrol'"
       "100:class_i *= 'plexmediaplayer'"
       "100:class_i *= 'virt-manager'"

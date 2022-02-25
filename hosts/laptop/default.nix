@@ -15,10 +15,11 @@
 { config, pkgs, ... }:
 
 {
-  imports =  [                              # For now, if applying to other system, swap files
-    ./hardware-configuration.nix            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
-    ../../modules/desktop/qemu
-  ];
+  imports =                                 # For now, if applying to other system, swap files
+    [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
+    [(import ../../modules/desktop/qemu)] ++              # Virtual Machines
+    (import ../../modules/hardware);                      # Hardware devices
+
 
   boot = {                                  # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
@@ -52,16 +53,6 @@
     interfaces = {
       enp0s25.useDHCP = true;               # Change to correct network driver.
       wlo1.useDHCP = true;
-    };
-  };
-
-  hardware.bluetooth = {                    # Bluetooth
-    enable = true;
-    hsphfpd.enable = true;                  # HSP & HFP daemon
-    settings = {
-      General = {
-        Enable = "Source,Sink,Media,Socket";
-      };
     };
   };
 

@@ -69,7 +69,7 @@
 
   users.users.matthias = {                  # System User
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "kvm" "networkmanager" "lp" "scanner" "kvm" "libvirtd" ];
+    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" ];
     shell = pkgs.zsh;                       # Default shell
   };
  

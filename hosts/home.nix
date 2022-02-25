@@ -52,6 +52,8 @@
       #pulseaudio       # Sound
       #wget             # Downloader
       #zsh              # Shell
+      #ffmpeg           # Multimedia framework
+      #gphoto2          # Digital camera software
       #
       # Imports General home-manager
       #alacritty        # Terminal Emulator
