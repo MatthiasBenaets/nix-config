@@ -13,10 +13,11 @@
   home = {                                # Specific packages for desktop
     packages = with pkgs; [
       google-chrome
+      plex-media-player
 
       # Gimp Inkscape Krita
       # Steam Discord
-      # Plex Handbrake MKVtoolnix Sonarr Radarr
+      # Handbrake MKVtoolnix Sonarr Radarr
       # Kdenlive
       # LibreOffice
     ];

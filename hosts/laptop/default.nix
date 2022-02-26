@@ -62,10 +62,6 @@
     tlp.enable = true;                      # TLP and auto-cpufreq for power management
     auto-cpufreq.enable = true;
     blueman.enable = true;
-    dbus.packages = with pkgs; [
-      polybar                               # systemctl status --user $*.service
-      dunst
-    ];
     xserver = {
       libinput = {                          # Trackpad support & gestures
         enable = true;

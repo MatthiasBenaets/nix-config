@@ -16,9 +16,10 @@
     windowManager = {
       bspwm = {
         enable = true;
-#       monitors = {                            # Multiple monitors
-#          eDP-1 = [ "1" "2" "3" "4" "5" ];
-#       };
+#        monitors = {                            # Multiple monitors
+#          HDMI-A-1 = [ "1" "2" "3" "4" "5" ];
+#          HDMI-A-0 = [ "6" "7" "8" "9" "0" ];
+#        };
         rules = {                               # Specific rules for apps - use xprop 
           "Emacs" = {
             desktop = "^3";
@@ -50,7 +51,9 @@
             desktop = "^5";
             state = "fullscreen";
           };
-
+          "*:*:Picture in picture" = {
+            state = "floating";
+          };
         };
         extraConfig = ''
           bspc monitor -d 1 2 3 4 5             # Workspace tag names (need to be the same as the polybar config to work)
@@ -73,7 +76,16 @@
           feh --bg-scale $HOME/.config/wall
 
           killall -q polybar &                  # Reboot polybar to correctly show workspaces
-          sleep 0.5; polybar top & #2>~/log &   # To lazy to figure out systemd service order
+
+          while pgrep -u $UID -x polybar >/dev/null; do sleep 1;done 
+
+          polybar main & #2>~/log &  # To lazy to figure out systemd service order
+          
+          if [[ $(xrandr -q | grep 'HDMI-A-0 connected') ]]; then
+            bspc monitor HDMI-A-0 -s HDMI-A-1
+            bspc monitor HDMI-A-0 -d 6 7 8 9 0
+            polybar sec &
+          fi
         '';
       };
     };

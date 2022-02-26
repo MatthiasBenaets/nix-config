@@ -19,6 +19,7 @@
       "100:class_i *= 'libreoffice'"
       "100:class_i *= 'obs'"
       "100:class_i *= 'pavucontrol'"
+      "100:name *= 'Picture in picture'"
       "100:class_i *= 'plexmediaplayer'"
       "100:class_i *= 'virt-manager'"
       "100:class_i *= 'vlc'"
@@ -34,5 +35,6 @@
 #     "class_i = 'polybar'"
 #     "class_i = 'alacritty'"
 #   ];
+    vSync = true;                                 # Should fix screen tearing
   };
 }

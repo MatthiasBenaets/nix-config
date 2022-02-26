@@ -44,6 +44,10 @@
 # };
 
   services = {
+    dbus.packages = with pkgs; [            # Systemctl status --user $*.service
+      polybar
+      dunst
+    ];
 #   printing = {                            # Printing service
 #     enable = true;
 #     drivers = [ pkgs.<<canon>> ];
@@ -69,7 +73,7 @@
 
   users.users.matthias = {                  # System User
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" ];
+    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" ];
     shell = pkgs.zsh;                       # Default shell
   };
  

@@ -19,11 +19,21 @@ in
     polybar = {
       enable = true;
       script = ''                               # Running polybar on startup
-        polybar top &                           # Does some issues with the workspaces not loading
+        #!/bin/sh
+        killall -q polybar
+
+        while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
+
+        polybar main &                          # Does some issues with the workspaces not loading
+
+        if [[ $(xrandr -q | grep 'HDMI-A-0 connected') ]]; then
+          polybar sec &
+        fi
       '';                                       # Gets fixed in the bspwmrc file
       package = mypolybar;
       config = {
-        "bar/top" = {                           # Bar name = Top
+        "bar/main" = {                          # Bar name = Top
+          #monitor = "HDMI-A-1";
           width = "100%";
           height = 15;
           background = "#00000000";
@@ -46,6 +56,27 @@ in
          
           tray-position = "right";
           tray-detached = "false";
+        };
+        "bar/sec" = {
+          monitor = "HDMI-A-0";
+          width = "100%";
+          height = 15;
+          background = "#00000000";
+          foreground = "#ccffffff";
+
+          offset-y = 2;
+          spacing = "1.5";
+          padding-right = 2;
+          module-margin-left = 1;
+          #module-margin-right = "0.5";
+
+          font-0 = "SourceCodePro:size=10";     # Icons
+          font-1 = "FontAwesome5Free:style=Solid:size=8";
+          font-2 = "FontAwesome5Free:style=Regular:size=8";
+          font-3 = "FontAwesome5Brands:style=Regular:size=8";
+          font-4 = "FiraCodeNerdFont:size=11";
+          modules-left = "logo bspwm";
+          #modules-right = "bspwm";
         };
         "module/memory" = {                     # RAM
           type = "internal/memory";
@@ -205,12 +236,19 @@ in
         };
         "module/bspwm" = {                      # Workspaces
           type = "internal/bspwm";
+          pin-workspace = true;
+          #label-monitor = "%name%";
 
           ws-icon-0 = "1;";                    # Needs to be the same amount and same name as bswmrc
           ws-icon-1 = "2;";
           ws-icon-2 = "3;";
           ws-icon-3 = "4;";
           ws-icon-4 = "5;";
+          ws-icon-5 = "6;";
+          ws-icon-6 = "7;";
+          ws-icon-7 = "8;";
+          ws-icon-8 = "9;";
+          ws-icon-9 = "0;";
           #ws-icon-default = "";               # Can have more workspaces availabe but enable default icon
 
           format = "<label-state> <label-mode>";
@@ -261,8 +299,8 @@ in
           label-private-foreground = "#bd2c40";
           label-private-underline = "#c9665e";
           label-private-padding = 2;
-        };	
-        "module/title" = {                      # Show title of active screen
+        };
+       "module/title" = {                      # Show title of active screen
           type = "internal/xwindow";
           format = "<label>";
           format-background = "#00000000";
@@ -282,8 +320,9 @@ in
           type = "custom/script";
           interval = 1;
           tail = "true";
-          exec = "~/.config/polybar/script/mic.sh";
-          click-left = "pactl list sources | grep -qi 'Mute: yes' && pactl set-source-mute 1 false || pactl set-source-mute 1 true ";
+          exec = "~/.config/polybar/script/mic.sh status";
+#          click-left = "pactl list sources | grep -qi 'Mute: yes' && pactl set-source-mute 1 false || pactl set-source-mute 1 true ";
+          click-left = "~/.config/polybar/script/mic.sh toggle";
         };
         "module/logo" = {
           type = "custom/text";

@@ -16,28 +16,33 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "uas" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/159fd445-5424-477a-87e8-a83b400d6136";
+    { device = "/dev/disk/by-uuid/9b1a6001-ca84-4157-91e9-df0493c186ab";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/1056-C2E5";
+    { device = "/dev/disk/by-uuid/141A-4E53";
       fsType = "vfat";
     };
 
-  fileSystems."/home/matthias/ssd" =
+  fileSystems."/ssd" =
     { device = "/dev/disk/by-uuid/26F0CCFDF0CCD3E9";
       fsType = "ntfs";
     };
 
+  fileSystems."/media" =
+    { device = "/dev/disk/by-uuid/36E6613DE660FE8D";
+      fsType = "ntfs";
+    };
+
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/6dfbbd87-d777-4e98-9406-895fcce07563"; }
+    [ { device = "/dev/disk/by-uuid/68a87195-bb0e-478d-8a94-4db4b7ae0bb3"; }
     ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";

@@ -24,7 +24,7 @@
         "super + {_,shift +}{Left, Right, Up, Down}" = "bspc node -{f,s} {west,east,north,south}";  # Focus or move node in given direction
         "super + m" = "bspc desktop -l next";                 # Alternate between the tiled and monocle layout
         "super + {t,f}" = "bspc node -t {tiled, fullscreen}"; # Alternate between the tiles and fullscreen layout
-        "super + shift + f" = "bspc node -t floating";        # Put node in floating
+        "super + h" = "bspc node -t floating";                # Put node in floating ( h is for hover )
         "super + g" = "bspc node -s biggest.window";          # Swap current node and the biggest window
    
         # Alt - Move workspaces
