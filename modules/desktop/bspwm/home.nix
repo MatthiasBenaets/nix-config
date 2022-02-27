@@ -56,6 +56,25 @@
           };
         };
         extraConfig = ''
+          feh --bg-scale $HOME/.config/wall     # Wallpaper
+
+          #pgrep -x sxhkd > /dev/null || sxhkd &
+
+          killall -q polybar &                  # Reboot polybar to correctly show workspaces
+
+          while pgrep -u $UID -x polybar >/dev/null; do sleep 1;done 
+
+          polybar main & #2>~/log &             # To lazy to figure out systemd service order
+          
+          if [[ $(xrandr -q | grep 'HDMI-A-0 connected') ]]; then   # If second monitor, also enable second polybar
+            bspc monitor HDMI-A-0 -s HDMI-A-1
+            bspc monitor HDMI-A-0 -d 6 7 8 9 0
+            polybar sec &
+
+            xset -dpms &                        # No sleep after 10 minutes idle
+            xset s off &
+          fi
+
           bspc monitor -d 1 2 3 4 5             # Workspace tag names (need to be the same as the polybar config to work)
 
           bspc config border_width      2
@@ -70,22 +89,6 @@
           #bspc config focused_border_color "#bd93f9"
 
           #bspc rule -a vlc state=fullscreen
-
-          #pgrep -x sxhkd > /dev/null || sxhkd &
-
-          feh --bg-scale $HOME/.config/wall
-
-          killall -q polybar &                  # Reboot polybar to correctly show workspaces
-
-          while pgrep -u $UID -x polybar >/dev/null; do sleep 1;done 
-
-          polybar main & #2>~/log &  # To lazy to figure out systemd service order
-          
-          if [[ $(xrandr -q | grep 'HDMI-A-0 connected') ]]; then
-            bspc monitor HDMI-A-0 -s HDMI-A-1
-            bspc monitor HDMI-A-0 -d 6 7 8 9 0
-            polybar sec &
-          fi
         '';
       };
     };

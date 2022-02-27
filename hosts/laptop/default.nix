@@ -24,9 +24,6 @@
   boot = {                                  # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
 
-#   initrd.kernelModules = [ "amdgpu" ];    # Video drivers
-#   kernelParams = [ "radeon.si_support=0" "amdgpu.si_support=1" ];     # Needed because GCN1 architecture    
-
     loader = {                              # EFI Boot
       efi = {
         canTouchEfiVariables = true;
@@ -64,12 +61,13 @@
     blueman.enable = true;
     xserver = {
       libinput = {                          # Trackpad support & gestures
-        enable = true;
-        touchpad.naturalScrolling = true;   # The correct way of scrolling
+      touchpad = {
+        tapping = true;
+        scrollMethod = "twofinger";
+        naturalScrolling = true;            # The correct way of scrolling
+        accelProfile = "adaptive";          # Speed settings
+        accelSpeed = "-0.5";
       };
-#     videoDrivers = [                      # Video drivers
-#       "amdgpu"
-#     ];
       resolutions = [
         { x = 1600; y = 920; }
         { x = 1280; y = 720; }

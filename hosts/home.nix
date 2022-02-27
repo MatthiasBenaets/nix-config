@@ -41,8 +41,9 @@
       # Dependencies
       libnotify         # Notifications need for Dunst
       # Apps
-      qbittorrent       # Torrents
+      google-chrome     # Browser
       pcmanfm           # File Manager
+      qbittorrent       # Torrents
 
       # General configuration
       #git              # Repositories
@@ -73,8 +74,16 @@
       #xorg.xkill       # Kill Applications
       #xorg.xrandr      # Screen settings
       #
+      # Desktop
+      #blueman          # Bluetooth
+      #discord          # Chat
+      #libreoffice      # Office Tools
+      #plex             # Plex Server
+      #steam            # Games
+      #
       # Laptop
       #blueman          # Bluetooth
+      #libreoffice      # Office Tools
     ];
   };
 

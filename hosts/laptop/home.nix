@@ -12,7 +12,6 @@
 {
   home = {                                # Specific packages for laptop
     packages = with pkgs; [
-      google-chrome
       libreoffice
       #light                              # xorg.xbacklight not supported. Other option is just use xrandr.
       #auto-cpufreq                       # Power management

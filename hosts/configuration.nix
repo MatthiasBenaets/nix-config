@@ -38,21 +38,30 @@
     package = pkgs.pulseaudioFull;
   };
 
-# hardware.sane = {                         # Used for scanning
-#   enable = true,
-#   extraBackends = [ pkgs.<<canon>> ];
+# hardware.sane = {                         # Used for scanning with Xsane
+#   enable = true;
+#   #extraBackends = [ pkgs.cnijfilter2 ];
+#   extraBackends = [ pkgs.sane-airscan ];
 # };
 
   services = {
+    printing = {                            # Printing and drivers for TS5300
+      enable = true;
+      drivers = [ pkgs.cnijfilter2 ];
+    };
+    avahi = {                               # Needed to find wireless printer
+      enable = true;
+      nssmdns = true;
+    };
+    xserver = {
+      libinput = {                          # Needed for all input devices
+        enable = true;
+      };
+    };
     dbus.packages = with pkgs; [            # Systemctl status --user $*.service
       polybar
       dunst
     ];
-#   printing = {                            # Printing service
-#     enable = true;
-#     drivers = [ pkgs.<<canon>> ];
-#   };
-#
 #   openssh = {                             # SSH
 #     enable = true;
 #     allowSFTP = true;
@@ -76,10 +85,6 @@
     extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" ];
     shell = pkgs.zsh;                       # Default shell
   };
- 
-  programs = {                              # Shell. Weirdly need to be enable here to add user to lightdm by default.
-    zsh.enable = true;
-  };  
  
   security = {                              # User does not need to give password when using sudo.
     sudo.wheelNeedsPassword = false;
@@ -105,6 +110,10 @@
     '';
   };
 
+  programs = {                              # Shell. Weirdly need to be enable here to add user to lightdm by default.
+    zsh.enable = true;
+  };  
+ 
   environment = {
     variables = {
       TERMINAL = "alacritty";

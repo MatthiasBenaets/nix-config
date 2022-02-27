@@ -12,14 +12,14 @@
 {
   home = {                                # Specific packages for desktop
     packages = with pkgs; [
-      google-chrome
       plex-media-player
+      libreoffice
+      #steam
+      #discord                             # ~/.config/discord/settings.json : add "SKIP_HOST_UPDATE": true
 
       # Gimp Inkscape Krita
-      # Steam Discord
       # Handbrake MKVtoolnix Sonarr Radarr
       # Kdenlive
-      # LibreOffice
     ];
   };
 
