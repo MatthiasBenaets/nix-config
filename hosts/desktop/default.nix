@@ -37,7 +37,7 @@
 
   networking = {
     hostName = "nixos";
-    networkmanager.enable = true;
+    #networkmanager.enable = true;
     interfaces = {
       enp3s0 = {                                # Change to correct network driver
         # useDHCP = true;                       # Disabled because fixed ip
@@ -46,7 +46,7 @@
           prefixLength = 24;
         } ];
       };
-      wlp2s0.useDHCP = true;                    # Wireless card
+      #wlp2s0.useDHCP = true;                   # Wireless card
     };
     defaultGateway = "192.168.0.1";
     nameservers = [ "1.1.1.1" ];                # Cloudflare

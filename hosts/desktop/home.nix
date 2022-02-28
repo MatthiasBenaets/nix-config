@@ -25,6 +25,5 @@
 
   services = {                            # Applets
     blueman-applet.enable = true;         # Bluetooth
-    network-manager-applet.enable = true; # Network
   };
 }

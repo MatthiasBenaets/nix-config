@@ -68,6 +68,17 @@
 #   };
 
 #   sshd.enable = true;
+
+    flatpak.enable = true;                  # (apparently not needed) flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+                                            # download flatpak file from website
+    # installed                             # sudo flatpak install <path>
+    # - stremio                             # reboot
+                                            # sudo flatpak uninstall --delete-data <app-id> (> flatpak list --app)
+  };
+
+  xdg.portal = {                            # Required for flatpak
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
   fonts.fonts = with pkgs; [                # Fonts

@@ -56,6 +56,9 @@ in
          
           tray-position = "right";
           tray-detached = "false";
+
+          #override-redirect = "true";
+          #wm-restack = "bspwm";
         };
         "bar/sec" = {
           monitor = "HDMI-A-0";
@@ -77,6 +80,9 @@ in
           font-4 = "FiraCodeNerdFont:size=11";
           modules-left = "logo bspwm";
           #modules-right = "bspwm";
+
+          #override-redirect = "true";
+          #wm-restack = "bspwm";
         };
         "module/memory" = {                     # RAM
           type = "internal/memory";
@@ -328,7 +334,9 @@ in
           type = "custom/text";
           content = " %{F#a7c7e7} ";
           format-foreground = "#a7c7e7";
-          click-right = "bspc quit";
+          #click-left = "bspc quit";
+          click-left = "systemctl suspend";
+          click-right = "poweroff";
         };
         "module/bluetooth" = {
           type = "custom/text";
