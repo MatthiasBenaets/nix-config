@@ -61,12 +61,13 @@
     blueman.enable = true;
     xserver = {
       libinput = {                          # Trackpad support & gestures
-      touchpad = {
-        tapping = true;
-        scrollMethod = "twofinger";
-        naturalScrolling = true;            # The correct way of scrolling
-        accelProfile = "adaptive";          # Speed settings
-        accelSpeed = "-0.5";
+        touchpad = {
+          tapping = true;
+          scrollMethod = "twofinger";
+          naturalScrolling = true;            # The correct way of scrolling
+          accelProfile = "adaptive";          # Speed settings
+          accelSpeed = "-0.5";
+        };
       };
       resolutions = [
         { x = 1600; y = 920; }
