@@ -17,7 +17,8 @@
 {
   imports =                                     # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
-#   [(import ../../modules/desktop/qemu)] ++              # Virtual Machines
+    [(import ../../modules/desktop/virtualisation)] ++    # Virtual Machines
+    [(import ../../modules/services/media.nix)] ++        # Media Center
     (import ../../modules/hardware);                      # Hardware devices
 
   boot = {                                      # Boot options
@@ -52,19 +53,19 @@
     nameservers = [ "1.1.1.1" ];                # Cloudflare
   };
 
-  environment = {
-    systemPackages = with pkgs; [
+  environment = {                               # Packages installed system wide
+    systemPackages = with pkgs; [               # This is because some options need to be configured.
       discord
       plex
       steam
     ];
   };
 
-  programs = {
+  programs = {                                  # Needed to succesfully start Steam
     steam.enable = true;
   };
   
-  nixpkgs.overlays = [
+  nixpkgs.overlays = [                          # This overlay will pull the latest version of Discord
      (self: super: {
        discord = super.discord.overrideAttrs (
          _: { src = builtins.fetchTarball {
@@ -96,7 +97,7 @@
 
       displayManager.setupCommands = ''
         ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal --output HDMI-A-0 --mode 1920x1080 --rotate normal --left-of HDMI-A-1
-      '';
+      '';                                       # Settings for correct display configuration
 
       resolutions = [
         { x = 1920; y = 1080; }

@@ -9,10 +9,10 @@
     enable = true;
     activeOpacity = "1";                          # Node transparency
     inactiveOpacity = "1";
-    backend = "xrender";                          # Rendering
+    backend = "glx";                              # Rendering (opengl)
     fade = true;
     fadeDelta = 5;
-    opacityRule = [                               # Opacity rules
+    opacityRule = [                               # Opacity rules if transparency is prefered
       "95:class_i ?= 'pcmanfm'"
       "95:class_i ?= 'rofi'"
       "80:class_i *= 'discord'"

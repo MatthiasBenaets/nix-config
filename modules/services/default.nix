@@ -18,3 +18,5 @@
   ./sxhkd.nix
   ./udiskie.nix
 ]
+
+# Media is pulled from desktop default config
