@@ -74,6 +74,7 @@
     # installed                             # sudo flatpak install <path>
     # - stremio                             # reboot
                                             # sudo flatpak uninstall --delete-data <app-id> (> flatpak list --app)
+                                            # flatpak uninstall --unused
   };
 
   xdg.portal = {                            # Required for flatpak

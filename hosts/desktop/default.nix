@@ -57,7 +57,7 @@
     systemPackages = with pkgs; [               # This is because some options need to be configured.
       discord
       plex
-      steam
+      #steam  # Below as seperate program. Otherwise won't work.
     ];
   };
 
@@ -66,14 +66,14 @@
   };
   
   nixpkgs.overlays = [                          # This overlay will pull the latest version of Discord
-     (self: super: {
-       discord = super.discord.overrideAttrs (
-         _: { src = builtins.fetchTarball {
-           url = "https://discord.com/api/download?platform=linux&format=tar.gz"; 
-           sha256 = "0hdgif8jpp5pz2c8lxas88ix7mywghdf9c9fn95n0dwf8g1c1xbb";
-         };}
-       );
-     })
+    (self: super: {
+      discord = super.discord.overrideAttrs (
+        _: { src = builtins.fetchTarball {
+          url = "https://discord.com/api/download?platform=linux&format=tar.gz"; 
+          sha256 = "0hdgif8jpp5pz2c8lxas88ix7mywghdf9c9fn95n0dwf8g1c1xbb";
+        };}
+      );
+    })
   ];
 
   services = {

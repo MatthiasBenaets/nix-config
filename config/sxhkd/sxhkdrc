@@ -38,7 +38,7 @@ super + {t,f}
   bspc node -t {tiles,fullscreen}
 
 # Put node in floating
-super + shift + f
+super + h
   bspc node -t floating
 
 # Swap current node and the biggest window
@@ -52,7 +52,7 @@ alt + {Left,Right}
 
 # Focus or send to the given desktop
 alt + {_,shift +}{ampersand,eacute,quotedbl,apostrophe,parenleft,setion,egrae,exlam,ccedilla,agrave}
-  bspc {desktop -f,node -d} '^{1-9,10}'
+  bspc {desktop -f,node -d} '{1-9,10}'
 
 # CONTROL RESIZE
 # Expand window by moving one of its sides outwards

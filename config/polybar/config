@@ -1,28 +1,95 @@
-[bar/top]
+[bar/main]
 background=#00000000
 font-0=SourceCodePro:size=10
 font-1=FontAwesome5Free:style=Solid:size=8
 font-2=FontAwesome5Free:style=Regular:size=8
 font-3=FontAwesome5Brands:style=Regular:size=8
+font-4=FiraCodeNerdFont:size=11
 foreground=#ccffffff
 height=15
-module-margin-left=3
-module-margin-right=3
-modules-left=bspwm title
-modules-right=memory cpu volume date battery
+module-margin-left=1
+modules-left=logo bspwm
+modules-right=backlight pad memory cpu pad mic volume pad battery pad date
 offset-y=2
 padding-right=2
 spacing=1.5
 tray-detached=false
 tray-position=right
 width=100%
+wm-restack=bspwm
+
+[bar/sec]
+background=#00000000
+font-0=SourceCodePro:size=10
+font-1=FontAwesome5Free:style=Solid:size=8
+font-2=FontAwesome5Free:style=Regular:size=8
+font-3=FontAwesome5Brands:style=Regular:size=8
+font-4=FiraCodeNerdFont:size=11
+foreground=#ccffffff
+height=15
+module-margin-left=1
+modules-left=logo bspwm
+modules-right=date
+monitor=HDMI-A-0
+offset-y=2
+padding-right=2
+spacing=1.5
+width=100%
+wm-restack=bspwm
+
+[module/backlight]
+bar-empty=─
+bar-empty-font=3
+bar-empty-foreground=#44
+bar-fill=─
+bar-fill-font=3
+bar-fill-foreground=ff
+bar-indicator=|
+bar-indicator-font=3
+bar-indicator-foreground=#ff
+bar-width=10
+card=intel_backlight
+format=<ramp> <bar>
+ramp-0=
+ramp-1=
+ramp-2=
+type=internal/backlight
 
 [module/battery]
+animation-charging-0=
+animation-charging-1=
+animation-charging-2=
+animation-charging-3=
+animation-charging-4=
+animation-charging-framerate=750
+bar-capacity-empty=█
+bar-capacity-empty-font=3
+bar-capacity-empty-foreground=#44ffffff
+bar-capacity-fill=█
+bar-capacity-fill-font=3
+bar-capacity-fill-foreground=#ddffffff
+bar-capacity-format=%{+u}%{+o}%fill%%empty%%{-u}%{-o}
+bar-capacity-width=10
+format-charging=<animation-charging> <label-charging>
+format-discharging=<ramp-capacity> <label-discharging>
+format-full=<ramp-capacity> <label-full>
 full-at=98
-label-charging=|  %percentage%%
-label-discharging=|  %percentage%%
-label-full=|  %percentage%%
+label-charging=%percentage%%
+label-discharging=%percentage%%
+label-full=%percentage%%
+ramp-capacity-0=
+ramp-capacity-0-foreground=#f53c3c
+ramp-capacity-1=
+ramp-capacity-1-foreground=#ffa900
+ramp-capacity-2=
+ramp-capacity-3=
+ramp-capacity-4=
 type=internal/battery
+
+[module/bluetooth]
+click-left=/nix/store/ln5s2qmpd7jn8vlpz3lwjjpynaqs3km5-blueman-2.2.3/bin/blueman-manager
+content=
+type=custom/text
 
 [module/bspwm]
 format=<label-state> <label-mode>
@@ -64,12 +131,18 @@ label-urgent-font=4
 label-urgent-foreground=#000000
 label-urgent-padding=2
 label-urgent-underline=#9b0a20
+pin-workspace=true
 type=internal/bspwm
 ws-icon-0=1;
 ws-icon-1=2;
 ws-icon-2=3;
 ws-icon-3=4;
 ws-icon-4=5;
+ws-icon-5=6;
+ws-icon-6=7;
+ws-icon-7=8;
+ws-icon-8=9;
+ws-icon-9=0;
 
 [module/cpu]
 format=<label>
@@ -82,11 +155,29 @@ type=internal/cpu
 date=  %%{F#999}%d-%m-%Y%%{F-} %%{F#fff}%H:%M%%{F-}
 type=internal/date
 
+[module/logo]
+click-left=systemctl suspend
+click-right=poweroff
+content=" %{F#a7c7e7} "
+format-foreground=#a7c7e7
+type=custom/text
+
 [module/memory]
 format=<label>
 format-foreground=#999
 label=  %percentage_used%%
 type=internal/memory
+
+[module/mic]
+click-left=~/.config/polybar/script/mic.sh toggle
+exec=~/.config/polybar/script/mic.sh status
+interval=1
+tail=true
+type=custom/script
+
+[module/pad]
+content="    "
+type=custom/text
 
 [module/title]
 format=<label>
@@ -109,3 +200,6 @@ ramp-volume-1=
 ramp-volume-2=
 type=internal/pulseaudio
 use-ui-max=false
+
+
+

@@ -21,16 +21,11 @@
       layout = "be";                              # Keyboard layout & €-sign
       xkbOptions = "eurosign:e";
 
-      libinput = {                                # Trackpad support
-        enable = true;
-        touchpad.disableWhileTyping = true;
-      };
-
-      serverLayoutSection = ''
-        Option "StandbyTime" "0"
-        Option "SuspendTime" "0"
-        Option "OffTime"     "0"
-      '';
+      #serverLayoutSection = ''
+      #  Option "StandbyTime" "0"
+      #  Option "SuspendTime" "0"
+      #  Option "OffTime"     "0"
+      #'';                                         # No Auto Sleep
 
       displayManager = {                          # Display Manager
         lightdm = {

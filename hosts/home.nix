@@ -31,6 +31,7 @@
       btop              # Resource Manager
       pfetch            # Minimal fetch
       ranger            # File Manager
+      
       # Video/Audio
       feh               # Image Viewer
       mpv               # Media Player
@@ -38,12 +39,19 @@
       pavucontrol       # Audio control
       plex-media-player # Media Player
       vlc               # Media Player
+      
       # Dependencies
       libnotify         # Notifications need for Dunst
+      libappindicator-gtk3  # Fixes tray icons
+
       # Apps
       google-chrome     # Browser
       pcmanfm           # File Manager
       qbittorrent       # Torrents
+
+      # File Management
+      unzip             # Zip files
+      unrar             # Rar files
 
       # General configuration
       #git              # Repositories
@@ -80,6 +88,10 @@
       #libreoffice      # Office Tools
       #plex             # Plex Server
       #steam            # Games
+      #radarr           # Movies
+      #sonarr           # TV Shows
+      #bazarr           # Subtitles
+      #handbrake        # Encoder
       #
       # Laptop
       #blueman          # Bluetooth

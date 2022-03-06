@@ -17,7 +17,7 @@
 {
   imports =                                 # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
-    [(import ../../modules/desktop/qemu)] ++              # Virtual Machines
+    [(import ../../modules/desktop/virtualisation)] ++    # Virtual Machines
     (import ../../modules/hardware);                      # Hardware devices
 
 
@@ -67,6 +67,7 @@
           naturalScrolling = true;            # The correct way of scrolling
           accelProfile = "adaptive";          # Speed settings
           accelSpeed = "-0.5";
+          disableWhileTyping = true;
         };
       };
       resolutions = [

@@ -11,13 +11,18 @@ bspc config split_ratio          0.5
 #bspc config borderless_monocle   true
 #bspc config gapless_monocle      true
 
+bspc config focus_follows_pointer true
+
 # Rules
 bspc rule -r '*'
-bspc rule -a 'Emacs' 'desktop=^3' 'follow=on' 'state=tiled'
-bspc rule -a 'Firefox' 'desktop=^2'
-bspc rule -a 'Google-chrome' 'desktop=^2'
+bspc rule -a '*:*:Picture in picture' 'state=floating'
+bspc rule -a '.blueman-manager-wrapped' 'state=floating' 'sticky=on'
+bspc rule -a 'Emacs' 'desktop=3' 'follow=on' 'state=tiled'
+bspc rule -a 'Google-chrome' 'desktop=2'
+bspc rule -a 'Pavucontrol' 'state=floating' 'sticky=on'
 bspc rule -a 'Pcmanfm' 'state=floating'
-bspc rule -a 'plexmediaplayer' 'desktop=^5' 'state=fullscreen'
+bspc rule -a 'libreoffice' 'desktop=4'
+bspc rule -a 'plexmediaplayer' 'desktop=5' 'state=fullscreen'
 
 # Startup
 
@@ -26,4 +31,15 @@ bspc rule -a 'plexmediaplayer' 'desktop=^5' 'state=fullscreen'
 feh --bg-scale $HOME/.config/wall
 
 killall -q polybar &                                # Reboot polybar to correctly show workspaces
-sleep 0.5; polybar top & #2>~/log &                 # To lazy to figure out systemd service order
+while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
+
+polybar main & #2>~/log &
+
+if [[ $(xrandr -q | grep 'HDMI-A-0 connected') ]]; then
+    bspc monitor HDMI-A-0 -d 6 7 8 9 0              # Enable second monitor when display is detected
+    bspc wm -O HDMI-A-1 HDMI-A-0
+    polybar sec &
+
+    xset -dpm&                                      # This is the desktop - No auto sleep
+    xset s off&
+fi

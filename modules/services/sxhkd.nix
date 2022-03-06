@@ -29,7 +29,7 @@
    
         # Alt - Move workspaces
         "alt + {Left,Right}" = "bspc desktop -f {prev,next}.local"; # Focus the next/previous desktop in the current monitor
-        "alt + {_,shift +}{ampersand,eacute,quotedbl,apostrophe,parenleft,section,egrave,exclam,ccedilla,agrave}" = "bspc {desktop -f,node -d} '^{1-9,10}'"; # Focus or send to the given desktop
+        "alt + {_,shift +}{ampersand,eacute,quotedbl,apostrophe,parenleft,section,egrave,exclam,ccedilla,agrave}" = "bspc {desktop -f,node -d} '{1-9,10}'"; # Focus or send to the given desktop
 
         # Control - Resize
         "control + {Left, Right, Up, Down}" = "bspc node -z {left -20 0, right 20 0, top 0 -20, bottom 0 20}";          # Expand window by moving one of its sides outwards

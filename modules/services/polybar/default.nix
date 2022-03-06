@@ -58,7 +58,7 @@ in
           tray-detached = "false";
 
           #override-redirect = "true";
-          #wm-restack = "bspwm";
+          wm-restack = "bspwm";
         };
         "bar/sec" = {
           monitor = "HDMI-A-0";
@@ -79,10 +79,10 @@ in
           font-3 = "FontAwesome5Brands:style=Regular:size=8";
           font-4 = "FiraCodeNerdFont:size=11";
           modules-left = "logo bspwm";
-          #modules-right = "bspwm";
+          modules-right = "date";
 
           #override-redirect = "true";
-          #wm-restack = "bspwm";
+          wm-restack = "bspwm";
         };
         "module/memory" = {                     # RAM
           type = "internal/memory";
