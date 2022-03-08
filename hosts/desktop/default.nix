@@ -54,6 +54,10 @@
   };
 
   environment = {                               # Packages installed system wide
+    #extraInit = ''
+    #  #xset -dpms
+    #  xset s 3600
+    #'';                                         # Fixes auto sleep
     systemPackages = with pkgs; [               # This is because some options need to be configured.
       discord
       plex
@@ -98,6 +102,13 @@
       displayManager.setupCommands = ''
         ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal --output HDMI-A-0 --mode 1920x1080 --rotate normal --left-of HDMI-A-1
       '';                                       # Settings for correct display configuration
+
+      serverFlagsSection = ''
+        Option "BlankTime" "0"
+        Option "StandbyTime" "0"
+        Option "SuspendTime" "0"
+        Option "OffTime" "0"
+      '';
 
       resolutions = [
         { x = 1920; y = 1080; }

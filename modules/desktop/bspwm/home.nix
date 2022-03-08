@@ -31,11 +31,11 @@
             #center = true;
             sticky = true;
           };
-          "Google-chrome" = {
-            desktop = "2";
+          #"Google-chrome" = {
+            #desktop = "2";
             #focus = true;
             #manage = false;
-          }; 
+          #}; 
           "libreoffice" ={
             desktop = "4";
           };
@@ -84,9 +84,6 @@
             bspc monitor HDMI-A-0 -d 6 7 8 9 0
             bspc wm -O HDMI-A-1 HDMI-A-0
             polybar sec &
-
-            xset -dpms &                        # No sleep after 10 minutes idle
-            xset s off &
           fi
         '';
       };

@@ -19,16 +19,7 @@ in
     polybar = {
       enable = true;
       script = ''                               # Running polybar on startup
-        #!/bin/sh
-        killall -q polybar
-
-        while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
-
-        polybar main &                          # Does some issues with the workspaces not loading
-
-        if [[ $(xrandr -q | grep 'HDMI-A-0 connected') ]]; then
-          polybar sec &
-        fi
+      #  Handled by bspwmrc (modules/desktop/bspwm)
       '';                                       # Gets fixed in the bspwmrc file
       package = mypolybar;
       config = {
@@ -40,7 +31,7 @@ in
           foreground = "#ccffffff";
 
           offset-y = 2;
-          spacing = "1.5";
+          #spacing = "1.5";
           padding-right = 2;
 
           module-margin-left = 1;
@@ -52,7 +43,7 @@ in
           font-3 = "FontAwesome5Brands:style=Regular:size=8";
           font-4 = "FiraCodeNerdFont:size=11"; 
           modules-left = "logo bspwm";
-          modules-right = "backlight pad memory cpu pad mic volume pad battery pad date"; #wired-network wireless-network bluetooth";
+          modules-right = "backlight pad memory cpu pad mic volume pad battery date"; #wired-network wireless-network bluetooth";
          
           tray-position = "right";
           tray-detached = "false";
@@ -140,7 +131,7 @@ in
           type = "internal/pulseaudio";
           interval = 2;
           use-ui-max = "false";
-          format-volume = "<ramp-volume> <label-volume>";
+          format-volume = "<ramp-volume>  <label-volume>";
           label-muted = "  muted";
           label-muted-foreground = "#66";
 
@@ -208,9 +199,9 @@ in
           label-charging = "%percentage%%";
           label-discharging = "%percentage%%";
 
-          format-charging = "<animation-charging> <label-charging>";
-          format-discharging = "<ramp-capacity> <label-discharging>";
-          format-full = "<ramp-capacity> <label-full>";
+          format-charging = "<animation-charging> <label-charging>    ";
+          format-discharging = "<ramp-capacity> <label-discharging>    ";
+          format-full = "<ramp-capacity> <label-full>    ";
  
           ramp-capacity-0 = "";
           ramp-capacity-0-foreground = "#f53c3c";
@@ -330,13 +321,40 @@ in
 #          click-left = "pactl list sources | grep -qi 'Mute: yes' && pactl set-source-mute 1 false || pactl set-source-mute 1 true ";
           click-left = "~/.config/polybar/script/mic.sh toggle";
         };
+        #"module/logo" = {
+        #  type = "custom/text";
+        #  content = " %{F#a7c7e7} ";
+        #  format-foreground = "#a7c7e7";
+        #  #click-left = "bspc quit";
+        #  double-click-left = "systemctl suspend";
+        #  double-click-middle = "poweroff";
+        #  double-click-right = "xset dpms force off";
+        #};
         "module/logo" = {
-          type = "custom/text";
-          content = " %{F#a7c7e7} ";
-          format-foreground = "#a7c7e7";
-          #click-left = "bspc quit";
-          click-left = "systemctl suspend";
-          click-right = "poweroff";
+          type = "custom/menu";
+          expand-right = true;
+
+          label-open = " %{F#a7c7e7} ";
+          label-close = " %{F#a7c7e7} ";
+          label-separator = "|";
+          format-spacing = "1";
+
+          menu-0-0 = "";
+          menu-0-0-exec = "menu-open-1";
+          menu-0-1 = "";
+          menu-0-1-exec = "menu-open-2";
+
+          menu-1-0 = "";
+          menu-1-0-exec = "sleep 0.5; xset dpms force standby";
+          menu-1-1 = "";
+          menu-1-1-exec = "sleep 0.5; systemctl suspend";
+          menu-1-2 = "";
+          menu-1-2-exec = "sleep 0.5; systemctl poweroff";
+          menu-1-3 = "";
+          menu-1-3-exec = "sleep 0.5; systemctl reboot";
+
+          menu-2-0 = "";
+          menu-2-0-exec = "google-chrome-stable &";
         };
         "module/bluetooth" = {
           type = "custom/text";
