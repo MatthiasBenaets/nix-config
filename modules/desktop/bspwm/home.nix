@@ -26,9 +26,9 @@
             follow = true;
             state = "tiled";
           };
-          ".blueman-manager-wrapped" ={
-            state = "floating";
+          ".blueman-manager-wrapped" ={ 
             #center = true;
+            state = "floating";
             sticky = true;
           };
           #"Google-chrome" = {
@@ -37,7 +37,12 @@
             #manage = false;
           #}; 
           "libreoffice" ={
-            desktop = "4";
+            desktop = "3";
+            follow = true;
+          };
+          "Lutris" = {
+            desktop = "5";
+            follow = true;
           };
           "Pavucontrol" = {
             state = "floating";
@@ -48,11 +53,17 @@
             state = "floating";
           };
           "plexmediaplayer" = {
-            desktop = "5";
+            desktop = "4";
+            follow= true;
             state = "fullscreen";
           };
           "*:*:Picture in picture" = {
             state = "floating";
+            sticky = true;
+          };
+          "Steam" = {
+            desktop = "5";
+            follow = true;
           };
         };
         extraConfig = ''

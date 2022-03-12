@@ -21,7 +21,13 @@
   networking.useDHCP = false;               # Deprecated but needed in config.
 
   time.timeZone = "Europe/Brussels";        # Time zone and internationalisation
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    extraLocaleSettings = {                 # Extra locale settings that need to be overwritten
+      LC_TIME = "nl_BE.UTF-8";
+      LC_MONETARY = "nl_BE.UTF-8";
+    };
+  };  
   console = {
     font = "Lat2-Terminus16";
     keyMap = "azerty";
@@ -73,7 +79,7 @@
                                             # download flatpak file from website
     # installed                             # sudo flatpak install <path>
     # - stremio                             # reboot
-                                            # sudo flatpak uninstall --delete-data <app-id> (> flatpak list --app)
+    # - bottles                             # sudo flatpak uninstall --delete-data <app-id> (> flatpak list --app)
                                             # flatpak uninstall --unused
   };
 

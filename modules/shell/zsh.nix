@@ -15,7 +15,7 @@
 
       oh-my-zsh = {                             # Extra plugins for zsh
         enable = true;
-        plugins = [ "git" ];
+        #plugins = [ "git" ];
         custom = "$HOME/.config/zsh_nix/custom";
       };
 

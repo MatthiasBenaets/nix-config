@@ -55,9 +55,8 @@
 
   environment = {                               # Packages installed system wide
     #extraInit = ''
-    #  #xset -dpms
-    #  xset s 3600
-    #'';                                         # Fixes auto sleep
+    #  snixembed --fork
+    #'';                                        # Fixes some tray icons
     systemPackages = with pkgs; [               # This is because some options need to be configured.
       discord
       plex
@@ -67,6 +66,10 @@
 
   programs = {                                  # Needed to succesfully start Steam
     steam.enable = true;
+    gamemode.enable = true;                     # Better gaming performance
+                                                # Steam: Right-click game - Properties - Launch options: gamemoderun %command%
+                                                # Lutris: General Preferences - Enable Feral GameMode
+                                                #                             - Global options - Add Environment Variables: LD_PRELOAD=/nix/store/*-gamemode-*-lib/lib/libgamemodeauto.so
   };
   
   nixpkgs.overlays = [                          # This overlay will pull the latest version of Discord

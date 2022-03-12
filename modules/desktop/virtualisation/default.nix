@@ -14,12 +14,30 @@
 { config, pkgs, ... }:
 
 {                                             # Add libvirtd and kvm to userGroups
-  boot ={
-    kernelParams = [ "intel_iommu=on" ];      # or amd_iommu (cpu)
-    kernelModules = [ "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" "vendor-reset" ];
-    extraModulePackages = [ config.boot.kernelPackages.vendor-reset ]; # Presumably fix for GPU Reset Bug
-    extraModprobeConfig = "options vfio-pci ids=1002:67DF,1002:AAF0"; # grep PCI_ID /sys/bus/pci/devices/*/uevent
-  };
+  #boot ={
+  #  kernelParams = [ "intel_iommu=on" "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" ];      # or amd_iommu (cpu)
+  #  kernelModules = [ "vendor-reset" "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd"];
+  #  extraModulePackages = [ config.boot.kernelPackages.vendor-reset ]; # Presumably fix for GPU Reset Bug
+  #  extraModprobeConfig = "options vfio-pci ids=1002:67DF,1002:AAF0"; # grep PCI_ID /sys/bus/pci/devices/*/uevent
+  #  kernelPatches = [
+  #    {
+  #    name = "vendor-reset-reqs-and-other-stuff";
+  #    patch = null;
+  #    extraConfig = ''
+  #    FTRACE y
+  #    KPROBES y
+  #    FUNCTION_TRACER y
+  #    HWLAT_TRACER y
+  #    TIMERLAT_TRACER y
+  #    IRQSOFF_TRACER y
+  #    OSNOISE_TRACER y
+  #    PCI_QUIRKS y
+  #    KALLSYMS y
+  #    KALLSYMS_ALL y
+  #    ''; 
+  #    }
+  #  ];
+  #};
 
   environment = {
     systemPackages = with pkgs; [
@@ -45,7 +63,7 @@
   users.groups.libvirtd.members = [ "root" "matthias" ];
 }
 
-# General Guide: gitlab.com/risingprismtv/singe-gpu-passthrough/-/wikis/home
+# General Guide: gitlab.com/risingprismtv/single-gpu-passthrough/-/wikis/home
 # 1. Download ISO
 # 2. Download latest Video BIOS from techpowerup.com/vgabios (Sapphire RX580 8Gb)
 # 2.1. Sudo mkdir /var/lib/libvirt/vbios/
@@ -72,12 +90,12 @@
 # 8.3 Add PCI hardware (GPU: 01:00:0 & 01:00:1 (most likely))
 # 8.3 Add Mouse, Keyboard (PCI USB Controller in PCI Host Device or USB Host Device)
 # 9. Select GPU and open XML
-# 9.1 Add line "<rom file:'/var/lib/libvirt/vbios/GPU.rom'/>" under "</source>"
+# 9.1 Add line "<rom file='/var/lib/libvirt/vbios/GPU.rom'/>" under "</source>"
 # 9.2 Do for both 01:00:0 and 01:00:1
 # 10. Edit CPU
 # 10.1 Disable "Copy host CPU configuration" and select "host-passthrough"
 # 10.2 Edit topology: Sockets=1 Cores=Total/2 Threads=2
-# 10.3 Edit XML
+# 10.3 Edit XML cpu under topology
 # 10.3.1  Add "<feature policy='require' name='topoext'/>" for AMDCPU
 # 10.3.2  Add "<feature policy='disable' name='smep'/>" for Intel CPU
 # 11 Change memory to prefered (12GB for 16GB Total)

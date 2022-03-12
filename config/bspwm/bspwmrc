@@ -18,11 +18,13 @@ bspc rule -r '*'
 bspc rule -a '*:*:Picture in picture' 'state=floating'
 bspc rule -a '.blueman-manager-wrapped' 'state=floating' 'sticky=on'
 bspc rule -a 'Emacs' 'desktop=3' 'follow=on' 'state=tiled'
-bspc rule -a 'Google-chrome' 'desktop=2'
+#bspc rule -a 'Google-chrome' 'desktop=2' 'follow=on'
 bspc rule -a 'Pavucontrol' 'state=floating' 'sticky=on'
 bspc rule -a 'Pcmanfm' 'state=floating'
-bspc rule -a 'libreoffice' 'desktop=4'
-bspc rule -a 'plexmediaplayer' 'desktop=5' 'state=fullscreen'
+bspc rule -a 'libreoffice' 'desktop=4' 'follow=on'
+bspc rule -a 'Lutris' 'desktop=5' 'follow=on'
+bspc rule -a 'plexmediaplayer' 'desktop=5' 'follow=on' 'state=fullscreen'
+bspc rule -a 'Steam' 'desktop=5' 'follow=on'
 
 # Startup
 

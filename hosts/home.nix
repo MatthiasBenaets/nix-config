@@ -42,7 +42,7 @@
       
       # Dependencies
       libnotify         # Notifications need for Dunst
-      libappindicator-gtk3  # Fixes tray icons
+      ##snixembed       # System tray fix, run snixembed --fork in .xinitrc
 
       # Apps
       google-chrome     # Browser
