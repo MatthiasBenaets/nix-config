@@ -12,11 +12,12 @@
 {
   home = {                                # Specific packages for desktop
     packages = with pkgs; [
+      # Applications
       plex-media-player
       libreoffice
       lutris
 
-      # In orimported with default config
+      # Imported in default config
       #steam
       #discord                            # See overlay default.nix
       #sonarr
@@ -25,24 +26,13 @@
       #handbrake
 
       # Future
-      # Gimp Inkscape Krita
-      # MKVtoolnix
-      # Kdenlive
+      #Gimp Inkscape Krita
+      #MKVtoolnix
+      #Kdenlive
     ];
   };
 
   services = {                            # Applets
     blueman-applet.enable = true;         # Bluetooth
-    #robi = {
-    # enable = true;
-    # rules = [
-    #   {
-    #     name = "Dual";
-    #     outputs_connected = [ "HDMI-A-0" "HDMI-A-1" ];
-    #     primary: "HDMI-A-1";
-    #     configure_row: [ "HDMI-A-0" "HDMI-A-1" ];
-    #   }
-    # ];
-    #};
   };
 }

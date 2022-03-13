@@ -29,6 +29,7 @@ On fresh NixOs-unstable install:
 - ```nixos-generate-config --root /mnt```
 - ```git clone https://github.com/matthiasbenaets/nix-dotfiles /mnt/etc/nixos/dotfiles```
 - ```cp /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/dotfiles/hosts/$HOST/hardware-configuration.nix```
+- ```rm /mnt/etc/nixos/configuration.nix```
 - Edit /mnt/etc/nixos/dotfiles/hosts/$HOST/default.nix
   - Change loader settings depending on Legacy Boot vs. UEFI
   - Edit networking interfaces
@@ -43,3 +44,5 @@ On fresh NixOs-unstable install:
 - ```Ctrl - Alt - F7```
 - Log in with LightDM
 - Enjoy
+
+if dual booting - rebuild once more if OS Prober can't find other partitions.

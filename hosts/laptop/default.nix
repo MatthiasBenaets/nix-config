@@ -66,7 +66,7 @@
           scrollMethod = "twofinger";
           naturalScrolling = true;            # The correct way of scrolling
           accelProfile = "adaptive";          # Speed settings
-          accelSpeed = "-0.5";
+          #accelSpeed = "-0.5";
           disableWhileTyping = true;
         };
       };

@@ -9,7 +9,7 @@
     enable = true;
     activeOpacity = "1";                          # Node transparency
     inactiveOpacity = "1";
-    backend = "glx";                              # Rendering (opengl)
+    backend = "glx";                              # Rendering (opengl) - Laptop might need xrender
     fade = true;
     fadeDelta = 5;
     opacityRule = [                               # Opacity rules if transparency is prefered
