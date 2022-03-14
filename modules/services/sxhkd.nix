@@ -21,19 +21,20 @@
         "super + r" = "bspc wm -r";                           # Reload WM
 
         # Super - Nodes
-        "super + {_,shift +}{Left, Right, Up, Down}" = "bspc node -{f,s} {west,east,north,south}";  # Focus or move node in given direction
+        "super + {_,shift +}{Left,Right,Up,Down}" = "bspc node -{f,s} {west,east,north,south}";  # Focus or move node in given direction
         "super + m" = "bspc desktop -l next";                 # Alternate between the tiled and monocle layout
-        "super + {t,f}" = "bspc node -t {tiled, fullscreen}"; # Alternate between the tiles and fullscreen layout
+        "super + {t,f}" = "bspc node -t {tiled,fullscreen}";  # Alternate between the tiles and fullscreen layout
         "super + h" = "bspc node -t floating";                # Put node in floating ( h is for hover )
         "super + g" = "bspc node -s biggest.window";          # Swap current node and the biggest window
    
         # Alt - Move workspaces
         "alt + {Left,Right}" = "bspc desktop -f {prev,next}.local"; # Focus the next/previous desktop in the current monitor
         "alt + {_,shift +}{ampersand,eacute,quotedbl,apostrophe,parenleft,section,egrave,exclam,ccedilla,agrave}" = "bspc {desktop -f,node -d} '{1-9,10}'"; # Focus or send to the given desktop
+        "alt + shift + {Left,Right}" = "bspc node -d {prev,next}.local --follow"; # Send and follow to previous or next desktop
 
         # Control - Resize
-        "control + {Left, Right, Up, Down}" = "bspc node -z {left -20 0, right 20 0, top 0 -20, bottom 0 20}";          # Expand window by moving one of its sides outwards
-        "control + shift + {Left, Right, Up, Down}" = "bspc node -z { right -20 0, left 20 0, bottom 0 -20, top 0 20}"; # Contract window by moving one of its sides inwards
+        "control + {Left,Right,Up,Down}" = "bspc node -z {left -20 0,right 20 0,top 0 -20,bottom 0 20}";          # Expand window by moving one of its sides outwards
+        "control + shift + {Left,Right,Up,Down}" = "bspc node -z { right -20 0,left 20 0,bottom 0 -20,top 0 20}"; # Contract window by moving one of its sides inwards
 
         # XF86 Keys
         "XF86AudioMute" = "pactl list sinks | grep -q Mute:.no && pactl set-sink-mute 0 1 || pactl set-sink-mute 0 0";  # Toggle mute audio
