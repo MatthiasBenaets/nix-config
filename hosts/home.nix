@@ -48,6 +48,7 @@
       google-chrome     # Browser
       pcmanfm           # File Manager
       qbittorrent       # Torrents
+      remmina           # XRDP Client
 
       # File Management
       unzip             # Zip files
