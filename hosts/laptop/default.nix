@@ -59,6 +59,7 @@
     tlp.enable = true;                      # TLP and auto-cpufreq for power management
     auto-cpufreq.enable = true;
     blueman.enable = true;
+    teamviewer.enable = true;
     xserver = {
       libinput = {                          # Trackpad support & gestures
         touchpad = {
