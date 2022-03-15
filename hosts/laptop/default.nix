@@ -46,23 +46,22 @@
     networkmanager.enable = true;
     interfaces = {
       enp0s25 = {
-        # useDHCTP = true;
-        ipv4.addresses = [ {
-            address = "192.168.0.51";
-            prefixLength = 24;
-          } ];
-        };
+        useDHCP = true;                     # For versatility sake, manually edit IP on nm-applet.
+        #ipv4.addresses = [ {
+        #    address = "192.168.0.51";
+        #    prefixLength = 24;
+        #} ];
       };
       wlo1 = {
-        # useDHCP = true;
-        ipv4.addresses = [ {                # Ip settings: *.0.51 for laptop
-          address = "192.168.0.51";
-          prefixLength = 24;
-        } ];  
+        useDHCP = true;
+        #ipv4.addresses = [ {
+        #  address = "192.168.0.51";
+        #  prefixLength = 24;
+        #} ];  
       };
     };
-    defaultGateway = "192.168.0.1";
-    nameserver = [ "1.1.1.1" ];
+    #defaultGateway = "192.168.0.1";
+    #nameservers = [ "1.1.1.1" ];
   };
 
   programs = {                              # No xbacklight, this is the alterantive
@@ -74,12 +73,12 @@
     tlp.enable = true;                      # TLP and auto-cpufreq for power management
     auto-cpufreq.enable = true;
     blueman.enable = true;
-    xrdp = {
-      enable = true;
-      defaultWindowManager = "${pkgs.bspwm}/bin/bspwm";
-      port = 3390;
-      openFirewall = true;
-    };
+    #xrdp = {
+    #  enable = true;
+    #  defaultWindowManager = "${pkgs.bspwm}/bin/bspwm";
+    #  port = 3390;
+    #  openFirewall = true;
+    #};
     xserver = {
       libinput = {                          # Trackpad support & gestures
         touchpad = {

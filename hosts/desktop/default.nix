@@ -51,7 +51,6 @@
     };
     defaultGateway = "192.168.0.1";
     nameservers = [ "1.1.1.1" ];                # Cloudflare
-    firewall.allowedTCPPorts = [ 3389 ];
   };
 
   environment = {                               # Packages installed system wide
@@ -101,6 +100,8 @@
     xrdp = {
       enable = true;
       defaultWindowManager = "${pkgs.bspwm}/bin/bspwm";
+      port = 3389;
+      openFirewall = true;
     };
     xserver = {                                 # In case, multi monitor support
       videoDrivers = [                          # Video Settings
