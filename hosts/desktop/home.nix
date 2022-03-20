@@ -13,10 +13,14 @@
   home = {                                # Specific packages for desktop
     packages = with pkgs; [
       # Applications
-      plex-media-player
-      libreoffice
-      lutris
+      plex-media-player # Media player
+      libreoffice       # Office packages
+      lutris            # Game launcher
+      shotcut           # Video Editor
 
+      # Dependencies
+      gmtp              # Used for mounting gopro
+      
       # Imported in default config
       #steam
       #discord                            # See overlay default.nix

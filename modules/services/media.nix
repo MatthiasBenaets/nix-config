@@ -1,3 +1,7 @@
+#
+# Media Services: Plex, Torrenting and automation
+#
+
 { config, pkgs, ... }:
 
 {
@@ -8,6 +12,7 @@
       jackett
       bazarr
       handbrake
+      deluge
     ];
   };
 
@@ -30,12 +35,19 @@
       user = "root";
       group = "users";
     };
+    deluge = {
+      enable = true;
+      web.enable = true;
+      user = "root";
+      group = "users";
+    };
   };
 }
 
 # literally can't be bothered anymore with user permissions.
-# Any of the services can't communicate with qbittorrent.
-# Deluge can't save to custom location
-# So everything with root and add permissions 775 with group users in radarr and sonar
+# So everything with root, add permissions 775 with group users in radarr and sonar
 # Radarr & Sonarr: chmod 775
 # Bazarr: chmod 660
+# Deluge: 
+#   Connection Manager: localhost:58846
+#   Preferences: Change download folder and enable Plugins-label

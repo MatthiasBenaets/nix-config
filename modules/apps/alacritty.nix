@@ -14,7 +14,7 @@
         font = rec {                          # Font - Laptop has size manually changed at home.nix
           normal.family = "Source Code Pro";
           bold = { style = "Bold"; };
-          #size = 8;
+#         size = 8;
         };
         offset = {                            # Positioning
           x = -1;

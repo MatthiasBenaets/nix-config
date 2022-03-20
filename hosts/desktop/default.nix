@@ -97,19 +97,21 @@
       enable = true;
       openFirewall = true;
     };
-    xrdp = {
-      enable = true;
-      defaultWindowManager = "${pkgs.bspwm}/bin/bspwm";
-      port = 3389;
-      openFirewall = true;
-    };
+    #xrdp = {
+    #  enable = true;
+    #  defaultWindowManager = "${pkgs.bspwm}/bin/bspwm";
+    #  port = 3389;
+    #  openFirewall = true;
+    #};
     xserver = {                                 # In case, multi monitor support
       videoDrivers = [                          # Video Settings
         "amdgpu"
       ];
 
       displayManager.setupCommands = ''
-        ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal --output HDMI-A-0 --mode 1920x1080 --rotate normal --left-of HDMI-A-1 --output DisplayPort-1 --mode 1280x1024 --rotate normal --right-of HDMI-A-1
+        #${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal --output HDMI-A-0 --mode 1920x1080 --rotate normal --left-of HDMI-A-1 --output DisplayPort-1 --mode 1280x1024 --rotate normal --right-of HDMI-A-1
+        ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal --output HDMI-A-0 --mode 1920x1080 --rotate normal --left-of HDMI-A-1
+        #${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal
       '';                                       # Settings for correct display configuration
 
       #displayManager.setupCommands = ''

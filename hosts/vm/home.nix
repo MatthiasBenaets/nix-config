@@ -3,7 +3,7 @@
 #
 #  flake.nix
 #   └─ ./hosts
-#       └─ ./desktop
+#       └─ ./vm
 #           └─ home.nix *
 #
 
@@ -13,12 +13,6 @@
   home = {                                # Specific packages for desktop
     packages = with pkgs; [
       google-chrome
-
-      # Gimp Inkscape Krita
-      # Steam Discord
-      # Plex Handbrake MKVtoolnix Sonarr Radarr
-      # Kdenlive
-      # LibreOffice
     ];
   };
 }

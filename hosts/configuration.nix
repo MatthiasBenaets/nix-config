@@ -78,7 +78,7 @@
     flatpak.enable = true;                  # (apparently not needed) flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
                                             # download flatpak file from website
     # installed                             # sudo flatpak install <path>
-    # - stremio                             # reboot
+    #                                       # reboot
     # - bottles                             # sudo flatpak uninstall --delete-data <app-id> (> flatpak list --app)
                                             # flatpak uninstall --unused
   };
@@ -142,6 +142,7 @@
       #vim
       git
       killall
+      usbutils
       pciutils
       wget
       xterm

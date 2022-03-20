@@ -39,7 +39,8 @@
       pavucontrol       # Audio control
       plex-media-player # Media Player
       vlc               # Media Player
-      
+      stremio           # Media Streamer
+
       # Dependencies
       libnotify         # Notifications need for Dunst
       ##snixembed       # System tray fix, run snixembed --fork in .xinitrc
@@ -47,7 +48,6 @@
       # Apps
       google-chrome     # Browser
       pcmanfm           # File Manager
-      qbittorrent       # Torrents
       remmina           # XRDP Client
 
       # File Management
@@ -59,6 +59,7 @@
       #killall          # Stop Applications
       #neovim           # Text Editor
       #pciutils         # Computer utility info
+      #usbutils         # USB utility info
       #pulseaudio       # Sound
       #wget             # Downloader
       #zsh              # Shell
@@ -84,15 +85,18 @@
       #xorg.xrandr      # Screen settings
       #
       # Desktop
+      #bazarr           # Subtitles
       #blueman          # Bluetooth
+      #deluge           # Torrents
       #discord          # Chat
+      #gmtp             # Mount MTP (GoPro)
+      #handbrake        # Encoder
       #libreoffice      # Office Tools
       #plex             # Plex Server
-      #steam            # Games
       #radarr           # Movies
       #sonarr           # TV Shows
-      #bazarr           # Subtitles
-      #handbrake        # Encoder
+      #steam            # Games
+      #shotcut          # Video editor
       #
       # Laptop
       #blueman          # Bluetooth

@@ -3,7 +3,7 @@
 #
 #  flake.nix
 #   └─ ./hosts
-#       └─ ./desktop
+#       └─ ./vm
 #            ├─ default.nix *
 #            └─ hardware-configuration.nix       
 #
@@ -27,7 +27,7 @@
       grub = {
         enable = true;
         version = 2;
-        device = "/dev/sda";                    # Name of harddrive
+        device = "/dev/sda";                    # Name of harddrive (can also be vda)
       };
       timeout = 1;                              # Grub auto select time
     };
@@ -49,11 +49,6 @@
 #     };
 #   };
 # };
-
-  services.dbus.packages = with pkgs;[          # No DisplayManager so enable services here.
-    polybar
-    dunst
-  ];
 
   services = {
     xserver = {                                 # In case, multi monitor support

@@ -41,8 +41,10 @@
         };
         defaultSession = "none+bspwm";            # none+bspwm -> no real display manager
       };
-      windowManager.bspwm = {                     # Window Manager
-        enable = true;
+      windowManager= {
+        bspwm = {                     # Window Manager
+          enable = true;
+        };  
       };
     }; 
   };

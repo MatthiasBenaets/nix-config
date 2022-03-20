@@ -1,7 +1,5 @@
 #
-#
 # DSLR Camera as webcam
-#
 #
 
 { config, pkgs, ... }:

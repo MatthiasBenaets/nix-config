@@ -7,7 +7,7 @@
 #   │       └─ default.nix
 #   └─ ./modules
 #       └─ ./desktop
-#           └─ ./qemu
+#           └─ ./virtualisation
 #               └─ default.nix *
 # 
 
@@ -58,9 +58,11 @@
       };
     };
     spiceUSBRedirection.enable = true;        # USB passthrough
+    docker.enable = true;
   };
 
   users.groups.libvirtd.members = [ "root" "matthias" ];
+  users.groups.docker.members = [ "matthias" ];
 }
 
 # General Guide: gitlab.com/risingprismtv/single-gpu-passthrough/-/wikis/home
