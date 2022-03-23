@@ -83,6 +83,12 @@
     })
   ];
 
+  #hardware.sane = {                           # Used for scanning with Xsane
+  #  enable = true;
+  #  #extraBackends = [ pkgs.cnijfilter2 ];
+  #  extraBackends = [ pkgs.sane-airscan ];
+  #};
+
   services = {
     blueman.enable = true;                      # Bluetooth
     printing = {                                # Printing and drivers for TS5300
@@ -113,10 +119,6 @@
         ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal --output HDMI-A-0 --mode 1920x1080 --rotate normal --left-of HDMI-A-1
         #${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal
       '';                                       # Settings for correct display configuration
-
-      #displayManager.setupCommands = ''
-      #  ${pkgs.xorg.xrandr}/bin/xrandr --output DisplayPort-1 --mode 1280x1024 --pos 3843x56 --rotate normal --output HDMI-A-0 --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-A-1 --primary --mode 1920x1080 --pos 1923x0 --rotate normal
-      #'';
 
       serverFlagsSection = ''
         Option "BlankTime" "0"

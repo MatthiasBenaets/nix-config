@@ -38,6 +38,11 @@
       fsType = "ext4";
     };
 
+  fileSystems."/toshiba2" = 
+    { device = "/dev/disk/by-uuid/21307718-de74-4a24-aaa7-dd09f7e89e32";
+      fsType = "ext4";
+    };
+
   fileSystems."/maxtor" =
     { device = "/dev/disk/by-uuid/36E6613DE660FE8D";
       fsType = "ntfs";
