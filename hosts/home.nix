@@ -63,8 +63,6 @@
       #pulseaudio       # Sound
       #wget             # Downloader
       #zsh              # Shell
-      #ffmpeg           # Multimedia framework
-      #gphoto2          # Digital camera software
       #
       # Imports General home-manager
       #alacritty        # Terminal Emulator
@@ -87,9 +85,12 @@
       # Desktop
       #bazarr           # Subtitles
       #blueman          # Bluetooth
+      #darktable        # Raw Image Processing
       #deluge           # Torrents
       #discord          # Chat
+      #ffmpeg           # Video Support (dslr)
       #gmtp             # Mount MTP (GoPro)
+      #gphoto2          # Digital Photography
       #handbrake        # Encoder
       #libreoffice      # Office Tools
       #plex             # Plex Server
@@ -97,7 +98,8 @@
       #sonarr           # TV Shows
       #steam            # Games
       #shotcut          # Video editor
-      #
+      #shotwell         # Raw Image Manager
+      # 
       # Laptop
       #blueman          # Bluetooth
       #libreoffice      # Office Tools

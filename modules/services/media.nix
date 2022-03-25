@@ -23,12 +23,12 @@
     radarr = {
       enable = true;
       user = "root";
-      group = "root";
+      group = "users";
     };
     sonarr = {
       enable = true;
       user = "root";
-      group = "root";
+      group = "users";
     };
     bazarr = {
       enable = true;

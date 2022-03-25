@@ -17,17 +17,21 @@
       libreoffice       # Office packages
       lutris            # Game launcher
       shotcut           # Video Editor
+      darktable         # Raw Image Processing
 
       # Dependencies
       gmtp              # Used for mounting gopro
       
       # Imported in default config
-      #steam
-      #discord                            # See overlay default.nix
-      #sonarr
-      #radarr                             # See services/media.nix for all 3
-      #bazarr
-      #handbrake
+      #bazarr           # Subtitles
+      #discord          # Comms           # See overlay default.nix
+      #ffmpeg           # Video Support
+      #gphoto2          # Digital Photography
+      #handbrake        # Encoder
+      #radarr           # Media Movies    # See services/media.nix for radarr, sonarr and bazarr
+      #shotwell         # Raw Photo Manager
+      #sonarr           # Media TV Shows
+      #steam            # Game Launcher
 
       # Future
       #Gimp Inkscape Krita
