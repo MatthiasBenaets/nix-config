@@ -92,7 +92,7 @@
           
           if [[ $(xrandr -q | grep 'HDMI-A-0 connected') ]]; then   # If second monitor, also enable second polybar
             #bspc monitor HDMI-A-0 -s HDMI-A-1
-            bspc monitor HDMI-A-0 -d 6 7 8 9 0
+            bspc monitor HDMI-A-0 -d 6 7 8 9 10
             bspc wm -O HDMI-A-1 HDMI-A-0
             polybar sec &
           fi

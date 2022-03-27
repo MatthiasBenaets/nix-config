@@ -245,7 +245,7 @@ in
           ws-icon-6 = "7;";
           ws-icon-7 = "8;";
           ws-icon-8 = "9;";
-          ws-icon-9 = "0;";
+          ws-icon-9 = "10;";
           #ws-icon-default = "";               # Can have more workspaces availabe but enable default icon
 
           format = "<label-state> <label-mode>";

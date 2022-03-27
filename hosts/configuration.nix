@@ -33,17 +33,6 @@
     keyMap = "azerty";
   };
 
-  sound = {                                 # Sound settings
-    enable = true;
-    mediaKeys.enable = true;
-  };
-
-  hardware.pulseaudio = {                   # Hardware audio
-    enable = true;
-    extraModules = [ pkgs.pulseaudio-modules-bt ];
-    package = pkgs.pulseaudioFull;
-  };
-
   services = {
     xserver = {
       libinput = {                          # Needed for all input devices
@@ -55,13 +44,9 @@
 #     allowSFTP = true;
 #   };
 #   sshd.enable = true;
-
-    flatpak.enable = true;                  # (apparently not needed) flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-    #                                       # download flatpak file from website
-    # installed                             # sudo flatpak install <path>
-    # - bottles                             # reboot
-    #                                       # sudo flatpak uninstall --delete-data <app-id> (> flatpak list --app)
-  };                                        # flatpak uninstall --unused
+    flatpak.enable = true;                  # download flatpak file from website - sudo flatpak install <path> - reboot if not showing up
+                                            # sudo flatpak uninstall --delete-data <app-id> (> flatpak list --app) - flatpak uninstall --unused
+  };
 
   xdg.portal = {                            # Required for flatpak
     enable = true;
@@ -70,8 +55,9 @@
 
   fonts.fonts = with pkgs; [                # Fonts
     source-code-pro
-    font-awesome
-    (nerdfonts.override {
+    font-awesome                            # Icons
+    corefonts                               # MS
+    (nerdfonts.override {                   # Nerdfont Icons override
       fonts = [
         "FiraCode"
       ];
@@ -108,10 +94,6 @@
     '';
   };
 
-  programs = {                              # Shell. Weirdly need to be enable here to add user to lightdm by default.
-    zsh.enable = true;
-  };  
- 
   environment = {
     variables = {
       TERMINAL = "alacritty";

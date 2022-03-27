@@ -17,8 +17,8 @@
 {
   imports =                                     # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
-    [(import ../../modules/desktop/virtualisation)] ++    # Virtual Machines
     [(import ../../modules/services/media.nix)] ++        # Media Center
+    (import ../../modules/desktop/virtualisation) ++      # Virtual Machines
     (import ../../modules/hardware);                      # Hardware devices
 
   boot = {                                      # Boot options
@@ -60,7 +60,6 @@
     systemPackages = with pkgs; [               # This is because some options need to be configured.
       discord
       plex
-      #steam  # Below as seperate program. Otherwise won't work.
     ];
   };
 
@@ -114,18 +113,24 @@
         "amdgpu"
       ];
 
-      displayManager.setupCommands = ''
-        #${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal --output HDMI-A-0 --mode 1920x1080 --rotate normal --left-of HDMI-A-1 --output DisplayPort-1 --mode 1280x1024 --rotate normal --right-of HDMI-A-1
-        ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal --output HDMI-A-0 --mode 1920x1080 --rotate normal --left-of HDMI-A-1
-        #${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal
-      '';                                       # Settings for correct display configuration
-
+      displayManager.sessionCommands = ''
+        #!/bin/sh
+        SCREEN=$(${pkgs.xorg.xrandr}/bin/xrandr | grep " connected " | wc -l)
+        if [[ $SCREEN -eq 1 ]]; then
+          ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal
+        elif [[ $SCREEN -eq 2 ]]; then
+          ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal --output HDMI-A-0 --mode 1920x1080 --rotate normal --left-of HDMI-A-1
+        elif [[ $SCREEN -eq 3 ]]; then
+          ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal --output HDMI-A-0 --mode 1920x1080 --rotate normal --left-of HDMI-A-1 --output DisplayPort-1 --mode 1280x1024 --rotate normal --right-of HDMI-A-1
+        fi
+      '';                                       # Settings for correct display configuration; This can also be done with setupCommands when X server start for smoother transition (if setup is static)
+                                                # Another option to research in future is arandr
       serverFlagsSection = ''
         Option "BlankTime" "0"
         Option "StandbyTime" "0"
         Option "SuspendTime" "0"
         Option "OffTime" "0"
-      '';
+      '';                                       # Used so computer don't goes to sleep
 
       resolutions = [
         { x = 1920; y = 1080; }

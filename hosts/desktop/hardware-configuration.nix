@@ -8,48 +8,58 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "uas" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "uas" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/ce2e7a62-b757-4d98-9ee2-f1f50e947834";
+    { #device = "/dev/disk/by-uuid/6ec8ce24-0535-4dce-9e71-9925938b807c";
+      device = "/dev/disk/by-label/nixos";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/C459-1408";
+    { #device = "/dev/disk/by-uuid/7791-9A11";
+      device = "/dev/disk/by-label/boot";
       fsType = "vfat";
     };
-    
+
   fileSystems."/ssd" =
-    { device = "/dev/disk/by-uuid/748e6628-0f4e-4479-8940-daa8531d3390";
+    { #device = "/dev/disk/by-uuid/748e6628-0f4e-4479-8940-daa8531d3390";
+      device = "/dev/disk/by-label/ssd";
       fsType = "ext4";
     };
 
   fileSystems."/hdd" =
-    { device = "/dev/disk/by-uuid/bbab0f8a-50f4-4a7c-a0d3-0ccb036f11d5";
+    { #device = "/dev/disk/by-uuid/bbab0f8a-50f4-4a7c-a0d3-0ccb036f11d5";
+      device = "/dev/disk/by-label/hdd";
       fsType = "ext4";
     };
 
   fileSystems."/toshiba" =
-    { device = "/dev/disk/by-uuid/7491ea96-a62d-4202-ada7-8d0310dfc967";
+    { #device = "/dev/disk/by-uuid/7491ea96-a62d-4202-ada7-8d0310dfc967";
+      device = "/dev/disk/by-label/toshiba";
       fsType = "ext4";
     };
 
-  fileSystems."/toshiba2" = 
-    { device = "/dev/disk/by-uuid/21307718-de74-4a24-aaa7-dd09f7e89e32";
+  fileSystems."/toshiba2" =
+    { #device = "/dev/disk/by-uuid/21307718-de74-4a24-aaa7-dd09f7e89e32";
+      device = "/dev/disk/by-label/toshiba2";
       fsType = "ext4";
     };
 
   fileSystems."/maxtor" =
-    { device = "/dev/disk/by-uuid/36E6613DE660FE8D";
+    { #device = "/dev/disk/by-uuid/36E6613DE660FE8D";
+      device = "/dev/disk/by-label/maxtor";
       fsType = "ntfs";
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/38067ff2-e529-4bd4-9ab7-fd5bc746be10"; }
+    [ 
+      { #device = "/dev/disk/by-uuid/7d0c3f66-c6eb-413c-956f-dfdd8ceb0cae"; 
+        device = "/dev/disk/by-label/swap";
+      }
     ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";

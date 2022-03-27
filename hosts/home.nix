@@ -64,7 +64,7 @@
       #wget             # Downloader
       #zsh              # Shell
       #
-      # Imports General home-manager
+      # Imports General home-manager modules
       #alacritty        # Terminal Emulator
       #dunst            # Notifications
       #doom emacs       # Text Editor
@@ -110,7 +110,6 @@
 
   programs = {
     home-manager.enable = true;
-    zsh.enable = true;
   };
 
   xsession = {                                # Session settings

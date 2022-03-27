@@ -28,6 +28,8 @@
           greeters = {
             gtk = {
               theme = {
+                #name = "Dracula";
+                #package = pkgs.dracula-theme;
                 name = "Dracula";
                 package = pkgs.dracula-theme;
               };
@@ -42,11 +44,28 @@
         defaultSession = "none+bspwm";            # none+bspwm -> no real display manager
       };
       windowManager= {
-        bspwm = {                     # Window Manager
+        bspwm = {                                 # Window Manager
           enable = true;
         };  
       };
     }; 
+  };
+
+  programs.zsh.enable = true;                     # Weirdly needs to be added to have default user on lightdm
+
+  sound = {                                       # ALSA sound enable
+    enable = true;
+    mediaKeys = {                                 # Keyboard Media Keys (for minimal desktop)
+      enable = true;
+    };
+  };
+
+  hardware = {                                    # Hardware Audio
+    pulseaudio = {
+      enable = true;
+      extraModules = [ pkgs.pulseaudio-modules-bt ];  # Extra Bluetooth Codecs 
+      package = pkgs.pulseaudioFull;
+    };
   };
 
   environment.systemPackages = with pkgs; [       # Packages installed
