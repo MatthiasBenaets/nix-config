@@ -99,10 +99,12 @@
       #steam            # Games
       #shotcut          # Video editor
       #shotwell         # Raw Image Manager
+      #simple-scan      # Scanning
       # 
       # Laptop
       #blueman          # Bluetooth
       #libreoffice      # Office Tools
+      #simple-scan      # Scanning
     ];
   };
 

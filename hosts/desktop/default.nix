@@ -61,6 +61,7 @@
     systemPackages = with pkgs; [               # This is because some options need to be configured.
       discord
       plex
+      simple-scan
       x11vnc
     ];
   };
@@ -84,11 +85,10 @@
     })
   ];
 
-  #hardware.sane = {                           # Used for scanning with Xsane
-  #  enable = true;
-  #  #extraBackends = [ pkgs.cnijfilter2 ];
-  #  extraBackends = [ pkgs.sane-airscan ];
-  #};
+  hardware.sane = {                           # Used for scanning with Xsane
+    enable = true;
+    extraBackends = [ pkgs.sane-airscan ];
+  };
 
   services = {
     blueman.enable = true;                      # Bluetooth
@@ -99,17 +99,16 @@
     avahi = {                                   # Needed to find wireless printer
       enable = true;
       nssmdns = true;
+      publish = {                               # Needed for detecting the scanner
+        enable = true;
+        addresses = true;
+        userServices = true;
+      };
     };
     plex = {                                    # Plex Server
       enable = true;
       openFirewall = true;
     };
-    #xrdp = {
-    #  enable = true;
-    #  defaultWindowManager = "${pkgs.bspwm}/bin/bspwm";
-    #  port = 3389;
-    #  openFirewall = true;
-    #};
     xserver = {                                 # In case, multi monitor support
       videoDrivers = [                          # Video Settings
         "amdgpu"

@@ -69,16 +69,34 @@
     light.enable = true;
   };
 
+  environment = {
+    systemPackages = with pkgs; [
+      simple-scan
+    ];
+  };
+
+  hardware.sane = {                           # Used for scanning with Xsane
+    enable = true;
+    extraBackends = [ pkgs.sane-airscan ];
+  };
+
   services = {
     tlp.enable = true;                      # TLP and auto-cpufreq for power management
     auto-cpufreq.enable = true;
     blueman.enable = true;
-    #xrdp = {
-    #  enable = true;
-    #  defaultWindowManager = "${pkgs.bspwm}/bin/bspwm";
-    #  port = 3390;
-    #  openFirewall = true;
-    #};
+    printing = {                            # Printing and drivers for TS5300
+      enable = true;
+      drivers = [ pkgs.cnijfilter2 ];
+    };
+    avahi = {                               # Needed to find wireless printer
+      enable = true;
+      nssmdns = true;
+      publish = {                           # Needed for detecting the scanner
+        enable = true;
+        addresses = true;
+        userServices = true;
+      };
+    };
     xserver = {
       libinput = {                          # Trackpad support & gestures
         touchpad = {
