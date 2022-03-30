@@ -355,6 +355,14 @@ in
 
           menu-2-0 = "";
           menu-2-0-exec = "google-chrome-stable &";
+          menu-2-1 = "";
+          menu-2-1-exec = "lutris &";
+          menu-2-2 = "";
+          menu-2-2-exec = "libreoffice &";
+          menu-2-3 = "";
+          menu-2-3-exec = "darktable &";
+          menu-2-4 = "";
+          menu-2-4-exec = "obs &";
         };
         "module/bluetooth" = {
           type = "custom/text";

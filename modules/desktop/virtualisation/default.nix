@@ -15,3 +15,5 @@
   ./docker.nix
   ./qemu.nix
 ]
+
+# x11vnc is pulled form desktop default config

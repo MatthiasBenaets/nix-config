@@ -18,6 +18,7 @@
   imports =                                     # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
     [(import ../../modules/services/media.nix)] ++        # Media Center
+    [(import ../../modules/desktop/virtualisation/x11vnc.nix)] ++
     (import ../../modules/desktop/virtualisation) ++      # Virtual Machines
     (import ../../modules/hardware);                      # Hardware devices
 
@@ -60,6 +61,7 @@
     systemPackages = with pkgs; [               # This is because some options need to be configured.
       discord
       plex
+      x11vnc
     ];
   };
 
