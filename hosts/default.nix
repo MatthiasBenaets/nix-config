@@ -34,7 +34,7 @@
 
   laptop = lib.nixosSystem {                            # Laptop profile
     inherit system;
-    specialArgs = { inherit inputs; };
+    specialArgs = { inherit user inputs; };
     modules = [
       ./laptop
       ./configuration.nix
@@ -52,7 +52,7 @@
 
   vm = lib.nixosSystem {                               # VM profile
     inherit system;
-    specialArgs = { inherit inputs; };
+    specialArgs = { inherit user inputs; };
     modules = [
       ./vm
       ./configuration.nix

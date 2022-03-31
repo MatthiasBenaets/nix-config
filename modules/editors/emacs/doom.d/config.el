@@ -52,3 +52,25 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+;; Bullet UTF-8 icons for org documents
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
+(defun my/org-mode/load-prettify-symbols ()
+  (interactive)
+  (setq prettify-symbols-alist
+  	(mapcan (lambda (x) (list x (cons (upcase (car x)) (cdr x))))
+    		'(("lambda" . ?λ)
+		 ("|>" . ?▷)
+		 ("<|" . ?◁)
+		 ("->>" . ?↠)
+		 ("->" . ?→)
+		 ("<-" . ?←)
+		 ("=>" . ?⇒)
+		 ("<=" . ?≤)
+		 (">=" . ?≥))))
+	(prettify-symbols-mode 1))
+(add-hook 'org-mode-hook 'my/org-mode/load-prettify-symbols)
+
+
