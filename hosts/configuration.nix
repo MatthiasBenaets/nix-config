@@ -10,7 +10,7 @@
 #               └─ bspwm.nix
 #             
 
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, user, ... }:
 
 {
   imports =                                 # Import window or display manager.
@@ -64,7 +64,7 @@
     })
   ];
 
-  users.users.matthias = {                  # System User
+  users.users.${user} = {                   # System User
     isNormalUser = true;
     extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" ];
     shell = pkgs.zsh;                       # Default shell

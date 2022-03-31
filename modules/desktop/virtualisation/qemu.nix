@@ -2,7 +2,7 @@
 # Qemu/KVM with virt-manager 
 #
 
-{ config, pkgs, ... }:
+{ config, pkgs, user, ... }:
 
 {                                             # Add libvirtd and kvm to userGroups
   #boot ={
@@ -56,7 +56,7 @@
     spiceUSBRedirection.enable = true;        # USB passthrough
   };
 
-  users.groups.libvirtd.members = [ "root" "matthias" ];
+  users.groups.libvirtd.members = [ "root" "${user}" ];
 }
 
 #FOR WINDOWS

@@ -12,7 +12,7 @@
 #               └─ default.nix
 #
 
-{ config, pkgs, ... }:
+{ config, pkgs, user, ... }:
 
 {
   imports =                                     # For now, if applying to other system, swap files
@@ -104,6 +104,27 @@
         addresses = true;
         userServices = true;
       };
+    };
+    samba = {
+      enable = true;
+#      enableNmbd = false;
+#      enableWinbindd = false;
+      #extraConfig = ''
+      #  guest account = myuser
+      #  map to guest = Bad User
+#
+#        load printers = no
+#        printcap name = /dev/null
+#      '';
+
+      shares = {
+        share = {
+          "path" = "/home/${user}/share";
+          "guest ok" = "yes";
+          "read only" = "no";
+        };
+      };
+      openFirewall = true;
     };
     plex = {                                    # Plex Server
       enable = true;

@@ -12,7 +12,7 @@
 #          └─ default.nix
 #
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, user, ... }:
 
 { 
   imports =                                   # Home Manager Modules
@@ -23,8 +23,8 @@
     (import ../modules/shell);
 
   home = {
-    username = "matthias";
-    homeDirectory = "/home/matthias";
+    username = "${user}";
+    homeDirectory = "/home/${user}";
 
     packages = with pkgs; [
       # Terminal

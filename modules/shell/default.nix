@@ -12,5 +12,4 @@
 
 [
   ./zsh.nix
-  ./git.nix
 ]

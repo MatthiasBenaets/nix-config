@@ -2,7 +2,7 @@
 # Screenshots
 #
 
-{ pkgs, ... }:
+{ pkgs, user, ... }:
 
 {
   services = {                                    # sxhkd shortcut = Printscreen button (Print)
@@ -10,7 +10,7 @@
       enable = true;
       settings = {
         General = {                               # Settings
-          savePath = "/home/matthias/";
+          savePath = "/home/${user}/";
           saveAsFileExtension = ".png";
           uiColor = "#2d0096";
           showHelp = "false";

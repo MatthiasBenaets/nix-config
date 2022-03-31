@@ -12,7 +12,7 @@
 #               └─ default.nix
 #
 
-{ config, pkgs, ... }:
+{ config, pkgs, user, ... }:
 
 {
   imports =                                 # For now, if applying to other system, swap files

@@ -11,12 +11,12 @@
 #            └─ ./home.nix 
 #
 
-{ lib, inputs, system, home-manager, ... }:
+{ lib, inputs, system, home-manager, user, ... }:
 
 {
   desktop = lib.nixosSystem {                           # Desktop profile
     inherit system;
-    specialArgs = { inherit inputs; };
+    specialArgs = { inherit user inputs; };             # Pass flake variable
     modules = [                                         # Modules that are used.
       ./desktop
       ./configuration.nix
@@ -24,7 +24,8 @@
       home-manager.nixosModules.home-manager {          # Home-Manager module that is used.
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.users.matthias = {
+        home-manager.extraSpecialArgs = { inherit user; };  # Pass flake variable
+        home-manager.users.${user} = {
           imports = [(import ./home.nix)] ++ [(import ./desktop/home.nix)];
         };
       }
@@ -41,7 +42,8 @@
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.users.matthias = {
+        home-manager.extraSpecialArgs = { inherit user; };
+        home-manager.users.${user} = {
           imports = [(import ./home.nix)] ++ [(import ./laptop/home.nix)];
         };
       }
@@ -58,7 +60,8 @@
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.users.matthias = {
+        home-manager.extraSpecialArgs = { inherit user; }; 
+        home-manager.users.${user} = {
           imports = [(import ./home.nix)] ++ [(import ./vm/home.nix)];
         };
       }

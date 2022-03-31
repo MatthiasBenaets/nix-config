@@ -14,7 +14,7 @@
 
 Build with:
 
-```sudo nixos-rebuild switch --flake .#$DEVICE```
+```sudo nixos-rebuild switch --flake .#<host>```
 on nixos-unstable
 
 On fresh NixOs-unstable install:
@@ -26,23 +26,29 @@ On fresh NixOs-unstable install:
   - If UEFI:
   - ```mkdir -p /mnt/boot```
   - ```mount /dev/disk/by-label/boot /mnt/boot```
+  - Mount other existing drives to their respective locations
 - ```nixos-generate-config --root /mnt```
-- ```git clone https://github.com/matthiasbenaets/nix-dotfiles /mnt/etc/nixos/dotfiles```
-- ```cp /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/dotfiles/hosts/$HOST/hardware-configuration.nix```
+- ```git clone https://github.com/matthiasbenaets/nixos-config /mnt/etc/nixos/setup```
+- Optional (current config works with labels not uuid's)
+  - ```cp /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/setup/hosts/<host>/hardware-configuration.nix```
 - ```rm /mnt/etc/nixos/configuration.nix```
-- Edit /mnt/etc/nixos/dotfiles/hosts/$HOST/default.nix
+- Change username in ```/mnt/etc/nixos/setup/flake.nix``` if you are not me.
+- Edit ```/mnt/etc/nixos/setup/hosts/<host>/default.nix```:
   - Change loader settings depending on Legacy Boot vs. UEFI
   - Edit networking interfaces
-     - Either ```ip a``` or look in /mnt/etc/nixos/configuration.nix
-  - Uncomment emacs in modules/editors/default.nix 
-     - Better to rebuild with it uncomment after installation to correctly install doom emacs.
-- ```cd /mnt/etc/nixos/dotfiles/```
-- ```nixos-install --flake .#$HOST```
-- Set root password and Reboot
-- Log into tty with root ```Ctrl - Alt - F1```
-- ```passwd $USER```
-- ```Ctrl - Alt - F7```
+     - Either ```ip a``` or look in ```/mnt/etc/nixos/configuration.nix```
+  - Set emacs to commented out in ```/mnt/etc/nixos/modules/editors/default.nix ```
+     - Better to rebuild with it uncommented after installation to correctly install doom emacs.
+- ```cd /mnt/etc/nixos/setup/```
+- ```nixos-install --flake .#<host>```
+- Set root password and reboot
+- If no users.users.initialPassword is set:
+  - Log into tty with root ```Ctrl - Alt - F1```
+  - ```passwd <user>```
+  - ```Ctrl - Alt - F7```
 - Log in with LightDM
-- Enjoy
+- Optional
+  - Move ```/etc/nixos/setup``` to other location and change permission to user:users
+  - ```nixos-rebuild switch --flake .#<host>``` to rebuild correctly and install doom emacs.
 
-if dual booting - rebuild once more if OS Prober can't find other partitions.
+If dual booting - rebuild once more if OS Prober can't find other partitions.
