@@ -57,6 +57,7 @@
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
+;; Change specific characters to unicode symbols
 (defun my/org-mode/load-prettify-symbols ()
   (interactive)
   (setq prettify-symbols-alist
@@ -72,5 +73,14 @@
 		 (">=" . ?≥))))
 	(prettify-symbols-mode 1))
 (add-hook 'org-mode-hook 'my/org-mode/load-prettify-symbols)
+
+;; Set height of bullets
+(custom-set-faces
+  '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
+  '(org-level-2 ((t (:inherit outline-2 :height 1.15))))
+  '(org-level-3 ((t (:inherit outline-3 :height 1.12))))
+  '(org-level-4 ((t (:inherit outline-4 :height 1.08))))
+  '(org-level-5 ((t (:inherit outline-5 :height 1.05))))
+)
 
 

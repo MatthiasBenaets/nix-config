@@ -59,41 +59,75 @@
   users.groups.libvirtd.members = [ "root" "${user}" ];
 }
 
-#FOR WINDOWS
-
 #SHARED FOLDER
-# Two options:
-# 1. Since this setup make use of iommu, you can pass through external usb hard drives or a specific PCI storage devices
-# 2. Set up shared folders in windows guest that can be accessed by host
-# 2.0. Enable above service gvfs (this is used in the file manager to actually connect to the windows directory)
-# 2.1. Log in to Windows
-# 2.2. Go to "Netowrk and Sharing Center"
-# 2.3. Click "Change advanced sharing settings" and enable all settings for Private, Guest or Public and All Networks
-# 2.3.1. Under "All Networks" you can disable "Password protected sharing" but it seems for optimal use, it's better to still give the password in the file manager
-# 2.4. (possibly optional), select a folder and click "Properties", "Sharing", "Advanced Sharing"
-# 2.4.1. Enable "Share this file"
-# 2.4.2. Under "Permissions", allow full control. Apply
-# 2.5. Click "Share" and use de drop down to add "Everyone" and change "Permission Level" to "Read/Write". Share, Done
-# 2.6. Search for services and open menu
-# 2.6.1. Search for below serices. Right click and select "Properties". "Startup type" = Automatic
-# 2.6.1.1. SSDP Discovery
-# 2.6.1.2. uPnPDevice Host
-# 2.6.1.3. Functions Discovery Provider Host
-# 2.6.1.4. Functions Discovery Resource Publication
-# 2.7. Find IP of virtual device and make sure you can ping it.
-# 2.8. In file manager add connection
-# 2.8.1. For example in PCManFM
-# 2.8.2. Search for smb://*ip*/
-# 2.8.3. You can even specify specific folder smb://*ip*/users/Matthias/Desktop/share
-# 2.8.4. If prompted to log in, do it, otherwise it might close on its own.
-# 2.9. If there are any issues, maybe disable firewall on guest
-# 2.10. Recommended to bookmark location for later
+#FOR WINDOWS
+# 3 options:
+#
+# 1. Make use of host samba server
+# 1.0 Samba is installed by default. The network-shared folder is at /home/<user>/share.
+# 1.1 On host, set a password for the autentication of the samba server
+# 1.2 $ smbpasswd -a <user>
+# 1.3 Give password twice
+# 1.4 On windows, open file explorer, right click "This PC", Map network drive...
+# 1.5 fill in address: \\<ip-address>\share
+# 1.6 Log in with details entered beforehand
+#
+# 2. Since this setup make use of iommu, you can pass through external usb hard drives or a specific PCI storage devices
+# 2.1 Open details of virtual desktop in virt-manager
+# 2.2 Add hardware
+# 2.3 USB Host Device
+# 2.4 Select device and launch virtual desktop
+#
+# 3. Set up shared folders in windows guest that can be accessed by host
+# 3.0. Enable above service gvfs (this is used in the file manager to actually connect to the windows directory)
+# 3.1. Log in to Windows
+# 3.2. Go to "Network and Sharing Center"
+# 3.3. Click "Change advanced sharing settings" and enable all settings for Private, Guest or Public and All Networks
+# 3.3.1. Under "All Networks" you can disable "Password protected sharing" but it seems for optimal use, it's better to still give the password in the file manager
+# 3.4. (possibly optional), select a folder and click "Properties", "Sharing", "Advanced Sharing"
+# 3.4.1. Enable "Share this file"
+# 3.4.2. Under "Permissions", allow full control. Apply
+# 3.5. Click "Share" and use de drop down to add "Everyone" and change "Permission Level" to "Read/Write". Share, Done
+# 3.6. Search for services and open menu
+# 3.6.1. Search for below serices. Right click and select "Properties". "Startup type" = Automatic
+# 3.6.1.1. SSDP Discovery
+# 3.6.1.2. uPnPDevice Host
+# 3.6.1.3. Functions Discovery Provider Host
+# 3.6.1.4. Functions Discovery Resource Publication
+# 3.7. Find IP of virtual device and make sure you can ping it.
+# 3.8. In file manager add connection
+# 3.8.1. For example in PCManFM
+# 3.8.2. Search for smb://*ip*/
+# 3.8.3. You can even specify specific folder smb://*ip*/users/Matthias/Desktop/share
+# 3.8.4. If prompted to log in, do it, otherwise it might close on its own.
+# 3.9. If there are any issues, maybe disable firewall on guest
+# 3.10. Recommended to bookmark location for later
 # Note:
-# This there is no passthrough, its recommended to install the windows kvm guest drivers.
+# There is no passthrough, its recommended to install the windows kvm guest drivers.
 # Can be found on github.com/virtio-win/virtio-win-pkg-scripts/blob/master/README.md
 # Add this as CD storage in virt manager
 # It can than be accest in the windows and the guest driver exe's can be run.
 # Also, change video in virt-manager to virtio. This will fix the resolution
+
+#FOR LINUX
+# 2 options
+#
+# 1. Make use of host samba server
+# 1.0 Samba is installed by default. The network-shared folder is at /home/<user>/share.
+# 1.1 On host, set a password for the autentication of the samba server
+# 1.2 $ smbpasswd -a <user>
+# 1.3 Give password twice
+# 1.4 On virtual machine open file manager
+# 1.5 Search for smb://<ip-address>/share
+# 1.6 Log in with details entered beforehand
+#
+# 2. Passing through a filesystem
+# 2.1 Open details of virtual desktop on virt-manager
+# 2.2 Add hardware
+# 2.3 Select Filesystem: Type = mount / Mode = mapped / Source path = /home/<user>/share / Target path = /sharepoint
+# 2.4 Boot into virtual machine
+# 2.5 Create a directory to mount /sharepoint
+# 2.6 $ sudo mount -t 9p -o trans=virtio /sharepoint /<mountpoint>
 
 #SINGLE GPU PASSTHROUGH
 # General Guide: gitlab.com/risingprismtv/single-gpu-passthrough/-/wikis/home

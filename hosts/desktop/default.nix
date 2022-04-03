@@ -94,7 +94,7 @@
     blueman.enable = true;                      # Bluetooth
     printing = {                                # Printing and drivers for TS5300
       enable = true;
-      drivers = [ pkgs.cnijfilter2 ];
+      drivers = [ pkgs.cnijfilter2 ];           # There is the possibility cups will complain about missing cmdtocanonij3. I guess this is just an error that can be ignored for now.
     };
     avahi = {                                   # Needed to find wireless printer
       enable = true;
@@ -105,21 +105,11 @@
         userServices = true;
       };
     };
-    samba = {
-      enable = true;
-#      enableNmbd = false;
-#      enableWinbindd = false;
-      #extraConfig = ''
-      #  guest account = myuser
-      #  map to guest = Bad User
-#
-#        load printers = no
-#        printcap name = /dev/null
-#      '';
-
+    samba = {                                   # File Sharing over local network
+      enable = true;                            # Don't forget to set a password:  $ smbpasswd -a <user>
       shares = {
-        share = {
-          "path" = "/home/${user}/share";
+        share = {                               # Best to chmod 777 this map
+          "path" = "/home/${user}/Share";
           "guest ok" = "yes";
           "read only" = "no";
         };
