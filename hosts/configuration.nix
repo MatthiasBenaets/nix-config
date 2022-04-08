@@ -30,7 +30,7 @@
   };  
   console = {
     font = "Lat2-Terminus16";
-    keyMap = "azerty";
+    keyMap = "azerty";                      # or us/dvorak/etc
   };
 
   services = {

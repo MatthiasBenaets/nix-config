@@ -13,12 +13,13 @@
   home = {                                # Specific packages for desktop
     packages = with pkgs; [
       # Applications
-      plex-media-player # Media player
-      libreoffice       # Office packages
-      lutris            # Game launcher
-      shotcut           # Video Editor
       darktable         # Raw Image Processing
-
+      gimp              # Graphical Editor
+      libreoffice       # Office Packages
+      lutris            # Game Launcher
+      plex-media-player # Media Player
+      shotcut           # Video Editor
+      
       # Dependencies
       gmtp              # Used for mounting gopro
       

@@ -65,6 +65,9 @@
       enable = true;
       extraModules = [ pkgs.pulseaudio-modules-bt ];  # Extra Bluetooth Codecs 
       package = pkgs.pulseaudioFull;
+      extraConfig = ''
+        load-module module-switch-on-connect
+      '';                                         # Automatically switch to bluetooth device upon connection
     };
   };
 

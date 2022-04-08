@@ -91,10 +91,10 @@
           polybar main & #2>~/log &             # To lazy to figure out systemd service order
 
           #Setting for desktop:
-          if [[ $(xrandr -q | grep 'HDMI-A-0 connected') ]]; then   # If second monitor, also enable second polybar
-            #bspc monitor HDMI-A-0 -s HDMI-A-1
-            bspc monitor HDMI-A-0 -d 6 7 8 9 10
-            bspc wm -O HDMI-A-1 HDMI-A-0
+          if [[ $(xrandr -q | grep 'DisplayPort-1 connected') ]]; then   # If second monitor, also enable second polybar
+            #bspc monitor DisplayPort-1 -s HDMI-A-1
+            bspc monitor DisplayPort-1 -d 6 7 8 9 10
+            bspc wm -O HDMI-A-1 DisplayPort-1
             polybar sec &
           fi
         '';

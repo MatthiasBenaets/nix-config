@@ -52,7 +52,7 @@ in
           wm-restack = "bspwm";
         };
         "bar/sec" = {
-          monitor = "HDMI-A-0";
+          monitor = "DisplayPort-1";
           width = "100%";
           height = 15;
           background = "#00000000";
