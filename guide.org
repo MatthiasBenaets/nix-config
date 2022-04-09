@@ -1,0 +1,768 @@
+#+TITLE: NixOS Guide
+#+DESCRIPTION: A basic introduction on building a NixOS config on your personal machine
+#+AUTHOR: Matthias Benaets
+
+#+ATTR_ORG: :width 500
+[[file:NixOS_logo.svg]]
+
+* NixOS
+** Introduction
+1. Linux distribution based on Nix package manager
+2. Supports declarative reproducible system configurations
+3. "Unbreakable" ↘
+   - Boot to specific configuration generations. (as mentioned above - reproducible)
+4. nix-store: no /lib & /usr/lib. almost non-existant /bin & /usr/bin. -> /nix/store
+5. nix-env: install packages at user level without having to change system state
+** Getting Started
+*** NixOS Website
+- [ ] [[https://nixos.org/][NixOS]]
+- [ ] [[https://nixos.org/manual/nixos/stable][Manual]]: Downloads -> NixOS -> More -> Manual
+- [ ] [[https://releases.nixos.org/?prefix=nixos][Unstable]]: Downloads -> NixOS -> More -> also available
+
+*** Burning ISO
+- balenaEtcher
+
+*** Booting into ISO
+**** Via USB
+- On boot: Esc / Del / F9-12
+
+**** Virt-Manager
+- Download KDE ISO
+- Optional minimal ISO
+- No password needed
+- Root
+  - Terminal (Konsole)
+  - $ sudo su
+Extra:
+- minimal iso: loadkeys ...
+- graphical iso: setxkbmap ...
+
+*** Partitioning
+**** GUI: Gparted [0/4]
+- [ ] Device -> Create partition table   -> msdos (legacy boot)
+                                        -> gpt (uefi boot)
+- [ ] Add new partition -> fileSystem: ext4/linux-swap
+- [ ] Manage flags -> boot for ext4 (possible not necessary)
+- [ ] Label partitions (useful later)
+
+**** Terminal: Parted
+*These step are for a fresh installation. Not dual boot*
+#+BEGIN_SRC
+  # parted /dev/sda -- mklabel msdos (gpt for uefi)
+  # parted /dev/sda -- mkpart primary 1MiB -8GiB (512MiB -8GiB for uefi)
+  # parted /dev/sda -- mkpart primary linux-swap -8GiB 100%
+
+  /* extra for UEFI */
+  # parted /dev/sda -- mkpart ESP fat32 1Mib 512MiB
+  # parted /dev/sda -- set 3 esp on
+
+  # mkfs.ext4 -L nixos /dev/sda1
+  # mkswap -L swap /dev/sda2
+
+  /* extra for UEFI */
+  # mkfs.fat -F 32 -n boot /dev/sda3
+#+END_SRC
+
+**** Mounting
+#+BEGIN_SRC
+  # mount /dev/disk/by-label/nixos /mnt
+
+  /* extra for UEFI */
+  # mkdir -p /mnt/boot
+  # mount /dev/disk/by-label/boot /mnt/boot
+
+  # swapon /dev/sda2
+#+END_SRC
+
+** Initial Configuration
+*** Generate
+- Generate default configuration:
+    # nixos-generate-config --root /mnt
+- Location:
+    # cd /mnt/etc/nixos/
+
+*** Configuration.nix
+**** General
+- Argument on how to evaluate config:
+    {config, pkgs, ...}:
+- Pull in other files used withinthe config:
+    import = [./hardware-configuration.nix];
+
+**** Boot [0/3]
+***** [ ] Legacy
+*Only viable if dualbooting linux distributions*
+#+BEGIN_SRC nix
+  # Default Grub setup
+  boot.loader.grub.enable = true;
+  boot.loader.grub.version = 2;
+  boot.loader.grub.device = "/dev/vda";
+  # Dual booting made easy (Optional)
+  boot.loader.grub.useOSProber = true;
+  # Dual booting made a bit harder (Extra Optional)
+  boot.loader.grub.extraEntries = ''
+    menuentry "Windows 10" {
+      chainloader (hd0,1)+1
+    }
+  '';
+#+END_SRC
+
+***** [ ] UEFI
+*Used for larger boot drives and dual booting with Windows*
+#+BEGIN_SRC nix
+  # Default UEFI setup
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  # Dual Booting using grub
+  boot.loader = {
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot/efi"; # /boot will probably work too
+    };
+    grub = {                          # Using grub means first 2 lines can be removed
+      enable = true;
+      #device = ["nodev"];            # Generate boot menu but not actually installed
+      devices = ["nodev"];            # Install grub
+      efiSupport = true;
+      useOSProber = true;             # Or use extraEntries like seen with Legacy
+    };                                # OSProber will probably not find windows partition on first install
+  };
+#+END_SRC
+
+***** [ ] Extras
+#+BEGIN_SRC nix
+  { pkgs, ... }:
+
+  {
+    boot ={
+      kernelPackages = pkgs.linuxPackages_latest;       # Get latest kernel
+      initrd.kernelModules = ["amdgpu"];                # More on this later on (setting it for xserver)
+      loader = {
+        #efi = {
+          #canTouchEfiVariables = true;
+          #efiSysMountPoint = "/boot/efi";
+        #};
+        grub = {
+          #enable = true;
+          #devices = ["nodev"];
+          #efiSupport = true;
+          #useOSProber = true;
+          configurationLimit = 5;                       # Limit stored system configurations.
+        };                                              # Also exists for systemd-boot
+        timeout = 5;                                    # Work for grub and efi boot, time before auto-boot
+      };
+    };
+  }
+#+END_SRC
+
+**** Networking [0/0]
+- [ ] Uncomment: networking.hostName="nixos";
+- [ ] Network card details #could.be.moved.to.hardware-configuration.nix
+  - Deprecated but keep: networking.useDHCP = false;
+  - Just internet via ethernet: networking.interfaces.<networkcard-id>.useDHCP = true;
+
+***** Extras
+#+BEGIN_SRC nix
+  networking = {
+    #hostName = "nixos";
+    #networkmanager.enable = true;
+    interfaces ={
+      enp0s5 = {
+        #useDHCP = true;
+        ipv4.addresses = [ {                  # Ofcourse not compatible with networkmanager
+          address = "192.168.0.50";
+          prefixLength = 24;
+        } ];
+      };
+    };
+    defaultGateway = "192.168.0.1";
+    nameservers = [ "1.1.1.1" ];
+  };
+#+END_SRC
+
+**** Internationalisation
+*Where am i? How do i work*
+#+BEGIN_SRC nix
+  # Clock
+  time.timeZone = "Belgium/Brussels";
+  # Locale
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_TIME = "nl_BE.UTF-8";
+    LC_MONETARY = "nl_BE.UTF-8";
+  };
+  # TTY layout
+  console = {
+    font = "...";
+    keyMap = "...";                           # us / fr / azerty / etc...
+  };
+  # XServer layout (possibly also sets console now)
+  services.xserver.layout = "..."             # us / fr / be / etc..
+  # Extra keyboard settings:
+  services.xserver.xkbOptions = "eurosign:e"; # For example adds €
+#+END_SRC
+
+**** Display Managers/Desktop Environments/Window Managers
+*Default*
+#+BEGIN_SRC nix
+  services.xserver.enable = true;
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
+#+END_SRC
+
+*Customized*
+#+BEGIN_SRC nix
+  services = {
+    xserver = {
+      enable = true;
+      displayManager = {
+        lightdm.enable = true;
+        defaultSession = “none+bspwm”;
+      };
+      desktopManager.xfce.enable = true;
+      windowManager.bspwm.enable = true;
+    };
+  };
+#+END_SRC
+
+**** Hardware
+***** Audio & Bluetooth
+- [[https://nixos.wiki/wiki/PulseAudio][PulseAudio Wiki]]
+- [[https://nixos.wiki/wiki/Bluetooth][Bluetooth Wifi (+ configuring it with PulseAudio)]]
+
+****** Example
+#+BEGIN_SRC nix
+  { pkgs, ... }:
+
+  {
+    sound = {
+      enable = true;
+      mediaKeys.enable = true;
+    };
+    hardware.bluetooth = {
+      enable = true;
+      hsphfpd.enable = true;         # HSP & HFP daemon
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+        };
+      };
+    };
+  }
+#+END_SRC
+
+***** Touchpad
+- [[https://search.nixos.org/options?channel=21.11&show=services.xserver.libinput.tapping&from=0&size=50&sort=relevance&type=packages&query=libinput][Libinput Options]]
+#+BEGIN_SRC nix
+  services.xserver.libinput = {
+    enable = true;
+    #tapping = true;
+    #naturalScrolling = true;
+    #...
+  }
+#+END_SRC
+
+**** Users
+#+BEGIN_SRC nix
+  users.users.<name> = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" "video" "audio" "networkmanager" "lp" "scanner"]
+    #initialPassword = "password";
+    #shell = pkgs.zsh;
+  }
+#+END_SRC
+
+**** Packages
+#+BEGIN_SRC nix
+  environment.systemPackages = with pkgs; [
+    vim
+    wget
+    git
+    #pkgs.firefox
+    firefox
+  ];
+#+END_SRC
+
+**** StateVersion
+- No need to touch this.
+- Nothing to do with the version of the system.
+- Just tells the version of state/config
+- Can be updates to a stable version if you are really sure.
+
+*** Hardware-configuration.nix
+**** Generate
+- Also get automatically generated with:
+    # nixos-generate-config --root /mnt
+- Should detect mounted drives, device parts, kernelModules, etc.. that are needed
+- Can be deleted and regenerated with:
+    # nixos-generate-config
+
+**** File System
+- $ sudo blkid
+- or just look in gparted
+#+BEGIN_SRC nix
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/e97ad9a8-d84f-4710-b8c9-cfa7707510ca";
+      fsType = "ext4";
+    };
+
+  #fileSystem."/" =
+  #  { device = "/dev/disk/by-label/nixos";
+  #    fsType = "ext4";
+  #  };
+#+END_SRC
+
+** Installation
+*** System
+- [ ] For initial installation:
+    # nixos-install
+- [ ] After applying changes to the config:
+    # nixos-rebuild switch
+- [ ] Lastly: Set a root password
+
+*** Login
+**** initialPassword
+- Log in with give password of users.users.<user>.initialPassword
+
+**** via TTY
+- Ctrl + Alt + F1 -> Log in via root
+- # passwd <user>
+- Ctrl + Alt + F7 -> Log in via user
+
+** Declaring packages, services, settings, etc
+*** Options
+- Individually via Nix Package Manager
+    Install: $ nix-env -iA nixos.firefox
+    List: $ nix-env -q
+    Uninstall: $ nix-env --uninstall firefox
+- Configuration file:
+
+*** Links
+- [[https://search.nixos.org/packages][Packages]]
+- [[https://search.nixos.org/options?][Options]]
+- $ man configuration.nix
+
+*** Declaring Packages
+*Installed Systemwide*
+#+BEGIN_SRC nix
+  environment = {
+    systemPackages = with pkgs; [
+      plex
+      superTux
+    ];
+  };
+
+  nixpkgs.config.allowUnfree = true;
+#+END_SRC
+
+*** Declaring Option
+*Some packages will also have options to configure it further*
+#+BEGIN_SRC nix
+  services = {
+    plex = {
+      enable = true;
+      openFirewall = true;
+    };
+  };
+#+END_SRC
+
+*** Variables
+*Values that can change often or you want to use multiple times*
+#+BEGIN_SRC nix
+  let
+    rofi-theme = {
+      "*" = {
+        bg = "#FFFFFF";
+      };
+    };
+  in
+  {
+    programs.rofi = {
+      enable = true;
+      theme = rofi-theme;
+    };
+  }
+#+END_SRC
+
+*** Overlays
+*Change packages or add new packages to existing in nix*
+- [[https://nixos.wiki/wiki/Overlays][Overlays wiki]]
+#+BEGIN_SRC nix
+  nixpkgs.overlays = [
+    (self: super: {
+      sl = super.sl.overrideAttrs (old: {
+        src = super.fetchFromGitHub {
+          owner = "mtoyoda";
+          repo = "sl";
+          rev = "923e7d7ebc5c1f009755bdeb789ac25658ccce03";
+          sha256 = "0000000000000000000000000000000000000000000000000000";
+        };
+      });
+    })
+
+    (self: super: {
+      discord = super.discord.overrideAttrs (
+        _: { src = builtins.fetchTarball {
+          url = "https://discord.com/api/download?platform=linux&format=tar.gz";
+          sha256 = "0000000000000000000000000000000000000000000000000000"; #52 0's
+        }; }
+      );
+    })
+  ];
+  #Should be the same for home-manager
+#+END_SRC
+
+*** Applying
+- $ sudo nixos-rebuild switch
+
+** Extras
+*** Updating & Upgrading
+**** Nix-channel
+A. $ nix-channel --add https://nixos.org/channels/nixos-21.11
+   OR
+B. $ nix-channel --update
+2. Next rebuild,use the --upgrade flag:
+     $ sudo nixos-rebuild --upgrade
+
+D. Installed through nix-env:
+     $ nix-env -u '*'
+
+**** Configuration.nix
+#+BEGIN_SRC nix
+  system.autoUpgrade = {
+    enable = true;
+    channel = "https://nixos.org/channels/nixos-unstable";
+  };
+#+END_SRC
+
+*** Garbage Collection
+**** Command-line [0/4]
+- [ ] Remove undeclared packaged, dependencies and symlinks:
+    $ nix-collect-garbage
+- [ ] Remove above of older generations:
+    $ nix-collect-garbage --delete-old
+  List generations:
+    $ nix-env --list-generations
+- [ ] Remove specific generations or older than ... days:
+    $ nix-env --delete-generations 14d
+    $ nix-env --delete-generations 10 11
+  Optimize store:
+    $ nix-store --gc
+- [ ] All in one:
+    $ nix-collect-garbage -d
+
+**** Configuration.nix
+#+BEGIN_SRC nix
+  nix = {
+    settings.auto-optimise-store = true;
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d"
+    };
+  };
+#+END_SRC
+
+* Home-Manager
+** Introduction
+- It's like configuration.nix, but for the user environment.
+- Plenty more options to declare packages
+- Also a better way to manage dotfiles
+
+** Getting Started
+*** Home-Manager Website
+- [ ] [[https://github.com/nix-community/home-manager][Github]]
+- [ ] [[https://nix-community.github.io/home-manager/][Manual]]
+- [ ] [[https://nix-community.github.io/home-manager/options.html][Appendix A]]
+- [ ] [[https://nix-community.github.io/home-manager/nixos-options.html][Appendix B]]
+
+*** Setup
+**** Initial [0/3]
+*As a user*
+- [ ] Add the channel: *need to be run with root privileges if you want to us the NixOS Module*
+    $ nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+    $ nix-channel --add https://github.com/nix-community/home-manager/archive/release-21.11.tar.gz home-manager
+- [ ] $ nix-channel --update
+- [ ] Just to be sure, relog.
+
+**** NixOS Module
+*Add to configuration.nix*
+#+BEGIN_SRC  nix
+  let
+  in
+  {
+    imports = [ <home-manager/nixos> ];
+
+    users.users.<name> = {
+      isNormalUser = true;
+    }
+
+    home-manager.users.<name> = { pkgs, …}: {
+      # declared packages. for example:
+      home.packages = [ pkgs.atool pkgs.httpie ];
+    };
+  }
+#+END_SRC
+
+**** Standalone
+- Installation:
+    $ nix-shell ‘<home-manager>’ -A install
+- Configuration file:
+    $ cd ~/.config/nixpkgs/home.nix
+
+** Configuration
+*** Links
+- [[https://nix-community.github.io/home-manager/options.html][Home-Manager Options]]
+- $ man home-configuration.nix
+
+*** Declare user packages
+#+BEGIN_SRC nix
+  home.packages = with pkgs; [
+    firefox
+  ];
+
+  services.dunst = {
+    enable = true;
+  };
+#+END_SRC
+
+*** Applying
+$ home-manager switch
+
+** Dotfiles
+*** Copy/Symlink
+**** Existing config files
+*For example, randomly nicked files used by other (who don't use NixOS)*
+#+BEGIN_SRC nix
+  home.file = {
+    ".config/alacritty/alacritty.yml".text = ''
+      {"font":{"bold":{"style":"Bold"}}}
+    '';
+  };
+#+END_SRC
+
+**** Stored files (also with no link to NixOS)
+#+BEGIN_SRC nix
+  home.file.".doom.d" = {
+    source ./doom.d;
+    recursive = true;
+    onChange = builtins.readFile ./doom.sh;
+  };
+  home.file.".config/polybar/script/mic.sh"={
+    source = ./mic.sh;
+    executable = true;
+  };
+#+END_SRC
+
+*** Declared
+*Example will generate a file .config/bspwm/bspwmrc*
+#+BEGIN_SRC nix
+  {
+    xsession = {
+      windowManager = {
+        bspwm = {
+          enable = true;
+          rules = {
+            "Emacs" = {
+              desktop = "3";
+              follow = true;
+              state = "tiled";
+            };
+            ".blueman-manager-wrapped" ={
+              state = "floating";
+              sticky = true;
+            };
+          };
+        };
+      };
+    };
+  }
+#+END_SRC
+
+* Flakes
+** Introduction
+- Flakes is an "upcoming feature" of the Nix package manager.
+- Specify code dependencies declaratively (will be stored in flake.lock)
+  - For example: home-manager
+- Rebuilding and updating whole system made easy
+- Very useful tool to build your own config
+  - Multiple configs in one
+  - People with github dotfiles will feel right at home
+
+** Getting Started
+*** Flakes Wiki
+- [[https://nixos.wiki/wiki/Flakes][Wiki]]
+
+*** Setup
+**** Configuration.nix
+#+BEGIN_SRC nix
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = "experimental-features = nix-command flakes";
+  };
+#+END_SRC
+
+**** Generate
+*This command will generate a flake.nix and flake.lock file*
+- pick a location to store in your system
+- $ nix flake init
+
+**** Inputs and Outputs
+***** Inputs
+*attribute set of all the dependencies used in the flake*
+#+BEGIN_SRC nix
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+  };
+#+END_SRC
+
+***** Outputs
+*function of an argument that uses a the inputs for reference*
+- Configure what you imported
+- Can be pretty much anything: Packages / configurations / modules / etc...
+
+** Configuration
+*** NixOS
+**** Flake.nix
+#+BEGIN_SRC nix
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    #nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+  };
+  outputs = { nixpkgs, home-manager, … }:
+    let
+      system = “x86_64-linux”;
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
+      lib = nixpkgs.lib;
+   in {
+     nixosConfigurations = {
+       <user> = lib.nixosSystem {
+         inherit system;
+         modules = [ ./configuration.nix ];
+       };
+       #<second user> = lib.nixosSystem {
+         #inherit system;
+         #modules = [ ./configuration.nix ];
+       #};
+     };
+  }
+#+END_SRC
+
+**** Build
+*a ".(#)" will just build host found in location*
+*specify host with ".#<host>" appended*
+- *optional* $ cp /etc/nixos/* <flake location>
+- $ nixos-rebuild build --flake .#
+or build and automatically switch
+- $ sudo nixos-rebuild switch --flake .#
+
+*** Home-Manager
+**** Flake.nix
+***** Seperate
+#+BEGIN_SRC nix
+  {
+    inputs = {
+      ...
+      home-manager = {
+        url = github:nix-community/home-manager;
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+    };
+    outputs = { self, nixpkgs, home-manager, ... }:
+      let
+        ...
+      in {
+        ...
+        hmConfig = {
+          <user> = home-manager.lib.homeManagerConfiguration {
+            inherit system pkgs;
+            username = “<user>”;
+            homeDirectory = “/home/<user>”;
+            #stateVersion = "22.05";  # If there is any complaining about differing stateVersions, specifically state here.
+            configuration = {
+              imports = [
+                /home/<user>/.config/home/home.nix
+              ];
+            };
+          };
+        };
+      };
+  }
+#+END_SRC
+
+***** Inside nixosConfigurations
+#+BEGIN_SRC nix
+  {
+    inputs = {
+      home-manager = {
+        url = github:nix-community/home-manager;
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+    };
+    outputs = { self, nixpkgs, home-manager, ... }:
+      let
+        ...
+      in {
+        nixosConfigurations = {
+          <user> = lib.nixosSystem {
+            inherit system;
+            modules = [
+              ./configuration.nix
+              home-manager.nixosModules.home-manager {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.users.<user> = {
+                  imports = [ ./home.nix ];
+                };
+              }
+            ];
+          };
+        };
+      };
+  }
+#+END_SRC
+
+**** Build
+***** Seperate
+*This will build a directory with everything home-manager needs. An activation script is also located inside this dir*
+- $ nix build .#hmConfig.<user>.activationPackage
+- $ ./result/activate
+
+***** Inside nixosConfiguraitons
+*Can be build with default rebuild command*
+- $ sudo nixos-rebuild switch
+
+** Updating
+*This will update the flake.lock file*
+- $ nix flake update #--recreate-lock-file
+- Now rebuild and switch
+
+** Flake on fresh install
+- Boot into ISO
+#+BEGIN_SRC
+  $ sudo su
+  # nix-env -iA nixos.git
+  # git clone <repo url> /mnt/<path>
+  # nixos-install --flake .#<host>
+  # reboot
+  /* login */
+  $ sudo rm -r /etc/nixos/configuration.nix
+  /* move build to desired location */
+#+END_SRC
+
+* Personal Config
+- [[/home/matthias/.setup][Config directory]]
+* Resources
+1. [[https://nixos.org/][NixOS Website]]
+2. [[https://nixos.org/learn.html/][NixOS Learn]]
+3. [[https://nixos.org/manual/nixos/stable/][NixOS Manual]]
+4. [[https://nixos.wiki/wiki/Main_Page][NixOS Wiki]]
+5. [[https://nixos.org/guides/nix-pills/][Nix Pills]]
+6. [[https://github.com/nix-community/home-manager/][Home-Manager Github]]
+7. [[https://nix-community.github.io/home-manager/][Home-Manager Manual]]
+8. [[https://nix-community.github.io/home-manager/options.html][Home-Manager Appendix_A]]
+9. [[https://nix-community.github.io/home-manager/nixos-options.html][Home-Manager Appendix B]]
+10. [[https://nixos.wiki/wiki/Configuration_Collection][List of reference configurations]]

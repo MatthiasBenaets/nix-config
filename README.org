@@ -1,0 +1,155 @@
+#+TITLE: Readme
+#+DESCRIPTION: General information about flakes and how to set it up
+#+AUTHOR: Matthias Benaets
+
+#+ATTR_ORG: :width 500
+[[file:NixOS_logo.svg]]
+
+
+* NixOS System Flake Configuration
+** System Components
+|              |                   |
+| ---          | ---               |
+| *shell:*     | Zsh               |
+| *DM:*        | LightDM           |
+| *WM:*        | Bspwm + Polybar   |
+| *Terminal*   | Alacritty         |
+| *Editor:*    | Nvim + Doom Emacs |
+| *Launcher:*  | Rofi              |
+| *GTK Theme:* | Dracula           |
+
+** Installation guide
+This flake currently has *3* hosts
+ 1. desktop
+    - UEFI boot w/ systemd-boot
+ 2. laptop
+    - UEFI boot w/ grub (Dual Boot)
+ 3. vm
+    - Legacy boot w/ grub
+
+Flakes can be build with:
+~sudo nixos-rebuild switch --flake .#<hostname>~
+
+*Installation steps:*
+*** Partitioning
+This will depend on the host chosen.
+**** UEFI
+*In these commands*
+- Partition Labels:
+  - Boot = "boot"
+  - Home = "nixos"
+- Partition Size:
+  - Boot = 512MiB
+  - Swap = 8GiB
+  - Home = Rest
+- No Swap: Ignore line 3 & 7
+
+#+BEGIN_SRC
+# parted /dev/sda -- mklabel gpt
+# parted /dev/sda -- mkpart primary 512MiB -8GiB
+# parted /dev/sda -- mkpart primary linux-swap -8GiB 100%
+# parted /dev/sda -- mkpart ESP fat32 1MiB 512MiB
+# parted /dev/sda -- set 3 esp
+# mkfs.ext4 -L nixos /dev/sda1
+# mkswap -L /dev/sda2
+# mkfs.fat -F 32 -n boot /dev/sda3
+#+END_SRC
+**** Legacy
+*In these commands*
+- Partition Label:
+  - Home & Boot = "nixos"
+  - Swap = "swap"
+- Partition Size:
+  - Swap = 8GiB
+  - Home = Rest
+- No swap: Ignore line 3 and 5
+
+#+BEGIN_SRC
+# parted /dev/sda -- mklabel msdos
+# parted /dev/sda -- mkpart primary 1MiB -8GiB
+# parted /dev/sda -- mkpart primary linux-swap -8GiB 100%
+# mkfs.ext4 -L nixos /dev/sda1
+# mkswap -L /dev/sda2
+#+END_SRC
+*** Installation
+**** UEFI
+*In these commands*
+- Partition with label ... to ...
+  - "nixos" = /mnt
+  - "boot" = /mnt/boot
+#+BEGIN_SRc
+# mount /dev/disk/by-label/nixos /mnt
+# mkdir -p /mnt/boot
+# mount /dev/disk/by-label/boot /mnt/boot
+#+END_SRC
+**** Legacy
+#+BEGIN_SRC
+# mount /dev/disk/by-label/nixos /mnt
+#+END_SRC
+**** Mounting Extras
+*In these commands*
+- Directory to mount a ssd:
+  - /mnt/ssd
+- Label of storage:
+  - ssd2
+- If storage has no label:
+  - ~mount /dev/disk/by-uuid/ssd2 /mnt/ssd~
+#+BEGIN_SRC
+# mkdir -p /mnt/ssd
+# mount /dev/disk/by-label/ssd2 /mnt/ssd
+#+END_SRC
+**** Generate
+*In these commands*
+- Swap is enable:
+  - Ignore if no swap or enough RAM
+- Configuration files are generates @ /mnt/etc/nixos
+  - If you are me, you don't need to do this. Hardware-configuration.nix already in flake.
+#+BEGIN_SRC
+# swapon /dev/sda2
+# nixos-generate-config --root /mnt
+# nix-env -iA nixos.git
+# git clone https://github.com/matthiasbenaets/nixos-config /mnt/etc/nixos/<name>
+#+END_SRC
+**** Possible Extra Steps
+1. Comment out emacs from ~<repo directory>/modules/editors/default.nix~
+   - This is because the doom emacs script needs a second terminal instance to install
+   - You can uncomment this on first rebuild
+2. Switch specific host hardware-configuration.nix with generated /mnt/etc/nixos/hardware-configuration.nixos
+3. Change existing network card name with the one in your system
+   - Look in generated hardware-configuration.nixos
+   - Or enter ~$ ip a~
+4. Change username in flake.nix
+5. Set a ~users.users.${user}.initialPassword = "..."~
+   - Not really recommended. It's maybe better to follow last steps
+**** Install
+*In these commands*
+- Move into cloned repository
+  - in this example ~/mnt/etc/nixos/<name>~
+- Available hosts:
+  - desktop
+  - laptop
+  - vm
+#+BEGIN_SRC
+# cd /mnt/etc/nixos/<name>
+# nixos-install --flake .#<host>
+#+END_SRC
+*** Finalization
+1. Set a root password after installation is done
+2. Reboot without livecd
+3. Login
+   1. If initialPassword is not set use TTY:
+      - ~Ctrl - Alt - F1~
+      - login as root
+      - ~# passwd <user>~
+      - ~Ctrl - Alt - F7~
+      - login as user
+4. Optional:
+   - ~$ sudo mv <location of cloned directory> <prefered location>~
+   - ~$ sudo chown -R <user>:users <new directory>~
+   - ~$ sudo rm /etc/nixos/configuration.nix~
+   - or just clone flake again do apply same changes.
+5. Dual boot:
+   - OSProber probably did not find your Windows partion after the first install
+   - There is a high likelyhood it will find it after:
+     - ~$ cd <repo directory>~
+     - ~$ sudo nixos-rebuild switch --flake .#<host>~
