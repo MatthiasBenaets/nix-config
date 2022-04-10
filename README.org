@@ -1,15 +1,12 @@
-#+TITLE: Readme
-#+DESCRIPTION: General information about flakes and how to set it up
+#+TITLE: Personal NixOS System Flake Configuration
+#+DESCRIPTION: General information about my flake and how to set it up
 #+AUTHOR: Matthias Benaets
 
 #+ATTR_ORG: :width 500
-[[file:NixOS_logo.svg]]
+[[file:rsc/Header.svg]]
 
 
-* NixOS System Flake Configuration
-** System Components
-|              |                   |
-| ---          | ---               |
+* System Components
 | *shell:*     | Zsh               |
 | *DM:*        | LightDM           |
 | *WM:*        | Bspwm + Polybar   |
@@ -18,7 +15,7 @@
 | *Launcher:*  | Rofi              |
 | *GTK Theme:* | Dracula           |
 
-** Installation guide
+* Installation guide
 This flake currently has *3* hosts
  1. desktop
     - UEFI boot w/ systemd-boot
@@ -30,10 +27,9 @@ This flake currently has *3* hosts
 Flakes can be build with:
 ~sudo nixos-rebuild switch --flake .#<hostname>~
 
-*Installation steps:*
-*** Partitioning
+** Partitioning
 This will depend on the host chosen.
-**** UEFI
+*** UEFI
 *In these commands*
 - Partition Labels:
   - Boot = "boot"
@@ -54,7 +50,7 @@ This will depend on the host chosen.
 # mkswap -L /dev/sda2
 # mkfs.fat -F 32 -n boot /dev/sda3
 #+END_SRC
-**** Legacy
+*** Legacy
 *In these commands*
 - Partition Label:
   - Home & Boot = "nixos"
@@ -71,8 +67,8 @@ This will depend on the host chosen.
 # mkfs.ext4 -L nixos /dev/sda1
 # mkswap -L /dev/sda2
 #+END_SRC
-*** Installation
-**** UEFI
+** Installation
+*** UEFI
 *In these commands*
 - Partition with label ... to ...
   - "nixos" = /mnt
@@ -82,11 +78,11 @@ This will depend on the host chosen.
 # mkdir -p /mnt/boot
 # mount /dev/disk/by-label/boot /mnt/boot
 #+END_SRC
-**** Legacy
+*** Legacy
 #+BEGIN_SRC
 # mount /dev/disk/by-label/nixos /mnt
 #+END_SRC
-**** Mounting Extras
+*** Mounting Extras
 *In these commands*
 - Directory to mount a ssd:
   - /mnt/ssd
@@ -98,7 +94,7 @@ This will depend on the host chosen.
 # mkdir -p /mnt/ssd
 # mount /dev/disk/by-label/ssd2 /mnt/ssd
 #+END_SRC
-**** Generate
+*** Generate
 *In these commands*
 - Swap is enable:
   - Ignore if no swap or enough RAM
@@ -110,7 +106,7 @@ This will depend on the host chosen.
 # nix-env -iA nixos.git
 # git clone https://github.com/matthiasbenaets/nixos-config /mnt/etc/nixos/<name>
 #+END_SRC
-**** Possible Extra Steps
+*** Possible Extra Steps
 1. Comment out emacs from ~<repo directory>/modules/editors/default.nix~
    - This is because the doom emacs script needs a second terminal instance to install
    - You can uncomment this on first rebuild
@@ -133,7 +129,7 @@ This will depend on the host chosen.
 # cd /mnt/etc/nixos/<name>
 # nixos-install --flake .#<host>
 #+END_SRC
-*** Finalization
+** Finalization
 1. Set a root password after installation is done
 2. Reboot without livecd
 3. Login

@@ -15,6 +15,7 @@
       # Applications
       darktable         # Raw Image Processing
       gimp              # Graphical Editor
+      inkscape          # Vector Graphical Editor
       libreoffice       # Office Packages
       lutris            # Game Launcher
       plex-media-player # Media Player

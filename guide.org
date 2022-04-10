@@ -3,13 +3,13 @@
 #+AUTHOR: Matthias Benaets
 
 #+ATTR_ORG: :width 500
-[[file:NixOS_logo.svg]]
+[[file:rsc/NixOS.svg]]
 
 * NixOS
 ** Introduction
 1. Linux distribution based on Nix package manager
 2. Supports declarative reproducible system configurations
-3. "Unbreakable" ↘
+3. "Unbreakable"
    - Boot to specific configuration generations. (as mentioned above - reproducible)
 4. nix-store: no /lib & /usr/lib. almost non-existant /bin & /usr/bin. -> /nix/store
 5. nix-env: install packages at user level without having to change system state
