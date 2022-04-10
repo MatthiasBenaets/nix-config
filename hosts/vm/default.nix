@@ -28,13 +28,6 @@
     };
   };
 
-  networking = {
-    hostName = "nixos";
-    interfaces = {
-      enp0s3.useDHCP = true;                    # Change to correct network driver.
-    };
-  };
-
   services = {
     xserver = {                                 
       resolutions = [

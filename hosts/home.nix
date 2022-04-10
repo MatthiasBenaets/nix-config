@@ -57,11 +57,13 @@
       # General configuration
       #git              # Repositories
       #killall          # Stop Applications
-      #neovim           # Text Editor
+      #nano             # Text Editor
       #pciutils         # Computer utility info
-      #usbutils         # USB utility info
       #pulseaudio       # Sound
+      #usbutils         # USB utility info
       #wget             # Downloader
+      #xclip            # Console Clipboard
+      #xterm            # Terminal
       #zsh              # Shell
       #
       # Imports General home-manager modules
@@ -69,7 +71,7 @@
       #dunst            # Notifications
       #doom emacs       # Text Editor
       #flameshot        # Screenshot
-      #nano             # Text Editor
+      #neovim           # Text Editor
       #picom            # Compositer
       #polybar          # Bar
       #rofi             # Menu

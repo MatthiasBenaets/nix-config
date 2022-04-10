@@ -1,10 +1,18 @@
-#+TITLE: Personal NixOS System Flake Configuration
+#+TITLE: Matthias' NixOS System Flake Configuration
 #+DESCRIPTION: General information about my flake and how to set it up
 #+AUTHOR: Matthias Benaets
 
 #+ATTR_ORG: :width 500
 [[file:rsc/Header.svg]]
 
+* Table of Content
+- [[System Components]]
+- [[Installation guide]]
+  - [[Partitioning]]
+  - [[Installation]]
+  - [[Finalization]]
+- [[FAQ]]
+- [[file:guide.org][Basic Guide.org]]
 
 * System Components
 | *shell:*     | Zsh               |
@@ -71,8 +79,8 @@ This will depend on the host chosen.
 *** UEFI
 *In these commands*
 - Partition with label ... to ...
-  - "nixos" = /mnt
-  - "boot" = /mnt/boot
+  - "nixos" = ~/mnt~
+  - "boot" = ~/mnt/boot~
 #+BEGIN_SRc
 # mount /dev/disk/by-label/nixos /mnt
 # mkdir -p /mnt/boot
@@ -85,7 +93,7 @@ This will depend on the host chosen.
 *** Mounting Extras
 *In these commands*
 - Directory to mount a ssd:
-  - /mnt/ssd
+  - ~/mnt/ssd~
 - Label of storage:
   - ssd2
 - If storage has no label:
@@ -98,7 +106,7 @@ This will depend on the host chosen.
 *In these commands*
 - Swap is enable:
   - Ignore if no swap or enough RAM
-- Configuration files are generates @ /mnt/etc/nixos
+- Configuration files are generates @ ~/mnt/etc/nixos~
   - If you are me, you don't need to do this. Hardware-configuration.nix already in flake.
 #+BEGIN_SRC
 # swapon /dev/sda2
@@ -110,12 +118,12 @@ This will depend on the host chosen.
 1. Comment out emacs from ~<repo directory>/modules/editors/default.nix~
    - This is because the doom emacs script needs a second terminal instance to install
    - You can uncomment this on first rebuild
-2. Switch specific host hardware-configuration.nix with generated /mnt/etc/nixos/hardware-configuration.nixos
+2. Switch specific host hardware-configuration.nix with generated ~/mnt/etc/nixos/hardware-configuration.nixos~
 3. Change existing network card name with the one in your system
    - Look in generated hardware-configuration.nixos
    - Or enter ~$ ip a~
 4. Change username in flake.nix
-5. Set a ~users.users.${user}.initialPassword = "..."~
+5. Set a ~users.users.${user}.initialPassword = ...~
    - Not really recommended. It's maybe better to follow last steps
 **** Install
 *In these commands*
@@ -149,3 +157,43 @@ This will depend on the host chosen.
    - There is a high likelyhood it will find it after:
      - ~$ cd <repo directory>~
      - ~$ sudo nixos-rebuild switch --flake .#<host>~
+* FAQ
+- What is NixOS?
+  NixOS is a Linux distribution built on top of the Nix package manager.
+  It uses declarative configurations and allow reliable system upgrades.
+- What is a Flake?
+  Flakes are an upcoming feature of the Nix package manager.
+  Flakes allow you to specify your major code dependencies in a declarative way.
+  It does this by creating a flake.lock file. Some major code dependencies are:
+  - nixpkgs
+  - home-manager
+- Should I switch to NixOS?
+  Is water wet?
+- Where can I learn about NixOS?
+  - Nix and NixOS
+    - [[file:guide.org][My General Setup Guide]]
+    - [[https://nixos.org/][Website]]
+    - [[https://nixos.org/learn.html][Manuals]]
+    - [[https://nixos.org/manual/nix/stable/introduction.html][Manual 2]]
+    - [[https://search.nixos.org/packages][Packages]] and [[https://search.nixos.org/options?][Options]]
+    - [[https://nixos.wiki/][Unofficial Wiki]]
+    - [[https://nixos.wiki/wiki/Resources][Wiki Resources]]
+    - [[https://nixos.org/guides/nix-pills/][Nix Pills]]
+    - [[https://www.ianthehenry.com/posts/how-to-learn-nix/][Some]] [[https://christine.website/blog][Blogs]]
+    - [[https://nixos.wiki/wiki/Configuration_Collection][Config Collection]]
+  - Home Manager
+    - [[https://github.com/nix-community/home-manager][Official Repo]]
+    - [[https://nix-community.github.io/home-manager/][Manual]]
+    - [[https://nix-community.github.io/home-manager/options.html][Appendix A]]
+    - [[https://nix-community.github.io/home-manager/nixos-options.html][Appendix B]]
+    - [[https://nix-community.github.io/home-manager/tools.html][Appendix D]]
+    - [[https://nixos.wiki/wiki/Home_Manager][NixOS wiki]]
+  - Flakes
+    - [[https://nixos.wiki/wiki/Flakes][NixOS wiki]]
+    - [[https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-flake.html][Manual]]
+    - [[https://www.tweag.io/blog/2020-05-25-flakes/][Some]] [[https://christine.website/blog/nix-flakes-3-2022-04-07][Blogs]]
+  - Videos
+    - [[https://youtu.be/AGVXJ-TIv3Y][My Personal Mini-Course]]
+    - [[https://www.youtube.com/watch?v=QKoQ1gKJY5A&list=PL-saUBvIJzOkjAw_vOac75v-x6EzNzZq][Wil T's Playlist]]
+    - [[https://www.youtube.com/watch?v=NYyImy-lqaA&list=PLRGI9KQ3_HP_OFRG6R-p4iFgMSK1t5BHs][Burke Libbey's Nixology]]
+    - [[https://www.youtube.com/user/elitespartan117j27/videos][John Ringer's]]

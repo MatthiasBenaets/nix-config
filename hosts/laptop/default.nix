@@ -41,29 +41,6 @@
     };
   };
 
-  networking = {
-    hostName = "nixos";
-    networkmanager.enable = true;
-    interfaces = {
-      enp0s25 = {
-        useDHCP = true;                     # For versatility sake, manually edit IP on nm-applet.
-        #ipv4.addresses = [ {
-        #    address = "192.168.0.51";
-        #    prefixLength = 24;
-        #} ];
-      };
-      wlo1 = {
-        useDHCP = true;
-        #ipv4.addresses = [ {
-        #  address = "192.168.0.51";
-        #  prefixLength = 24;
-        #} ];  
-      };
-    };
-    #defaultGateway = "192.168.0.1";
-    #nameservers = [ "1.1.1.1" ];
-  };
-
   programs = {                              # No xbacklight, this is the alterantive
     dconf.enable = true;
     light.enable = true;

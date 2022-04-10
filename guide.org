@@ -1,4 +1,4 @@
-#+TITLE: NixOS Guide
+#+TITLE: NixOS Fresh Install Guide
 #+DESCRIPTION: A basic introduction on building a NixOS config on your personal machine
 #+AUTHOR: Matthias Benaets
 
@@ -15,9 +15,9 @@
 5. nix-env: install packages at user level without having to change system state
 ** Getting Started
 *** NixOS Website
-- [ ] [[https://nixos.org/][NixOS]]
-- [ ] [[https://nixos.org/manual/nixos/stable][Manual]]: Downloads -> NixOS -> More -> Manual
-- [ ] [[https://releases.nixos.org/?prefix=nixos][Unstable]]: Downloads -> NixOS -> More -> also available
+- [[https://nixos.org/][NixOS]]
+- [[https://nixos.org/manual/nixos/stable][Manual]]: Downloads -> NixOS -> More -> Manual
+- [[https://releases.nixos.org/?prefix=nixos][Unstable]]: Downloads -> NixOS -> More -> also available
 
 *** Burning ISO
 - balenaEtcher
@@ -33,17 +33,17 @@
 - Root
   - Terminal (Konsole)
   - $ sudo su
-Extra:
-- minimal iso: loadkeys ...
-- graphical iso: setxkbmap ...
+- Layout:
+  - minimal iso: loadkeys ...
+  - graphical iso: setxkbmap ...
 
 *** Partitioning
-**** GUI: Gparted [0/4]
-- [ ] Device -> Create partition table   -> msdos (legacy boot)
-                                        -> gpt (uefi boot)
-- [ ] Add new partition -> fileSystem: ext4/linux-swap
-- [ ] Manage flags -> boot for ext4 (possible not necessary)
-- [ ] Label partitions (useful later)
+**** GUI: Gparted
+- Device -> Create partition table   -> msdos (legacy boot)
+                                    -> gpt (uefi boot)
+- Add new partition -> fileSystem: ext4/linux-swap
+- Manage flags -> boot for ext4 (possible not necessary)
+- Label partitions (useful later)
 
 **** Terminal: Parted
 *These step are for a fresh installation. Not dual boot*
@@ -77,9 +77,9 @@ Extra:
 ** Initial Configuration
 *** Generate
 - Generate default configuration:
-    # nixos-generate-config --root /mnt
+  - ~# nixos-generate-config --root /mnt~
 - Location:
-    # cd /mnt/etc/nixos/
+  - ~# cd /mnt/etc/nixos~
 
 *** Configuration.nix
 **** General
@@ -88,8 +88,8 @@ Extra:
 - Pull in other files used withinthe config:
     import = [./hardware-configuration.nix];
 
-**** Boot [0/3]
-***** [ ] Legacy
+**** Boot
+***** Legacy
 *Only viable if dualbooting linux distributions*
 #+BEGIN_SRC nix
   # Default Grub setup
@@ -106,7 +106,7 @@ Extra:
   '';
 #+END_SRC
 
-***** [ ] UEFI
+***** UEFI
 *Used for larger boot drives and dual booting with Windows*
 #+BEGIN_SRC nix
   # Default UEFI setup
@@ -128,7 +128,7 @@ Extra:
   };
 #+END_SRC
 
-***** [ ] Extras
+***** Extras
 #+BEGIN_SRC nix
   { pkgs, ... }:
 
@@ -154,9 +154,9 @@ Extra:
   }
 #+END_SRC
 
-**** Networking [0/0]
-- [ ] Uncomment: networking.hostName="nixos";
-- [ ] Network card details #could.be.moved.to.hardware-configuration.nix
+**** Networking
+- Uncomment: networking.hostName="nixos";
+- Network card details #could.be.moved.to.hardware-configuration.nix
   - Deprecated but keep: networking.useDHCP = false;
   - Just internet via ethernet: networking.interfaces.<networkcard-id>.useDHCP = true;
 
@@ -166,7 +166,7 @@ Extra:
     #hostName = "nixos";
     #networkmanager.enable = true;
     interfaces ={
-      enp0s5 = {
+      enp0s3 = {
         #useDHCP = true;
         ipv4.addresses = [ {                  # Ofcourse not compatible with networkmanager
           address = "192.168.0.50";
@@ -291,13 +291,13 @@ Extra:
 *** Hardware-configuration.nix
 **** Generate
 - Also get automatically generated with:
-    # nixos-generate-config --root /mnt
+  - ~# nixos-generate-config --root /mnt~
 - Should detect mounted drives, device parts, kernelModules, etc.. that are needed
 - Can be deleted and regenerated with:
-    # nixos-generate-config
+  - ~# nixos-generate-config~
 
 **** File System
-- $ sudo blkid
+- ~$ sudo blkid~
 - or just look in gparted
 #+BEGIN_SRC nix
   fileSystems."/" =
@@ -313,11 +313,11 @@ Extra:
 
 ** Installation
 *** System
-- [ ] For initial installation:
+- For initial installation:
     # nixos-install
-- [ ] After applying changes to the config:
+- After applying changes to the config:
     # nixos-rebuild switch
-- [ ] Lastly: Set a root password
+- Lastly: Set a root password
 
 *** Login
 **** initialPassword
@@ -325,15 +325,15 @@ Extra:
 
 **** via TTY
 - Ctrl + Alt + F1 -> Log in via root
-- # passwd <user>
+- ~# passwd <user>~
 - Ctrl + Alt + F7 -> Log in via user
 
 ** Declaring packages, services, settings, etc
 *** Options
 - Individually via Nix Package Manager
-    Install: $ nix-env -iA nixos.firefox
-    List: $ nix-env -q
-    Uninstall: $ nix-env --uninstall firefox
+  - Install: ~$ nix-env -iA nixos.firefox~
+  - List: ~$ nix-env -q~
+  - Uninstall: ~$ nix-env --uninstall firefox~
 - Configuration file:
 
 *** Links
@@ -412,19 +412,19 @@ Extra:
 #+END_SRC
 
 *** Applying
-- $ sudo nixos-rebuild switch
+- ~$ sudo nixos-rebuild switch~
 
 ** Extras
 *** Updating & Upgrading
 **** Nix-channel
-A. $ nix-channel --add https://nixos.org/channels/nixos-21.11
+A. ~$ nix-channel --add https://nixos.org/channels/nixos-21.11~
    OR
 B. $ nix-channel --update
 2. Next rebuild,use the --upgrade flag:
-     $ sudo nixos-rebuild --upgrade
+     ~$ sudo nixos-rebuild --upgrade~
 
 D. Installed through nix-env:
-     $ nix-env -u '*'
+     ~$ nix-env -u '*'~
 
 **** Configuration.nix
 #+BEGIN_SRC nix
@@ -435,20 +435,20 @@ D. Installed through nix-env:
 #+END_SRC
 
 *** Garbage Collection
-**** Command-line [0/4]
-- [ ] Remove undeclared packaged, dependencies and symlinks:
-    $ nix-collect-garbage
-- [ ] Remove above of older generations:
-    $ nix-collect-garbage --delete-old
+**** Command-line
+- Remove undeclared packaged, dependencies and symlinks:
+    ~$ nix-collect-garbage~
+- Remove above of older generations:
+    ~$ nix-collect-garbage --delete-old~
   List generations:
-    $ nix-env --list-generations
-- [ ] Remove specific generations or older than ... days:
-    $ nix-env --delete-generations 14d
-    $ nix-env --delete-generations 10 11
+    ~$ nix-env --list-generations~
+- Remove specific generations or older than ... days:
+    ~$ nix-env --delete-generations 14d~
+    ~$ nix-env --delete-generations 10 11~
   Optimize store:
-    $ nix-store --gc
-- [ ] All in one:
-    $ nix-collect-garbage -d
+    ~$ nix-store --gc~
+- All in one:
+    ~$ nix-collect-garbage -d~
 
 **** Configuration.nix
 #+BEGIN_SRC nix
@@ -470,19 +470,19 @@ D. Installed through nix-env:
 
 ** Getting Started
 *** Home-Manager Website
-- [ ] [[https://github.com/nix-community/home-manager][Github]]
-- [ ] [[https://nix-community.github.io/home-manager/][Manual]]
-- [ ] [[https://nix-community.github.io/home-manager/options.html][Appendix A]]
-- [ ] [[https://nix-community.github.io/home-manager/nixos-options.html][Appendix B]]
+- [[https://github.com/nix-community/home-manager][Github]]
+- [[https://nix-community.github.io/home-manager/][Manual]]
+- [[https://nix-community.github.io/home-manager/options.html][Appendix A]]
+- [[https://nix-community.github.io/home-manager/nixos-options.html][Appendix B]]
 
 *** Setup
-**** Initial [0/3]
+**** Initial
 *As a user*
-- [ ] Add the channel: *need to be run with root privileges if you want to us the NixOS Module*
-    $ nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-    $ nix-channel --add https://github.com/nix-community/home-manager/archive/release-21.11.tar.gz home-manager
-- [ ] $ nix-channel --update
-- [ ] Just to be sure, relog.
+- Add the channel: *need to be run with root privileges if you want to us the NixOS Module*
+  - ~$ nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager~
+  - ~$ nix-channel --add https://github.com/nix-community/home-manager/archive/release-21.11.tar.gz home-manager~
+- ~$ nix-channel --update~
+- Just to be sure, relog.
 
 **** NixOS Module
 *Add to configuration.nix*
@@ -505,14 +505,14 @@ D. Installed through nix-env:
 
 **** Standalone
 - Installation:
-    $ nix-shell ‘<home-manager>’ -A install
+  - ~$ nix-shell ‘<home-manager>’ -A install~
 - Configuration file:
-    $ cd ~/.config/nixpkgs/home.nix
+  - ~$ cd ~/.config/nixpkgs/home.nix~
 
 ** Configuration
 *** Links
 - [[https://nix-community.github.io/home-manager/options.html][Home-Manager Options]]
-- $ man home-configuration.nix
+- ~$ man home-configuration.nix~
 
 *** Declare user packages
 #+BEGIN_SRC nix
@@ -526,7 +526,7 @@ D. Installed through nix-env:
 #+END_SRC
 
 *** Applying
-$ home-manager switch
+- ~$ home-manager switch~
 
 ** Dotfiles
 *** Copy/Symlink
@@ -604,7 +604,7 @@ $ home-manager switch
 **** Generate
 *This command will generate a flake.nix and flake.lock file*
 - pick a location to store in your system
-- $ nix flake init
+- ~$ nix flake init~
 
 **** Inputs and Outputs
 ***** Inputs
@@ -655,9 +655,9 @@ $ home-manager switch
 *a ".(#)" will just build host found in location*
 *specify host with ".#<host>" appended*
 - *optional* $ cp /etc/nixos/* <flake location>
-- $ nixos-rebuild build --flake .#
+- ~$ nixos-rebuild build --flake .#~
 or build and automatically switch
-- $ sudo nixos-rebuild switch --flake .#
+- ~$ sudo nixos-rebuild switch --flake .#~
 
 *** Home-Manager
 **** Flake.nix
@@ -665,7 +665,7 @@ or build and automatically switch
 #+BEGIN_SRC nix
   {
     inputs = {
-      ...
+      #other inputs
       home-manager = {
         url = github:nix-community/home-manager;
         inputs.nixpkgs.follows = "nixpkgs";
@@ -673,9 +673,9 @@ or build and automatically switch
     };
     outputs = { self, nixpkgs, home-manager, ... }:
       let
-        ...
+        #variables
       in {
-        ...
+        #other outputs
         hmConfig = {
           <user> = home-manager.lib.homeManagerConfiguration {
             inherit system pkgs;
@@ -697,6 +697,7 @@ or build and automatically switch
 #+BEGIN_SRC nix
   {
     inputs = {
+      #other inputs
       home-manager = {
         url = github:nix-community/home-manager;
         inputs.nixpkgs.follows = "nixpkgs";
@@ -704,7 +705,7 @@ or build and automatically switch
     };
     outputs = { self, nixpkgs, home-manager, ... }:
       let
-        ...
+        #variables
       in {
         nixosConfigurations = {
           <user> = lib.nixosSystem {
@@ -728,16 +729,16 @@ or build and automatically switch
 **** Build
 ***** Seperate
 *This will build a directory with everything home-manager needs. An activation script is also located inside this dir*
-- $ nix build .#hmConfig.<user>.activationPackage
-- $ ./result/activate
+- ~$ nix build .#hmConfig.<user>.activationPackage~
+- ~$ ./result/activate~
 
 ***** Inside nixosConfiguraitons
 *Can be build with default rebuild command*
-- $ sudo nixos-rebuild switch
+- ~$ sudo nixos-rebuild switch~
 
 ** Updating
 *This will update the flake.lock file*
-- $ nix flake update #--recreate-lock-file
+- ~$ nix flake update~
 - Now rebuild and switch
 
 ** Flake on fresh install

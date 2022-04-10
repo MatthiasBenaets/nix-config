@@ -102,11 +102,13 @@
     };
     systemPackages = with pkgs; [           # Default packages install system-wide
       #vim
-      git
+      #git
       killall
-      usbutils
+      nano
       pciutils
+      usbutils
       wget
+      xclip
       xterm
     ];
   };

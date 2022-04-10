@@ -64,4 +64,22 @@
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  networking = {
+    useDHCP = false;                            # Deprecated
+    hostName = "nixos";
+    #networkmanager.enable = true;
+    interfaces = {
+      enp3s0 = {                                # Change to correct network driver
+        # useDHCP = true;                       # Disabled because fixed ip
+        ipv4.addresses = [ {                    # Ip settings: *.0.50 for main machine
+          address = "192.168.0.50";
+          prefixLength = 24;
+        } ];
+      };
+      #wlp2s0.useDHCP = true;                   # Wireless card
+    };
+    defaultGateway = "192.168.0.1";
+    nameservers = [ "1.1.1.1" ];                # Cloudflare
+  };
 }
