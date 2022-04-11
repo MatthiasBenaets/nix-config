@@ -79,8 +79,8 @@ This will depend on the host chosen.
 *** UEFI
 *In these commands*
 - Partition with label ... to ...
-  - "nixos" = ~/mnt~
-  - "boot" = ~/mnt/boot~
+  - "nixos" -> ~/mnt~
+  - "boot" -> ~/mnt/boot~
 #+BEGIN_SRc
 # mount /dev/disk/by-label/nixos /mnt
 # mkdir -p /mnt/boot
@@ -162,13 +162,13 @@ This will depend on the host chosen.
   NixOS is a Linux distribution built on top of the Nix package manager.
   It uses declarative configurations and allow reliable system upgrades.
 - What is a Flake?
-  Flakes are an upcoming feature of the Nix package manager.
-  Flakes allow you to specify your major code dependencies in a declarative way.
-  It does this by creating a flake.lock file. Some major code dependencies are:
-  - nixpkgs
-  - home-manager
+  - Flakes are an upcoming feature of the Nix package manager.
+  - Flakes allow you to specify your major code dependencies in a declarative way.
+  - It does this by creating a flake.lock file. Some major code dependencies are:
+    - nixpkgs
+    - home-manager
 - Should I switch to NixOS?
-  Is water wet?
+  - Is water wet?
 - Where can I learn about NixOS?
   - Nix and NixOS
     - [[file:guide.org][My General Setup Guide]]

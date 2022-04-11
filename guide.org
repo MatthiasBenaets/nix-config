@@ -11,7 +11,7 @@
 2. Supports declarative reproducible system configurations
 3. "Unbreakable"
    - Boot to specific configuration generations. (as mentioned above - reproducible)
-4. nix-store: no /lib & /usr/lib. almost non-existant /bin & /usr/bin. -> /nix/store
+4. nix-store: no ~/lib~ & ~/usr/lib~. almost non-existant ~/bin~ & ~/usr/bin~. -> ~/nix/store~
 5. nix-env: install packages at user level without having to change system state
 ** Getting Started
 *** NixOS Website
@@ -32,10 +32,10 @@
 - No password needed
 - Root
   - Terminal (Konsole)
-  - $ sudo su
+  - ~$ sudo su~
 - Layout:
-  - minimal iso: loadkeys ...
-  - graphical iso: setxkbmap ...
+  - minimal iso: ~# loadkeys ...~
+  - graphical iso: ~# setxkbmap ...~
 
 *** Partitioning
 **** GUI: Gparted
@@ -84,9 +84,9 @@
 *** Configuration.nix
 **** General
 - Argument on how to evaluate config:
-    {config, pkgs, ...}:
+    - ~{config, pkgs, ...}:~
 - Pull in other files used withinthe config:
-    import = [./hardware-configuration.nix];
+    - ~import = [./hardware-configuration.nix];~
 
 **** Boot
 ***** Legacy
@@ -155,10 +155,10 @@
 #+END_SRC
 
 **** Networking
-- Uncomment: networking.hostName="nixos";
+- Uncomment: ~networking.hostName="nixos";~
 - Network card details #could.be.moved.to.hardware-configuration.nix
-  - Deprecated but keep: networking.useDHCP = false;
-  - Just internet via ethernet: networking.interfaces.<networkcard-id>.useDHCP = true;
+  - Deprecated but keep: ~networking.useDHCP = false;~
+  - Just internet via ethernet: ~networking.interfaces.<networkcard-id>.useDHCP = true;~
 
 ***** Extras
 #+BEGIN_SRC nix
@@ -314,14 +314,14 @@
 ** Installation
 *** System
 - For initial installation:
-    # nixos-install
+  - ~# nixos-install~
 - After applying changes to the config:
-    # nixos-rebuild switch
+  - ~# nixos-rebuild switch~
 - Lastly: Set a root password
 
 *** Login
 **** initialPassword
-- Log in with give password of users.users.<user>.initialPassword
+- Log in with give password of ~users.users.<user>.initialPassword~
 
 **** via TTY
 - Ctrl + Alt + F1 -> Log in via root
@@ -339,7 +339,7 @@
 *** Links
 - [[https://search.nixos.org/packages][Packages]]
 - [[https://search.nixos.org/options?][Options]]
-- $ man configuration.nix
+- ~$ man configuration.nix~
 
 *** Declaring Packages
 *Installed Systemwide*
@@ -419,12 +419,12 @@
 **** Nix-channel
 A. ~$ nix-channel --add https://nixos.org/channels/nixos-21.11~
    OR
-B. $ nix-channel --update
+B. ~$ nix-channel --update~
 2. Next rebuild,use the --upgrade flag:
-     ~$ sudo nixos-rebuild --upgrade~
+   - ~$ sudo nixos-rebuild --upgrade~
 
 D. Installed through nix-env:
-     ~$ nix-env -u '*'~
+   - ~$ nix-env -u '*'~
 
 **** Configuration.nix
 #+BEGIN_SRC nix
@@ -437,18 +437,18 @@ D. Installed through nix-env:
 *** Garbage Collection
 **** Command-line
 - Remove undeclared packaged, dependencies and symlinks:
-    ~$ nix-collect-garbage~
+  - ~$ nix-collect-garbage~
 - Remove above of older generations:
-    ~$ nix-collect-garbage --delete-old~
-  List generations:
-    ~$ nix-env --list-generations~
+  - ~$ nix-collect-garbage --delete-old~
+  - List generations:
+    - ~$ nix-env --list-generations~
 - Remove specific generations or older than ... days:
-    ~$ nix-env --delete-generations 14d~
-    ~$ nix-env --delete-generations 10 11~
-  Optimize store:
-    ~$ nix-store --gc~
+  - ~$ nix-env --delete-generations 14d~
+  - ~$ nix-env --delete-generations 10 11~
+  - Optimize store:
+    - ~$ nix-store --gc~
 - All in one:
-    ~$ nix-collect-garbage -d~
+  - ~$ nix-collect-garbage -d~
 
 **** Configuration.nix
 #+BEGIN_SRC nix
@@ -654,7 +654,7 @@ D. Installed through nix-env:
 **** Build
 *a ".(#)" will just build host found in location*
 *specify host with ".#<host>" appended*
-- *optional* $ cp /etc/nixos/* <flake location>
+- *optional* ~$ cp /etc/nixos/* <flake location>~
 - ~$ nixos-rebuild build --flake .#~
 or build and automatically switch
 - ~$ sudo nixos-rebuild switch --flake .#~
