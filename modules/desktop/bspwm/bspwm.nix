@@ -18,7 +18,7 @@
     xserver = {
       enable = true;
 
-      layout = "be";                              # Keyboard layout & €-sign
+      layout = "us";                              # Keyboard layout & €-sign
       xkbOptions = "eurosign:e";
 
       displayManager = {                          # Display Manager

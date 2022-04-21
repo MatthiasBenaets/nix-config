@@ -9,7 +9,7 @@
 #           └─ home.nix *
 #
 
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   xsession = {

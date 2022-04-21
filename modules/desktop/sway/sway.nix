@@ -3,7 +3,7 @@
 {
   #future reference https://github.com/gytis-ivaskevicius/nixfiles/tree/2b2abcd07ede0df56360a8cda50a919a65864f8c when I switch to wayland
   programs = {
-    sway = {
+    sway = {                              # Tiling Wayland compositor & window manager
       enable = true;
       wrapperFeatures.gtk = true;
       extraPackages = with pkgs; [
@@ -18,7 +18,7 @@
         #wofi           # Menu
       ];
     };
-    waybar.enable = true;
+    waybar.enable = true;                 # Bar
   };
 
   environment = {
@@ -29,9 +29,19 @@
     '';                                   # Will automatically open sway when logged into tty1
     variable = {
       XKB_DEFAULT_LAYOUT = "be";          # Keyboard layout
-      #LIBCL_ALWAYS_SOFTWARE = "1";       # If Alacritty does not work
+      #LIBCL_ALWAYS_SOFTWARE = "1";       # For applications in VM like alacritty to work
+      #WLR_NO_HARDWARE_CURSORS = "1";     # For cursor in VM
     };
   };
 
   hardware.opengl.enable = true;
+
+  services.pipewire = {                   # Sound
+    enable = true;
+    alsa = {
+      enable = true;
+      support32Bit = true;
+    };
+    pulse.enable = true;
+  };
 }
