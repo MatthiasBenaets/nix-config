@@ -24,30 +24,39 @@
 #     };
 
       home-manager = {                                        # Home Package Management
-        url = github:nix-community/home-manager;
+        url = "github:nix-community/home-manager";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+
+      darwin = {
+        url = "github:lnl7/nix-darwin/master";                # MacOS Packages
         inputs.nixpkgs.follows = "nixpkgs";
       };
     };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, ... }:    # Function that tells my flake which to use and what do what to do with the dependencies.
+  outputs = inputs @ { self, nixpkgs, home-manager, darwin, ... }:    # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                       # Variables that can be used in the config files.
-      system = "x86_64-linux";                                # System architecture
       user = "matthias";
-
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;                            # Allow proprietary software
-      };
-
-      lib = nixpkgs.lib;
     in                                                        # Use above variables in ...
     {
       nixosConfigurations = (                                 # Location of the available configurations
         import ./hosts {                                      # Imports ./hosts/default.nix
           inherit (nixpkgs) lib;
-          inherit inputs user system home-manager;                 # Also inherit home-manager so it does not need to be defined here.
+          inherit inputs user nixpkgs home-manager;                 # Also inherit home-manager so it does not need to be defined here.
         }
       );
+
+      darwinConfigurations."macbook" = darwin.lib.darwinSystem {
+        system = "x86_64-darwin";
+        modules = [
+          ./darwin/configuration.nix
+          home-manager.darwinModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.matthias = import ./darwin/home.nix;
+          }
+        ];
+      };
 
 #     devShell.${system} = (                                  # devShell
 #       import ./outputs/installation.nix {

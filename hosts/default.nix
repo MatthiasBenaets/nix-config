@@ -11,8 +11,18 @@
 #            └─ ./home.nix 
 #
 
-{ lib, inputs, system, home-manager, user, ... }:
+{ lib, inputs, nixpkgs, home-manager, user, ... }:
 
+let
+  system = "x86_64-linux";                              # System architecture
+
+  pkgs = import nixpkgs {
+    inherit system;
+    config.allowUnfree = true;                          # Allow proprietary software
+  };
+
+  lib = nixpkgs.lib;
+in
 {
   desktop = lib.nixosSystem {                           # Desktop profile
     inherit system;
