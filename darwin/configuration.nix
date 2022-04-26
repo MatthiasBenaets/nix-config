@@ -1,10 +1,10 @@
 #
-#  Specific system configuration settings for desktop
+#  Specific system configuration settings for macbook
 #
 #  flake.nix
-#   └─ ./hosts
-#       └─ ./macbook
-#            └─ default.nix *
+#   └─ ./darwin
+#       ├─ ./default.nix
+#       └─ ./configuration.nix *
 #
 
 { config, pkgs, user, ... }:
@@ -73,6 +73,7 @@
         # Toggle Window
         lalt - t : yabai -m window --toggle float && yabai -m window --grid 4:4:1:1:2:2
         lalt - f : yabai -m window --toggle zoom-fullscreen
+        lalt - q : yabai -m window --close
 
         # Focus Window
         lalt - up : yabai -m window --focus north
@@ -110,8 +111,8 @@
         shift + ctrl - left : yabai -m window --space prev && yabai -m space --focus prev
         shift + ctrl - right : yabai -m window --space next && yabai -m space --focus next
 
-        alt - q : yabai -m window --close
-
+        # Menu
+        #cmd + space : for now its using the default keybinding to open Spotlight Search
       '';
     };
   };

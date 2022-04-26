@@ -2,9 +2,9 @@
 #  Home-manager configuration for macbook
 #
 #  flake.nix
-#   └─ ./hosts
-#       └─ ./macbook
-#           └─ home.nix *
+#   └─ ./darwin
+#       ├─ ./default.nix
+#       └─ ./home.nix *
 #
 
 { pkgs, ... }:
@@ -13,7 +13,7 @@
   imports = [
   ];
 
-  home = {                                # Specific packages for macbook
+  home = {                                      # Specific packages for macbook
     packages = with pkgs; [
       # Applications
       pfetch
@@ -21,11 +21,11 @@
   };
 
   programs = {
-    alacritty = {
+    alacritty = {                               # Terminal Emulator
       enable = true;
     };
-    zsh = {                               # So for some reason it won't change default shell on it's own
-      enable = true;                      # Run: chsh -s /bin/zsh
+    zsh = {                                     # Post installation script is run in configuration.nix to make it default shell
+      enable = true;
       enableAutosuggestions = true;             # Auto suggest options and highlights syntact, searches in history for options
       enableSyntaxHighlighting = true;
       history.size = 10000;
@@ -36,12 +36,12 @@
         custom = "$HOME/.config/zsh_nix/custom";
       };
 
-      initExtra = ''                            # Zsh theme
+      initExtra = ''
         # Spaceship
         source ${pkgs.spaceship-prompt}/share/zsh/site-functions/prompt_spaceship_setup
         autoload -U promptinit; promptinit
         pfetch
-      '';
+      '';                                       # Zsh theme
     };
   };
 

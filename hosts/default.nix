@@ -1,5 +1,5 @@
 #
-#  These are the different profiles that can be used when building the flake.
+#  These are the different profiles that can be used when building NixOS.
 #
 #  flake.nix 
 #   └─ ./hosts  
@@ -14,24 +14,24 @@
 { lib, inputs, nixpkgs, home-manager, user, ... }:
 
 let
-  system = "x86_64-linux";                              # System architecture
+  system = "x86_64-linux";                             	    # System architecture
 
   pkgs = import nixpkgs {
     inherit system;
-    config.allowUnfree = true;                          # Allow proprietary software
+    config.allowUnfree = true;                              # Allow proprietary software
   };
 
   lib = nixpkgs.lib;
 in
 {
-  desktop = lib.nixosSystem {                           # Desktop profile
+  desktop = lib.nixosSystem {                               # Desktop profile
     inherit system;
-    specialArgs = { inherit user inputs; };             # Pass flake variable
-    modules = [                                         # Modules that are used.
+    specialArgs = { inherit user inputs; };                 # Pass flake variable
+    modules = [                                             # Modules that are used.
       ./desktop
       ./configuration.nix
 
-      home-manager.nixosModules.home-manager {          # Home-Manager module that is used.
+      home-manager.nixosModules.home-manager {              # Home-Manager module that is used.
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = { inherit user; };  # Pass flake variable
@@ -42,7 +42,7 @@ in
     ];
   };
 
-  laptop = lib.nixosSystem {                            # Laptop profile
+  laptop = lib.nixosSystem {                                # Laptop profile
     inherit system;
     specialArgs = { inherit user inputs; };
     modules = [
@@ -60,7 +60,7 @@ in
     ];
   };
 
-  vm = lib.nixosSystem {                               # VM profile
+  vm = lib.nixosSystem {                                    # VM profile
     inherit system;
     specialArgs = { inherit user inputs; };
     modules = [
