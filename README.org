@@ -7,23 +7,27 @@
 
 * Table of Content
 - [[System Components]]
-- [[Installation guide]]
+- [[NixOS Installation Guide]]
   - [[Partitioning]]
   - [[Installation]]
   - [[Finalization]]
+- [[Nix-Darwin Installation Guide]]
 - [[FAQ]]
 - [[file:guide.org][Basic Guide.org]]
 
 * System Components
-| *shell:*     | Zsh               |
-| *DM:*        | LightDM           |
-| *WM:*        | Bspwm + Polybar   |
-| *Terminal*   | Alacritty         |
-| *Editor:*    | Nvim + Doom Emacs |
-| *Launcher:*  | Rofi              |
-| *GTK Theme:* | Dracula           |
+|              | *NixOS*           | *Darwin*         |
+|--------------+-------------------+------------------|
+| *shell:*     | Zsh               | Zsh              |
+| *DM:*        | LightDM           | /                |
+| *WM:*        | Bspwm + Polybar   | Yabai            |
+| *Hotkey*     | Sxhkd             | Skhd             |
+| *Terminal*   | Alacritty         | Alacritty        |
+| *Editor:*    | Nvim + Doom Emacs | Doom Emacs       |
+| *Launcher:*  | Rofi              | Spotlight Search |
+| *GTK Theme:* | Dracula           | /                |
 
-* Installation guide
+* NixOS Installation Guide
 This flake currently has *3* hosts
  1. desktop
     - UEFI boot w/ systemd-boot
@@ -33,7 +37,7 @@ This flake currently has *3* hosts
     - Legacy boot w/ grub
 
 Flakes can be build with:
-~sudo nixos-rebuild switch --flake .#<hostname>~
+~$ sudo nixos-rebuild switch --flake .#<hostname>~
 
 ** Partitioning
 This will depend on the host chosen.
@@ -106,8 +110,9 @@ This will depend on the host chosen.
 *In these commands*
 - Swap is enable:
   - Ignore if no swap or enough RAM
-- Configuration files are generates @ ~/mnt/etc/nixos~
+- Configuration files are generated @ ~/mnt/etc/nixos~
   - If you are me, you don't need to do this. Hardware-configuration.nix already in flake.
+- Clone repository
 #+BEGIN_SRC
 # swapon /dev/sda2
 # nixos-generate-config --root /mnt
@@ -157,19 +162,66 @@ This will depend on the host chosen.
    - There is a high likelyhood it will find it after:
      - ~$ cd <repo directory>~
      - ~$ sudo nixos-rebuild switch --flake .#<host>~
+* Nix-Darwin Installation Guide
+This flake currently has *1* host
+  1. macbook
+
+The Apple computer should have the nix package manager.
+~$ sh <(curl -L https://nixos.org/nix/install)~
+
+** Setup
+*In these commands*
+- Create a nix config directory
+- Allow experimental features to use flakes
+
+#+BEGIN_SRC
+$ mkdir ~/.config/nix
+$ echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
+#+END_SRC
+** Installation
+*** Initial
+*In these commands*
+- Get git
+- Clone repository
+- First build of Darwin
+  - This is done because the darwin command is not yet available
+
+#+BEGIN_SRC
+$ nix-env -iA nixpkgs.git
+$ git clone https://github.com/matthiasbenaets/nixos-config
+$ cd nixos-config
+$ nix build .#darwinConfigurations.<host>.system
+$ ./result/sw/bin/darwin-rebuild switch --flake .#<host>
+#+END_SRC
+
+In my flake it is possible ~./result~ is actually in ~./darwin/result~
+
+*** Rebuild
+Within the directory it is now possible to rebuild with:
+- ~$ darwin-rebuild switch --flake .#<host>~
+** Finalization
+*Mostly optional or already correct by default*
+1. Change default shell for Terminal or iTerm.
+   - ~Terminal/iTerm > Preferences > General > Shells open with: Command > /bin/zsh~
+2. Disable Secure Keyboard Entry. Needed for Skhd.
+   - ~Terminal/iTerm > Secure Keyboard Entry~
+3. Install XCode to get complete development environment.
+   - ~$ xcode-select --install~
 * FAQ
 - What is NixOS?
-  NixOS is a Linux distribution built on top of the Nix package manager.
-  It uses declarative configurations and allow reliable system upgrades.
+  - NixOS is a Linux distribution built on top of the Nix package manager.
+  - It uses declarative configurations and allow reliable system upgrades.
 - What is a Flake?
   - Flakes are an upcoming feature of the Nix package manager.
   - Flakes allow you to specify your major code dependencies in a declarative way.
   - It does this by creating a flake.lock file. Some major code dependencies are:
     - nixpkgs
     - home-manager
+- What is Nix-Darwin?
+  - Nix-Darwin is a way to use Nix modules on Darwin (macOS).
 - Should I switch to NixOS?
   - Is water wet?
-- Where can I learn about NixOS?
+- Where can I learn about Nix?
   - Nix and NixOS
     - [[file:guide.org][My General Setup Guide]]
     - [[https://nixos.org/][Website]]
@@ -181,7 +233,7 @@ This will depend on the host chosen.
     - [[https://nixos.org/guides/nix-pills/][Nix Pills]]
     - [[https://www.ianthehenry.com/posts/how-to-learn-nix/][Some]] [[https://christine.website/blog][Blogs]]
     - [[https://nixos.wiki/wiki/Configuration_Collection][Config Collection]]
-  - Home Manager
+  - Home-manager
     - [[https://github.com/nix-community/home-manager][Official Repo]]
     - [[https://nix-community.github.io/home-manager/][Manual]]
     - [[https://nix-community.github.io/home-manager/options.html][Appendix A]]
@@ -192,8 +244,12 @@ This will depend on the host chosen.
     - [[https://nixos.wiki/wiki/Flakes][NixOS wiki]]
     - [[https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-flake.html][Manual]]
     - [[https://www.tweag.io/blog/2020-05-25-flakes/][Some]] [[https://christine.website/blog/nix-flakes-3-2022-04-07][Blogs]]
+  - Nix-Darwin
+    - [[https://github.com/LnL7/nix-darwin/][Official Repo]]
+    - [[https://daiderd.com/nix-darwin/manual/index.html][Manual]]
+    - [[https://github.com/LnL7/nix-darwin/wiki/Upgrading-nix][Mini-Wiki]]
   - Videos
     - [[https://youtu.be/AGVXJ-TIv3Y][My Personal Mini-Course]]
     - [[https://www.youtube.com/watch?v=QKoQ1gKJY5A&list=PL-saUBvIJzOkjAw_vOac75v-x6EzNzZq][Wil T's Playlist]]
     - [[https://www.youtube.com/watch?v=NYyImy-lqaA&list=PLRGI9KQ3_HP_OFRG6R-p4iFgMSK1t5BHs][Burke Libbey's Nixology]]
-    - [[https://www.youtube.com/user/elitespartan117j27/videos][John Ringer's]]
+    - [[https://www.youtube.com/user/elitespartan117j27/videos][John Ringer's Channel]]

@@ -139,6 +139,11 @@
     enableKeyMapping = true;
   };
 
+  networking = {
+    computerName = "MacBook";
+    hostName = "MacBook";
+  };
+
   nix = {
     package = pkgs.nix;
     gc = {
