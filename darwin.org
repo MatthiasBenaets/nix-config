@@ -1,0 +1,16 @@
+#+TITLE: Nix-Darwin Fresh Install guide
+#+DESCRIPTION: A basic introductional guide on building a Nix-Darwin config on your personal Mac machine
+#+AUTHOR: Matthias Benaets
+
+#+ATTR_ORG: :width 200
+[[file:rsc/nix-darwin.png]]
+
+* Nix-Darwin
+** Introduction
+1. Used to run Nix Modules on macOS using the Darwin Unix-based core set of components
+2. Like a ~/etc/nixos/configuration.nix~ but for macOS
+3. Since it will use the Nix Package Manager, just like NixOS, supports declarative reproductible system configurations
+
+** Getting Started
+*** Nix-Darwin Website
+- [[https://github.com/LnL7/nix-darwin][Github]]

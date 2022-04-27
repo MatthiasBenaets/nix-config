@@ -13,7 +13,9 @@
   - [[Finalization]]
 - [[Nix-Darwin Installation Guide]]
 - [[FAQ]]
-- [[file:guide.org][Basic Guide.org]]
+- Extra:
+  - [[file:nixos.org][General NixOS Setup Guide]]
+  - [[file:darwin.org][General Darwin Setup Guide]]
 
 * System Components
 |              | *NixOS*           | *Darwin*         |
@@ -62,6 +64,7 @@ This will depend on the host chosen.
 # mkswap -L /dev/sda2
 # mkfs.fat -F 32 -n boot /dev/sda3
 #+END_SRC
+
 *** Legacy
 *In these commands*
 - Partition Label:
@@ -79,6 +82,7 @@ This will depend on the host chosen.
 # mkfs.ext4 -L nixos /dev/sda1
 # mkswap -L /dev/sda2
 #+END_SRC
+
 ** Installation
 *** UEFI
 *In these commands*
@@ -90,10 +94,12 @@ This will depend on the host chosen.
 # mkdir -p /mnt/boot
 # mount /dev/disk/by-label/boot /mnt/boot
 #+END_SRC
+
 *** Legacy
 #+BEGIN_SRC
 # mount /dev/disk/by-label/nixos /mnt
 #+END_SRC
+
 *** Mounting Extras
 *In these commands*
 - Directory to mount a ssd:
@@ -106,6 +112,7 @@ This will depend on the host chosen.
 # mkdir -p /mnt/ssd
 # mount /dev/disk/by-label/ssd2 /mnt/ssd
 #+END_SRC
+
 *** Generate
 *In these commands*
 - Swap is enable:
@@ -119,6 +126,7 @@ This will depend on the host chosen.
 # nix-env -iA nixos.git
 # git clone https://github.com/matthiasbenaets/nixos-config /mnt/etc/nixos/<name>
 #+END_SRC
+
 *** Possible Extra Steps
 1. Comment out emacs from ~<repo directory>/modules/editors/default.nix~
    - This is because the doom emacs script needs a second terminal instance to install
@@ -130,6 +138,7 @@ This will depend on the host chosen.
 4. Change username in flake.nix
 5. Set a ~users.users.${user}.initialPassword = ...~
    - Not really recommended. It's maybe better to follow last steps
+
 **** Install
 *In these commands*
 - Move into cloned repository
@@ -142,6 +151,7 @@ This will depend on the host chosen.
 # cd /mnt/etc/nixos/<name>
 # nixos-install --flake .#<host>
 #+END_SRC
+
 ** Finalization
 1. Set a root password after installation is done
 2. Reboot without livecd
@@ -162,6 +172,7 @@ This will depend on the host chosen.
    - There is a high likelyhood it will find it after:
      - ~$ cd <repo directory>~
      - ~$ sudo nixos-rebuild switch --flake .#<host>~
+
 * Nix-Darwin Installation Guide
 This flake currently has *1* host
   1. macbook
@@ -178,6 +189,7 @@ The Apple computer should have the nix package manager.
 $ mkdir ~/.config/nix
 $ echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
 #+END_SRC
+
 ** Installation
 *** Initial
 *In these commands*
@@ -199,6 +211,7 @@ In my flake it is possible ~./result~ is actually in ~./darwin/result~
 *** Rebuild
 Within the directory it is now possible to rebuild with:
 - ~$ darwin-rebuild switch --flake .#<host>~
+
 ** Finalization
 *Mostly optional or already correct by default*
 1. Change default shell for Terminal or iTerm.
@@ -206,7 +219,8 @@ Within the directory it is now possible to rebuild with:
 2. Disable Secure Keyboard Entry. Needed for Skhd.
    - ~Terminal/iTerm > Secure Keyboard Entry~
 3. Install XCode to get complete development environment.
-   - ~$ xcode-select --install~
+     - ~$ xcode-select --install~
+
 * FAQ
 - What is NixOS?
   - NixOS is a Linux distribution built on top of the Nix package manager.
@@ -223,7 +237,7 @@ Within the directory it is now possible to rebuild with:
   - Is water wet?
 - Where can I learn about Nix?
   - Nix and NixOS
-    - [[file:guide.org][My General Setup Guide]]
+    - [[file:nixos.org][My General Setup Guide]]
     - [[https://nixos.org/][Website]]
     - [[https://nixos.org/learn.html][Manuals]]
     - [[https://nixos.org/manual/nix/stable/introduction.html][Manual 2]]
@@ -245,9 +259,10 @@ Within the directory it is now possible to rebuild with:
     - [[https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-flake.html][Manual]]
     - [[https://www.tweag.io/blog/2020-05-25-flakes/][Some]] [[https://christine.website/blog/nix-flakes-3-2022-04-07][Blogs]]
   - Nix-Darwin
+    - [[file:darwin.org][My General Setup Guide]]
     - [[https://github.com/LnL7/nix-darwin/][Official Repo]]
     - [[https://daiderd.com/nix-darwin/manual/index.html][Manual]]
-    - [[https://github.com/LnL7/nix-darwin/wiki/Upgrading-nix][Mini-Wiki]]
+    - [[https://github.com/LnL7/nix-darwin/wiki][Mini-Wiki]]
   - Videos
     - [[https://youtu.be/AGVXJ-TIv3Y][My Personal Mini-Course]]
     - [[https://www.youtube.com/watch?v=QKoQ1gKJY5A&list=PL-saUBvIJzOkjAw_vOac75v-x6EzNzZq][Wil T's Playlist]]

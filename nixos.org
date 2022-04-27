@@ -1,5 +1,5 @@
 #+TITLE: NixOS Fresh Install Guide
-#+DESCRIPTION: A basic introduction on building a NixOS config on your personal machine
+#+DESCRIPTION: A basic introductional guide on building a NixOS config on your personal machine
 #+AUTHOR: Matthias Benaets
 
 #+ATTR_ORG: :width 500
@@ -13,6 +13,7 @@
    - Boot to specific configuration generations. (as mentioned above - reproducible)
 4. nix-store: no ~/lib~ & ~/usr/lib~. almost non-existant ~/bin~ & ~/usr/bin~. -> ~/nix/store~
 5. nix-env: install packages at user level without having to change system state
+
 ** Getting Started
 *** NixOS Website
 - [[https://nixos.org/][NixOS]]
@@ -754,8 +755,6 @@ or build and automatically switch
   /* move build to desired location */
 #+END_SRC
 
-* Personal Config
-- [[/home/matthias/.setup][Config directory]]
 * Resources
 1. [[https://nixos.org/][NixOS Website]]
 2. [[https://nixos.org/learn.html/][NixOS Learn]]
