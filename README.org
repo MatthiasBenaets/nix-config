@@ -206,10 +206,10 @@ $ nix build .#darwinConfigurations.<host>.system
 $ ./result/sw/bin/darwin-rebuild switch --flake .#<host>
 #+END_SRC
 
-In my flake it is possible ~./result~ is actually in ~./darwin/result~
+~/result~ is located depending on where you build the system.
 
 *** Rebuild
-Within the directory it is now possible to rebuild with:
+Since darwin is now added to the PATH, you can build it from anywhere in the system. In this example it is rebuild inside the flake directory:
 - ~$ darwin-rebuild switch --flake .#<host>~
 
 ** Finalization

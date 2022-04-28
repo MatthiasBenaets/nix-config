@@ -57,6 +57,12 @@
   };
 
   users.groups.libvirtd.members = [ "root" "${user}" ];
+
+  boot.extraModprobeConfig = ''
+    options kvm_intel nested=1
+    options kvm_intel emulate_invalid_guest_state=0
+    options kvm ignore_nsrs=1
+  '';                                         # Needed to run OSX-KVM
 }
 
 #SHARED FOLDER
@@ -133,10 +139,10 @@
 # General Guide: gitlab.com/risingprismtv/single-gpu-passthrough/-/wikis/home
 # 1. Download ISO
 # 2. Download latest Video BIOS from techpowerup.com/vgabios (Sapphire RX580 8Gb)
-# 2.1. Sudo mkdir /var/lib/libvirt/vbios/
-# 2.2. Sudo mv ~/Downloads/*.rom /var/lib/libvirt/vbios/GPU.rom
-# 2.3. Cd /var/lib/libvirt/vbios/
-# 2.4. Sudo chmod -R 660 GPU.rom
+# 2.1. $ Sudo mkdir /var/lib/libvirt/vbios/
+# 2.2. $ Sudo mv ~/Downloads/*.rom /var/lib/libvirt/vbios/GPU.rom
+# 2.3. $ Cd /var/lib/libvirt/vbios/
+# 2.4. $ Sudo chmod -R 660 GPU.rom
 # 3. Launch virt-manager
 # 4. File - Add Connection
 # 5. Create Virtual Machine
@@ -168,3 +174,54 @@
 # 11 Change memory to prefered (12GB for 16GB Total)
 # 12 Start VM
 # 13 Install correct video drivers
+
+#MACOS ON VIRT-MANAGER
+# General Guide: nixos.wiki/wiki/OSX-KVM
+# Repository: github.com/kholia/OSX-KVM
+# IMPORTANT: if you wish to start the virtual machine with virt-manager gui, clone to /home/<user>/.
+# 1. git clone https://github.com/kholia/OSX-KVM
+# 2. create a shell.nix (maybe best to store inside cloned directory)
+# 3. shell.nix content:
+#    with import <nixpkgs> {};
+#    mkShell {
+#      buildInputs = [
+#        qemu
+#        python3
+#        iproute2
+#      ];
+#    }
+# 4. In nixos configuration add:
+#    virtualisation.libvirtd.enable = true;
+#    users.extraUsers.<user>.extraGroups = [ "libvirtd" ];
+#    boot.extraModprobeConfig = ''
+#      options kvm_intel nested=1
+#      options kvm_intel emulate_invalid_guest_state=0
+#      options kvm ignore_msrs=1
+#    '';
+# 5. Run the shell: $ nix-shell
+# 6. As mentioned in the README, run ./fetch-macOS.py
+# 6.1 Can be a specific version 
+# 7. Create base image for the macOs installer
+# 8. $ qemu-img convert BaseSystem.dmg -O raw BaseSystem.img
+# 9. Create disk for macOS
+# 9.1 $ qemu-img create -f qcow2 mac_hdd_ng.img 128G
+# 10. Set up networking. If something like virbr0 does not get detected start virt-manager. Commands:
+#    $ sudo ip tuntap add dev tap0 mode tap
+#    $ sudo ip link set tap0 up promisc on
+#    $ sudo ip link set dev virbr0 up
+#    $ sudo ip link set dev tap0 master virbr0
+# 11. Boot the system
+# 11.1 $ ./OpenCore-Boot.sh
+# 12. Choose the first option to start the MacOS installer: macOS Base Systen
+# 12.1 Use Disk Utility to esase the correct drive.
+# 13. Go back and select the option to reinstall macOS
+# 13.1 After the initial installation, a reboot will happen. Select the second option 'MacOs install'.
+# 13.2 This will finalize the installaton but it will probably reboot multiple times. The second option will now have changed to the name of your drive. Use this as the boot option
+# 14. To add the installation to virt-manager:
+# 14.1 $ sed "s/CHANGEME/$USER/g" macOS-libvirt-Catalina.xml > macOS.xml
+# 14.2 Inside macOS.xml change the emulator from /usr/bin/qemu-system-x86_64 to /run/libvirt/nix-emulators/qemu-system-x86_64
+# 14.3 $ virt-xml-validate macOS.xml
+# 15. $ virsh --connect qemu:///system define macOS.xml
+# 16.(optional if permission is needed to the libvirt-qemu user)
+# 16.1 $ sudo setfacl -m u:libvirt-qemu:rx /home/$USER
+# 16.2 $ sudo setfacl -R -m u:libvirt-qemu:rx /home/$USER/OSX-KVM

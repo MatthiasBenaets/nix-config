@@ -329,13 +329,14 @@
 - ~# passwd <user>~
 - Ctrl + Alt + F7 -> Log in via user
 
-** Declaring packages, services, settings, etc
+** Installing and Declaring Packages
 *** Options
 - Individually via Nix Package Manager
   - Install: ~$ nix-env -iA nixos.firefox~
   - List: ~$ nix-env -q~
   - Uninstall: ~$ nix-env --uninstall firefox~
-- Configuration file:
+- Alternatively you can also use nix-shell
+- Configuration file: see below
 
 *** Links
 - [[https://search.nixos.org/packages][Packages]]
@@ -343,7 +344,7 @@
 - ~$ man configuration.nix~
 
 *** Declaring Packages
-*Installed Systemwide*
+*Installed Systemwide with configuration.nix*
 #+BEGIN_SRC nix
   environment = {
     systemPackages = with pkgs; [
@@ -581,7 +582,7 @@ D. Installed through nix-env:
 
 * Flakes
 ** Introduction
-- Flakes is an "upcoming feature" of the Nix package manager.
+- Flakes are an "upcoming feature" of the Nix package manager.
 - Specify code dependencies declaratively (will be stored in flake.lock)
   - For example: home-manager
 - Rebuilding and updating whole system made easy
@@ -735,7 +736,7 @@ or build and automatically switch
 
 ***** Inside nixosConfiguraitons
 *Can be build with default rebuild command*
-- ~$ sudo nixos-rebuild switch~
+- ~$ sudo nixos-rebuild switch --flake .#<host>~
 
 ** Updating
 *This will update the flake.lock file*
