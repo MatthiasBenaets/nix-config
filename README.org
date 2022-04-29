@@ -1,8 +1,8 @@
-#+TITLE: Matthias' NixOS System Flake Configuration
+#+TITLE: Matthias' NixOS & Nix-Darwin System Configuration Flake
 #+DESCRIPTION: General information about my flake and how to set it up
 #+AUTHOR: Matthias Benaets
 
-#+ATTR_ORG: :width 500
+#+ATTR_ORG: :width 600
 [[file:rsc/Header.svg]]
 
 * Table of Content
@@ -15,7 +15,7 @@
 - [[FAQ]]
 - Extra:
   - [[file:nixos.org][General NixOS Setup Guide]]
-  - [[file:darwin.org][General Darwin Setup Guide]]
+  - [[file:darwin.org][General Nix-Darwin Setup Guide]]
 
 * System Components
 |              | *NixOS*           | *Darwin*         |
@@ -232,10 +232,11 @@ Since darwin is now added to the PATH, you can build it from anywhere in the sys
     - nixpkgs
     - home-manager
 - What is Nix-Darwin?
-  - Nix-Darwin is a way to use Nix modules on Darwin (macOS).
+  - Nix-Darwin is a way to use Nix modules on macOS using the Darwin Unix-based core set of components.
+  - Just like NixOS, it allows to build declarative reproducible configurations.
 - Should I switch to NixOS?
   - Is water wet?
-- Where can I learn about Nix?
+- Where can I learn about everything Nix?
   - Nix and NixOS
     - [[file:nixos.org][My General Setup Guide]]
     - [[https://nixos.org/][Website]]

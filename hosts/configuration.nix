@@ -42,6 +42,8 @@
   };
 
   fonts.fonts = with pkgs; [                # Fonts
+    carlito
+    vegur
     source-code-pro
     font-awesome                            # Icons
     corefonts                               # MS
