@@ -215,7 +215,7 @@
 # 12. Choose the first option to start the MacOS installer: macOS Base Systen
 # 12.1 Use Disk Utility to esase the correct drive.
 # 13. Go back and select the option to reinstall macOS
-# 13.1 After the initial installation, a reboot will happen. Select the second option 'MacOs install'.
+# 13.1 After the initial installation, a reboot will happen. Do nothing and wait or select the second option 'MacOs install'.
 # 13.2 This will finalize the installaton but it will probably reboot multiple times. The second option will now have changed to the name of your drive. Use this as the boot option
 # 14. To add the installation to virt-manager:
 # 14.1 $ sed "s/CHANGEME/$USER/g" macOS-libvirt-Catalina.xml > macOS.xml

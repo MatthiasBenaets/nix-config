@@ -3,9 +3,9 @@
 #+AUTHOR: Matthias Benaets
 
 #+ATTR_ORG: :width 200
-[[file:rsc/nix-darwin.png]]
+[[file:rsc/Nix-Darwin.png]]
 
-* TODO Nix-Darwin
+* Nix-Darwin
 ** Introduction
 1. Used to run Nix Modules on macOS using the Darwin Unix-based core set of components
 2. Like a ~/etc/nixos/configuration.nix~ but for macOS
@@ -44,7 +44,7 @@ $ ./result/bin/darwin-installer
 $ darwin-rebuild switch
 #+END_SRC
 
-** TODO Declaring Packages
+** Declaring Packages
 *** Links
 - [[https://search.nixos.org/packages][Packages]]
 - [[https://search.nixos.org/options?][Options]]
@@ -69,7 +69,7 @@ After installation a ~darwin-configuation.nix~ file will be created in ~~/.nixpk
 *** Applying
 - ~$ darwin-rebuild switch~
 
-*** TODO Running apps
+*** Running apps
 - Apps will be installed in ~/nix/store~ but if a .app file is available, it can also be found in ~~/Applications~
 - From here you can ~$ ln -s ~/Applications/<name>.app /Applications~
 - If your app is not available:
@@ -371,7 +371,10 @@ or build and automatically switch
 #+END_SRC
 
 ** Nix Package Manager
+- [[https://nixos.org/manual/nix/stable/installation/installing-binary.html?highlight=uninstall#macos][Full guide]]
 - ~$ sudo rm -rf /nix /etc/nix ~/.nix*~
+- In ~/etc~ move all files with .backup-before.nix to original name (probably zshrc and bashrc)
+- Spotlight Search > Disk Utility > Unmount nix store > Delete volume
 - reboot
 
 * Resources

@@ -70,7 +70,7 @@ in
           font-3 = "FontAwesome5Brands:style=Regular:size=8";
           font-4 = "FiraCodeNerdFont:size=11";
           modules-left = "logo bspwm";
-          modules-right = "date";
+          modules-right = "mic volume pad date";
 
           #override-redirect = "true";
           wm-restack = "bspwm";
