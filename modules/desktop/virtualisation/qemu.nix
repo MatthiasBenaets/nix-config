@@ -30,18 +30,13 @@
   #  ];
   #};
 
-  environment = {
-    systemPackages = with pkgs; [
-      virt-manager
-      qemu
-      OVMF
-      gvfs                                    # Used for shared folders between linux and windows
-    ];
-  };
+  boot.extraModprobeConfig = ''
+    options kvm_intel nested=1
+    options kvm_intel emulate_invalid_guest_state=0
+    options kvm ignore_nsrs=1
+  '';                                         # Needed to run OSX-KVM 
 
-  services = {                                # Enable file sharing between OS
-    gvfs.enable = true;
-  };
+  users.groups.libvirtd.members = [ "root" "${user}" ];
 
   virtualisation = {
     libvirtd = {
@@ -56,13 +51,18 @@
     spiceUSBRedirection.enable = true;        # USB passthrough
   };
 
-  users.groups.libvirtd.members = [ "root" "${user}" ];
+  environment = {
+    systemPackages = with pkgs; [
+      virt-manager
+      qemu
+      OVMF
+      gvfs                                    # Used for shared folders between linux and windows
+    ];
+  };
 
-  boot.extraModprobeConfig = ''
-    options kvm_intel nested=1
-    options kvm_intel emulate_invalid_guest_state=0
-    options kvm ignore_nsrs=1
-  '';                                         # Needed to run OSX-KVM
+  services = {                                # Enable file sharing between OS
+    gvfs.enable = true;
+  };
 }
 
 #SHARED FOLDER

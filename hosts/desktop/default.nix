@@ -37,6 +37,11 @@
     };
   };
 
+  hardware.sane = {                           # Used for scanning with Xsane
+    enable = true;
+    extraBackends = [ pkgs.sane-airscan ];
+  };
+
   environment = {                               # Packages installed system wide
     #extraInit = ''
     #  snixembed --fork
@@ -55,22 +60,6 @@
                                                 # Steam: Right-click game - Properties - Launch options: gamemoderun %command%
                                                 # Lutris: General Preferences - Enable Feral GameMode
                                                 #                             - Global options - Add Environment Variables: LD_PRELOAD=/nix/store/*-gamemode-*-lib/lib/libgamemodeauto.so
-  };
-  
-  nixpkgs.overlays = [                          # This overlay will pull the latest version of Discord
-    (self: super: {
-      discord = super.discord.overrideAttrs (
-        _: { src = builtins.fetchTarball {
-          url = "https://discord.com/api/download?platform=linux&format=tar.gz"; 
-          sha256 = "0hdgif8jpp5pz2c8lxas88ix7mywghdf9c9fn95n0dwf8g1c1xbb";
-        };}
-      );
-    })
-  ];
-
-  hardware.sane = {                           # Used for scanning with Xsane
-    enable = true;
-    extraBackends = [ pkgs.sane-airscan ];
   };
 
   services = {
@@ -134,4 +123,15 @@
       ];
     };
   };
+
+  nixpkgs.overlays = [                          # This overlay will pull the latest version of Discord
+    (self: super: {
+      discord = super.discord.overrideAttrs (
+        _: { src = builtins.fetchTarball {
+          url = "https://discord.com/api/download?platform=linux&format=tar.gz"; 
+          sha256 = "0hdgif8jpp5pz2c8lxas88ix7mywghdf9c9fn95n0dwf8g1c1xbb";
+        };}
+      );
+    })
+  ];
 }

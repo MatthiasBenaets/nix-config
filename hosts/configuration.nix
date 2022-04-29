@@ -18,6 +18,13 @@
       ../modules/desktop/bspwm/bspwm.nix
     ];
 
+  users.users.${user} = {                   # System User
+    isNormalUser = true;
+    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" ];
+    shell = pkgs.zsh;                       # Default shell
+  };
+  security.sudo.wheelNeedsPassword = false; # User does not need to give password when using sudo.
+
   networking.useDHCP = false;               # Deprecated but needed in config.
 
   time.timeZone = "Europe/Brussels";        # Time zone and internationalisation
@@ -27,10 +34,41 @@
       LC_TIME = "nl_BE.UTF-8";
       LC_MONETARY = "nl_BE.UTF-8";
     };
-  };  
+  };
+
   console = {
     font = "Lat2-Terminus16";
     keyMap = "us";	                    # or us/azerty/etc
+  };
+
+  fonts.fonts = with pkgs; [                # Fonts
+    source-code-pro
+    font-awesome                            # Icons
+    corefonts                               # MS
+    (nerdfonts.override {                   # Nerdfont Icons override
+      fonts = [
+        "FiraCode"
+      ];
+    })
+  ];
+
+  environment = {
+    variables = {
+      TERMINAL = "alacritty";
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+    };
+    systemPackages = with pkgs; [           # Default packages install system-wide
+      #vim
+      #git
+      killall
+      nano
+      pciutils
+      usbutils
+      wget
+      xclip
+      xterm
+    ];
   };
 
   services = {
@@ -53,29 +91,6 @@
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
-  fonts.fonts = with pkgs; [                # Fonts
-    source-code-pro
-    font-awesome                            # Icons
-    corefonts                               # MS
-    (nerdfonts.override {                   # Nerdfont Icons override
-      fonts = [
-        "FiraCode"
-      ];
-    })
-  ];
-
-  users.users.${user} = {                   # System User
-    isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" ];
-    shell = pkgs.zsh;                       # Default shell
-  };
- 
-  security = {                              # User does not need to give password when using sudo.
-    sudo.wheelNeedsPassword = false;
-  };
-
-  nixpkgs.config.allowUnfree = true;        # Allow proprietary software.
-
   nix = {                                   # Nix Package Manager settings
     settings ={
       auto-optimise-store = true;           # Optimise syslinks
@@ -93,28 +108,10 @@
       keep-derivations      = true
     '';
   };
+  nixpkgs.config.allowUnfree = true;        # Allow proprietary software.
 
-  environment = {
-    variables = {
-      TERMINAL = "alacritty";
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-    };
-    systemPackages = with pkgs; [           # Default packages install system-wide
-      #vim
-      #git
-      killall
-      nano
-      pciutils
-      usbutils
-      wget
-      xclip
-      xterm
-    ];
-  };
-
-  system = {                              # NixOS settings
-    autoUpgrade = {                       # Allow auto update
+  system = {                                # NixOS settings
+    autoUpgrade = {                         # Allow auto update
       enable = true;
       channel = "https://nixos.org/channels/nixos-unstable";
     };

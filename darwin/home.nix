@@ -10,33 +10,26 @@
 { pkgs, ... }:
 
 {
-  imports = [
-  ];
-
-  home = {                                      # Specific packages for macbook
+  home = {                                        # Specific packages for macbook
     packages = with pkgs; [
       # Terminal
       pfetch
-
-      #Video/Audio
-      plex-media-player
-
-      #Apps
-      remmina
+      # Applications
     ];
+    stateVersion = "22.05";
   };
 
   programs = {
-    alacritty = {                               # Terminal Emulator
+    alacritty = {                                 # Terminal Emulator
       enable = true;
     };
-    zsh = {                                     # Post installation script is run in configuration.nix to make it default shell
+    zsh = {                                       # Post installation script is run in configuration.nix to make it default shell
       enable = true;
-      enableAutosuggestions = true;             # Auto suggest options and highlights syntact, searches in history for options
+      enableAutosuggestions = true;               # Auto suggest options and highlights syntact, searches in history for options
       enableSyntaxHighlighting = true;
       history.size = 10000;
 
-      oh-my-zsh = {                             # Extra plugins for zsh
+      oh-my-zsh = {                               # Extra plugins for zsh
         enable = true;
         plugins = [ "git" ];
         custom = "$HOME/.config/zsh_nix/custom";
@@ -47,12 +40,12 @@
         source ${pkgs.spaceship-prompt}/share/zsh/site-functions/prompt_spaceship_setup
         autoload -U promptinit; promptinit
         pfetch
-      '';                                       # Zsh theme
+      '';                                         # Zsh theme
     };
     neovim = {
       enable = true;
-      #viAlias = true;
-      #vimAlias = true;
+      viAlias = true;
+      vimAlias = true;
 
       plugins = with pkgs.vimPlugins; [
 
@@ -61,19 +54,19 @@
         vim-markdown
 
         # Quality of life
-        vim-lastplace         # Opens document where you left it
-        auto-pairs            # Print double quotes/brackets/etc.
-        vim-gitgutter         # See uncommitted changes of file :GitGutterEnable
+        vim-lastplace                             # Opens document where you left it
+        auto-pairs                                # Print double quotes/brackets/etc.
+        vim-gitgutter                             # See uncommitted changes of file :GitGutterEnable
 
         # File Tree
-        nerdtree              # File Manager - set in extraConfig to F6
+        nerdtree                                  # File Manager - set in extraConfig to F6
 
         # Customization 
-        wombat256-vim         # Color scheme for lightline
-        srcery-vim            # Color scheme for text
+        wombat256-vim                             # Color scheme for lightline
+        srcery-vim                                # Color scheme for text
 
-        lightline-vim         # Info bar at bottom
-        indent-blankline-nvim # Indentation lines
+        lightline-vim                             # Info bar at bottom
+        indent-blankline-nvim                     # Indentation lines
       ];
 
       extraConfig = ''
@@ -93,6 +86,4 @@
       '';
     };
   };
-
-  home.stateVersion = "22.05";
 }

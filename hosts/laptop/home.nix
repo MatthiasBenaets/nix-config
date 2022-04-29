@@ -24,7 +24,11 @@
       #tlp                                # Power management
     ];
   };
-  
+
+  programs = {
+    alacritty.settings.font.size = 8;
+  };
+
   services = {                            # Applets
     blueman-applet.enable = true;         # Bluetooth
     network-manager-applet.enable = true; # Network
@@ -34,9 +38,5 @@
 #     lowLevelPercent = 20;
 #     iconType = null;
 #   };
-  };
-
-  programs = {
-    alacritty.settings.font.size = 8;
   };
 }

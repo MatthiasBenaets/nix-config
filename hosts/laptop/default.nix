@@ -41,9 +41,9 @@
     };
   };
 
-  programs = {                              # No xbacklight, this is the alterantive
-    dconf.enable = true;
-    light.enable = true;
+  hardware.sane = {                           # Used for scanning with Xsane
+    enable = true;
+    extraBackends = [ pkgs.sane-airscan ];
   };
 
   environment = {
@@ -52,9 +52,9 @@
     ];
   };
 
-  hardware.sane = {                           # Used for scanning with Xsane
-    enable = true;
-    extraBackends = [ pkgs.sane-airscan ];
+  programs = {                              # No xbacklight, this is the alterantive
+    dconf.enable = true;
+    light.enable = true;
   };
 
   services = {

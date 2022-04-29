@@ -1,12 +1,14 @@
 { pkgs, user, ... }:
 
 {
+  networking.firewall.allowedTCPPorts = [ 5900 ];   # Since x11vpn defaults to port 5900. Open this port in firewall
+
   environment = {                                   # VNC used for remote access to the desktop
     systemPackages = with pkgs; [
       x11vnc
     ];
   };
-  networking.firewall.allowedTCPPorts = [ 5900 ];   # Since x11vpn defaults to port 5900. Open this port in firewall
+
   systemd.services."x11vnc" = {                     # Made into a custom service
     enable = true;
     description = "VNC Server for X11";

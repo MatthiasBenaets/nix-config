@@ -46,8 +46,8 @@ $ darwin-rebuild switch
 
 ** Declaring Packages
 *** Links
-- [[https://search.nixos.org/packages][Packages]]
-- [[https://search.nixos.org/options?][Options]]
+- [[https://search.nixos.org/packages][Packages]]: Don't forget to check that the package is available for your system
+- [[https://lnl7.github.io/nix-darwin/manual/index.html][Options]]
 - ~$ man 5 configuration.nix~
 
 *** Declaring Packages
@@ -71,7 +71,7 @@ After installation a ~darwin-configuation.nix~ file will be created in ~~/.nixpk
 
 *** Running apps
 - Apps will be installed in ~/nix/store~ but if a .app file is available, it can also be found in ~~/Applications~
-- From here you can ~$ ln -s ~/Applications/<name>.app /Applications~
+- From here you can ~$ ln -s ~/Applications/Nix Apps/<name>.app /Applications~
 - If your app is not available:
 
 #+BEGIN_SRC
@@ -87,7 +87,9 @@ If you already have homebrew installed, it's possible to manage all packages in 
   homebrew = {
     enable = true;
     autoUpdate = true;
+    cleanup = "uninstall";
     brews = [ "..." ];
+    casks = [ " " ];
     taps = [ " " ];
     ...
   }

@@ -108,9 +108,9 @@
       #libreoffice      # Office Tools
       #simple-scan      # Scanning
     ];
+    file.".config/wall".source = config.lib.file.mkOutOfStoreSymlink ../modules/themes/wall;
+    stateVersion = "22.05";
   };
-
-  nixpkgs.config.allowUnfree = true;
 
   programs = {
     home-manager.enable = true;
@@ -142,7 +142,5 @@
     };
   };
 
-  home.file.".config/wall".source = config.lib.file.mkOutOfStoreSymlink ../modules/themes/wall;
-
-  home.stateVersion = "22.05";
+  #nixpkgs.config.allowUnfree = true;
 }

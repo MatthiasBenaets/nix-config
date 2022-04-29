@@ -10,18 +10,39 @@
 { config, pkgs, user, ... }:
 
 {
-  programs = {
-    zsh.enable = true;
+  users.users."${user}" = {                 # macOS user
+    home = "/Users/${user}";
+    shell = pkgs.zsh;                     # Default shell
   };
-  environment.shells = with pkgs; [ zsh ];
-  system.activationScripts.postActivation.text = ''
-    sudo chsh -s ${pkgs.zsh}/bin/zsh
-  '';
+
+  networking = {
+    computerName = "MacBook";             # Host name
+    hostName = "MacBook";
+  };
+
+  fonts = {                               # Fonts
+    fontDir.enable = true;
+    fonts = with pkgs; [
+      source-code-pro
+      font-awesome
+      (nerdfonts.override {
+        fonts = [
+          "FiraCode"
+        ];
+      })
+    ];
+  };
 
   environment = {
-    systemPackages = with pkgs; [
+    shells = with pkgs; [ zsh ];          # Default shell
+    variables = {                         # System variables
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+    };
+    systemPackages = with pkgs; [         # Installed Nix packages
       # Terminal
       git
+      ranger
 
       # Doom Emacs
       emacs
@@ -30,12 +51,16 @@
     ];
   };
 
+  programs = {                            # Shell needs to be enabled
+    zsh.enable = true;
+  };
+
   services = {
     nix-daemon.enable = true;             # Auto upgrade daemon
-    yabai = {
+    yabai = {                             # Tiling window manager
       enable = true;
       package = pkgs.yabai;
-      config = {
+      config = {                          # Other configuration options
         layout = "bsp";
         auto_balance = "off";
         split_ratio = "0.50";
@@ -61,9 +86,9 @@
         yabai -m rule --add app='^System Information$' manage=off layer=above
         #yabai -m rule --add=
         #yabai -m rule --add=
-      '';
+      '';                                 # Specific rules for if it is managed and on which layer
     };
-    skhd = {
+    skhd = {                              # Hotkey daemon
       enable = true;
       package = pkgs.skhd;
       skhdConfig = ''
@@ -113,48 +138,59 @@
 
         # Menu
         #cmd + space : for now its using the default keybinding to open Spotlight Search
-      '';
+      '';                                 # Hotkey config
     };
   };
 
-  users.users.matthias = {
-    home = "/Users/matthias";
-    shell = pkgs.zsh;
-  };
-
-  fonts = {
-    fontDir.enable = true;
-    fonts = with pkgs; [
-      source-code-pro
-      font-awesome
-      (nerdfonts.override {
-        fonts = [
-          "FiraCode"
-        ];
-      })
+  homebrew = {                            # Declare Homebrew using Nix-Darwin
+    enable = true;
+    autoUpdate = true;                    # Auto update packages
+    cleanup = "zap";                      # Uninstall not listed packages and casks
+    brews = [
     ];
-  };
-
-  system.keyboard = {
-    enableKeyMapping = true;
-  };
-
-  networking = {
-    computerName = "MacBook";
-    hostName = "MacBook";
+    casks = [
+      "plex-media-player"
+    ];
   };
 
   nix = {
     package = pkgs.nix;
-    gc = {
+    gc = {                                # Garbage collection
       automatic = true;
       interval.Day = 7;
       options = "--delete-older-than 7d";
     };
     extraOptions = ''
+      auto-optimise-store = true
       experimental-features = nix-command flakes
     '';
   };
 
-  system.stateVersion = 4;
+  system = {
+    defaults = {
+      NSGlobalDomain = {                  # Global macOS system settings
+        KeyRepeat = 1;
+        NSAutomaticCapitalizationEnabled = false;
+        NSAutomaticSpellingCorrectionEnabled = false;
+      };
+      dock = {                            # Dock settings
+        autohide = true;
+        orientation = "bottom";
+        showhidden = true;
+        tilesize = 40;
+      };
+      finder = {                          # Finder settings
+        QuitMenuItem = false;             # I believe this probably will need to be true if using spacebar
+      };  
+      trackpad = {                        # Trackpad settings
+        Clicking = true;
+        TrackpadRightClick = true;
+      };
+    };
+    keyboard = {
+      enableKeyMapping = true;            # Needed for skhd
+    };
+    activationScripts.postActivation.text = ''sudo chsh -s ${pkgs.zsh}/bin/zsh''; # Since it's not possible to declare default shell, run this command after build
+    stateVersion = 4;
+  };
 }
