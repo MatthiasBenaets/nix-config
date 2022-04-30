@@ -7,13 +7,12 @@
 #       └─ ./home.nix *
 #
 
-{ pkgs, nix-doom-emacs, ... }:
+{ pkgs, ... }:
 
 {
   imports =
     [
       ../modules/apps/alacritty.nix
-      nix-doom-emacs.hmModule
     ];
 
   home = {                                        # Specific packages for macbook
@@ -26,10 +25,6 @@
   };
 
   programs = {
-    doom-emacs = {
-      enable = true;
-      doomPrivateDir = ../modules/editors/emacs/doom.d;
-    };
     alacritty = {                                 # Terminal Emulator
       enable = true;
     };
@@ -94,13 +89,6 @@
 
         nmap <F6> :NERDTreeToggle<CR>             " F6 opens NERDTree
       '';
-    };
-
-    services = {
-      emacs = {
-        enable = true;
-        package = nix-doom-emacs;
-      };
     };
   };
 }
