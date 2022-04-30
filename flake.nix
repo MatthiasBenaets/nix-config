@@ -33,9 +33,11 @@
         url = "github:lnl7/nix-darwin/master";                        # MacOS Packages
         inputs.nixpkgs.follows = "nixpkgs";
       };
+
+      nix-doom-emacs.url = "github:vlaci/nix-doom-emacs";
     };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, darwin, ... }:    # Function that tells my flake which to use and what do what to do with the dependencies.
+  outputs = inputs @ { self, nixpkgs, home-manager, darwin, nix-doom-emacs, ... }:    # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                               # Variables that can be used in the config files.
       user = "matthias";
     in                                                                # Use above variables in ...
@@ -50,7 +52,7 @@
       darwinConfigurations = (                                        # Location of the available darwin configurations
         import ./darwin {
           inherit (nixpkgs) lib;
-          inherit inputs user nixpkgs home-manager darwin;
+          inherit inputs user nixpkgs home-manager darwin nix-doom-emacs;
         }
       );
 
