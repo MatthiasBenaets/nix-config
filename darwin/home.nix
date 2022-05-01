@@ -2,9 +2,12 @@
 #  Home-manager configuration for macbook
 #
 #  flake.nix
-#   └─ ./darwin
-#       ├─ ./default.nix
-#       └─ ./home.nix *
+#   ├─ ./darwin
+#   │   ├─ ./default.nix
+#   │   └─ ./home.nix *
+#   └─ ./modules
+#       └─ ./apps
+#           └─ ./alacritty.nix
 #
 
 { pkgs, ... }:

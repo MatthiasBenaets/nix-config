@@ -141,6 +141,4 @@
       name = "FiraCode Nerd Font Mono Medium";  
     };
   };
-
-  #nixpkgs.config.allowUnfree = true;
 }

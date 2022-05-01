@@ -128,9 +128,9 @@ This will depend on the host chosen.
 #+END_SRC
 
 *** Possible Extra Steps
-1. Comment out emacs from ~<repo directory>/modules/editors/default.nix~
-   - This is because the doom emacs script needs a second terminal instance to install
-   - You can uncomment this on first rebuild
+1. If you are planning to use doom emacs. It's recommended to comment out the import in configuration.nix for the initial installation if no user environment is already available.
+   - This is due to the post install script is partially hardcoded
+   - If you move your flake after first install, it's no longer relevant
 2. Switch specific host hardware-configuration.nix with generated ~/mnt/etc/nixos/hardware-configuration.nixos~
 3. Change existing network card name with the one in your system
    - Look in generated hardware-configuration.nixos

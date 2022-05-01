@@ -5,10 +5,13 @@
 #   ├─ ./hosts
 #   │   └─ configuration.nix *
 #   └─ ./modules
-#       └─ ./desktop
-#           └─ ./bspwm
-#               └─ bspwm.nix
-#             
+#       ├─ ./desktop
+#       │   └─ ./bspwm
+#       │       └─ bspwm.nix
+#       └─ ./editors
+#           └─ ./emacs
+#               └─ default.nix
+#
 
 { config, lib, pkgs, inputs, user, ... }:
 
@@ -16,6 +19,7 @@
   imports =                                 # Import window or display manager.
     [
       ../modules/desktop/bspwm/bspwm.nix
+      ../modules/editors/emacs
     ];
 
   users.users.${user} = {                   # System User
