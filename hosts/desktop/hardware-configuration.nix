@@ -49,6 +49,12 @@
       fsType = "ext4";
     };
 
+  fileSystems."/toshiba3" =
+    { #device = "/dev/disk/by-uuid/7f5e9ea1-2bc3-44c5-9b6a-d8fe2a311b73"; 
+      device = "/dev/disk/by-label/toshiba3";
+      fsType = "ext4";
+    };
+
   fileSystems."/maxtor" =
     { #device = "/dev/disk/by-uuid/36E6613DE660FE8D";
       device = "/dev/disk/by-label/maxtor";
