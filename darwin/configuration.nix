@@ -10,7 +10,7 @@
 { config, pkgs, user, ... }:
 
 {
-  users.users."${user}" = {                 # macOS user
+  users.users."${user}" = {               # macOS user
     home = "/Users/${user}";
     shell = pkgs.zsh;                     # Default shell
   };

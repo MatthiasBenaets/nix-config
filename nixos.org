@@ -25,7 +25,7 @@
 
 *** Booting into ISO
 **** Via USB
-- On boot: Esc / Del / F9-12
+- On boot: Esc / Del / F1-12
 
 **** Virt-Manager
 - Download KDE ISO
@@ -86,7 +86,7 @@
 **** General
 - Argument on how to evaluate config:
     - ~{config, pkgs, ...}:~
-- Pull in other files used withinthe config:
+- Pull in other files used within the config:
     - ~import = [./hardware-configuration.nix];~
 
 **** Boot
@@ -181,7 +181,7 @@
 #+END_SRC
 
 **** Internationalisation
-*Where am i? How do i work*
+*Locales, Layouts and Options*
 #+BEGIN_SRC nix
   # Clock
   time.timeZone = "Belgium/Brussels";
@@ -287,7 +287,7 @@
 - No need to touch this.
 - Nothing to do with the version of the system.
 - Just tells the version of state/config
-- Can be updates to a stable version if you are really sure.
+- Can be updated to a stable version if you are really sure.
 
 *** Hardware-configuration.nix
 **** Generate
@@ -322,7 +322,7 @@
 
 *** Login
 **** initialPassword
-- Log in with give password of ~users.users.<user>.initialPassword~
+- Log in with given password at ~users.users.<user>.initialPassword~
 
 **** via TTY
 - Ctrl + Alt + F1 -> Log in via root
@@ -335,7 +335,7 @@
   - Install: ~$ nix-env -iA nixos.firefox~
   - List: ~$ nix-env -q~
   - Uninstall: ~$ nix-env --uninstall firefox~
-- Alternatively you can also use nix-shell
+- Alternatively you can also use ~$ nix-shell -p <package name>~
 - Configuration file: see below
 
 *** Links
@@ -438,7 +438,7 @@ D. Installed through nix-env:
 
 *** Garbage Collection
 **** Command-line
-- Remove undeclared packaged, dependencies and symlinks:
+- Remove undeclared packages, dependencies and symlinks:
   - ~$ nix-collect-garbage~
 - Remove above of older generations:
   - ~$ nix-collect-garbage --delete-old~
@@ -480,7 +480,7 @@ D. Installed through nix-env:
 *** Setup
 **** Initial
 *As a user*
-- Add the channel: *need to be run with root privileges if you want to us the NixOS Module*
+- Add the channel: *needs to be run with root privileges if you want to us the NixOS Module*
   - ~$ nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager~
   - ~$ nix-channel --add https://github.com/nix-community/home-manager/archive/release-21.11.tar.gz home-manager~
 - ~$ nix-channel --update~
@@ -545,7 +545,7 @@ D. Installed through nix-env:
 **** Stored files (also with no link to NixOS)
 #+BEGIN_SRC nix
   home.file.".doom.d" = {
-    source ./doom.d;
+    source = ./doom.d;
     recursive = true;
     onChange = builtins.readFile ./doom.sh;
   };
@@ -618,7 +618,7 @@ D. Installed through nix-env:
 #+END_SRC
 
 ***** Outputs
-*function of an argument that uses a the inputs for reference*
+*function of an argument that uses the inputs for reference*
 - Configure what you imported
 - Can be pretty much anything: Packages / configurations / modules / etc...
 

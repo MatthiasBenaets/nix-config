@@ -27,6 +27,7 @@ When prompted, allow the installer to use root priviliges and to set up Nix as a
 **** Installing Packages
 If you just want to use the Nix Package Manager, great, you are done. You can install new packages using the command below. Available packages can be found [[https://search.nixos.org/packages][here]]:
 - ~$ nix-env -iA nixpkgs.<package name>~
+- ~$ nix-shell -p <package name>~
 If you would also like to configure these packages using their options, it's recommended that you keep reading.
 
 ** Installation
@@ -81,7 +82,7 @@ $ ln -s /nix/store/<correct path>/bin/<pkgname>.app /Applications/.
 #+END_SRC
 
 ** Homebrew
-If you already have homebrew installed, it's possible to manage all packages in your configuration file.
+If you already have homebrew installed (which is a must), it's possible to manage all packages in your configuration file.
 
 #+BEGIN_SRC nix
   homebrew = {
@@ -96,6 +97,43 @@ If you already have homebrew installed, it's possible to manage all packages in 
 #+END_SRC
 
 But honestly, if it's packaged in for Nix, use Nix;
+
+** Extras
+*** Useful Options
+#+BEGIN_SRC nix
+system = {
+  defaults = {
+    NSGlobalDomain = { ... };
+    dock = { autohide = true; orientation = "bottom"; tilesize = int; };
+    finder = {};
+    trackpad = { Clicking = true; TrackpadRightClick = true; };
+  };
+  keyboard = { enableKeyMapping = true; };
+};
+
+environment = {
+  variables = {
+    EDITOR = "...";
+    VISUAL = "...";
+  };
+};
+#+END_SRC
+
+*** Garbage Collection
+**** Command-line
+ - Remove undeclared packages, dependencies and symlinks:
+   - ~$ sudo nix-collect-garbage -d~
+
+**** Darwin-configuration.nix
+#+BEGIN_SRC nix
+nix = {
+  gc = {
+    automatic = true;
+    interval.Day = 7; #Hours, minutes
+    options = "--delete-older-than 7d";
+  };
+};
+#+END_SRC
 
 * Home-Manager
 ** Introduction
@@ -161,6 +199,7 @@ But honestly, if it's packaged in for Nix, use Nix;
 *** Applying
 - ~$ home-manager switch~
 
+** Extras
 * Flakes
 ** Introduction
 - Flakes are an "upcoming feature" of the Nix package manager.
@@ -228,7 +267,7 @@ $ echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
 #+END_SRC
 
 ***** Outputs
-*function of an argument that uses a the inputs for reference*
+*function of an argument that uses the inputs for reference*
 - Configure what you imported
 - Can be pretty much anything: Packages / configurations / modules / etc...
 

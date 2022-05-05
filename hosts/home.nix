@@ -35,7 +35,6 @@
       # Video/Audio
       feh               # Image Viewer
       mpv               # Media Player
-      obs-studio        # Broadcasting
       pavucontrol       # Audio control
       plex-media-player # Media Player
       vlc               # Media Player
@@ -47,12 +46,14 @@
 
       # Apps
       google-chrome     # Browser
-      pcmanfm           # File Manager
-      remmina           # XRDP Client
+      remmina           # XRDP & VNC Client
 
       # File Management
+      gnome.file-roller # Archive Manager
+      pcmanfm           # File Manager
       unzip             # Zip files
       unrar             # Rar files
+
 
       # General configuration
       #git              # Repositories
@@ -107,6 +108,9 @@
       #blueman          # Bluetooth
       #libreoffice      # Office Tools
       #simple-scan      # Scanning
+      #
+      # Flatpak
+      #obs-studio       # Recording/Live Streaming
     ];
     file.".config/wall".source = config.lib.file.mkOutOfStoreSymlink ../modules/themes/wall;
     stateVersion = "22.05";

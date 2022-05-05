@@ -19,7 +19,7 @@
   imports =                                 # Import window or display manager.
     [
       ../modules/desktop/bspwm/bspwm.nix
-      ../modules/editors/emacs
+      ../modules/editors/emacs              # ! Comment this out on first install !
     ];
 
   users.users.${user} = {                   # System User
@@ -28,8 +28,6 @@
     shell = pkgs.zsh;                       # Default shell
   };
   security.sudo.wheelNeedsPassword = false; # User does not need to give password when using sudo.
-
-  networking.useDHCP = false;               # Deprecated but needed in config.
 
   time.timeZone = "Europe/Brussels";        # Time zone and internationalisation
   i18n = {

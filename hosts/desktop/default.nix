@@ -12,13 +12,14 @@
 #               └─ default.nix
 #
 
-{ config, pkgs, user, ... }:
+{ config, pkgs, lib, user, ... }:
 
 {
   imports =                                     # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
+    [(import ../../modules/apps/steam.nix)] ++ # VNC Server
+    [(import ../../modules/desktop/virtualisation/x11vnc.nix)] ++ # VNC Server
     [(import ../../modules/services/media.nix)] ++        # Media Center
-    [(import ../../modules/desktop/virtualisation/x11vnc.nix)] ++
     (import ../../modules/desktop/virtualisation) ++      # Virtual Machines
     (import ../../modules/hardware);                      # Hardware devices
 
@@ -52,14 +53,6 @@
       simple-scan
       x11vnc
     ];
-  };
-
-  programs = {                                  # Needed to succesfully start Steam
-    steam.enable = true;
-    gamemode.enable = true;                     # Better gaming performance
-                                                # Steam: Right-click game - Properties - Launch options: gamemoderun %command%
-                                                # Lutris: General Preferences - Enable Feral GameMode
-                                                #                             - Global options - Add Environment Variables: LD_PRELOAD=/nix/store/*-gamemode-*-lib/lib/libgamemodeauto.so
   };
 
   services = {
@@ -98,7 +91,7 @@
       ];
 
       displayManager.sessionCommands = ''
-        !/bin/sh
+        #!/bin/sh
         SCREEN=$(${pkgs.xorg.xrandr}/bin/xrandr | grep " connected " | wc -l)
         if [[ $SCREEN -eq 1 ]]; then
           ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal
@@ -114,7 +107,7 @@
         Option "StandbyTime" "0"
         Option "SuspendTime" "0"
         Option "OffTime" "0"
-      '';                                       # Used so computer don't goes to sleep
+      '';                                       # Used so computer does not goes to sleep
 
       resolutions = [
         { x = 1920; y = 1080; }

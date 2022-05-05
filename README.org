@@ -18,16 +18,16 @@
   - [[file:darwin.org][General Nix-Darwin Setup Guide]]
 
 * System Components
-|              | *NixOS*           | *Darwin*         |
-|--------------+-------------------+------------------|
-| *shell:*     | Zsh               | Zsh              |
-| *DM:*        | LightDM           | /                |
-| *WM:*        | Bspwm + Polybar   | Yabai            |
-| *Hotkey*     | Sxhkd             | Skhd             |
-| *Terminal*   | Alacritty         | Alacritty        |
-| *Editor:*    | Nvim + Doom Emacs | Doom Emacs       |
-| *Launcher:*  | Rofi              | Spotlight Search |
-| *GTK Theme:* | Dracula           | /                |
+|              | *NixOS*           | *Darwin*          |
+|--------------+-------------------+-------------------|
+| *shell:*     | Zsh               | Zsh               |
+| *DM:*        | LightDM           | /                 |
+| *WM:*        | Bspwm + Polybar   | Yabai             |
+| *Hotkey*     | Sxhkd             | Skhd              |
+| *Terminal*   | Alacritty         | Alacritty         |
+| *Editor:*    | Nvim + Doom Emacs | Nvim + Doom Emacs |
+| *Launcher:*  | Rofi              | /                 |
+| *GTK Theme:* | Dracula           | /                 |
 
 * NixOS Installation Guide
 This flake currently has *3* hosts
@@ -89,7 +89,7 @@ This will depend on the host chosen.
 - Partition with label ... to ...
   - "nixos" -> ~/mnt~
   - "boot" -> ~/mnt/boot~
-#+BEGIN_SRc
+#+BEGIN_SRC
 # mount /dev/disk/by-label/nixos /mnt
 # mkdir -p /mnt/boot
 # mount /dev/disk/by-label/boot /mnt/boot
@@ -131,6 +131,7 @@ This will depend on the host chosen.
 1. If you are planning to use doom emacs. It's recommended to comment out the import in configuration.nix for the initial installation if no user environment is already available.
    - This is due to the post install script is partially hardcoded
    - If you move your flake after first install, it's no longer relevant
+   - The installation script is hardcoded for ~$HOME/.setup~, so save the flake there!
 2. Switch specific host hardware-configuration.nix with generated ~/mnt/etc/nixos/hardware-configuration.nixos~
 3. Change existing network card name with the one in your system
    - Look in generated hardware-configuration.nixos
