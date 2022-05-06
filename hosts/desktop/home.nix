@@ -37,9 +37,7 @@
       #steam            # Game Launcher
 
       # Future
-      #Gimp Inkscape Krita
       #MKVtoolnix
-      #Kdenlive
     ];
   };
 

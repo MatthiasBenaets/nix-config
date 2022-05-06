@@ -9,10 +9,9 @@ foreground=#ccffffff
 height=15
 module-margin-left=1
 modules-left=logo bspwm
-modules-right=backlight pad memory cpu pad mic volume pad battery pad date
+modules-right=backlight pad memory cpu pad mic volume pad battery date
 offset-y=2
 padding-right=2
-spacing=1.5
 tray-detached=false
 tray-position=right
 width=100%
@@ -29,8 +28,8 @@ foreground=#ccffffff
 height=15
 module-margin-left=1
 modules-left=logo bspwm
-modules-right=date
-monitor=HDMI-A-0
+modules-right=mic volume pad date
+monitor=DisplayPort-1
 offset-y=2
 padding-right=2
 spacing=1.5
@@ -70,9 +69,9 @@ bar-capacity-fill-font=3
 bar-capacity-fill-foreground=#ddffffff
 bar-capacity-format=%{+u}%{+o}%fill%%empty%%{-u}%{-o}
 bar-capacity-width=10
-format-charging=<animation-charging> <label-charging>
-format-discharging=<ramp-capacity> <label-discharging>
-format-full=<ramp-capacity> <label-full>
+format-charging="<animation-charging> <label-charging>    "
+format-discharging="<ramp-capacity> <label-discharging>    "
+format-full="<ramp-capacity> <label-full>    "
 full-at=98
 label-charging=%percentage%%
 label-discharging=%percentage%%
@@ -87,7 +86,7 @@ ramp-capacity-4=
 type=internal/battery
 
 [module/bluetooth]
-click-left=/nix/store/ln5s2qmpd7jn8vlpz3lwjjpynaqs3km5-blueman-2.2.3/bin/blueman-manager
+click-left=/nix/store/nlqrgrkd2z4l16xwki7zk2z0jhrl0pbw-blueman-2.2.4/bin/blueman-manager
 content=
 type=custom/text
 
@@ -136,13 +135,13 @@ type=internal/bspwm
 ws-icon-0=1;
 ws-icon-1=2;
 ws-icon-2=3;
-ws-icon-3=4;
-ws-icon-4=5;
+ws-icon-3=4;
+ws-icon-4=5;
 ws-icon-5=6;
 ws-icon-6=7;
-ws-icon-7=8;
-ws-icon-8=9;
-ws-icon-9=0;
+ws-icon-7=8;
+ws-icon-8=9;
+ws-icon-9=10;
 
 [module/cpu]
 format=<label>
@@ -156,11 +155,34 @@ date=  %%{F#999}%d-%m-%Y%%{F-} %%{F#fff}%H:%M%%{F-}
 type=internal/date
 
 [module/logo]
-click-left=systemctl suspend
-click-right=poweroff
-content=" %{F#a7c7e7} "
-format-foreground=#a7c7e7
-type=custom/text
+expand-right=true
+format-spacing=1
+label-close=" %{F#a7c7e7} "
+label-open=" %{F#a7c7e7} "
+label-separator=|
+menu-0-0=
+menu-0-0-exec=menu-open-1
+menu-0-1=
+menu-0-1-exec=menu-open-2
+menu-1-0=
+menu-1-0-exec=sleep 0.5; xset dpms force standby
+menu-1-1=
+menu-1-1-exec=sleep 0.5; systemctl suspend
+menu-1-2=
+menu-1-2-exec=sleep 0.5; systemctl poweroff
+menu-1-3=
+menu-1-3-exec=sleep 0.5; systemctl reboot
+menu-2-0=
+menu-2-0-exec=google-chrome-stable &
+menu-2-1=
+menu-2-1-exec=lutris &
+menu-2-2=
+menu-2-2-exec=libreoffice &
+menu-2-3=
+menu-2-3-exec=darktable &
+menu-2-4=
+menu-2-4-exec=obs &
+type=custom/menu
 
 [module/memory]
 format=<label>
@@ -190,8 +212,8 @@ label-maxlen=75
 type=internal/xwindow
 
 [module/volume]
-click-right=/nix/store/2dd5rl0qclzfr66kz4q1ryskbl2mrd62-pavucontrol-5.0/bin/pavucontrol
-format-volume=<ramp-volume> <label-volume>
+click-right=/nix/store/4cv9fbc6hln70phd0dsz1grj0f3xxk2w-pavucontrol-5.0/bin/pavucontrol
+format-volume=<ramp-volume>  <label-volume>
 interval=2
 label-muted=  muted
 label-muted-foreground=#66
@@ -200,6 +222,3 @@ ramp-volume-1=
 ramp-volume-2=
 type=internal/pulseaudio
 use-ui-max=false
-
-
-

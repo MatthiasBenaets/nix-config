@@ -355,14 +355,26 @@ in
 
           menu-2-0 = "";
           menu-2-0-exec = "google-chrome-stable &";
-          menu-2-1 = "";
-          menu-2-1-exec = "lutris &";
+          menu-2-1 = "";
+          menu-2-1-exec = "emacs &";
           menu-2-2 = "";
           menu-2-2-exec = "libreoffice &";
-          menu-2-3 = "";
-          menu-2-3-exec = "darktable &";
-          menu-2-4 = "";
-          menu-2-4-exec = "obs &";
+          menu-2-3 = "";
+          menu-2-3-exec = "plexmediaplayer &";
+          menu-2-4 = "";
+          menu-2-4-exec = "darktable &";
+          menu-2-5 = "";
+          menu-2-5-exec = "flatpak run com.obsproject.Studio &";
+          menu-2-6 = "";
+          menu-2-6-exec = "gimp &";
+          menu-2-7 = "";
+          menu-2-7-exec = "inkscape &";
+          menu-2-8 = "";
+          menu-2-8-exec = "kdenlive &";
+          menu-2-9 = "";
+          menu-2-9-exec = "lutris &";
+          menu-2-10 = "";
+          menu-2-10-exec = "steam &";
         };
         "module/bluetooth" = {
           type = "custom/text";

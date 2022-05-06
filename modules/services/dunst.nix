@@ -5,7 +5,7 @@
 { config, pkgs, ... }:
 
 let
-  colors = import ../themes/base16.nix;                 # Import colors theme
+  colors = import ../themes/colors.nix;                 # Import colors theme
 in
 {
   xdg.dataFile."dbus-1/services/org.knopwob.dunst.service".source = "${pkgs.dunst}/share/dbus-1/services/org.knopwob.dunst.service";
@@ -16,7 +16,7 @@ in
       package = pkgs.papirus-icon-theme;
       size = "16x16";
     };
-    settings = with colors.scheme.dracula; {            # Settings
+    settings = with colors.scheme.doom; {            # Settings
       global = {
         monitor = 0;
         # geometry [{width}x{height}][+/-{x}+/-{y}]
@@ -30,7 +30,7 @@ in
         padding = 16;
         horizontal_padding = 16;
         frame_width = 3;
-        frame_color = "${base00}";
+        frame_color = "#${bg}";
         separator_color = "frame";
         font = "FiraCode Nerd Font 10";
         line_height = 4;
@@ -49,19 +49,19 @@ in
         hide_duplicate_count = true;
       };
       urgency_low = {                                   # Colors
-        background = "#${base00}";
-        foreground = "#${base05}";
+        background = "#${bg}";
+        foreground = "#${text}";
         timeout = 4;
       };
       urgency_normal = {
-        background = "#${base00}";
-        foreground = "#${base05}";
+        background = "#${bg}";
+        foreground = "#${text}";
         timeout = 4;
       };
       urgency_critical = {
-        background = "#${base00}";
-        foreground = "#${base05}";
-        frame_color = "#${base08}";
+        background = "#${bg}";
+        foreground = "#${text}";
+        frame_color = "#${red}";
         timeout = 10;
       };
     };

@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ lib, inputs, nixpkgs, home-manager, user, ... }:
+{ lib, inputs, nixpkgs, home-manager, user, location, ... }:
 
 let
   system = "x86_64-linux";                             	    # System architecture
@@ -26,7 +26,7 @@ in
 {
   desktop = lib.nixosSystem {                               # Desktop profile
     inherit system;
-    specialArgs = { inherit inputs user; };                 # Pass flake variable
+    specialArgs = { inherit inputs user location; };        # Pass flake variable
     modules = [                                             # Modules that are used.
       ./desktop
       ./configuration.nix
@@ -44,7 +44,7 @@ in
 
   laptop = lib.nixosSystem {                                # Laptop profile
     inherit system;
-    specialArgs = { inherit user inputs; };
+    specialArgs = { inherit inputs user location; };
     modules = [
       ./laptop
       ./configuration.nix
@@ -62,7 +62,7 @@ in
 
   vm = lib.nixosSystem {                                    # VM profile
     inherit system;
-    specialArgs = { inherit user inputs; };
+    specialArgs = { inherit inputs user location; };
     modules = [
       ./vm
       ./configuration.nix

@@ -6,74 +6,7 @@
 
 let
   inherit (config.lib.formats.rasi) mkLiteral;        # Theme.rasi alternative. Add Theme here
-  rofi-theme = {    
-    "*" = {
-      bg = mkLiteral "#11121D";
-      bg-alt = mkLiteral "#444b6a";
-
-      fg = mkLiteral "#FFFFFF";
-      fg-alt = mkLiteral "#787c99";
-
-      background-color = mkLiteral "@bg";
-
-      border = 0;
-      margin = 0;
-      padding = 0;
-      spacing = 0;
-    };
-
-    "window" = {
-      width = mkLiteral "30%";
-    };
-
-    "element" = {
-      padding = mkLiteral "8 0";
-      text-color = mkLiteral "@fg-alt";
-    };
-
-    "element selected" = {
-      text-color = mkLiteral "@fg";
-    };
-
-    "element-text" = {
-      background-color = mkLiteral "inherit";
-      text-color = mkLiteral "inherit";
-      vertical-align = mkLiteral "0.5";
-    };
-
-    "element-icon" = {
-      size = 30;
-    };
-
-    "entry" = {
-      background-color = mkLiteral "@bg-alt";
-      padding = 12;
-      text-color = mkLiteral "@fg";
-    };
-
-    "inputbar" = {
-      children = mkLiteral "[prompt, entry]";
-    };
-
-    "listview" = {
-      padding = mkLiteral "8 12";
-      background-color = mkLiteral "@bg";
-      columns = 1;
-      lines = 8;
-    };
-
-    "mainbox" = {
-      background-color = mkLiteral "@bg";
-      children = mkLiteral "[inputbar, listview]";
-    };
-
-    "prompt" = {
-      background-color = mkLiteral "@bg-alt";
-      enabled = true;
-      padding = mkLiteral "12 0 0 12";
-      text-color = mkLiteral "@fg";
-    };
-  };
+  colors = import ../themes/colors.nix;
 in
 {
   programs = {
@@ -81,7 +14,83 @@ in
       enable = true;
       terminal = "${pkgs.alacritty}/bin/alacritty";           # Alacritty is default terminal emulator
       location = "center";
-      theme = rofi-theme;                                     # Use theme from above
+      theme =  with colors.scheme.doom; {
+        "*" = {
+          spacing = 0;
+          background-color = mkLiteral "transparent";
+          
+          text-color = mkLiteral "#${text}";
+        };
+
+        "window" = {
+          transparency = "real";
+          fullscreen = true;
+          background-color = mkLiteral "#${bg}";
+        };
+
+        "mainbox" = {
+          padding = mkLiteral "30% 30%";
+        };
+
+        "inputbar" = {
+          margin = mkLiteral "0px 0px 20px 0px";
+          children = mkLiteral "[prompt, textbox-prompt-colon, entry, case-indicator]";
+        };
+
+        "prompt" = {
+          text-color = mkLiteral "#${blue}";
+        };
+
+        "textbox-prompt-colon" = {
+          expand = false;
+          str = ":";
+          text-color = mkLiteral "#${text-alt}";
+        };
+
+        "entry" = {
+          margin = mkLiteral "0px 10px";
+        };
+
+        "listview" = {
+          spacing = mkLiteral "5px";
+          dynamic = true;
+          scrollbar = false;
+        };
+
+        "element" = {
+          padding = mkLiteral "5px";
+          text-color = mkLiteral "#${text-alt}";
+          highlight = mkLiteral "bold #${green}";
+          border-radius = mkLiteral "3px";
+        };
+
+        "element selected" = {
+          background-color = mkLiteral "#${emphasis}";
+          text-color = mkLiteral "#${text}";
+        };
+
+        "element urgent, element selected urgent" = {   
+          text-color = mkLiteral "#${red}";
+        };
+
+        "element active, element selected active" = {
+          text-color = mkLiteral "#${magenta}";
+        };
+
+        "message" = {
+          padding = mkLiteral "5px";
+          border-radius = mkLiteral "3px";
+          background-color = mkLiteral "#${emphasis}";
+          border = mkLiteral "1px";
+          border-color = mkLiteral "#${cyan}";
+        };
+
+        "button selected" = {
+          padding = mkLiteral "5px";
+          border-radius = mkLiteral "3px";
+          background-color = mkLiteral "#${emphasis}";
+        };
+      };
     };
   };
 }

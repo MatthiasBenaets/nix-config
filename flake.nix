@@ -38,26 +38,21 @@
   outputs = inputs @ { self, nixpkgs, home-manager, darwin, ... }:    # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                               # Variables that can be used in the config files.
       user = "matthias";
+      location = "$HOME/.setup";
     in                                                                # Use above variables in ...
     {
       nixosConfigurations = (                                         # Location of the available nixos configurations
         import ./hosts {                                              # Imports ./hosts/default.nix
           inherit (nixpkgs) lib;
-          inherit inputs user nixpkgs home-manager;                   # Also inherit home-manager so it does not need to be defined here.
+          inherit inputs nixpkgs home-manager user location;          # Also inherit home-manager so it does not need to be defined here.
         }
       );
 
       darwinConfigurations = (                                        # Location of the available darwin configurations
         import ./darwin {
           inherit (nixpkgs) lib;
-          inherit inputs user nixpkgs home-manager darwin;
+          inherit inputs nixpkgs home-manager darwin user;
         }
       );
-
-#     devShell.${system} = (                                          # devShell
-#       import ./path {
-#         inherit system nixpkgs;
-#       }
-#     );
     };
 }

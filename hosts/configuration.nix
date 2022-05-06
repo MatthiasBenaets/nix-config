@@ -13,7 +13,7 @@
 #               └─ default.nix
 #
 
-{ config, lib, pkgs, inputs, user, ... }:
+{ config, lib, pkgs, inputs, user, location, ... }:
 
 {
   imports =                                 # Import window or display manager.
