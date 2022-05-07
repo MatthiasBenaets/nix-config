@@ -54,7 +54,7 @@ alt + {Left,Right}
   bspc desktop -f {prev,next}.local
 
 # Focus or send to the given desktop
-alt + {_,shift +}{ampersand,eacute,quotedbl,apostrophe,parenleft,setion,egrae,exlam,ccedilla,agrave}
+alt + {_,shift +}{1-9,0}
   bspc {desktop -f,node -d} '{1-9,10}'
 
 # Send and follow node to next or previous desktop
@@ -62,13 +62,12 @@ alt + shift + {Left,Right}
   bspc node -d {prev,next}.local --follow
 
 # CONTROL RESIZE
-# Expand window by moving one of its sides outwards
-control + {Left, Right, Up, Down}
-  bspc node -z {left -20 0, right 20 0, top 0 -20, bottom 0 20}
-
-# Contract window by moving one of its sides inwards
-control + shift + {Left, Right, Up, Down}
-  bspc node -z { right -20 0, left 20 0, bottom 0 -20, top 0 20}
+# Expand or shrink window by moving one of its sides outwards or inwards depening on first direction pressed
+control + {Left,Down,Up,Right}
+  bspc node -z {left -20 0 || bspc node -z right -20 0, \
+              bottom 0 20 || bspc node -z top 0 20,\
+              top 0 -20 || bspc node -z bottom 0 -20,\
+              right 20 0 || bspc node -z left 20 0}
 
 # XF86 KEYS
 # Toggle mute audio

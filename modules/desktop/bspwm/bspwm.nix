@@ -63,12 +63,11 @@
   hardware = {                                    # Hardware Audio
     pulseaudio = {
       enable = true;
-      extraModules = [ pkgs.pulseaudio-modules-bt ];  # Extra Bluetooth Codecs 
       package = pkgs.pulseaudioFull;
       extraConfig = ''
         load-module module-switch-on-connect
       '';                                         # Automatically switch to bluetooth device upon connection
-    };
+    };                                            # For optimal mic quality: Input at 35% (-25db)
   };
 
   environment.systemPackages = with pkgs; [       # Packages installed

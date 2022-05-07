@@ -123,12 +123,6 @@
   xsession = {                                # Session settings
     enable = true;
     numlock.enable = true;
-
-    pointerCursor = {
-      name = "Dracula-cursors";
-      package = pkgs.dracula-theme;
-      size = 16;
-    };
   };
 
   gtk = {                                     # Theming
@@ -136,6 +130,11 @@
     theme = {
       name = "Dracula";
       package = pkgs.dracula-theme;
+    };
+    cursorTheme = {
+      name = "Dracula-cursors";
+      package = pkgs.dracula-theme;
+      size = 16;
     };
     iconTheme = {
       name = "Papirus-Dark";
