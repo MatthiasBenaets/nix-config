@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  #future reference https://github.com/gytis-ivaskevicius/nixfiles/tree/2b2abcd07ede0df56360a8cda50a919a65864f8c when I switch to wayland
   hardware.opengl.enable = true;
 
   environment = {
@@ -11,7 +10,7 @@
       fi
     '';                                   # Will automatically open sway when logged into tty1
     variable = {
-      XKB_DEFAULT_LAYOUT = "be";          # Keyboard layout
+      #XKB_DEFAULT_LAYOUT = "us";         # Keyboard layout
       #LIBCL_ALWAYS_SOFTWARE = "1";       # For applications in VM like alacritty to work
       #WLR_NO_HARDWARE_CURSORS = "1";     # For cursor in VM
     };
@@ -20,7 +19,6 @@
   programs = {
     sway = {                              # Tiling Wayland compositor & window manager
       enable = true;
-      wrapperFeatures.gtk = true;
       extraPackages = with pkgs; [
         #swaylock       # Screen Locker
         #swayidle       # Idle Management
@@ -28,15 +26,16 @@
         #mako           # Notifications
         #kanshi         # Autorandr
         #
-        foot            # Terminal
-        dmenu           # Menu
+        #dmenu           # Menu
         #wofi           # Menu
+        autotiling      # Tiling Script
       ];
     };
-    waybar.enable = true;                 # Bar
   };
 
-  services.pipewire = {                   # Sound
+  sound.enable = true;                    # Sound
+  security.rtkit.enable = true;
+  services.pipewire = {
     enable = true;
     alsa = {
       enable = true;

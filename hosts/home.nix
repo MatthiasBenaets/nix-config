@@ -42,7 +42,6 @@
 
       # Dependencies
       libnotify         # Notifications need for Dunst
-      ##snixembed       # System tray fix, run snixembed --fork in .xinitrc
 
       # Apps
       google-chrome     # Browser
@@ -62,6 +61,7 @@
       #pciutils         # Computer utility info
       #pulseaudio       # Sound
       #usbutils         # USB utility info
+      #wacomtablet      # Wacom Tablet
       #wget             # Downloader
       #xclip            # Console Clipboard
       #xterm            # Terminal
@@ -141,7 +141,7 @@
       package = pkgs.papirus-icon-theme;
     };
     font = {
-      name = "FiraCode Nerd Font Mono Medium";  
+      name = "JetBrains Mono Medium";  # or FiraCode Nerd Font Mono Medium  
     };
   };
 }

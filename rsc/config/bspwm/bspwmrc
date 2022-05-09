@@ -9,12 +9,13 @@ bspc config border_width      2
 bspc config window_gaps      12
 bspc config split_ratio     0.5
 
-bspc config focus_follows_pointer     true
-#bspc config borderless_monocle       true
-#bspc config gapless_monocle          true
+bspc config click_to_focus	     true
+bspc config focus_follows_pointer    false
+bspc config borderless_monocle       false
+bspc config gapless_monocle          false
 
-#bspc config normal_border_color  "#44475a"
-#bspc config focused_border_color "#bd93f9"
+#bspc config normal_border_color  "#000000"
+#bspc config focused_border_color "#ffffff"
 
 
 # Rules

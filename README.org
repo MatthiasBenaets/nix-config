@@ -1,8 +1,8 @@
-#+TITLE: Matthias' NixOS & Nix-Darwin System Configuration Flake
-#+DESCRIPTION: General information about my flake and how to set it up
-#+AUTHOR: Matthias Benaets
+#+title: Matthias' NixOS & Nix-Darwin System Configuration Flake
+#+description: General information about my flake and how to set it up
+#+author: Matthias Benaets
 
-#+ATTR_ORG: :width 600
+#+attr_org: :width 600
 [[file:rsc/Header.svg]]
 
 * Table of Content
@@ -54,7 +54,7 @@ This will depend on the host chosen.
   - Home = Rest
 - No Swap: Ignore line 3 & 7
 
-#+BEGIN_SRC
+#+begin_src
 # parted /dev/sda -- mklabel gpt
 # parted /dev/sda -- mkpart primary 512MiB -8GiB
 # parted /dev/sda -- mkpart primary linux-swap -8GiB 100%
@@ -63,7 +63,7 @@ This will depend on the host chosen.
 # mkfs.ext4 -L nixos /dev/sda1
 # mkswap -L /dev/sda2
 # mkfs.fat -F 32 -n boot /dev/sda3
-#+END_SRC
+#+end_src
 
 *** Legacy
 *In these commands*
@@ -75,13 +75,13 @@ This will depend on the host chosen.
   - Home = Rest
 - No swap: Ignore line 3 and 5
 
-#+BEGIN_SRC
+#+begin_src
 # parted /dev/sda -- mklabel msdos
 # parted /dev/sda -- mkpart primary 1MiB -8GiB
 # parted /dev/sda -- mkpart primary linux-swap -8GiB 100%
 # mkfs.ext4 -L nixos /dev/sda1
 # mkswap -L /dev/sda2
-#+END_SRC
+#+end_src
 
 ** Installation
 *** UEFI
@@ -89,16 +89,16 @@ This will depend on the host chosen.
 - Partition with label ... to ...
   - "nixos" -> ~/mnt~
   - "boot" -> ~/mnt/boot~
-#+BEGIN_SRC
+#+begin_src
 # mount /dev/disk/by-label/nixos /mnt
 # mkdir -p /mnt/boot
 # mount /dev/disk/by-label/boot /mnt/boot
-#+END_SRC
+#+end_src
 
 *** Legacy
-#+BEGIN_SRC
+#+begin_src
 # mount /dev/disk/by-label/nixos /mnt
-#+END_SRC
+#+end_src
 
 *** Mounting Extras
 *In these commands*
@@ -108,10 +108,10 @@ This will depend on the host chosen.
   - ssd2
 - If storage has no label:
   - ~mount /dev/disk/by-uuid/ssd2 /mnt/ssd~
-#+BEGIN_SRC
+#+begin_src
 # mkdir -p /mnt/ssd
 # mount /dev/disk/by-label/ssd2 /mnt/ssd
-#+END_SRC
+#+end_src
 
 *** Generate
 *In these commands*
@@ -120,19 +120,22 @@ This will depend on the host chosen.
 - Configuration files are generated @ ~/mnt/etc/nixos~
   - If you are me, you don't need to do this. Hardware-configuration.nix already in flake.
 - Clone repository
-#+BEGIN_SRC
+#+begin_src
 # swapon /dev/sda2
 # nixos-generate-config --root /mnt
 # nix-env -iA nixos.git
 # git clone https://github.com/matthiasbenaets/nixos-config /mnt/etc/nixos/<name>
-#+END_SRC
+
+Optional if you are not me
+# cp /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/nixos-config/hosts/<host>/.
+#+end_src
 
 *** Possible Extra Steps
 1. If you are planning on using doom emacs, don't forget to rebuild after the initial installation
    - Don't forget to change the flake location in flake.nix
    - This is because userActivationScript is used for the setup and some locations are partially hardcoded
    - It will automatically install if ~~/.emacs.d~ does not exist
-2. Switch specific host hardware-configuration.nix with generated ~/mnt/etc/nixos/hardware-configuration.nixos~
+2. Switch specific host hardware-configuration.nix with generated ~/mnt/etc/nixos/hardware-configuration.nix~
 3. Change existing network card name with the one in your system
    - Look in generated hardware-configuration.nixos
    - Or enter ~$ ip a~
@@ -140,7 +143,7 @@ This will depend on the host chosen.
 5. Set a ~users.users.${user}.initialPassword = ...~
    - Not really recommended. It's maybe better to follow last steps
 
-**** Install
+*** Install
 *In these commands*
 - Move into cloned repository
   - in this example ~/mnt/etc/nixos/<name>~
@@ -148,10 +151,10 @@ This will depend on the host chosen.
   - desktop
   - laptop
   - vm
-#+BEGIN_SRC
+#+begin_src
 # cd /mnt/etc/nixos/<name>
 # nixos-install --flake .#<host>
-#+END_SRC
+#+end_src
 
 ** Finalization
 1. Set a root password after installation is done
@@ -173,6 +176,10 @@ This will depend on the host chosen.
    - There is a high likelyhood it will find it after:
      - ~$ cd <repo directory>~
      - ~$ sudo nixos-rebuild switch --flake .#<host>~
+6. Rebuilds:
+   - ~<flakelocation>$ sudo nixos-rebuild switch --flake .#<host>~
+   - First rebuild will probably hang on "updating user environment" or "reloading user units".
+     - This is because it is syncing or installing doom-emacs
 
 * Nix-Darwin Installation Guide
 This flake currently has *1* host
@@ -186,10 +193,10 @@ The Apple computer should have the nix package manager.
 - Create a nix config directory
 - Allow experimental features to use flakes
 
-#+BEGIN_SRC
+#+begin_src
 $ mkdir ~/.config/nix
 $ echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
-#+END_SRC
+#+end_src
 
 ** Installation
 *** Initial
@@ -199,13 +206,13 @@ $ echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
 - First build of Darwin
   - This is done because the darwin command is not yet available
 
-#+BEGIN_SRC
+#+begin_src
 $ nix-env -iA nixpkgs.git
 $ git clone https://github.com/matthiasbenaets/nixos-config
 $ cd nixos-config
 $ nix build .#darwinConfigurations.<host>.system
 $ ./result/sw/bin/darwin-rebuild switch --flake .#<host>
-#+END_SRC
+#+end_src
 
 ~/result~ is located depending on where you build the system.
 

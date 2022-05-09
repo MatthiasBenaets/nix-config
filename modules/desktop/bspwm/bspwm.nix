@@ -71,9 +71,11 @@
   };
 
   environment.systemPackages = with pkgs; [       # Packages installed
+    xclip
     xorg.xev
     xorg.xkill
     xorg.xrandr
+    xterm
     #alacritty
     #sxhkd
   ];

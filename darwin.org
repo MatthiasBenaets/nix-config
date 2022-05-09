@@ -1,8 +1,8 @@
-#+TITLE: Nix-Darwin Fresh Install guide
-#+DESCRIPTION: A basic introductional guide on building a Nix-Darwin config on your personal Mac machine
-#+AUTHOR: Matthias Benaets
+#+title: Nix-Darwin Fresh Install guide
+#+description: A basic introductional guide on building a Nix-Darwin config on your personal Mac machine
+#+author: Matthias Benaets
 
-#+ATTR_ORG: :width 300
+#+attr_org: :width 300
 [[file:rsc/Nix-Darwin.svg]]
 
 * Nix-Darwin
@@ -33,17 +33,17 @@ If you would also like to configure these packages using their options, it's rec
 ** Installation
 - Nix-Darwin can be installed by using the commands below:
 
-#+BEGIN_SRC
+#+begin_src
 $ nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
 $ ./result/bin/darwin-installer
-#+END_SRC
+#+end_src
 
 - The script above will not take care of files in ~/etc~. If, after the installation, you get prompted that the script was not able to create a symlink in ~/etc~, it's probably because the file already exists. In this case its best to ~# mv~. For example:
 
-#+BEGIN_SRC
+#+begin_src
 # mv /etc/bashrc /etc/bashrc.orig
 $ darwin-rebuild switch
-#+END_SRC
+#+end_src
 
 ** Declaring Packages
 *** Links
@@ -53,7 +53,7 @@ $ darwin-rebuild switch
 
 *** Declaring Packages
 After installation a ~darwin-configuation.nix~ file will be created in ~~/.nixpkgs/~
-#+BEGIN_SRC nix
+#+begin_src nix
   { pkgs, ... }:
   {
     # Packages
@@ -65,7 +65,7 @@ After installation a ~darwin-configuation.nix~ file will be created in ~~/.nixpk
     services.nix-daemon.enable = true;
     nix.package = pkgs.nix;
   }
-#+END_SRC
+#+end_src
 
 *** Applying
 - ~$ darwin-rebuild switch~
@@ -75,16 +75,16 @@ After installation a ~darwin-configuation.nix~ file will be created in ~~/.nixpk
 - From here you can ~$ ln -s ~/Applications/Nix Apps/<name>.app /Applications~
 - If your app is not available:
 
-#+BEGIN_SRC
+#+begin_src
 $ ls -la /nix/store | grep "<pkg name>"
 -- find correct path to package --
 $ ln -s /nix/store/<correct path>/bin/<pkgname>.app /Applications/.
-#+END_SRC
+#+end_src
 
 ** Homebrew
 If you already have homebrew installed (which is a must), it's possible to manage all packages in your configuration file.
 
-#+BEGIN_SRC nix
+#+begin_src nix
   homebrew = {
     enable = true;
     autoUpdate = true;
@@ -94,13 +94,13 @@ If you already have homebrew installed (which is a must), it's possible to manag
     taps = [ " " ];
     ...
   }
-#+END_SRC
+#+end_src
 
 But honestly, if it's packaged in for Nix, use Nix;
 
 ** Extras
 *** Useful Options
-#+BEGIN_SRC nix
+#+begin_src nix
 system = {
   defaults = {
     NSGlobalDomain = { ... };
@@ -117,7 +117,7 @@ environment = {
     VISUAL = "...";
   };
 };
-#+END_SRC
+#+end_src
 
 *** Garbage Collection
 **** Command-line
@@ -125,7 +125,7 @@ environment = {
    - ~$ sudo nix-collect-garbage -d~
 
 **** Darwin-configuration.nix
-#+BEGIN_SRC nix
+#+begin_src nix
 nix = {
   gc = {
     automatic = true;
@@ -133,7 +133,7 @@ nix = {
     options = "--delete-older-than 7d";
   };
 };
-#+END_SRC
+#+end_src
 
 * Home-Manager
 ** Introduction
@@ -164,7 +164,7 @@ nix = {
 
 **** Nix-Darwin Module
 *Add to configuration.nix*
-#+BEGIN_SRC  nix
+#+begin_src nix
   {
     imports = [ <home-manager/nix-darwin> ];
 
@@ -178,7 +178,7 @@ nix = {
       home.packages = [ pkgs.btop ];
     };
   }
-#+END_SRC
+#+end_src
 
 ** Configuration
 *** Links
@@ -186,7 +186,7 @@ nix = {
 - ~$ man home-configuration.nix~
 
 *** Declare user packages
-#+BEGIN_SRC nix
+#+begin_src nix
   home.packages = with pkgs; [
     firefox
   ];
@@ -194,7 +194,7 @@ nix = {
   services.dunst = {
     enable = true;
   };
-#+END_SRC
+#+end_src
 
 *** Applying
 - ~$ home-manager switch~
@@ -218,19 +218,19 @@ nix = {
  *Allowing experimental features such as flake to be installed*
 - If you already have a darwin-configuration.nix file. Rebuild the system with:
 
- #+BEGIN_SRC nix
+ #+begin_src nix
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = "experimental-features = nix-command flakes";
   };
-#+END_SRC
+#+end_src
 
 - If you are installing a flake without nix-darwin on your system
 
-#+BEGIN_SRC
+#+begin_src
 $ mkdir -p ~/.config/nix
 $ echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
-#+END_SRC
+#+end_src
 
 ** Installation
 **** Generate
@@ -238,7 +238,7 @@ $ echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
 - pick a location to store in your system
 - ~$ nix flake init~
 
-#+BEGIN_SRC nix
+#+begin_src nix
   {
     description = "A basic flake";
 
@@ -255,16 +255,16 @@ $ echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
       };
     };
   }
-#+END_SRC
+#+end_src
 
 **** Inputs and Outputs
 ***** Inputs
 *attribute set of all the dependencies used in the flake*
-#+BEGIN_SRC nix
+#+begin_src nix
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
-#+END_SRC
+#+end_src
 
 ***** Outputs
 *function of an argument that uses the inputs for reference*
@@ -277,11 +277,11 @@ $ echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
 - For the first initial installation it recommended that your use ~$ nix build~
 - The location of ~/result~ depends on what location you are building from. It's maybe recommended that your build inside the flake.
 
-#+BEGIN_SRC
+#+begin_src
 $ cd <flake>
 $ nix build .#darwinConfiguration.<host>.system
 $ ./result/sw/bin/darwin-rebuild switch --flake .#<host>
-#+END_SRC
+#+end_src
 
 **** Rebuild
 - After the first installation, you don't need to target ~/darwin-rebuild~ inside ~/result~
@@ -293,7 +293,7 @@ $ ./result/sw/bin/darwin-rebuild switch --flake .#<host>
 ** Configuration
 *** Nix-Darwin
 **** Flake.nix
-#+BEGIN_SRC nix
+#+begin_src nix
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     darwin.url = "github:lnl7/nix-darwin/master";
@@ -311,7 +311,7 @@ $ ./result/sw/bin/darwin-rebuild switch --flake .#<host>
        #};
      };
   };
-#+END_SRC
+#+end_src
 
 **** Build
 *a ".(#)" will just build host found in location*
@@ -323,7 +323,7 @@ or build and automatically switch
 *** Home-Manager
 **** Flake.nix
 ***** Seperate
-#+BEGIN_SRC nix
+#+begin_src nix
   {
     inputs = {
       #other inputs
@@ -353,10 +353,10 @@ or build and automatically switch
         };
       };
   }
-#+END_SRC
+#+end_src
 
 ***** Inside nixosConfigurations
-#+BEGIN_SRC nix
+#+begin_src nix
   {
     inputs = {
       #other inputs
@@ -387,7 +387,7 @@ or build and automatically switch
         };
       };
   }
-#+END_SRC
+#end_src
 
 **** Build
 ***** Seperate
@@ -406,10 +406,10 @@ or build and automatically switch
 
 * Uninstall
 ** Nix-Darwin
-#+BEGIN_SRC
+#+begin_src
   $ nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A uninstaller
   $ ./result/bin/darwin-uninstaller
-#+END_SRC
+#+end_src
 
 ** Nix Package Manager
 - [[https://nixos.org/manual/nix/stable/installation/installing-binary.html?highlight=uninstall#macos][Full guide]]

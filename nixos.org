@@ -1,8 +1,8 @@
-#+TITLE: NixOS Fresh Install Guide
-#+DESCRIPTION: A basic introductional guide on building a NixOS config on your personal machine
-#+AUTHOR: Matthias Benaets
+#+title: NixOS Fresh Install Guide
+#+description: A basic introductional guide on building a NixOS config on your personal machine
+#+author: Matthias Benaets
 
-#+ATTR_ORG: :width 500
+#+attr_org: :width 500
 [[file:rsc/NixOS.svg]]
 
 * NixOS
@@ -48,7 +48,7 @@
 
 **** Terminal: Parted
 *These step are for a fresh installation. Not dual boot*
-#+BEGIN_SRC
+#+begin_src
   # parted /dev/sda -- mklabel msdos (gpt for uefi)
   # parted /dev/sda -- mkpart primary 1MiB -8GiB (512MiB -8GiB for uefi)
   # parted /dev/sda -- mkpart primary linux-swap -8GiB 100%
@@ -62,10 +62,10 @@
 
   /* extra for UEFI */
   # mkfs.fat -F 32 -n boot /dev/sda3
-#+END_SRC
+#+end_src
 
 **** Mounting
-#+BEGIN_SRC
+#+begin_src
   # mount /dev/disk/by-label/nixos /mnt
 
   /* extra for UEFI */
@@ -73,7 +73,7 @@
   # mount /dev/disk/by-label/boot /mnt/boot
 
   # swapon /dev/sda2
-#+END_SRC
+#+end_src
 
 ** Initial Configuration
 *** Generate
@@ -92,7 +92,7 @@
 **** Boot
 ***** Legacy
 *Only viable if dualbooting linux distributions*
-#+BEGIN_SRC nix
+#+begin_src nix
   # Default Grub setup
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
@@ -105,11 +105,11 @@
       chainloader (hd0,1)+1
     }
   '';
-#+END_SRC
+#+end_src
 
 ***** UEFI
 *Used for larger boot drives and dual booting with Windows*
-#+BEGIN_SRC nix
+#+begin_src nix
   # Default UEFI setup
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -127,10 +127,10 @@
       useOSProber = true;             # Or use extraEntries like seen with Legacy
     };                                # OSProber will probably not find windows partition on first install
   };
-#+END_SRC
+#+end_src
 
 ***** Extras
-#+BEGIN_SRC nix
+#+begin_src nix
   { pkgs, ... }:
 
   {
@@ -153,7 +153,7 @@
       };
     };
   }
-#+END_SRC
+#+end_src
 
 **** Networking
 - Uncomment: ~networking.hostName="nixos";~
@@ -162,7 +162,7 @@
   - Just internet via ethernet: ~networking.interfaces.<networkcard-id>.useDHCP = true;~
 
 ***** Extras
-#+BEGIN_SRC nix
+#+begin_src nix
   networking = {
     #hostName = "nixos";
     #networkmanager.enable = true;
@@ -178,11 +178,11 @@
     defaultGateway = "192.168.0.1";
     nameservers = [ "1.1.1.1" ];
   };
-#+END_SRC
+#+end_src
 
 **** Internationalisation
 *Locales, Layouts and Options*
-#+BEGIN_SRC nix
+#+begin_src nix
   # Clock
   time.timeZone = "Belgium/Brussels";
   # Locale
@@ -200,18 +200,18 @@
   services.xserver.layout = "..."             # us / fr / be / etc..
   # Extra keyboard settings:
   services.xserver.xkbOptions = "eurosign:e"; # For example adds €
-#+END_SRC
+#+end_src
 
 **** Display Managers/Desktop Environments/Window Managers
 *Default*
-#+BEGIN_SRC nix
+#+begin_src nix
   services.xserver.enable = true;
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
-#+END_SRC
+#+end_src
 
 *Customized*
-#+BEGIN_SRC nix
+#+begin_src nix
   services = {
     xserver = {
       enable = true;
@@ -223,7 +223,7 @@
       windowManager.bspwm.enable = true;
     };
   };
-#+END_SRC
+#+end_src
 
 **** Hardware
 ***** Audio & Bluetooth
@@ -231,7 +231,7 @@
 - [[https://nixos.wiki/wiki/Bluetooth][Bluetooth Wifi (+ configuring it with PulseAudio)]]
 
 ****** Example
-#+BEGIN_SRC nix
+#+begin_src nix
   { pkgs, ... }:
 
   {
@@ -239,41 +239,50 @@
       enable = true;
       mediaKeys.enable = true;
     };
-    hardware.bluetooth = {
-      enable = true;
-      hsphfpd.enable = true;         # HSP & HFP daemon
-      settings = {
-        General = {
-          Enable = "Source,Sink,Media,Socket";
+    hardware = {
+      pulseaudio = {
+        enable = true;
+        package = pkgs.pulseaudioFull;
+        extraConfig = ''
+          load-module module-switch-on-connect
+        '';
+      };
+      bluetooth = {
+        enable = true;
+        hsphfpd.enable = true;         # HSP & HFP daemon
+        settings = {
+          General = {
+            Enable = "Source,Sink,Media,Socket";
+          };
         };
       };
     };
   }
-#+END_SRC
+#+end_src
 
 ***** Touchpad
 - [[https://search.nixos.org/options?channel=21.11&show=services.xserver.libinput.tapping&from=0&size=50&sort=relevance&type=packages&query=libinput][Libinput Options]]
-#+BEGIN_SRC nix
+#+begin_src nix
   services.xserver.libinput = {
     enable = true;
     #tapping = true;
     #naturalScrolling = true;
     #...
   }
-#+END_SRC
+#+end_src
 
 **** Users
-#+BEGIN_SRC nix
+#+begin_src nix
   users.users.<name> = {
     isNormalUser = true;
     extraGroups = [ "wheel" "video" "audio" "networkmanager" "lp" "scanner"]
     #initialPassword = "password";
     #shell = pkgs.zsh;
   }
-#+END_SRC
+#+end_src
 
 **** Packages
-#+BEGIN_SRC nix
+#+begin_src nix
   environment.systemPackages = with pkgs; [
     vim
     wget
@@ -281,7 +290,7 @@
     #pkgs.firefox
     firefox
   ];
-#+END_SRC
+#+end_src
 
 **** StateVersion
 - No need to touch this.
@@ -300,7 +309,7 @@
 **** File System
 - ~$ sudo blkid~
 - or just look in gparted
-#+BEGIN_SRC nix
+#+begin_src nix
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/e97ad9a8-d84f-4710-b8c9-cfa7707510ca";
       fsType = "ext4";
@@ -310,7 +319,7 @@
   #  { device = "/dev/disk/by-label/nixos";
   #    fsType = "ext4";
   #  };
-#+END_SRC
+#+end_src
 
 ** Installation
 *** System
@@ -345,7 +354,7 @@
 
 *** Declaring Packages
 *Installed Systemwide with configuration.nix*
-#+BEGIN_SRC nix
+#+begin_src nix
   environment = {
     systemPackages = with pkgs; [
       plex
@@ -354,22 +363,22 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-#+END_SRC
+#+end_src
 
 *** Declaring Option
 *Some packages will also have options to configure it further*
-#+BEGIN_SRC nix
+#+begin_src nix
   services = {
     plex = {
       enable = true;
       openFirewall = true;
     };
   };
-#+END_SRC
+#+end_src
 
 *** Variables
 *Values that can change often or you want to use multiple times*
-#+BEGIN_SRC nix
+#+begin_src nix
   let
     rofi-theme = {
       "*" = {
@@ -383,12 +392,12 @@
       theme = rofi-theme;
     };
   }
-#+END_SRC
+#+end_src
 
 *** Overlays
 *Change packages or add new packages to existing in nix*
 - [[https://nixos.wiki/wiki/Overlays][Overlays wiki]]
-#+BEGIN_SRC nix
+#+begin_src nix
   nixpkgs.overlays = [
     (self: super: {
       sl = super.sl.overrideAttrs (old: {
@@ -411,7 +420,7 @@
     })
   ];
   #Should be the same for home-manager
-#+END_SRC
+#+end_src
 
 *** Applying
 - ~$ sudo nixos-rebuild switch~
@@ -429,12 +438,12 @@ D. Installed through nix-env:
    - ~$ nix-env -u '*'~
 
 **** Configuration.nix
-#+BEGIN_SRC nix
+#+begin_src nix
   system.autoUpgrade = {
     enable = true;
     channel = "https://nixos.org/channels/nixos-unstable";
   };
-#+END_SRC
+#+end_src
 
 *** Garbage Collection
 **** Command-line
@@ -453,7 +462,7 @@ D. Installed through nix-env:
   - ~$ nix-collect-garbage -d~
 
 **** Configuration.nix
-#+BEGIN_SRC nix
+#+begin_src nix
   nix = {
     settings.auto-optimise-store = true;
     gc = {
@@ -462,7 +471,7 @@ D. Installed through nix-env:
       options = "--delete-older-than 7d"
     };
   };
-#+END_SRC
+#+end_src
 
 * Home-Manager
 ** Introduction
@@ -488,7 +497,7 @@ D. Installed through nix-env:
 
 **** NixOS Module
 *Add to configuration.nix*
-#+BEGIN_SRC  nix
+#+begin_src nix
   let
   in
   {
@@ -503,7 +512,7 @@ D. Installed through nix-env:
       home.packages = [ pkgs.atool pkgs.httpie ];
     };
   }
-#+END_SRC
+#+end_src
 
 **** Standalone
 - Installation:
@@ -517,7 +526,7 @@ D. Installed through nix-env:
 - ~$ man home-configuration.nix~
 
 *** Declare user packages
-#+BEGIN_SRC nix
+#+begin_src nix
   home.packages = with pkgs; [
     firefox
   ];
@@ -525,7 +534,7 @@ D. Installed through nix-env:
   services.dunst = {
     enable = true;
   };
-#+END_SRC
+#+end_src
 
 *** Applying
 - ~$ home-manager switch~
@@ -534,16 +543,16 @@ D. Installed through nix-env:
 *** Copy/Symlink
 **** Existing config files
 *For example, randomly nicked files used by other (who don't use NixOS)*
-#+BEGIN_SRC nix
+#+begin_src nix
   home.file = {
     ".config/alacritty/alacritty.yml".text = ''
       {"font":{"bold":{"style":"Bold"}}}
     '';
   };
-#+END_SRC
+#+end_src
 
 **** Stored files (also with no link to NixOS)
-#+BEGIN_SRC nix
+#+begin_src nix
   home.file.".doom.d" = {
     source = ./doom.d;
     recursive = true;
@@ -553,11 +562,11 @@ D. Installed through nix-env:
     source = ./mic.sh;
     executable = true;
   };
-#+END_SRC
+#+end_src
 
 *** Declared
 *Example will generate a file .config/bspwm/bspwmrc*
-#+BEGIN_SRC nix
+#+begin_src nix
   {
     xsession = {
       windowManager = {
@@ -578,7 +587,7 @@ D. Installed through nix-env:
       };
     };
   }
-#+END_SRC
+#+end_src
 
 * Flakes
 ** Introduction
@@ -596,12 +605,12 @@ D. Installed through nix-env:
 
 *** Setup
 **** Configuration.nix
-#+BEGIN_SRC nix
+#+begin_src nix
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = "experimental-features = nix-command flakes";
   };
-#+END_SRC
+#+end_src
 
 **** Generate
 *This command will generate a flake.nix and flake.lock file*
@@ -611,11 +620,11 @@ D. Installed through nix-env:
 **** Inputs and Outputs
 ***** Inputs
 *attribute set of all the dependencies used in the flake*
-#+BEGIN_SRC nix
+#+begin_src nix
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
-#+END_SRC
+#+end_src
 
 ***** Outputs
 *function of an argument that uses the inputs for reference*
@@ -625,7 +634,7 @@ D. Installed through nix-env:
 ** Configuration
 *** NixOS
 **** Flake.nix
-#+BEGIN_SRC nix
+#+begin_src nix
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     #nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
@@ -651,7 +660,7 @@ D. Installed through nix-env:
        #};
      };
   }
-#+END_SRC
+#+end_src
 
 **** Build
 *a ".(#)" will just build host found in location*
@@ -664,7 +673,7 @@ or build and automatically switch
 *** Home-Manager
 **** Flake.nix
 ***** Seperate
-#+BEGIN_SRC nix
+#+begin_src nix
   {
     inputs = {
       #other inputs
@@ -693,10 +702,10 @@ or build and automatically switch
         };
       };
   }
-#+END_SRC
+#+end_src
 
 ***** Inside nixosConfigurations
-#+BEGIN_SRC nix
+#+begin_src nix
   {
     inputs = {
       #other inputs
@@ -726,7 +735,7 @@ or build and automatically switch
         };
       };
   }
-#+END_SRC
+#+end_src
 
 **** Build
 ***** Seperate
@@ -745,7 +754,7 @@ or build and automatically switch
 
 ** Flake on fresh install
 - Boot into ISO
-#+BEGIN_SRC
+#+begin_src
   $ sudo su
   # nix-env -iA nixos.git
   # git clone <repo url> /mnt/<path>
@@ -754,7 +763,7 @@ or build and automatically switch
   /* login */
   $ sudo rm -r /etc/nixos/configuration.nix
   /* move build to desired location */
-#+END_SRC
+#+end_src
 
 * Resources
 1. [[https://nixos.org/][NixOS Website]]

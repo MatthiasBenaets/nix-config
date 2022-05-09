@@ -67,28 +67,28 @@
           };
         };
         extraConfig = ''
-          feh --bg-scale $HOME/.config/wall     # Wallpaper
-
-          bspc monitor -d 1 2 3 4 5             # Workspace tag names (need to be the same as the polybar config to work)
+          bspc monitor -d 1 2 3 4 5               # Workspace tag names (need to be the same as the polybar config to work)
 
           bspc config border_width      2
           bspc config window_gaps      12
           bspc config split_ratio     0.5
 
-          bspc config focus_follows_pointer     true
-          #bspc config borderless_monocle       true
-          #bspc config gapless_monocle          true
+          bspc config click_to_focus            true
+          bspc config focus_follows_pointer     false
+          bspc config borderless_monocle        false
+          bspc config gapless_monocle           false
 
-          #bspc config normal_border_color  "#44475a"
-          #bspc config focused_border_color "#bd93f9"
+          #bspc config normal_border_color  "#000000"
+          #bspc config focused_border_color "#ffffff"
 
-          #pgrep -x sxhkd > /dev/null || sxhkd &
+          #pgrep -x sxhkd > /dev/null || sxhkd &  # Not needed on NixOS
 
-          killall -q polybar &                  # Reboot polybar to correctly show workspaces
-
+          feh --bg-scale $HOME/.config/wall       # Wallpaper
+          
+          killall -q polybar &                    # Reboot polybar to correctly show workspaces
           while pgrep -u $UID -x polybar >/dev/null; do sleep 1;done 
 
-          polybar main & #2>~/log &             # To lazy to figure out systemd service order
+          polybar main & #2>~/log &               # To lazy to figure out systemd service order
 
           #Setting for desktop:
           if [[ $(xrandr -q | grep 'DisplayPort-1 connected') ]]; then   # If second monitor, also enable second polybar

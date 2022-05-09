@@ -44,14 +44,12 @@
   };
 
   environment = {                               # Packages installed system wide
-    #extraInit = ''
-    #  snixembed --fork
-    #'';                                        # Fixes some tray icons
     systemPackages = with pkgs; [               # This is because some options need to be configured.
       discord
       plex
       simple-scan
       x11vnc
+      wacomtablet
     ];
   };
 
@@ -89,6 +87,9 @@
       videoDrivers = [                          # Video Settings
         "amdgpu"
       ];
+
+      modules = [ pkgs.xf86_input_wacom ];      # Both needed for wacom tablet usage
+      wacom.enable = true;
 
       displayManager.sessionCommands = ''
         #!/bin/sh
