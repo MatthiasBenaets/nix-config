@@ -20,6 +20,7 @@
 
       layout = "us";                              # Keyboard layout & €-sign
       xkbOptions = "eurosign:e";
+      libinput.enable = true;
 
       displayManager = {                          # Display Manager
         lightdm = {

@@ -17,6 +17,7 @@
 {
   imports =                                 # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
+    [(import ../../modules/desktop/sway/sway.nix)] ++     # Window Manager
     (import ../../modules/desktop/virtualisation) ++      # Virtual Machines
     (import ../../modules/hardware);                      # Hardware devices
 
@@ -74,22 +75,22 @@
         userServices = true;
       };
     };
-    xserver = {
-      libinput = {                          # Trackpad support & gestures
-        touchpad = {
-          tapping = true;
-          scrollMethod = "twofinger";
-          naturalScrolling = true;            # The correct way of scrolling
-          accelProfile = "adaptive";          # Speed settings
-          #accelSpeed = "-0.5";
-          disableWhileTyping = true;
-        };
-      };
-      resolutions = [
-        { x = 1600; y = 920; }
-        { x = 1280; y = 720; }
-        { x = 1920; y = 1080; }
-      ];
-    };
+    #xserver = {
+    #  libinput = {                          # Trackpad support & gestures
+    #    touchpad = {
+    #      tapping = true;
+    #      scrollMethod = "twofinger";
+    #      naturalScrolling = true;            # The correct way of scrolling
+    #      accelProfile = "adaptive";          # Speed settings
+    #      #accelSpeed = "-0.5";
+    #      disableWhileTyping = true;
+    #    };
+    #  };
+    #  resolutions = [
+    #    { x = 1600; y = 920; }
+    #    { x = 1280; y = 720; }
+    #    { x = 1920; y = 1080; }
+    #  ];
+    #};
   };
 }

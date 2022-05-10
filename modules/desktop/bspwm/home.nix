@@ -13,6 +13,8 @@
 
 {
   xsession = {
+    enable = true;
+    numlock.enable = true;
     windowManager = {
       bspwm = {
         enable = true;

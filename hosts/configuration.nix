@@ -18,7 +18,6 @@
 {
   imports =                                 # Import window or display manager.
     [
-      ../modules/desktop/bspwm/bspwm.nix
       ../modules/editors/emacs              # ! Comment this out on first install !
     ];
 
@@ -75,11 +74,6 @@
   };
 
   services = {
-    xserver = {
-      libinput = {                          # Needed for all input devices
-        enable = true;
-      };
-    };
 #   openssh = {                             # SSH
 #     enable = true;
 #     allowSFTP = true;

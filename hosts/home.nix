@@ -16,7 +16,6 @@
 
 { 
   imports =                                   # Home Manager Modules
-    [(import ../modules/desktop/bspwm/home.nix)] ++
     (import ../modules/editors) ++
     (import ../modules/apps) ++
     (import ../modules/services) ++
@@ -118,11 +117,6 @@
 
   programs = {
     home-manager.enable = true;
-  };
-
-  xsession = {                                # Session settings
-    enable = true;
-    numlock.enable = true;
   };
 
   gtk = {                                     # Theming

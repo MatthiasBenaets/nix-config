@@ -10,13 +10,17 @@
 { pkgs, ... }:
 
 {
+  imports =
+    [
+      ../../modules/desktop/sway/home.nix # Window Manager
+    ];
+
   home = {                                # Specific packages for laptop
     packages = with pkgs; [
       # Applications
       libreoffice                         # Office packages
 
       # Display
-      arandr
       #light                              # xorg.xbacklight not supported. Other option is just use xrandr.
 
       # Power Management
