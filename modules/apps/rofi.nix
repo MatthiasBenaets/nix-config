@@ -9,6 +9,7 @@ let
   colors = import ../themes/colors.nix;
 in
 {
+  config = lib.mkIf (config.xsession.enable == true){ 
   programs = {
     rofi = { 
       enable = true;
@@ -92,5 +93,6 @@ in
         };
       };
     };
+  };
   };
 }

@@ -18,7 +18,7 @@
   imports =                                   # Home Manager Modules
     (import ../modules/editors) ++
     (import ../modules/apps) ++
-    (import ../modules/services) ++
+    #(import ../modules/services) ++
     (import ../modules/shell);
 
   home = {

@@ -23,7 +23,7 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/52d9b6f4-215b-4dfc-8f11-51f1e6f3ef4f";
+    { device = "/dev/disk/by-label/nixos";
       fsType = "ext4";
     };
 

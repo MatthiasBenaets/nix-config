@@ -2,9 +2,10 @@
 # DSLR Camera as webcam
 #
 
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
+  config = lib.mkIf (config.services.xserver.enable == true) {
   boot = {
     kernelModules = [ "v4l2loopback" ];           # Enable video for linux
     extraModulePackages = with config.boot.kernelPackages; [v4l2loopback.out];  # Get latest version for current kernel
@@ -21,7 +22,8 @@
       #shotwell
     ];
     interactiveShellInit = ''
-      alias dslr='gphoto2 --stdout --capture-movie | ffmpeg -i - -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 /dev/video0'
+       alias dslr='gphoto2 --stdout --capture-movie | ffmpeg -i - -vcodec rawvideo -pix_fmt yuv420p -threads 0 -f v4l2 /dev/video0'
     '';                                           # Alias for command to start video streaming the camera output
+  };
   };
 }

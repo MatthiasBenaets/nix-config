@@ -2,9 +2,10 @@
 # Compositor
 #
 
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 { 
+  config = lib.mkIf (config.xsession.enable == true) {
   services.picom = {
     enable = true;
     activeOpacity = "1";                          # Node transparency
@@ -29,4 +30,5 @@
 #   ];
     vSync = true;                                 # Should fix screen tearing
   };
+};
 }

@@ -9,7 +9,7 @@
         exec sway
       fi
     '';                                   # Will automatically open sway when logged into tty1
-    variable = {
+    variables = {
       #XKB_DEFAULT_LAYOUT = "us";         # Keyboard layout
       #LIBCL_ALWAYS_SOFTWARE = "1";       # For applications in VM like alacritty to work
       #WLR_NO_HARDWARE_CURSORS = "1";     # For cursor in VM

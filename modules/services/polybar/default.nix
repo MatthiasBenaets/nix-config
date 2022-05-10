@@ -2,7 +2,7 @@
 # Bar
 #
 
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   mypolybar = pkgs.polybar.override {           # Extra packages to run polybar (mostly sound atm)
@@ -11,6 +11,7 @@ let
   };
 in
 { 
+  config = lib.mkIf (config.xsession.enable == true) {
   home.file.".config/polybar/script/mic.sh" ={
     source = ./mic.sh;
     executable = true;
@@ -386,6 +387,7 @@ in
       };
     };
   };
+  };  
 }
 
 

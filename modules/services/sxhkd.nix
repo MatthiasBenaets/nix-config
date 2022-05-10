@@ -2,9 +2,10 @@
 # Keyboard shortcuts
 #
 
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
+  config = lib.mkIf (config.xsession.enable == true) {
   services = {
     sxhkd = {
       enable = true;
@@ -57,4 +58,5 @@
       };
     };
   };
+  };   
 }
