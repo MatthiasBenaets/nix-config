@@ -7,6 +7,9 @@
 #   │        ├─ default.nix *
 #   │        └─ hardware-configuration.nix
 #   └─ ./modules
+#       ├─ ./desktop
+#       │   └─ ./bspwm
+#       │       └─ bspwm.nix
 #       └─ ./desktop
 #           └─ ./qemu
 #               └─ default.nix

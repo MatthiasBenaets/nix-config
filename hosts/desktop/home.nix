@@ -2,9 +2,13 @@
 #  Home-manager configuration for desktop
 #
 #  flake.nix
-#   └─ ./hosts
+#   ├─ ./hosts
+#   │   └─ ./desktop
+#   │       └─ ./home.nix
+#   └─ ./modules
 #       └─ ./desktop
-#           └─ home.nix *
+#           └─ ./bspwm
+#               └─ home.nix
 #
 
 { pkgs, ... }:

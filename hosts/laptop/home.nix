@@ -2,9 +2,15 @@
 #  Home-manager configuration for laptop
 #
 #  flake.nix
-#   └─ ./hosts
-#       └─ ./laptop
-#           └─ home.nix *
+#   ├─ ./hosts
+#   │   └─ ./laptop
+#   │       └─ home.nix *
+#   └─ ./modules
+#       └─ ./desktop
+#           └─ ./sway
+#               └─ home.nix
+#
+
 #
 
 { pkgs, ... }:

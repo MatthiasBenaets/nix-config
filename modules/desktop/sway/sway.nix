@@ -20,13 +20,14 @@
     sway = {                              # Tiling Wayland compositor & window manager
       enable = true;
       extraPackages = with pkgs; [
-        #swaylock       # Screen Locker
-        #swayidle       # Idle Management
-        #wl-clipboard   # Commandline Clipboard
-        #mako           # Notifications
-        #kanshi         # Autorandr
+        swaylock        # Screen Locker
+        swayidle        # Idle Management
+        wl-clipboard    # Commandline Clipboard #alternative clipman/wayclip
+
+        #mako           # Notifications #not needed if dunst works
+        #kanshi         # Autorandr #not needed with single laptopscreen. need to find something like arandr
         #
-        #dmenu           # Menu
+        #dmenu          # Menu
         #wofi           # Menu
         autotiling      # Tiling Script
       ];

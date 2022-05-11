@@ -6,7 +6,7 @@
 #       ├─ default.nix *
 #       ├─ configuration.nix
 #       ├─ home.nix
-#       └─ ./desktop OR ./laptop
+#       └─ ./desktop OR ./laptop OR ./vm
 #            ├─ ./default.nix
 #            └─ ./home.nix 
 #

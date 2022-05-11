@@ -5,9 +5,6 @@
 #   ├─ ./hosts
 #   │   └─ configuration.nix *
 #   └─ ./modules
-#       ├─ ./desktop
-#       │   └─ ./bspwm
-#       │       └─ bspwm.nix
 #       └─ ./editors
 #           └─ ./emacs
 #               └─ default.nix

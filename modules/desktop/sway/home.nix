@@ -9,9 +9,16 @@
       terminal = "${pkgs.alacritty}/bin/alacritty";
       menu = "${pkgs.dmenu}/bin/dmenu_run";
 
-      startup = [{                                      # Run commands on Sway startup
-        command = "${pkgs.autotiling}/bin/autotiling";  # Tiling Script
-      }];
+      startup = [                                       # Run commands on Sway startup
+        {command = "${pkgs.autotiling}/bin/autotiling"; always = true;} # Tiling Script
+        {command = ''
+          ${pkgs.swayidle}/bin/swayidle \
+            timeout 120 '${pkgs.swaylock-fancy}/bin/swaylock' \
+            timeout 120 'swaymsg "output * dpms off"' \
+            resume 'swaymsg "output * dpms on"' \
+            before-sleep 'swaylock-fancy'
+        ''}
+      ];
 
       bars = [];                                        # No bar because using Waybar
 

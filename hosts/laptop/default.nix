@@ -7,9 +7,11 @@
 #   │        ├─ default.nix *
 #   │        └─ hardware-configuration.nix       
 #   └─ ./modules
-#       └─ ./desktop
-#           └─ ./qemu
-#               └─ default.nix
+#       ├─ ./desktop
+#       │   └─ ./sway
+#       │       └─ sway.nix
+#       └─ ./hardware
+#           └─ default.nix
 #
 
 { config, pkgs, user, ... }:
