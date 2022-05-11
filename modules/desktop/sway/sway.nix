@@ -20,7 +20,7 @@
     sway = {                              # Tiling Wayland compositor & window manager
       enable = true;
       extraPackages = with pkgs; [
-        swaylock        # Screen Locker
+        #swaylock-idle        # Screen Locker
         swayidle        # Idle Management
         wl-clipboard    # Commandline Clipboard #alternative clipman/wayclip
 
