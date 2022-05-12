@@ -7,17 +7,22 @@
     config = rec {                                      # Sway configuration
       modifier = "Mod4";
       terminal = "${pkgs.alacritty}/bin/alacritty";
-      menu = "${pkgs.dmenu}/bin/dmenu_run";
+      #menu = "${pkgs.dmenu}/bin/dmenu_run";
+      menu = "${pkgs.fuzzel}/bin/fuzzel";
 
       startup = [                                       # Run commands on Sway startup
         {command = "${pkgs.autotiling}/bin/autotiling"; always = true;} # Tiling Script
         {command = ''
-          ${pkgs.swayidle}/bin/swayidle \
-            timeout 120 '${pkgs.swaylock-fancy}/bin/swaylock-fancy' \
-            timeout 240 'swaymsg "output * dpms off"' \
-            resume 'swaymsg "output * dpms on"' \
-            before-sleep 'swaylock-fancy'
-        ''; always = true;}
+          ${pkgs.swayidle}/bin/swayidle -w \
+              before-sleep '${pkgs.swaylock-fancy}/bin/swaylock-fancy'
+        ''; always = true;}                             # Lock on lid close
+        #{command = ''
+        #  ${pkgs.swayidle}/bin/swayidle \
+        #    timeout 120 '${pkgs.swaylock-fancy}/bin/swaylock-fancy' \
+        #    timeout 240 'swaymsg "output * dpms off"' \
+        #    resume 'swaymsg "output * dpms on"' \
+        #    before-sleep '${pkgs.swaylock-fancy}/bin/swaylock-fancy'
+        #''; always = true;}                            # Auto lock\
       ];
 
       bars = [];                                        # No bar because using Waybar
@@ -32,10 +37,22 @@
         outer = 3;
       };
 
-      input = {                                         # Input modules
+      input = {                                         # Input modules: $ man sway-input
+        "type:touchpad" = {
+          tap = "disabled";
+          dwt = "enabled";
+          scroll_method = "two_finger";
+          middle_emulation = "enabled";
+          natural_scroll = "enabled";
+        };
         "type:keyboard" = {
           xkb_layout = "us";
         };
+      };
+
+      output = {
+        "*".bg = "~/.config/wall fill";
+        "*".scale = "1";
       };
 
       keybindings = {                                   # Hotkeys
@@ -43,7 +60,9 @@
         "${modifier}+q" = "kill";                       # Kill container
         "${modifier}+r" = "reload";                     # Reload env
         "${modifier}+space" = "exec ${menu}";           # Open menu
-        
+        "${modifier}+e" = "exec ${pkgs.pcmanfm}/bin/pcmanfm"; # File Manager
+        "${modifier}+l" = "exec ${pkgs.swaylock-fancy}/bin/swaylock-fancy"; # Lock Screen
+
         "${modifier}+Left" = "focus left";              # Focus container in workspace
         "${modifier}+Right" = "focus right";
         "${modifier}+Up" = "focus up";
@@ -79,25 +98,30 @@
 
         "Print" = "exec ${pkgs.flameshot}/bin/flameshot gui"; # Screenshots
 
-        #"XF86AudioLowerVolume = "exec ${pkgs.pamixer}/bin/pamixer -d 10;   #Volume control
-        #"XF86AudioRaiseVolume = "exec ${pkgs.pamixer}/bin/pamixer -i 10;
-        #"XF86AudioMute" = "exec ${pkgs.pamixer}/bin/pamixer -t";           #Media control
+        "XF86AudioLowerVolume" = "exec ${pkgs.pamixer}/bin/pamixer -d 10";   #Volume control
+        "XF86AudioRaiseVolume" = "exec ${pkgs.pamixer}/bin/pamixer -i 10";
+        "XF86AudioMute" = "exec ${pkgs.pamixer}/bin/pamixer -t";             #Media control
+        "XF86AudioMicMute" = "exec ${pkgs.pamixer}/bin/pamixer --default-source -t";
         #"XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
         #"XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
         #"XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
         #
-        #"XF86MonBrightnessDown" = "exec ${pkgs.light}/bin/light -U  5";    # Display brightness control
-        #"XF86MonBrightnessUp" = "exec ${pkgs.light}/bin/light -A 5";
+        "XF86MonBrightnessDown" = "exec ${pkgs.light}/bin/light -U  5";      # Display brightness control
+        "XF86MonBrightnessUp" = "exec ${pkgs.light}/bin/light -A 5";
       };
     };
-    #extraConfig = ''
-    #  output <display> {
-    #    mode 1920x1080@60Hz
-    #  }
-    #'';                                    # $ swaymsg -t get_outputs
-    #extraSessionCommands = ''
-    #  export WLR_NO_HARDWARE_CURSORS="1";  # Needed for cursor in vm
-    #'';
+    extraConfig = ''
+      set $opacity 0.8
+      for_window [app_id="pcmanfm"] opacity 0.95
+      for_window [class="Emacs"] opacity $opacity
+      for_window [app_id="Alacritty"] opacity $opacity
+    '';                                    # $ swaymsg -t get_tree or get_outputs
+    extraSessionCommands = ''
+      #export WLR_NO_HARDWARE_CURSORS="1";  # Needed for cursor in vm
+      export XDG_SESSION_TYPE=wayland
+      export XDG_SESSION_DESKTOP=sway
+      export XDG_CURRENT_DESKTOP=sway
+    '';
   };
 
   programs.waybar = {
@@ -109,7 +133,6 @@
         font-family: FiraCode Nerd Font Mono;
         font-weight: bold;
       }
-
       window#waybar {
         background-color: #1a1b26;
         /*background: transparent;*/
@@ -117,11 +140,9 @@
         transition-duration: .5s;
         border-bottom: none;
       }
-
       window#waybar.hidden {
         opacity: 0.2;
       }
-
       #workspace,
       #mode,
       #clock,
@@ -133,6 +154,7 @@
       #window,
       #cpu,
       #disk,
+      #battery,
       #tray {
         background-color: #252734;
         padding: 0 12px;
@@ -140,57 +162,47 @@
         border-radius: 90px;
         background-clip: padding-box;
       }
-
       #workspaces button {
         padding: 0 5px;
         color: #7aa2f7;
         min-width: 20px;
       }
-
       #workspaces button:hover {
         background-color: rgba(0, 0, 0, 0.2);
       }
-
       #workspaces button.focused {
         color: #c678dd;
       }
-
       #workspaces button.urgent {
         color: #e06c75;
       }
-
       #mode {
         color: #e06c75;
       }
-
       #disk {
         color: #56b6c2;
       }
-
       #cpu {
         color: #d19a66;
       }
-
       #memory {
         color: #c678dd;
       }
-
       #clock {
         color: #7aa2f7;
       }
-
       #window {
         color: #9ece6a;
       }
-
+      #battery {
+        color: #9ece6a;
+      }
       #network {
         color: #c678dd;
       }
-
       #pulseaudio {
         color: #d19a66;
       }
-
       #pulseaudio.muted {
         color: #c678dd;
         background-color: #252734;
@@ -205,11 +217,11 @@
       ];
       tray = { spacing = 10; };
       modules-center = [ "clock" ];
-      modules-left = [ "sway/workspaces" "cpu" "disk" "memory" "sway/window" "sway/mode" ];
-      modules-right = [ "network" "pulseaudio" "tray"];
+      modules-left = [ "sway/workspaces" "sway/window" "sway/mode" ];
+      modules-right = [ "cpu" "memory" "disk" "pulseaudio" "battery" "network" "tray" ];
 
       "sway/workspaces" = {
-        format = "<span font='13'>{icon}</span>";
+        format = "<span font='14'>{icon}</span>";
         format-icons = {
           "1"="";
           "2"="";
@@ -227,36 +239,47 @@
         };
       };
       clock = {
-        format = "{:%b %d %H:%M} <span font='13'></span>";
+        format = "{:%b %d %H:%M} <span font='14'></span>";
         tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
         format-alt = "{:%A, %B %d, %Y} ";
       };
       cpu = {
-        format = "{usage}% <span font='13'></span>";
+        format = "{usage}% <span font='14'></span>";
         tooltip = false;
         interval = 1;
       };
       disk = {
-        format = "{percentage_used}% <span font='13'></span>";
+        format = "{percentage_used}% <span font='14'></span>";
         path = "/";
         interval = 30;
       };
       memory = {
-        format = "{}% <span font='13'></span>";
+        format = "{}% <span font='14'></span>";
         interval = 1;
       };
+      battery = {
+        interval = 60;
+        states = {
+          warning = 30;
+          critical = 15;
+        };
+        format = "{capacity}% <span font='16'>{icon}</span>";
+        format-icons = ["" "" "" "" ""];
+        max-length = 25;
+      };
       network = {
-        format-wifi = "<span font='13'></span>";
-        format-ethernet = "<span font='13'></span> {ifname}: {ipaddr}/{cidr}";
-        format-linked = "<span font='13'></span> {ifname} (No IP)";
-        format-disconnected = "<span font='12'>睊</span> Not connected";
+        format-wifi = "<span font='14'></span>";
+        format-ethernet = "<span font='14'></span> {ifname}: {ipaddr}/{cidr}";
+        format-linked = "<span font='14'>睊</span> {ifname} (No IP)";
+        format-disconnected = "<span font='14'>睊</span> Not connected";
         format-alt = "{ifname}: {ipaddr}/{cidr}";
-        tooltip-format = "<span font='13'></span> {essid} {signalStrength}%";
+        tooltip-format = "{essid} {signalStrength}%";
+        on-click-right = "${pkgs.alacritty}/bin/alacritty -e nmtui";
       };
       pulseaudio = {
-        format = "<span font='13'>{icon}</span> {volume}% {format_source}";
-        format-bluetooth = "<span font='13'>{icon}</span> {volume}% {format_source}";
-        format-bluetooth-muted = "<span font='13'></span> {volume}% {format_source}";
+        format = "<span font='14'>{icon}</span> {volume}% {format_source}";
+        format-bluetooth = "<span font='14'>{icon}</span> {volume}% {format_source}";
+        format-bluetooth-muted = "<span font='14'></span> {volume}% {format_source}";
         format-muted = "<span font='13'></span> {format_source}";
         format-source = "{volume}% <span font='11'></span>";
         format-source-muted = "<span font='11'></span>";
@@ -270,12 +293,12 @@
           car = "";
         };
         tooltip-format = "{desc}, {volume}%";
-        on-click = "pamixer -t";
-        on-click-right = "${pkgs.pamixer}/bin/pamixer -t";
+        on-click = "${pkgs.pamixer}/bin/pamixer -t";
+        on-click-right = "${pkgs.pamixer}/bin/pamixer --default-source -t";
         on-click-middle = "${pkgs.pavucontrol}/bin/pavucontrol";
       };
       tray = {
-        icon-size = 16;
+        icon-size = 14;
       };
     }];
   };

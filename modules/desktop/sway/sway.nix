@@ -30,6 +30,7 @@
         #dmenu          # Menu
         #wofi           # Menu
         autotiling      # Tiling Script
+        wev
       ];
     };
   };

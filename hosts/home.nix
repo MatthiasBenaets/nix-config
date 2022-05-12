@@ -76,10 +76,13 @@
       #udiskie          # Auto Mounting
       #vim              # Text Editor
       #
-      # WM/DM
+      # X11
       #xorg.xev         # Input viewer
       #xorg.xkill       # Kill Applications
       #xorg.xrandr      # Screen settings
+      #
+      # Wayland
+      #
       #
       # Desktop
       #bazarr           # Subtitles
