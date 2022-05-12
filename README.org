@@ -18,16 +18,20 @@
   - [[file:darwin.org][General Nix-Darwin Setup Guide]]
 
 * System Components
-|              | *NixOS*           | *Darwin*          |
-|--------------+-------------------+-------------------|
-| *shell:*     | Zsh               | Zsh               |
-| *DM:*        | LightDM           | /                 |
-| *WM:*        | Bspwm + Polybar   | Yabai             |
-| *Hotkey*     | Sxhkd             | Skhd              |
-| *Terminal*   | Alacritty         | Alacritty         |
-| *Editor:*    | Nvim + Doom Emacs | Nvim + Doom Emacs |
-| *Launcher:*  | Rofi              | /                 |
-| *GTK Theme:* | Dracula           | /                 |
+|                 | *NixOS - Xorg*    | *NixOS - Wayland* | *Darwin*          |
+|-----------------+-------------------+-------------------+-------------------|
+| *Shell*         | Zsh               | Zsh               | Zsh               |
+| *DM*            | LightDM           | TTY1 Login        | /                 |
+| *WM*            | Bspwm             | Sway              | Yabai             |
+| *Compositor*    | Picom             | Sway              | /                 |
+| *Bar*           | Polybar           | Waybar            | /                 |
+| *Hotkeys*       | Sxhkd             | Sway              | Skhd              |
+| *Launcher*      | Rofi              | Fuzzel            | /                 |
+| *GTK Theme*     | Dracula           | Dracula           | /                 |
+| *Notifications* | Dunst             | Dunst             | /                 |
+| *Terminal*      | Alacritty         | Alacritty         | Alacritty         |
+| *Editor*        | Nvim + Doom Emacs | Nvim + Doom Emacs | Nvim + Doom Emacs |
+| *Used by host*  | Desktop & VM      | Laptop            | Macbook           |
 
 * NixOS Installation Guide
 This flake currently has *3* hosts

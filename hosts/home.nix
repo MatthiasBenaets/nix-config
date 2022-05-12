@@ -55,34 +55,46 @@
       #killall          # Stop Applications
       #nano             # Text Editor
       #pciutils         # Computer utility info
-      #pulseaudio       # Sound
       #usbutils         # USB utility info
       #wacomtablet      # Wacom Tablet
       #wget             # Downloader
-      #xclip            # Console Clipboard
-      #xterm            # Terminal
       #zsh              # Shell
       #
-      # Imports General home-manager modules
+      # General home-manager
       #alacritty        # Terminal Emulator
       #dunst            # Notifications
       #doom emacs       # Text Editor
       #flameshot        # Screenshot
       #neovim           # Text Editor
+      #udiskie          # Auto Mounting
+      #vim              # Text Editor
+      #
+      # Xorg configuration
+      #pulseaudio       # Sound
+      #xclip            # Console Clipboard
+      #xorg.xev         # Input viewer
+      #xorg.xkill       # Kill Applications
+      #xorg.xrandr      # Screen settings
+      #xterm            # Terminal
+      #
+      # Xorg home-manager
       #picom            # Compositer
       #polybar          # Bar
       #rofi             # Menu
       #sxhkd            # Shortcuts
-      #udiskie          # Auto Mounting
-      #vim              # Text Editor
       #
-      # X11
-      #xorg.xev         # Input viewer
-      #xorg.xkill       # Kill Applications
-      #xorg.xrandr      # Screen settings
+      # Wayland configuration
+      #autotiling       # Tiling Script
+      #pipewire         # Sound
+      #swayidle         # Idle Management Daemon
+      #wev              # Input viewer
+      #wl-clipboard     # Console Clipboard
       #
-      # Wayland
-      #
+      # Wayland home-manager
+      #fuzzel           # Menu
+      #pamixer          # Pulse Audio Mixer
+      #swaylock-fancy   # Screen Locker
+      #waybar           # Bar
       #
       # Desktop
       #bazarr           # Subtitles
@@ -105,6 +117,7 @@
       # 
       # Laptop
       #blueman          # Bluetooth
+      #light            # Display Brightness
       #libreoffice      # Office Tools
       #simple-scan      # Scanning
       #

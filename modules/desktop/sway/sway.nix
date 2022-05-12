@@ -10,7 +10,6 @@
       fi
     '';                                   # Will automatically open sway when logged into tty1
     variables = {
-      #XKB_DEFAULT_LAYOUT = "us";         # Keyboard layout
       #LIBCL_ALWAYS_SOFTWARE = "1";       # For applications in VM like alacritty to work
       #WLR_NO_HARDWARE_CURSORS = "1";     # For cursor in VM
     };
@@ -20,17 +19,11 @@
     sway = {                              # Tiling Wayland compositor & window manager
       enable = true;
       extraPackages = with pkgs; [
-        #swaylock-idle        # Screen Locker
-        swayidle        # Idle Management
-        wl-clipboard    # Commandline Clipboard #alternative clipman/wayclip
-
-        #mako           # Notifications #not needed if dunst works
-        #kanshi         # Autorandr #not needed with single laptopscreen. need to find something like arandr
-        #
-        #dmenu          # Menu
-        #wofi           # Menu
         autotiling      # Tiling Script
-        wev
+        swayidle        # Idle Management Daemon
+        wev             # Input viewer
+        wl-clipboard    # Commandline Clipboard #alternative clipman/wayclip
+        #kanshi         # Autorandr #not needed with single laptopscreen. need to find something like arandr
       ];
     };
   };
