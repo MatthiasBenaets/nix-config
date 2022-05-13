@@ -8,11 +8,16 @@
 #   │        └─ hardware-configuration.nix
 #   └─ ./modules
 #       ├─ ./desktop
-#       │   └─ ./bspwm
-#       │       └─ bspwm.nix
-#       └─ ./desktop
-#           └─ ./qemu
-#               └─ default.nix
+#       │   ├─ ./bspwm
+#       │   │   └─ bspwm.nix
+#       │   └─ ./virtualisation
+#       │       └─ default.nix
+#       ├─ ./programs
+#       │   └─ steam.nix
+#       ├─ ./services
+#       │   └─ default.nix
+#       └─ ./hardware
+#           └─ default.nix
 #
 
 { config, pkgs, lib, user, ... }:
@@ -21,10 +26,9 @@
   imports =                                     # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
     [(import ../../modules/desktop/bspwm/bspwm.nix)] ++   # Window Manager
-    [(import ../../modules/apps/steam.nix)] ++            # VNC Server
-    [(import ../../modules/desktop/virtualisation/x11vnc.nix)] ++ # VNC Server
+    [(import ../../modules/programs/steam.nix)] ++        # Steam
     [(import ../../modules/services/media.nix)] ++        # Media Center
-    (import ../../modules/desktop/virtualisation) ++      # Virtual Machines
+    (import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC
     (import ../../modules/hardware);                      # Hardware devices
 
   boot = {                                      # Boot options

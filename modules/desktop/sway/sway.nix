@@ -1,3 +1,16 @@
+#
+#  Sway configuration
+#
+#  flake.nix
+#   ├─ ./hosts
+#   │   └─ ./laptop
+#   │       └─ default.nix
+#   └─ ./modules
+#       └─ ./desktop
+#           └─ ./sway
+#               └─ sway.nix *
+#
+
 { config, lib, pkgs, ... }:
 
 {

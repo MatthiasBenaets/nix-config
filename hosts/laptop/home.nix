@@ -6,11 +6,11 @@
 #   │   └─ ./laptop
 #   │       └─ home.nix *
 #   └─ ./modules
-#       └─ ./desktop
-#           └─ ./sway
-#               └─ home.nix
-#
-
+#       ├─ ./desktop
+#       │   └─ ./sway
+#       │      └─ home.nix
+#       └─ ./programs
+#           └─ ./waybar.nix
 #
 
 { pkgs, ... }:
@@ -19,6 +19,7 @@
   imports =
     [
       ../../modules/desktop/sway/home.nix # Window Manager
+      ../../modules/programs/waybar.nix   # Waybar
     ];
 
   home = {                                # Specific packages for laptop

@@ -3,7 +3,7 @@
 #
 #  flake.nix
 #   ├─ ./hosts
-#   │   └─ ./<host>
+#   │   └─ ./desktop
 #   │       └─ default.nix
 #   └─ ./modules
 #       └─ ./desktop
@@ -14,6 +14,5 @@
 [
   ./docker.nix
   ./qemu.nix
+  ./x11vnc.nix
 ]
-
-# x11vnc is pulled form desktop default config

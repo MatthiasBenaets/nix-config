@@ -26,7 +26,7 @@
 | *Compositor*    | Picom             | Sway              | /                 |
 | *Bar*           | Polybar           | Waybar            | /                 |
 | *Hotkeys*       | Sxhkd             | Sway              | Skhd              |
-| *Launcher*      | Rofi              | Fuzzel            | /                 |
+| *Launcher*      | Rofi              | Rofi              | /                 |
 | *GTK Theme*     | Dracula           | Dracula           | /                 |
 | *Notifications* | Dunst             | Dunst             | /                 |
 | *Terminal*      | Alacritty         | Alacritty         | Alacritty         |

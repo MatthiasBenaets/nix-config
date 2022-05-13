@@ -1,3 +1,16 @@
+#
+#  Sway Home manager configuration
+#
+#  flake.nix
+#   ├─ ./hosts
+#   │   └─ ./laptop
+#   │       └─ home.nix
+#   └─ ./modules
+#       └─ ./desktop
+#           └─ ./sway
+#               └─ home.nix *
+#
+
 { config, lib, pkgs, ... }:
 
 {
@@ -7,8 +20,7 @@
     config = rec {                                      # Sway configuration
       modifier = "Mod4";
       terminal = "${pkgs.alacritty}/bin/alacritty";
-      #menu = "${pkgs.dmenu}/bin/dmenu_run";
-      menu = "${pkgs.fuzzel}/bin/fuzzel";
+      menu = "${pkgs.rofi}/bin/rofi -show drun";
 
       startup = [                                       # Run commands on Sway startup
         {command = "${pkgs.autotiling}/bin/autotiling"; always = true;} # Tiling Script
@@ -47,6 +59,7 @@
         };
         "type:keyboard" = {
           xkb_layout = "us";
+          xkb_numlock = "enabled";
         };
       };
 
@@ -56,12 +69,16 @@
       };
 
       keybindings = {                                   # Hotkeys
+        "${modifier}+Escape" = "exec swaymsg exit";     # Exit Sway
         "${modifier}+Return" = "exec ${terminal}";      # Open terminal
-        "${modifier}+q" = "kill";                       # Kill container
-        "${modifier}+r" = "reload";                     # Reload env
         "${modifier}+space" = "exec ${menu}";           # Open menu
         "${modifier}+e" = "exec ${pkgs.pcmanfm}/bin/pcmanfm"; # File Manager
         "${modifier}+l" = "exec ${pkgs.swaylock-fancy}/bin/swaylock-fancy"; # Lock Screen
+
+        "${modifier}+r" = "reload";                     # Reload environment
+        "${modifier}+q" = "kill";                       # Kill container
+        "${modifier}+f" = "fullscreen toggle";          # Fullscreen
+        "${modifier}+h" = "floating toggle";            # Floating
 
         "${modifier}+Left" = "focus left";              # Focus container in workspace
         "${modifier}+Right" = "focus right";
@@ -112,9 +129,14 @@
     };
     extraConfig = ''
       set $opacity 0.8
-      for_window [app_id="pcmanfm"] opacity 0.95
-      for_window [class="Emacs"] opacity $opacity
+      for_window [app_id="pcmanfm"] opacity 0.95, floating enable
       for_window [app_id="Alacritty"] opacity $opacity
+      for_window [title="drun"] opacity $opacity
+      for_window [class="Google-chrome"] move container to workspace number 2, workspace number 2
+      for_window [class="Emacs"] opacity $opacity, move container to workspace number 3, workspace number 3
+      for_window [app_id="pavucontrol"] floating enable, sticky
+      for_window [app_id=".blueman-manager-wrapped"] floating enable
+      for_window [title="Picture in picture"] floating enable, move position 1205 634, resize set 700 400, sticky enable
     '';                                    # $ swaymsg -t get_tree or get_outputs
     extraSessionCommands = ''
       #export WLR_NO_HARDWARE_CURSORS="1";  # Needed for cursor in vm
@@ -122,185 +144,6 @@
       export XDG_SESSION_DESKTOP=sway
       export XDG_CURRENT_DESKTOP=sway
     '';
-  };
-
-  programs.waybar = {
-    enable = true;
-    systemd.enable = true;
-    style = ''
-      * {
-        border: none;
-        font-family: FiraCode Nerd Font Mono;
-        font-weight: bold;
-      }
-      window#waybar {
-        background-color: #1a1b26;
-        /*background: transparent;*/
-        transition-property: background-color;
-        transition-duration: .5s;
-        border-bottom: none;
-      }
-      window#waybar.hidden {
-        opacity: 0.2;
-      }
-      #workspace,
-      #mode,
-      #clock,
-      #pulseaudio,
-      #network,
-      #mpd,
-      #memory,
-      #network,
-      #window,
-      #cpu,
-      #disk,
-      #battery,
-      #tray {
-        background-color: #252734;
-        padding: 0 12px;
-        margin: 4px 4px 4px 4px;
-        border-radius: 90px;
-        background-clip: padding-box;
-      }
-      #workspaces button {
-        padding: 0 5px;
-        color: #7aa2f7;
-        min-width: 20px;
-      }
-      #workspaces button:hover {
-        background-color: rgba(0, 0, 0, 0.2);
-      }
-      #workspaces button.focused {
-        color: #c678dd;
-      }
-      #workspaces button.urgent {
-        color: #e06c75;
-      }
-      #mode {
-        color: #e06c75;
-      }
-      #disk {
-        color: #56b6c2;
-      }
-      #cpu {
-        color: #d19a66;
-      }
-      #memory {
-        color: #c678dd;
-      }
-      #clock {
-        color: #7aa2f7;
-      }
-      #window {
-        color: #9ece6a;
-      }
-      #battery {
-        color: #9ece6a;
-      }
-      #network {
-        color: #c678dd;
-      }
-      #pulseaudio {
-        color: #d19a66;
-      }
-      #pulseaudio.muted {
-        color: #c678dd;
-        background-color: #252734;
-      }
-    '';
-    settings = [{
-      layer = "top";
-      position = "top";
-      height = 30;
-      output = [
-        "eDP-1"
-      ];
-      tray = { spacing = 10; };
-      modules-center = [ "clock" ];
-      modules-left = [ "sway/workspaces" "sway/window" "sway/mode" ];
-      modules-right = [ "cpu" "memory" "disk" "pulseaudio" "battery" "network" "tray" ];
-
-      "sway/workspaces" = {
-        format = "<span font='14'>{icon}</span>";
-        format-icons = {
-          "1"="";
-          "2"="";
-          "3"="";
-          "4"="";
-          "5"="";
-        };
-        all-outputs = true;
-        persistent_workspaces = {
-           "1" = [];
-           "2" = [];
-           "3" = [];
-           "4" = [];
-           "5" = [];
-        };
-      };
-      clock = {
-        format = "{:%b %d %H:%M} <span font='14'></span>";
-        tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-        format-alt = "{:%A, %B %d, %Y} ";
-      };
-      cpu = {
-        format = "{usage}% <span font='14'></span>";
-        tooltip = false;
-        interval = 1;
-      };
-      disk = {
-        format = "{percentage_used}% <span font='14'></span>";
-        path = "/";
-        interval = 30;
-      };
-      memory = {
-        format = "{}% <span font='14'></span>";
-        interval = 1;
-      };
-      battery = {
-        interval = 60;
-        states = {
-          warning = 30;
-          critical = 15;
-        };
-        format = "{capacity}% <span font='16'>{icon}</span>";
-        format-icons = ["" "" "" "" ""];
-        max-length = 25;
-      };
-      network = {
-        format-wifi = "<span font='14'></span>";
-        format-ethernet = "<span font='14'></span> {ifname}: {ipaddr}/{cidr}";
-        format-linked = "<span font='14'>睊</span> {ifname} (No IP)";
-        format-disconnected = "<span font='14'>睊</span> Not connected";
-        format-alt = "{ifname}: {ipaddr}/{cidr}";
-        tooltip-format = "{essid} {signalStrength}%";
-        on-click-right = "${pkgs.alacritty}/bin/alacritty -e nmtui";
-      };
-      pulseaudio = {
-        format = "<span font='14'>{icon}</span> {volume}% {format_source}";
-        format-bluetooth = "<span font='14'>{icon}</span> {volume}% {format_source}";
-        format-bluetooth-muted = "<span font='14'></span> {volume}% {format_source}";
-        format-muted = "<span font='13'></span> {format_source}";
-        format-source = "{volume}% <span font='11'></span>";
-        format-source-muted = "<span font='11'></span>";
-        format-icons = {
-          default = [ "" "" "" ];
-          headphone = "";
-          hands-free = "";
-          headset = "";
-          phone = "";
-          portable = "";
-          car = "";
-        };
-        tooltip-format = "{desc}, {volume}%";
-        on-click = "${pkgs.pamixer}/bin/pamixer -t";
-        on-click-right = "${pkgs.pamixer}/bin/pamixer --default-source -t";
-        on-click-middle = "${pkgs.pavucontrol}/bin/pavucontrol";
-      };
-      tray = {
-        icon-size = 14;
-      };
-    }];
   };
 
   #services = {                             # Dynamic display configuration

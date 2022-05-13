@@ -1,0 +1,88 @@
+* {
+  border: none;
+  font-family: FiraCode Nerd Font Mono;
+  font-weight: bold;
+}
+window#waybar {
+  background-color: #1a1b26;
+  /*background: transparent;*/
+  transition-property: background-color;
+  transition-duration: .5s;
+  border-bottom: none;
+}
+window#waybar.hidden {
+  opacity: 0.2;
+}
+#workspace,
+#mode,
+#clock,
+#pulseaudio,
+#network,
+#mpd,
+#memory,
+#network,
+#window,
+#cpu,
+#disk,
+#battery,
+#tray {
+  background-color: #252734;
+  padding: 0 12px;
+  margin: 4px 4px 4px 4px;
+  border-radius: 90px;
+  background-clip: padding-box;
+}
+#workspaces button {
+  padding: 0 5px;
+  color: #7aa2f7;
+  min-width: 20px;
+}
+#workspaces button:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+#workspaces button.focused {
+  color: #c678dd;
+}
+#workspaces button.urgent {
+  color: #e06c75;
+}
+#mode {
+  color: #e06c75;
+}
+#disk {
+  color: #56b6c2;
+}
+#cpu {
+  color: #d19a66;
+}
+#memory {
+  color: #c678dd;
+}
+#clock {
+  color: #7aa2f7;
+}
+#window {
+  color: #9ece6a;
+}
+#battery {
+  color: #9ece6a;
+}
+#battery.warning {
+  color: #ff5d17;
+}
+#battery.critical {
+  color: #ff200c;
+}
+#battery.charging {
+  color: #9ece6a;
+}
+#network {
+  color: #c678dd;
+}
+#pulseaudio {
+  color: #d19a66;
+}
+#pulseaudio.muted {
+  color: #c678dd;
+  background-color: #252734;
+}

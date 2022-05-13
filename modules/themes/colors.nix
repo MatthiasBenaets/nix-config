@@ -1,5 +1,5 @@
 #
-# Dracula theme
+# System themes
 #
 
 {

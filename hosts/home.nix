@@ -5,7 +5,13 @@
 #   ├─ ./hosts
 #   │   └─ home.nix *
 #   └─ ./modules
-#       └─ ./apps & ./services & ./shell & ./editors
+#       ├─ ./editors
+#       │   └─ default.nix
+#       ├─ ./programs
+#       │   └─ default.nix
+#       ├─ ./services
+#       │   └─ default.nix
+#       └─ ./shell
 #           └─ default.nix
 #
 
@@ -14,7 +20,7 @@
 { 
   imports =                                   # Home Manager Modules
     (import ../modules/editors) ++
-    (import ../modules/apps) ++
+    (import ../modules/programs) ++
     (import ../modules/services) ++
     (import ../modules/shell);
 

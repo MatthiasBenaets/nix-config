@@ -1,3 +1,7 @@
+#
+# VNC Remote Connect Server
+#
+
 { pkgs, user, ... }:
 
 {

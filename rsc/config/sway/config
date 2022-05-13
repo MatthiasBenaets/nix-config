@@ -1,0 +1,109 @@
+font pango:Source Code Pro 10.000000
+floating_modifier Mod4
+default_border pixel 2
+default_floating_border pixel 2
+hide_edge_borders none
+focus_wrapping no
+focus_follows_mouse yes
+focus_on_window_activation smart
+mouse_warping output
+workspace_layout default
+workspace_auto_back_and_forth no
+client.focused #4c7899 #285577 #ffffff #2e9ef4 #285577
+client.focused_inactive #333333 #5f676a #ffffff #484e50 #5f676a
+client.unfocused #333333 #222222 #888888 #292d2e #222222
+client.urgent #2f343a #900000 #ffffff #900000 #900000
+client.placeholder #000000 #0c0c0c #ffffff #000000 #0c0c0c
+client.background #ffffff
+
+bindsym Alt+1 workspace number 1
+bindsym Alt+2 workspace number 2
+bindsym Alt+3 workspace number 3
+bindsym Alt+4 workspace number 4
+bindsym Alt+5 workspace number 5
+bindsym Alt+Left workspace prev
+bindsym Alt+Right workspace next
+bindsym Alt+Shift+1 move container to workspace number 1
+bindsym Alt+Shift+2 move container to workspace number 2
+bindsym Alt+Shift+3 move container to workspace number 3
+bindsym Alt+Shift+4 move container to workspace number 4
+bindsym Alt+Shift+5 move container to workspace number 5
+bindsym Alt+Shift+Left move container to workspace prev, workspace prev
+bindsym Alt+Shift+Right move container to workspace next, workspace next
+bindsym Control+Down resize grow height 20px
+bindsym Control+Left resize shrink width 20px
+bindsym Control+Right resize grow width 20px
+bindsym Control+Up resize shrink height 20px
+bindsym Mod4+Down focus down
+bindsym Mod4+Left focus left
+bindsym Mod4+Return exec /nix/store/ikjaqc2sb7ylm9kyag1dbqhh6kivbqar-alacritty-0.10.1/bin/alacritty
+bindsym Mod4+Right focus right
+bindsym Mod4+Shift+Down move down
+bindsym Mod4+Shift+Left move left
+bindsym Mod4+Shift+Right move right
+bindsym Mod4+Shift+Up move up
+bindsym Mod4+Up focus up
+bindsym Mod4+e exec /nix/store/0dlc0k50x2359x1p4l7dnq9bjlxaqd6q-pcmanfm-1.3.2/bin/pcmanfm
+bindsym Mod4+f fullscreen toggle
+bindsym Mod4+h floating toggle
+bindsym Mod4+l exec /nix/store/c5512cv2lf584a7qzcxd0f0m7q6lhf74-swaylock-fancy-unstable-2021-10-11/bin/swaylock-fancy
+bindsym Mod4+q kill
+bindsym Mod4+r reload
+bindsym Mod4+space exec /nix/store/4h77v9wlj6cifqjwspbsdckixw2bfyyk-rofi-1.7.3/bin/rofi -show drun
+bindsym Print exec /nix/store/ix5zc2xx8hvxhhlbvl1vr220zqqxcq37-flameshot-11.0.0/bin/flameshot gui
+bindsym XF86AudioLowerVolume exec /nix/store/6hjsih6laihfcdl897fdmqpma0ndzzvw-pamixer-1.5/bin/pamixer -d 10
+bindsym XF86AudioMicMute exec /nix/store/6hjsih6laihfcdl897fdmqpma0ndzzvw-pamixer-1.5/bin/pamixer --default-source -t
+bindsym XF86AudioMute exec /nix/store/6hjsih6laihfcdl897fdmqpma0ndzzvw-pamixer-1.5/bin/pamixer -t
+bindsym XF86AudioRaiseVolume exec /nix/store/6hjsih6laihfcdl897fdmqpma0ndzzvw-pamixer-1.5/bin/pamixer -i 10
+bindsym XF86MonBrightnessDown exec /nix/store/8aw7ag6x4qfi4qr19pvj08pi22csswan-light-1.2.2/bin/light -U  5
+bindsym XF86MonBrightnessUp exec /nix/store/8aw7ag6x4qfi4qr19pvj08pi22csswan-light-1.2.2/bin/light -A 5
+
+input "type:keyboard" {
+xkb_layout us
+xkb_numlock enabled
+}
+
+input "type:touchpad" {
+dwt enabled
+middle_emulation enabled
+natural_scroll enabled
+scroll_method two_finger
+tap disabled
+}
+
+output "*" {
+bg ~/.config/wall fill
+scale 1
+}
+
+mode "resize" {
+  bindsym Down resize grow height 10 px
+  bindsym Escape mode default
+  bindsym Left resize shrink width 10 px
+  bindsym Return mode default
+  bindsym Right resize grow width 10 px
+  bindsym Up resize shrink height 10 px
+  bindsym h resize shrink width 10 px
+  bindsym j resize grow height 10 px
+  bindsym k resize shrink height 10 px
+  bindsym l resize grow width 10 px
+}
+
+gaps inner 3
+gaps outer 3
+exec_always /nix/store/v0iggni4mrsyx7bf49wvs2a7d75irgvz-autotiling-1.6/bin/autotiling
+
+exec_always /nix/store/k8v8vqarz3i49r94jk6iaypspsqxk2q1-swayidle-1.7.1/bin/swayidle -w \
+    before-sleep '/nix/store/c5512cv2lf584a7qzcxd0f0m7q6lhf74-swaylock-fancy-unstable-2021-10-11/bin/swaylock-fancy'
+
+
+exec "systemctl --user import-environment; systemctl --user start sway-session.target"
+set $opacity 0.8
+for_window [app_id="pcmanfm"] opacity 0.95, floating enable
+for_window [app_id="Alacritty"] opacity $opacity
+for_window [title="drun"] opacity $opacity
+for_window [class="Google-chrome"] move container to workspace number 2, workspace number 2
+for_window [class="Emacs"] opacity $opacity, move container to workspace number 3, workspace number 3
+for_window [app_id="pavucontrol"] floating enable, sticky
+for_window [app_id=".blueman-manager-wrapped"] floating enable
+for_window [title="Picture in picture"] floating enable, move position 1205 634, resize set 700 400, sticky enable

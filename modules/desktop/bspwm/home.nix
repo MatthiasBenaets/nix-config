@@ -3,10 +3,12 @@
 #
 #  flake.nix
 #   ├─ ./hosts
-#   │   └─ home.nix
+#   │   └─ ./<host>
+#   │       └─ home.nix
 #   └─ ./modules
 #       └─ ./desktop
-#           └─ home.nix *
+#           └─ ./bspwm
+#               └─ home.nix *
 #
 
 { config, lib, pkgs, ... }:

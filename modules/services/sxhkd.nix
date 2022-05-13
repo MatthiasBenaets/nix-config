@@ -13,7 +13,7 @@
           # Apps
           "super + Return" = "alacritty";                       # Open Terminal
           "super + space" = "rofi -show drun";                  # Open Rofi (custom theme " -theme theme.rasi")
-          "super + f" = "pcmanfm";                              # File Manager
+          "super + e" = "pcmanfm";                              # File Manager
 
           "Print" = "flameshot gui";                            # Start flameshot gui
 

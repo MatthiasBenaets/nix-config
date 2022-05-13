@@ -15,12 +15,12 @@ in
     home.file.".config/polybar/script/mic.sh" ={
       source = ./mic.sh;
       executable = true;
-      };
-      services = {
+    };
+    services = {
       polybar = {
         enable = true;
         script = ''                               # Running polybar on startup
-        #  Handled by bspwmrc (modules/desktop/bspwm)
+          #  Handled by bspwmrc (modules/desktop/bspwm)
         '';                                       # Gets fixed in the bspwmrc file
         package = mypolybar;
         config = {
@@ -45,7 +45,7 @@ in
             font-4 = "FiraCodeNerdFont:size=11";
             modules-left = "logo bspwm";
             modules-right = "backlight pad memory cpu pad mic volume pad battery date"; #wired-network wireless-network bluetooth";
- 
+
             tray-position = "right";
             tray-detached = "false";
 
@@ -81,20 +81,6 @@ in
             format = "<label>"; #<bar-used>";
             format-foreground = "#999";
             label = "  %percentage_used%%";
-
-      #         bar-used-width = 30;                  # Add visual usage
-      #         bar-used-foreground-0 = "#aaff77";
-      #         bar-used-foreground-1 = "#aaff77";
-      #         bar-used-foreground-2 = "#fba922";
-      #         bar-used-foreground-3 = "#ff5555";
-      #         bar-used-indicator = "|";
-      #         bar-used-indicator-font = 6;
-      #         bar-used-indicator-foreground = "#fff";
-      #         bar-used-fill = "─";
-      #         bar-used-fill-font = 6;
-      #         bar-used-empty = "─";
-      #         bar-used-empty-font = 6;
-      #         bar-used-empty-foreground = "#444444";
           };
           "module/cpu" = {                        # CPU
             type = "internal/cpu";
@@ -102,31 +88,6 @@ in
             format = "<label>"; # <ramp-coreload>";
             format-foreground = "#999";
             label = "  %percentage%%";
-
-      #         ramp-coreload-0 = "▁";                # Add visual usage
-      #         ramp-coreload-0-font = 2;
-      #         ramp-coreload-0-foreground = "#aaff77";
-      #         ramp-coreload-1 = "▂";
-      #         ramp-coreload-1-font = 2;
-      #         ramp-coreload-1-foreground = "#aaff77";
-      #         ramp-coreload-2 = "▃";
-      #         ramp-coreload-2-font = 2;
-      #         ramp-coreload-2-foreground = "#aaff77";
-      #         ramp-coreload-3 = "▄";
-      #         ramp-coreload-3-font = 2;
-      #         ramp-coreload-3-foreground = "#aaff77";
-      #         ramp-coreload-4 = "▅";
-      #         ramp-coreload-4-font = 2;
-      #         ramp-coreload-4-foreground = "#fba922";
-      #         ramp-coreload-5 = "▆";
-      #         ramp-coreload-5-font = 2;
-      #         ramp-coreload-5-foreground = "#fba922";
-      #         ramp-coreload-6 = "▇";
-      #         ramp-coreload-6-font = 2;
-      #         ramp-coreload-6-foreground = "#ff5555";
-      #         ramp-coreload-7 = "█";
-      #         ramp-coreload-7-font = 2;
-      #         ramp-coreload-7-foreground = "#ff5555";
           };
           "module/volume" = {                     # Volume
             type = "internal/pulseaudio";
@@ -163,35 +124,35 @@ in
             bar-empty-font = 3;
             bar-empty-foreground = "#44";
           };
-      #       "module/wireless-network" = {           # Show either wired or wireless
-      #         type = "internal/network";
-      #         interface = "wlo1";
-      #         interval = "3.0";
-      #         ping-interval = 10;
-      #
-      ##        format-connected = "<ramp-signal>";
-      #         format-connected = "<ramp-signal> <label-connected>";
-      #         label-connected = "%essid%";
-      #         label-disconnected = "";
-      #         label-disconnected-foreground = "#66";
-      #
-      #         ramp-signal-0 = "";
-      #
-      #         animation-packetloss-0 = "";
-      #         animation-packetloss-0-foreground = "#ffa64c";
-      #         animation-packetloss-1 = "";
-      #         animation-packetloss-1-foreground = "#00000000";
-      #         animation-packetloss-framerate = 500;
-      #       };
-      #       "module/wired-network" = {              # Ditto module above
-      #         type = "internal/network";
-      #         interface = "enp0s25";
-      #         interval = "3.0";
-      #
-      #         label-connected = "  %{T3}%local_ip%%{T-}";
-      ##        label-connected = "";
-      #         label-disconnected-foreground = "#66";
-      #       };
+          #"module/wireless-network" = {           # Show either wired or wireless
+            #type = "internal/network";
+            #interface = "wlo1";
+            #interval = "3.0";
+            #ping-interval = 10;
+            #
+            #format-connected = "<ramp-signal>";
+            #format-connected = "<ramp-signal> <label-connected>";
+            #label-connected = "%essid%";
+            #label-disconnected = "";
+            #label-disconnected-foreground = "#66";
+            #
+            #ramp-signal-0 = "";
+            #
+            #animation-packetloss-0 = "";
+            #animation-packetloss-0-foreground = "#ffa64c";
+            #animation-packetloss-1 = "";
+            #animation-packetloss-1-foreground = "#00000000";
+            #animation-packetloss-framerate = 500;
+          #};
+          #"module/wired-network" = {              # Ditto module above
+            #type = "internal/network";
+            #interface = "enp0s25";
+            #interval = "3.0";
+            #
+            #label-connected = "  %{T3}%local_ip%%{T-}";
+            #label-connected = "";
+            #label-disconnected-foreground = "#66";
+          #};
           "module/battery" = {                    # Show battery (only when exist), uncomment to show battery and animations
             type = "internal/battery";
             full-at = 98;
@@ -298,7 +259,7 @@ in
             label-private-underline = "#c9665e";
             label-private-padding = 2;
           };
-         "module/title" = {                      # Show title of active screen
+          "module/title" = {                      # Show title of active screen
             type = "internal/xwindow";
             format = "<label>";
             format-background = "#00000000";
@@ -309,7 +270,7 @@ in
             label-empty-foreground = "#ccffffff";
           };
 
-          # CUSTOM
+            # CUSTOM
           "module/pad" = {
             type = "custom/text";
             content = "    ";
@@ -319,17 +280,17 @@ in
             interval = 1;
             tail = "true";
             exec = "~/.config/polybar/script/mic.sh status";
-      #          click-left = "pactl list sources | grep -qi 'Mute: yes' && pactl set-source-mute 1 false || pactl set-source-mute 1 true ";
+            #click-left = "pactl list sources | grep -qi 'Mute: yes' && pactl set-source-mute 1 false || pactl set-source-mute 1 true ";
             click-left = "~/.config/polybar/script/mic.sh toggle";
           };
           #"module/logo" = {
-          #  type = "custom/text";
-          #  content = " %{F#a7c7e7} ";
-          #  format-foreground = "#a7c7e7";
-          #  #click-left = "bspc quit";
-          #  double-click-left = "systemctl suspend";
-          #  double-click-middle = "poweroff";
-          #  double-click-right = "xset dpms force off";
+            #type = "custom/text";
+            #content = " %{F#a7c7e7} ";
+            #format-foreground = "#a7c7e7";
+            #click-left = "bspc quit";
+            #double-click-left = "systemctl suspend";
+            #double-click-middle = "poweroff";
+            #double-click-right = "xset dpms force off";
           #};
           "module/logo" = {
             type = "custom/menu";

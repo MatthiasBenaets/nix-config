@@ -14,3 +14,4 @@
   ./nvim
   #./emacs
 ]
+# emacs get pulled from hosts configuration
