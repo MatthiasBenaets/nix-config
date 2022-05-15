@@ -30,7 +30,7 @@
       lutris            # Game Launcher
       plex-media-player # Media Player
       shotcut           # Video Editor
-      
+
       # Dependencies
       gmtp              # Used for mounting gopro
       

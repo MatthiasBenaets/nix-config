@@ -5,17 +5,17 @@
 #+attr_org: :width 600
 [[file:rsc/Header.svg]]
 
-* Table of Content
-- [[System Components]]
-- [[NixOS Installation Guide]]
-  - [[Partitioning]]
-  - [[Installation]]
-  - [[Finalization]]
-- [[Nix-Darwin Installation Guide]]
-- [[FAQ]]
-- Extra:
-  - [[file:nixos.org][General NixOS Setup Guide]]
-  - [[file:darwin.org][General Nix-Darwin Setup Guide]]
+* Table of Content :toc:
+- [[#system-components][System Components]]
+- [[#nixos-installation-guide][NixOS Installation Guide]]
+  - [[#partitioning][Partitioning]]
+  - [[#installation][Installation]]
+  - [[#finalization][Finalization]]
+- [[#nix-darwin-installation-guide][Nix-Darwin Installation Guide]]
+  - [[#setup][Setup]]
+  - [[#installation-1][Installation]]
+  - [[#finalization-1][Finalization]]
+- [[#faq][FAQ]]
 
 * System Components
 |                 | *NixOS - Xorg*    | *NixOS - Wayland* | *Darwin*          |
@@ -231,7 +231,7 @@ Since darwin is now added to the PATH, you can build it from anywhere in the sys
 2. Disable Secure Keyboard Entry. Needed for Skhd.
    - ~Terminal/iTerm > Secure Keyboard Entry~
 3. Install XCode to get complete development environment.
-     - ~$ xcode-select --install~
+   - ~$ xcode-select --install~
 
 * FAQ
 - What is NixOS?
