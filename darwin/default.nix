@@ -3,7 +3,9 @@
 #
 #  flake.nix
 #   └─ ./darwin
-#       └─ ./default.nix
+#       ├─ ./default.nix *
+#       ├─ configuration.nix
+#       └─ home.nix
 #
 
 { lib, inputs, nixpkgs, home-manager, darwin, user, ...}:

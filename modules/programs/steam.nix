@@ -1,6 +1,8 @@
 #
 # Steam
 #
+# Do not forget to enable Steam play for all title in the settings menu
+#
 
 { pkgs, lib, ... }:
 

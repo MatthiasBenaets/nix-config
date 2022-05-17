@@ -1,3 +1,12 @@
+#
+# Nix setup using Home-manager
+#
+# flake.nix
+#   └─ ./nix
+#       ├─ default.nix
+#       └─ pacman.nix *
+#
+
 { config, pkgs, inputs, nixgl, user, ... }:
 
 {
@@ -44,6 +53,3 @@
   };
   nixpkgs.config.allowUnfree = true;                    # Allow proprietary software.
 }
-
-  #nix --extra-experimental-features 'nix-command flakes' build .#homeConfigurations.<host>.activationPackage
-  #home-manager switch --flake .#<host>

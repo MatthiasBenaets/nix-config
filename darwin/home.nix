@@ -22,7 +22,6 @@
     packages = with pkgs; [
       # Terminal
       pfetch
-      # Applications
     ];
     stateVersion = "22.05";
   };

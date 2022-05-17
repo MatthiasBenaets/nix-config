@@ -1,15 +1,18 @@
 #
 #  G'Day
-#  Behold is my personal NixOS and Darwin Flake.
+#  Behold is my personal Nix, NixOS and Darwin Flake.
 #  I'm not the sharpest tool in the shed, so this build might not be the best out there.
-#  I refer to the README document on how to use these files.
+#  I refer to the README and other org document on how to use these files.
 #  Currently and possibly forever a Work In Progress.
 #
 #  flake.nix *             
 #   ├─ ./hosts
 #   │   └─ default.nix
-#   └─ ./darwin
+#   ├─ ./darwin
+#   │   └─ default.nix
+#   └─ ./nix
 #       └─ default.nix
+#
 
 {
   description = "My Personal NixOS and Darwin System Flake Configuration";
@@ -17,11 +20,6 @@
   inputs =                                                                  # All flake references used to build my NixOS setup. These are dependencies.
     {
       nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";                  # Nix Packages
-
-#     nurpkgs = {                                                           # Nix User Packages
-#       url = github:nix-community/NUR;
-#       inputs.nixpkgs.follows = "nixpkgs";
-#     };
 
       home-manager = {                                                      # User Package Management
         url = "github:nix-community/home-manager";
@@ -34,6 +32,11 @@
       };
 
       nixgl.url = "github:guibou/nixGL";                                    # OpenGL
+
+#     nurpkgs = {                                                           # Nix User Packages
+#       url = github:nix-community/NUR;
+#       inputs.nixpkgs.follows = "nixpkgs";
+#     };
     };
 
   outputs = inputs @ { self, nixpkgs, home-manager, darwin, nixgl, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.

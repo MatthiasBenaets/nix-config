@@ -58,6 +58,7 @@
       simple-scan
       x11vnc
       wacomtablet
+      appimage-run
     ];
   };
 

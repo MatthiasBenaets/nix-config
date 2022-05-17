@@ -11,10 +11,13 @@
   - [[#partitioning][Partitioning]]
   - [[#installation][Installation]]
   - [[#finalization][Finalization]]
-- [[#nix-darwin-installation-guide][Nix-Darwin Installation Guide]]
-  - [[#setup][Setup]]
+- [[#nix-installation-guide][Nix Installation Guide]]
   - [[#installation-1][Installation]]
   - [[#finalization-1][Finalization]]
+- [[#nix-darwin-installation-guide][Nix-Darwin Installation Guide]]
+  - [[#setup][Setup]]
+  - [[#installation-2][Installation]]
+  - [[#finalization-2][Finalization]]
 - [[#faq][FAQ]]
 
 * System Components
@@ -43,7 +46,8 @@ This flake currently has *3* hosts
     - Legacy boot w/ grub
 
 Flakes can be build with:
-~$ sudo nixos-rebuild switch --flake .#<hostname>~
+- ~$ sudo nixos-rebuild switch --flake <path>#<hostname>~
+- example ~$ sudo nixos-rebuild switch --flake .#desktop~
 
 ** Partitioning
 This will depend on the host chosen.
@@ -185,11 +189,50 @@ Optional if you are not me
    - First rebuild will probably hang on "updating user environment" or "reloading user units".
      - This is because it is syncing or installing doom-emacs
 
+* Nix Installation Guide
+This flake currently has *1* host
+  1. pacman
+
+The Linux distribution must have the nix package manager installed.
+~$ sh <(curl -L https://nixos.org/nix/install) --daemon~
+To be able to have a easy reproducible setup when using the nix package manager on a non-NixOS system, home-manager is a wonderful tool to achieve this.
+So this is how it is set up in this flake.
+
+** Installation
+*** Initial
+*In these commands*
+- Get git
+- Clone repository
+- First build of the flake
+  - This is done so we can use the nix flake commands
+
+#+begin_src
+$ nix-env -iA nixpkgs.git
+$ git clone https://github.com/matthiasbenaets/nixos-config ~/.setup
+$ cd ~/.setup
+$ nix build --extra-experimental-features 'nix-command flakes' .#homeConfigurations.<host>.activationPackage
+$ ./result/activate
+#+end_src
+
+*** Rebuild
+Since home-manager is now a valid command we can rebuild the system using this command. In this example it is build from inside the flake directory:
+- ~$ home-manager switch --flake .#<host>~
+This will rebuild the configuration and automatically activate it.
+
+** Finalization
+*Mostly optional or already correct by default*
+1. NixGL gets set up by default, so if you are planning on using GUI applications that use OpenGL or Vulkan:
+   - ~$ nixGLIntel <package>~
+   - or add it to your aliasses file
+2. Every rebuild, and activation-script will run to add applications to the system menu.
+   - it's pretty much the same as adding the path to XDG_DATA_DIRS
+   - if you do not want to or if the locations are different, change this.
+
 * Nix-Darwin Installation Guide
 This flake currently has *1* host
   1. macbook
 
-The Apple computer should have the nix package manager.
+The Apple computer must have the nix package manager installed.
 ~$ sh <(curl -L https://nixos.org/nix/install)~
 
 ** Setup
@@ -207,13 +250,13 @@ $ echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
 *In these commands*
 - Get git
 - Clone repository
-- First build of Darwin
+- First build of the flake on Darwin
   - This is done because the darwin command is not yet available
 
 #+begin_src
 $ nix-env -iA nixpkgs.git
-$ git clone https://github.com/matthiasbenaets/nixos-config
-$ cd nixos-config
+$ git clone https://github.com/matthiasbenaets/nixos-config ~/.setup
+$ cd ~/.setup
 $ nix build .#darwinConfigurations.<host>.system
 $ ./result/sw/bin/darwin-rebuild switch --flake .#<host>
 #+end_src
@@ -221,8 +264,9 @@ $ ./result/sw/bin/darwin-rebuild switch --flake .#<host>
 ~/result~ is located depending on where you build the system.
 
 *** Rebuild
-Since darwin is now added to the PATH, you can build it from anywhere in the system. In this example it is rebuild inside the flake directory:
+Since darwin is now added to the PATH, you can build it from anywhere in the system. In this example it is rebuild from inside the flake directory:
 - ~$ darwin-rebuild switch --flake .#<host>~
+This will rebuild the configuration and automatically activate it.
 
 ** Finalization
 *Mostly optional or already correct by default*
