@@ -31,7 +31,10 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
-      nixgl.url = "github:guibou/nixGL";                                    # OpenGL
+      nixgl = {                                                             #OpenGL 
+        url = "github:guibou/nixGL";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
 
 #     nurpkgs = {                                                           # Nix User Packages
 #       url = github:nix-community/NUR;

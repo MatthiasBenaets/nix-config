@@ -39,10 +39,10 @@ in
             #module-margin-right = "0.5";
 
             font-0 = "SourceCodePro:size=10";     # Icons
-            font-1 = "FontAwesome5Free:style=Solid:size=8";
-            font-2 = "FontAwesome5Free:style=Regular:size=8";
-            font-3 = "FontAwesome5Brands:style=Regular:size=8";
-            font-4 = "FiraCodeNerdFont:size=11";
+            font-1 = "FontAwesome6Free:style=Solid:size=8";
+            font-2 = "FontAwesome6Free:style=Regular:size=8";
+            font-3 = "FontAwesome6Brands:style=Regular:size=8";
+            font-4 = "FiraCodeNerdFont:size=10";
             modules-left = "logo bspwm";
             modules-right = "backlight pad memory cpu pad mic volume pad battery date"; #wired-network wireless-network bluetooth";
 
@@ -66,10 +66,10 @@ in
             #module-margin-right = "0.5";
 
             font-0 = "SourceCodePro:size=10";     # Icons
-            font-1 = "FontAwesome5Free:style=Solid:size=8";
-            font-2 = "FontAwesome5Free:style=Regular:size=8";
-            font-3 = "FontAwesome5Brands:style=Regular:size=8";
-            font-4 = "FiraCodeNerdFont:size=11";
+            font-1 = "FontAwesome6Free:style=Solid:size=8";
+            font-2 = "FontAwesome6Free:style=Regular:size=8";
+            font-3 = "FontAwesome6Brands:style=Regular:size=8";
+            font-4 = "FiraCodeNerdFont:size=10";
             modules-left = "logo bspwm";
             modules-right = "mic volume pad date";
 
