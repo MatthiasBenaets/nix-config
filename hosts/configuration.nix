@@ -39,6 +39,14 @@
     keyMap = "us";	                    # or us/azerty/etc
   };
 
+  security.rtkit.enable = true;
+  sound = {                                 # ALSA sound enable
+    enable = true;
+    mediaKeys = {                           # Keyboard Media Keys (for minimal desktop)
+      enable = true;
+    };
+  };
+
   fonts.fonts = with pkgs; [                # Fonts
     carlito                                 # NixOS
     vegur                                   # NixOS
@@ -71,6 +79,14 @@
   };
 
   services = {
+    pipewire = {                            # Sound
+      enable = true;
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
+      pulse.enable = true;
+    };
 #   openssh = {                             # SSH
 #     enable = true;
 #     allowSFTP = true;

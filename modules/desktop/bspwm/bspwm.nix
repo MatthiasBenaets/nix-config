@@ -56,22 +56,15 @@
 
   programs.zsh.enable = true;                     # Weirdly needs to be added to have default user on lightdm
 
-  sound = {                                       # ALSA sound enable
-    enable = true;
-    mediaKeys = {                                 # Keyboard Media Keys (for minimal desktop)
-      enable = true;
-    };
-  };
-
-  hardware = {                                    # Hardware Audio
-    pulseaudio = {
-      enable = true;
-      package = pkgs.pulseaudioFull;
-      extraConfig = ''
-        load-module module-switch-on-connect
-      '';                                         # Automatically switch to bluetooth device upon connection
-    };                                            # For optimal mic quality: Input at 35% (-25db)
-  };
+  #hardware = {                                    # Hardware Audio
+  #  pulseaudio = {
+  #    enable = true;
+  #    package = pkgs.pulseaudioFull;
+  #    extraConfig = ''
+  #     load-module module-switch-on-connect
+  #    '';                                         # Automatically switch to bluetooth device upon connection
+  #  };                                            # For optimal mic quality: Input at 35% (-25db)
+  #};
 
   environment.systemPackages = with pkgs; [       # Packages installed
     xclip

@@ -22,6 +22,9 @@
 
 { config, pkgs, lib, user, ... }:
 
+let
+  new-lg4ff = config.boot.kernelPackages.callPackage ./new-lg4ff.nix { };
+in
 {
   imports =                                     # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
@@ -33,7 +36,11 @@
 
   boot = {                                      # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
-
+    extraModulePackages = [ new-lg4ff.out ];
+    kernelModules = [ "hid-logitech-new" ];
+    extraModprobeConfig = ''
+      option hid-logitech-new
+    '';
     initrd.kernelModules = [ "amdgpu" ];        # Video drivers
     
     loader = {                                  # For legacy boot:
