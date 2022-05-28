@@ -39,7 +39,7 @@ in
     extraModulePackages = [ new-lg4ff.out ];
     kernelModules = [ "hid-logitech-new" ];
     extraModprobeConfig = ''
-      option hid-logitech-new
+      options hid-logitech-new
     '';
     initrd.kernelModules = [ "amdgpu" ];        # Video drivers
     

@@ -2,16 +2,14 @@
 
 stdenv.mkDerivation rec {
   pname = "new-lg4ff";
-  version = "2022-04-20";
+  version = "unstable-2022-04-20";
 
   src = fetchFromGitHub {
     owner = "berarma";
     repo = "new-lg4ff";
-    rev = "f2aa8e7ce0163015d65940189e441cbc40d41df5";
+    rev = "0.3.3";
     sha256 = "y+Kgwx/luqFI5kcP+OSVJUxPSO7tK70NXdbK5UeuqWs=";
   };
-
-  hardeningDisable = [ "format" "pic" ];
 
   preBuild = ''
     substituteInPlace Makefile --replace "modules_install" "INSTALL_MOD_PATH=$out modules_install"
