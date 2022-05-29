@@ -32,13 +32,4 @@ stdenv.mkDerivation rec {
     maintainers = with maintainers; [ matthiasbenaets ];
     platforms = platforms.linux;
   };
-
-  ######### implementations
-  # boot = {
-  #   extraModulePackages = [ new-lg4ff.out ];
-  #   kernelModules = [ "hid-logitech-new" ];
-  #   extraModprobeConfig = ''
-  #     option hid-logitech-new
-  #   '';
-  # };
 }

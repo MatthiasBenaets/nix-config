@@ -31,8 +31,6 @@
           greeters = {
             gtk = {
               theme = {
-                #name = "Dracula";
-                #package = pkgs.dracula-theme;
                 name = "Dracula";
                 package = pkgs.dracula-theme;
               };
@@ -55,16 +53,6 @@
   };
 
   programs.zsh.enable = true;                     # Weirdly needs to be added to have default user on lightdm
-
-  #hardware = {                                    # Hardware Audio
-  #  pulseaudio = {
-  #    enable = true;
-  #    package = pkgs.pulseaudioFull;
-  #    extraConfig = ''
-  #     load-module module-switch-on-connect
-  #    '';                                         # Automatically switch to bluetooth device upon connection
-  #  };                                            # For optimal mic quality: Input at 35% (-25db)
-  #};
 
   environment.systemPackages = with pkgs; [       # Packages installed
     xclip

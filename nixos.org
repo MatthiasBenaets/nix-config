@@ -743,6 +743,9 @@ or build and automatically switch
 - ~$ nix build .#hmConfig.<user>.activationPackage~
 - ~$ ./result/activate~
 
+Afterwards you will be able to build home-manager from the flake using
+- ~$ home-manager switch --flake .#<host>~
+
 ***** Inside nixosConfiguraitons
 *Can be build with default rebuild command*
 - ~$ sudo nixos-rebuild switch --flake .#<host>~

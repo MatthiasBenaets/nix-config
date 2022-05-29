@@ -38,9 +38,6 @@ in
     kernelPackages = pkgs.linuxPackages_latest;
     extraModulePackages = [ new-lg4ff.out ];
     kernelModules = [ "hid-logitech-new" ];
-    extraModprobeConfig = ''
-      options hid-logitech-new
-    '';
     initrd.kernelModules = [ "amdgpu" ];        # Video drivers
     
     loader = {                                  # For legacy boot:
