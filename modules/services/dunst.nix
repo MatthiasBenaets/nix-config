@@ -8,7 +8,7 @@ let
   colors = import ../themes/colors.nix;                 # Import colors theme
 in
 {
-  xdg.dataFile."dbus-1/services/org.knopwob.dunst.service".source = "${pkgs.dunst}/share/dbus-1/services/org.knopwob.dunst.service";
+  home.packages = [ pkgs.libnotify ];                   # Dependency
   services.dunst = {
     enable = true;
     iconTheme = {                                       # Icons
@@ -16,7 +16,7 @@ in
       package = pkgs.papirus-icon-theme;
       size = "16x16";
     };
-    settings = with colors.scheme.doom; {            # Settings
+    settings = with colors.scheme.doom; {               # Settings
       global = {
         monitor = 0;
         # geometry [{width}x{height}][+/-{x}+/-{y}]
@@ -66,4 +66,5 @@ in
       };
     };
   };
+  xdg.dataFile."dbus-1/services/org.knopwob.dunst.service".source = "${pkgs.dunst}/share/dbus-1/services/org.knopwob.dunst.service";
 }

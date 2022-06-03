@@ -5,37 +5,26 @@
 { config, pkgs, lib, ... }:
 
 {
-  environment = {
-    systemPackages = with pkgs; [
-      radarr
-      sonarr
-      jackett
-      bazarr
-      handbrake
-      deluge
-    ];
-  };
-
   services = {
-    jackett = {
-      enable = true;
-    };
-    radarr = {
+    radarr = {                  #7878
       enable = true;
       user = "root";
       group = "users";
     };
-    sonarr = {
+    sonarr = {                  #8989
       enable = true;
       user = "root";
       group = "users";
     };
-    bazarr = {
+    bazarr = {                  #6767
       enable = true;
       user = "root";
       group = "users";
     };
-    deluge = {
+    prowlarr = {                #9696
+      enable = true;
+    };
+    deluge = {                  #8112
       enable = true;
       web.enable = true;
       user = "root";
@@ -49,6 +38,7 @@
 # (Under Media Management - Show Advanced | Under Subtitles)
 # Radarr & Sonarr: chmod 775
 # Bazarr: chmod 664
+# Prowlarr should just work
 # Deluge: 
 #   Connection Manager: localhost:58846
 #   Preferences: Change download folder and enable Plugins-label

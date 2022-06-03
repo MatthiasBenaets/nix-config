@@ -42,11 +42,9 @@
       vlc               # Media Player
       stremio           # Media Streamer
 
-      # Dependencies
-      libnotify         # Notifications need for Dunst
-
       # Apps
       google-chrome     # Browser
+      firefox           # Browser
       remmina           # XRDP & VNC Client
 
       # File Management
@@ -61,6 +59,7 @@
       #killall          # Stop Applications
       #nano             # Text Editor
       #pciutils         # Computer utility info
+      #pipewire         # Sound
       #usbutils         # USB utility info
       #wacomtablet      # Wacom Tablet
       #wget             # Downloader
@@ -71,12 +70,13 @@
       #dunst            # Notifications
       #doom emacs       # Text Editor
       #flameshot        # Screenshot
+      #libnotify        # Dep for Dunst
       #neovim           # Text Editor
+      #rofi             # Menu
       #udiskie          # Auto Mounting
       #vim              # Text Editor
       #
       # Xorg configuration
-      #pulseaudio       # Sound
       #xclip            # Console Clipboard
       #xorg.xev         # Input viewer
       #xorg.xkill       # Kill Applications
@@ -86,18 +86,15 @@
       # Xorg home-manager
       #picom            # Compositer
       #polybar          # Bar
-      #rofi             # Menu
       #sxhkd            # Shortcuts
       #
       # Wayland configuration
       #autotiling       # Tiling Script
-      #pipewire         # Sound
       #swayidle         # Idle Management Daemon
       #wev              # Input viewer
       #wl-clipboard     # Console Clipboard
       #
       # Wayland home-manager
-      #fuzzel           # Menu
       #pamixer          # Pulse Audio Mixer
       #swaylock-fancy   # Screen Locker
       #waybar           # Bar
@@ -114,6 +111,7 @@
       #handbrake        # Encoder
       #libreoffice      # Office Tools
       #plex             # Plex Server
+      #prowlarr         # Indexer Manager
       #radarr           # Movies
       #sonarr           # TV Shows
       #steam            # Games
@@ -131,6 +129,11 @@
       #obs-studio       # Recording/Live Streaming
     ];
     file.".config/wall".source = config.lib.file.mkOutOfStoreSymlink ../modules/themes/wall;
+    pointerCursor = {                         # This will set cursor systemwide so applications can not choose their own
+      name = "Dracula-cursors";
+      package = pkgs.dracula-theme;
+      size = 16;
+    };
     stateVersion = "22.05";
   };
 
@@ -144,17 +147,12 @@
       name = "Dracula";
       package = pkgs.dracula-theme;
     };
-    cursorTheme = {
-      name = "Dracula-cursors";
-      package = pkgs.dracula-theme;
-      size = 16;
-    };
     iconTheme = {
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
     };
     font = {
-      name = "JetBrains Mono Medium";  # or FiraCode Nerd Font Mono Medium  
-    };
+      name = "JetBrains Mono Medium";         # or FiraCode Nerd Font Mono Medium
+    };                                        # Cursor is declared under home.pointerCursor
   };
 }

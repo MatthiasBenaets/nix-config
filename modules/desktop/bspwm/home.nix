@@ -31,15 +31,9 @@
             state = "tiled";
           };
           ".blueman-manager-wrapped" ={ 
-            #center = true;
             state = "floating";
             sticky = true;
           };
-          #"Google-chrome" = {
-            #desktop = "2";
-            #focus = true;
-            #manage = false;
-          #}; 
           "libreoffice" ={
             desktop = "3";
             follow = true;
@@ -50,7 +44,6 @@
           };
           "Pavucontrol" = {
             state = "floating";
-            #center = true;
             sticky = true;
           };
           "Pcmanfm" = {
@@ -61,13 +54,17 @@
             follow= true;
             state = "fullscreen";
           };
-          "*:*:Picture in picture" = {
+          "*:*:Picture in picture" = {  #Google Chrome PIP
+            state = "floating";
+            sticky = true;
+          };
+          "*:*:Picture-in-Picture" = {  #Firefox PIP
             state = "floating";
             sticky = true;
           };
           "Steam" = {
             desktop = "5";
-            follow = true;
+            #follow = true;
           };
         };
         extraConfig = ''
@@ -101,6 +98,9 @@
             bspc wm -O HDMI-A-1 DisplayPort-1
             polybar sec &
           fi
+
+          #Extras
+          steam &
         '';
       };
     };
