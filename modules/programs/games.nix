@@ -4,9 +4,16 @@
 # Do not forget to enable Steam play for all title in the settings menu
 #
 
-{ pkgs, lib, ... }:
+{ config, pkgs, nur, lib, ... }:
 
 {
+  hardware.new-lg4ff.enable = true;
+
+  environment.systemPackages = [
+    config.nur.repos.c0deaddict.oversteer       # Steering Wheel Configuration
+    pkgs.lutris                                 # Game Launcher
+  ];
+
   programs = {                                  # Needed to succesfully start Steam
     steam = {
       enable = true;

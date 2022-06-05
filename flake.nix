@@ -31,18 +31,17 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
+      nurpkgs = {
+        url = "github:nix-community/NUR";                                   # NUR packages
+      };
+
       nixgl = {                                                             #OpenGL 
         url = "github:guibou/nixGL";
         inputs.nixpkgs.follows = "nixpkgs";
       };
-
-#     nurpkgs = {                                                           # Nix User Packages
-#       url = github:nix-community/NUR;
-#       inputs.nixpkgs.follows = "nixpkgs";
-#     };
     };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, darwin, nixgl, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
+  outputs = inputs @ { self, nixpkgs, home-manager, darwin, nur, nixgl, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                                     # Variables that can be used in the config files.
       user = "matthias";
       location = "$HOME/.setup";
@@ -51,7 +50,7 @@
       nixosConfigurations = (                                               # NixOS configurations
         import ./hosts {                                                    # Imports ./hosts/default.nix
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager user location;                # Also inherit home-manager so it does not need to be defined here.
+          inherit inputs nixpkgs home-manager nur user location;            # Also inherit home-manager so it does not need to be defined here.
         }
       );
 

@@ -110,6 +110,8 @@
       #gphoto2          # Digital Photography
       #handbrake        # Encoder
       #libreoffice      # Office Tools
+      #lutris           # Game Launcher
+      #new-lg4ff        # Logitech Drivers
       #plex             # Plex Server
       #prowlarr         # Indexer Manager
       #radarr           # Movies
@@ -128,7 +130,7 @@
       # Flatpak
       #obs-studio       # Recording/Live Streaming
     ];
-    file.".config/wall".source = config.lib.file.mkOutOfStoreSymlink ../modules/themes/wall;
+    file.".config/wall".source = ../modules/themes/wall;
     pointerCursor = {                         # This will set cursor systemwide so applications can not choose their own
       name = "Dracula-cursors";
       package = pkgs.dracula-theme;

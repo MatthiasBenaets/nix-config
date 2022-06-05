@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ lib, inputs, nixpkgs, home-manager, user, location, ... }:
+{ lib, inputs, nixpkgs, home-manager, nur, user, location, ... }:
 
 let
   system = "x86_64-linux";                             	    # System architecture
@@ -28,6 +28,7 @@ in
     inherit system;
     specialArgs = { inherit inputs user location; };        # Pass flake variable
     modules = [                                             # Modules that are used.
+      nur.nixosModules.nur
       ./desktop
       ./configuration.nix
 

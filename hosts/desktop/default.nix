@@ -13,31 +13,26 @@
 #       │   └─ ./virtualisation
 #       │       └─ default.nix
 #       ├─ ./programs
-#       │   └─ steam.nix
+#       │   └─ games.nix
 #       ├─ ./services
 #       │   └─ default.nix
 #       └─ ./hardware
 #           └─ default.nix
 #
 
-{ config, pkgs, lib, user, ... }:
+{ pkgs, lib, user, ... }:
 
-let
-  new-lg4ff = config.boot.kernelPackages.callPackage ./new-lg4ff.nix { };
-in
 {
   imports =                                     # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
     [(import ../../modules/desktop/bspwm/bspwm.nix)] ++   # Window Manager
-    [(import ../../modules/programs/steam.nix)] ++        # Steam
+    [(import ../../modules/programs/games.nix)] ++        # Gaming
     [(import ../../modules/services/media.nix)] ++        # Media Center
     (import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC
     (import ../../modules/hardware);                      # Hardware devices
 
   boot = {                                      # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
-    extraModulePackages = [ new-lg4ff.out ];
-    kernelModules = [ "hid-logitech-new" ];
     initrd.kernelModules = [ "amdgpu" ];        # Video drivers
     
     loader = {                                  # For legacy boot:
