@@ -18,7 +18,8 @@
 {
   imports =
     [
-      ../../modules/desktop/sway/home.nix # Window Manager
+      #../../modules/desktop/sway/home.nix # Window Manager
+      ../../modules/desktop/hyprland/home.nix # Window Manager
       ../../modules/programs/waybar.nix   # Waybar
     ];
 
