@@ -98,9 +98,6 @@
             bspc wm -O HDMI-A-1 DisplayPort-1
             polybar sec &
           fi
-
-          #Extras
-          steam &
         '';
       };
     };

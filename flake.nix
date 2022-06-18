@@ -31,7 +31,7 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
-      nurpkgs = {
+      nur = {
         url = "github:nix-community/NUR";                                   # NUR packages
       };
 

@@ -43,8 +43,8 @@
       stremio           # Media Streamer
 
       # Apps
-      google-chrome     # Browser
       firefox           # Browser
+      google-chrome     # Browser
       remmina           # XRDP & VNC Client
 
       # File Management

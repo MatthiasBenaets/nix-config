@@ -1,5 +1,5 @@
 with import <nixpkgs> {};
-stdenv.mkDerivation {
+mkShell {
   name = "React-Electron-Shell";
   buildInputs = with pkgs; [
     nodePackages.create-react-app
@@ -15,6 +15,10 @@ stdenv.mkDerivation {
     binutils
   ];
   ELECTRON_OVERRIDE_DIST_PATH = "${electron}/bin/"; #NEEDED to not get errors on npm start
+
+  shellHook = ''
+    echo "done"
+  '';
 }
 
 # ELECTRON
