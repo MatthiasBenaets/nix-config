@@ -6,11 +6,9 @@
 #   │   └─ ./laptop
 #   │       └─ home.nix *
 #   └─ ./modules
-#       ├─ ./desktop
-#       │   └─ ./sway
-#       │      └─ home.nix
-#       └─ ./programs
-#           └─ ./waybar.nix
+#       └─ ./desktop
+#           └─ ./hyprland
+#              └─ hyprland.nix
 #
 
 { pkgs, ... }:
@@ -20,7 +18,6 @@
     [
       #../../modules/desktop/sway/home.nix # Window Manager
       ../../modules/desktop/hyprland/home.nix # Window Manager
-      ../../modules/programs/waybar.nix   # Waybar
     ];
 
   home = {                                # Specific packages for laptop
@@ -43,7 +40,7 @@
 
   services = {                            # Applets
     blueman-applet.enable = true;         # Bluetooth
-#    network-manager-applet.enable = true; # Network
+#   network-manager-applet.enable = true; # Network
 #   cbatticon = {
 #     enable = true;
 #     criticalLevelPercent = 10;

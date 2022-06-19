@@ -8,8 +8,11 @@
 #   │        └─ hardware-configuration.nix       
 #   └─ ./modules
 #       ├─ ./desktop
-#       │   └─ ./sway
-#       │       └─ sway.nix
+#       │   └─ ./hyprland
+#       │       └─ hyprland.nix
+#       ├─ ./modules
+#       │   └─ ./programs
+#       │       └─ waybar.nix
 #       └─ ./hardware
 #           └─ default.nix
 #
@@ -21,8 +24,8 @@
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
     #[(import ../../modules/desktop/sway/sway.nix)] ++     # Window Manager
     [(import ../../modules/desktop/hyprland/hyprland.nix)] ++     # Window Manager
+    [(import ../../modules/programs/waybar.nix)] ++     # Window Manager
     (import ../../modules/hardware);                      # Hardware devices
-
 
   boot = {                                  # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
@@ -96,11 +99,9 @@
     #};
   };
 
-
   #temporary bluetooth fix
   systemd.tmpfiles.rules = [
     "d /var/lib/bluetooth 700 root root - -"
   ];
   systemd.targets."bluetooth".after = ["systemd-tmpfiles-setup.service"];
-
 }

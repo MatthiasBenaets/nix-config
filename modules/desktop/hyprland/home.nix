@@ -1,5 +1,5 @@
 #
-#  Sway Home manager configuration
+#  Hyprland NixOS & Home manager configuration
 #
 #  flake.nix
 #   ├─ ./hosts
@@ -43,8 +43,8 @@
 
         gaps_in=5
         gaps_out=10
-        border_size=2
-        col.active_border=0x66ee1111
+        border_size=4
+        col.active_border=0x80ffffff
         col.inactive_border=0x66333333
 
         damage_tracking=full # leave it on full unless you hate your GPU and want to make it suffer
@@ -85,13 +85,12 @@
       #windowrule=pseudo,abc
       #windowrule=monitor 0,xyz
 
-      bind=SUPER,Return,exec,alacritty
+      bind=SUPER,Return,exec,${pkgs.alacritty}/bin/alacritty
       bind=SUPER,Q,killactive,
       bind=SUPER,Escape,exit,
-      bind=SUPER,E,exec,pcmanfm
+      bind=SUPER,E,exec,${pkgs.pcmanfm}/bin/pcmanfm
       bind=SUPER,H,togglefloating,
-      #bind=SUPER,Space,exec,wofi --show drun -o DP-3
-      bind=SUPER,Space,exec,rofi -show drun -o DP-3
+      bind=SUPER,Space,exec,${pkgs.rofi}/bin/rofi -show drun -o DP-3
       bind=SUPER,P,pseudo,
 
       bind=SUPER,left,movefocus,l
@@ -130,19 +129,20 @@
       bind=CTRL,up,resizeactive,0 -20
       bind=CTRL,down,resizeactive,0 20
 
-      bind=,print,exec,flameshot gui
+      bind=,print,exec,${pkgs.flameshot}/bin/flameshot gui
 
-      bind=,XF86AudioLowerVolume,exec,pamixer -d 10
-      bind=,XF86AudioRaiseVolume,exec,pamixer -i 10
-      bind=,XF86AudioMute,exec,pamixer -t
-      bind=,XF86AudioMicMute,exec,pamixer --default-source -t
-      bind=,XF86MonBrightnessDown,exec,light -U 5
-      bind=,XF86MonBrightnessUP,exec,light -A 5
+      bind=,XF86AudioLowerVolume,exec,${pkgs.pamixer}/bin/pamixer -d 10
+      bind=,XF86AudioRaiseVolume,exec,${pkgs.pamixer}/bin/pamixer -i 10
+      bind=,XF86AudioMute,exec,${pkgs.pamixer}/bin/pamixer -t
+      bind=,XF86AudioMicMute,exec,${pkgs.pamixer}/bin/pamixer --default-source -t
+      bind=,XF86MonBrightnessDown,exec,${pkgs.light}/bin/light -U 5
+      bind=,XF86MonBrightnessUP,exec,${pkgs.light}/bin/light -A 5
 
       windowrule=float,rofi
 
-      exec-once=swaybg -m center -i $HOME/.config/wall
-      exec-once=waybar
+      exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
+      exec-once=${pkgs.waybar}/bin/waybar
+      exec-once=${pkgs.blueman}/bin/blueman-applet
     '';
   };
 }
