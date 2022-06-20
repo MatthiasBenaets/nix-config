@@ -22,8 +22,8 @@
 {
   imports =                                 # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
-    #[(import ../../modules/desktop/sway/sway.nix)] ++     # Window Manager
-    [(import ../../modules/desktop/hyprland/hyprland.nix)] ++     # Window Manager
+    [(import ../../modules/desktop/sway/sway.nix)] ++     # Window Manager
+    #[(import ../../modules/desktop/hyprland/hyprland.nix)] ++     # Window Manager
     [(import ../../modules/programs/waybar.nix)] ++     # Window Manager
     (import ../../modules/hardware);                      # Hardware devices
 

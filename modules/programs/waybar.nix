@@ -120,11 +120,10 @@
         ];
         tray = { spacing = 10; };
         modules-center = [ "clock" ];
-        #modules-left = [ "sway/workspaces" "sway/window" "sway/mode" ];
-        modules-left = [ "wlr/workspaces" ];
+        modules-left = [ "sway/workspaces" "sway/window" "sway/mode" ];
+        #modules-left = [ "wlr/workspaces" ];
         modules-right = [ "cpu" "memory" "disk" "pulseaudio" "battery" "network" "tray" ];
 
-        "gtk-layer-shell" = false;
         "sway/workspaces" = {
           format = "<span font='14'>{icon}</span>";
           format-icons = {
