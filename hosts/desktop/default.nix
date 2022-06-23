@@ -61,6 +61,10 @@
   };
 
   services = {
+    redshift = {
+      enable = true;
+      brightness.night = "0.3";
+    };
     blueman.enable = true;                      # Bluetooth
     printing = {                                # Printing and drivers for TS5300
       enable = true;
@@ -135,4 +139,9 @@
       );
     })
   ];
+
+  location = {                                  # Primarily used for redshift
+    latitude = 50.929818;
+    longitude = 5.338297;
+  };
 }

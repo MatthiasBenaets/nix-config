@@ -6,7 +6,7 @@
 #   │   ├─ ./default.nix
 #   │   └─ ./home.nix *
 #   └─ ./modules
-#       └─ ./apps
+#       └─ ./programs
 #           └─ ./alacritty.nix
 #
 
@@ -15,7 +15,7 @@
 {
   imports =
     [
-      ../modules/apps/alacritty.nix
+      ../modules/programs/alacritty.nix
     ];
 
   home = {                                        # Specific packages for macbook

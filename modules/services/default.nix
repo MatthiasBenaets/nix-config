@@ -14,7 +14,7 @@
   ./dunst.nix
   ./flameshot.nix
   ./picom.nix
-  ./polybar
+  ./polybar.nix
   ./sxhkd.nix
   ./udiskie.nix
 ]

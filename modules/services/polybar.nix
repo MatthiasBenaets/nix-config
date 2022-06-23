@@ -12,10 +12,6 @@ let
 in
 { 
   config = lib.mkIf (config.xsession.enable) {    # Only evaluate code if using X11
-    home.file.".config/polybar/script/mic.sh" ={
-      source = ./mic.sh;
-      executable = true;
-    };
     services = {
       polybar = {
         enable = true;
@@ -44,7 +40,7 @@ in
             font-3 = "FontAwesome6Brands:style=Regular:size=8";
             font-4 = "FiraCodeNerdFont:size=10";
             modules-left = "logo bspwm";
-            modules-right = "backlight pad memory cpu pad mic volume pad battery date"; #wired-network wireless-network bluetooth";
+            modules-right = "backlight pad memory cpu pad mic sink volume pad battery date"; #wired-network wireless-network bluetooth";
 
             tray-position = "right";
             tray-detached = "false";
@@ -101,7 +97,7 @@ in
             ramp-volume-1 = "";
             ramp-volume-2 = "";
 
-            click-right = "${pkgs.pavucontrol}/bin/pavucontrol";  # Right click opens pavucontrol, left click mutes, scroll changes levels
+            click-left = "${pkgs.pavucontrol}/bin/pavucontrol";  # Right click opens pavucontrol, left click mutes, scroll changes levels
           };
           "module/backlight" = {                  # Keeping for the futur when i have a screen that supports xbacklight
             type = "internal/backlight";          # Now doen with sxhkb shortcuts
@@ -283,15 +279,13 @@ in
             #click-left = "pactl list sources | grep -qi 'Mute: yes' && pactl set-source-mute 1 false || pactl set-source-mute 1 true ";
             click-left = "~/.config/polybar/script/mic.sh toggle";
           };
-          #"module/logo" = {
-            #type = "custom/text";
-            #content = " %{F#a7c7e7} ";
-            #format-foreground = "#a7c7e7";
-            #click-left = "bspc quit";
-            #double-click-left = "systemctl suspend";
-            #double-click-middle = "poweroff";
-            #double-click-right = "xset dpms force off";
-          #};
+          "module/sink" = {
+            type = "custom/script";
+            interval = 1;
+            tail = "true";
+            exec = "~/.config/polybar/script/sink.sh status";
+            click-left = "~/.config/polybar/script/sink.sh toggle";
+          };
           "module/logo" = {
             type = "custom/menu";
             expand-right = true;
@@ -347,6 +341,56 @@ in
           };
         };
       };
+    };
+    home.file.".config/polybar/script/mic.sh" = {               # Custom script: Mic mute
+      text = ''
+        #!/bin/sh
+
+        case $1 in
+          "status")
+            #MUTED=$(pacmd list-sources | awk '/\*/,EOF {print}' | awk '/muted/ {print $2; exit}')
+            #if [[ $MUTED = "no" ]]; then
+            MUTED=$(awk -F"[][]" '/Left:/ { print $4 }' <(amixer sget Capture))
+            if [[ $MUTED = "on" ]]; then
+              echo ''
+            else
+              echo ''
+            fi
+          ;;
+          "toggle")
+            #ID=$(pacmd list-sources | grep "*\ index:" | cut -d' ' -f5)
+            #pactl set-source-mute $ID toggle
+            ${pkgs.alsa-utils}/bin/amixer set Capture toggle
+          ;;
+        esac
+      '';
+      executable = true;
+    };
+    home.file.".config/polybar/script/sink.sh" = {              # Custom script: Toggle speaker/headset
+      text = ''
+        #!/bin/sh
+
+        HEAD=$(awk '/ 44./ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status))
+        SPEAK=$(awk '/118./ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status))
+
+        case $1 in
+          "status")
+            if [[ $HEAD = "*" ]]; then
+              echo ''
+            elif [[ $SPEAK = "*" ]]; then
+              echo '蓼'
+            fi
+          ;;
+          "toggle")
+            if [[ $HEAD = "*" ]]; then
+              ${pkgs.wireplumber}/bin/wpctl set-default 118
+            elif [[ $SPEAK = "*" ]]; then
+              ${pkgs.wireplumber}/bin/wpctl set-default 44
+            fi
+          ;;
+        esac
+      '';
+      executable = true;
     };
   };  
 }

@@ -86,6 +86,6 @@
       #wlp2s0.useDHCP = true;                   # Wireless card
     };
     defaultGateway = "192.168.0.1";
-    nameservers = [ "192.168.0.50" ];           # Pi-Hole DNS
+    nameservers = [ "192.168.0.50" "1.1.1.1" ];           # Pi-Hole DNS
   };
 }

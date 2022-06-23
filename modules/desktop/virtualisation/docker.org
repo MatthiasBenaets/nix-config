@@ -1,0 +1,283 @@
+#+title: Docker Notes
+#+description: A few notes on how my docker is set up
+#+author: Matthias Benaets
+
+* Docker
+** Setup
+#+begin_src nix
+virtualisation = {
+  docker.enable = true;
+};
+
+users.groups.docker.members = [ "${user}" ];
+#+end_src
+
+** Portainer
+*Gui for docker*
+
+#+begin_src
+$ docker volume create portainer_data
+$ docker run -d -p 8000:8000 -p 9443:9443 --name portainer \
+     --restart=always \
+     -v /var/run/docker.sock:/var/run/docker.sock \
+     -v portainer_data:/data \
+     portainer/portainer-ce:latest
+#+end_src
+
+*localhost:9443*
+
+** Traefik
+*Reverse Proxy*
+
+- ~$ sudo mkdir -p /etc/traefik/certs~
+- ~$ sudo vim /etc/traefik/traefik.yml~
+
+#+begin_src yaml
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: false  # true by default
+
+# (Optional) Log information
+# ---
+# log:
+#  level: ERROR  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+#   format: common  # common, json, logfmt
+#   filePath: /var/log/traefik/traefik.log
+
+# (Optional) Accesslog
+# ---
+# accesslog:
+  # format: common  # common, json, logfmt
+  # filePath: /var/log/traefik/access.log
+
+# (Optional) Enable API and Dashboard
+# ---
+api:
+ dashboard: true  # true by default
+ insecure: true  # Don't do this in production!
+
+# Entry Points configuration
+# ---
+entryPoints:
+  web:
+    address: :80
+    # (Optional) Redirect to HTTPS
+    # ---
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+
+  websecure:
+    address: :443
+
+# Configure your CertificateResolver here...
+# ---
+certificatesResolvers:
+#   staging:
+#     acme:
+#       email: your-email@example.com
+#       storage: /etc/traefik/certs/acme.json
+#       caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+#       httpChallenge:
+#         entryPoint: web
+#
+  production:
+    acme:
+      email: your-email@example.com
+      storage: /etc/traefik/certs/acme.json
+      caServer: "https://acme-v02.api.letsencrypt.org/directory"
+      httpChallenge:
+        entryPoint: web
+
+# (Optional) Overwrite Default Certificates
+# tls:
+#   stores:
+#     default:
+#       defaultCertificate:
+#         certFile: /etc/traefik/certs/cert.pem
+#         keyFile: /etc/traefik/certs/cert-key.pem
+# (Optional) Disable TLS version 1.0 and 1.1
+#   options:
+#     default:
+#       minVersion: VersionTLS12
+
+providers:
+  docker:
+    exposedByDefault: false  # Default is true
+  file:
+    # watch for dynamic configuration changes
+    directory: /etc/traefik
+    watch: true
+#+end_src
+
+- On portainer, add a stack
+
+#+begin_src yaml
+version: '3'
+
+services:
+  traefik:
+    image: "traefik:v2.5"
+    container_name: "traefik"
+    ports:
+      - "80:80"
+      - "443:443"
+      # (Optional) Expose Dashboard
+      - "8080:8080"  # Don't do this in production!
+    volumes:
+      - /etc/traefik:/etc/traefik
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+#+end_src
+
+*localhost:8080*
+
+** Duck DNS
+*DNS Service*
+
+- www.duckdns.org
+  - for me, login with github
+- Create subdomain
+- In portainer
+  - Add container
+  - name: duckdns
+  - image: linuxserver/duckdns
+  - Advanced container settings
+    - Env:
+      - $ id
+      - PUID = 1000 (what you get when running the command)
+      - PGID = 1000
+      - TZ = Europe/Brussels
+      - TOKEN = Copy from duckdns website
+      - LOG_FILE = true
+      - SUBDOMAINS = websitename,otherwebsitename (without https://www and .duckdns.org)
+    - Volumes:
+      - ~$ mkdir -p duckdns/config~
+      - container = /config Host = /path/to/duckdns/config
+    - Restart Policy:
+      - Unless stopped
+- Now checkdns
+
+** Nginx
+*Web Server*
+
+- In portainer
+  - Add container
+  - name: nginx
+  - image: nginx:latest
+  - no ports (traefik will do this)
+  - Advanced container settings
+    - Network: bridge to traefik_default
+    - Labels:
+      - traefik.enable = true
+      - traefik.http.routers.nginx.entrypoint = web,secureweb
+      - traefik.http.routers.nginx.rule = Host(`nginx.<name>.duckdns.org`)
+      - traefik.http.routers.nginx.tls = true
+      - traefik.http.routers.nginx.tls.certresolver = production
+      - traefik.http.services.nginx.loadbalancer.server.port = 80
+
+*localhost:80/:443 or *<name>.duckdns.org*
+
+** Plex
+*Media Server*
+
+- At the moment I host this seperately from docke
+  - ~$ sudo mkdir /etc/traefik/data~
+  - ~$ sudo vim /etc/traefik/data/config/yml~
+
+#+begin_src yaml
+http:
+  routers:
+    plex:
+      entryPoints:
+        - "web"
+        - "websecure"
+      rule: "Host(`plex.<name>.duckdns.org`)"
+      tls:
+        certResolver: production
+      service: plex
+  services:
+    plex:
+      loadBalancer:
+        servers:
+          - url: "http://<host ip>:32400"
+        passHostHeader: true
+#+end_src
+
+*localhost:32400 or plex.<name>.duckdns.org*
+
+** Pi-Hole
+*DNS Server/Ad blocker*
+
+- In portainer
+  - Add container
+  - name: pi-hole
+  - image: pihole/pihole:latest
+
+*** Normal hosting
+- manual network port publishing:
+  - 53:53 TCP
+  - 53:53 UDP
+  - 67:67 UDP
+  - 80:80 TCP
+  - 443:443 TCP
+- Advanced container settings
+  - volumes:
+    - ~$ sudo mkdir /etc/pihole /etc/dnsmasq.d~
+    - Container = /etc/pihole Host = /etc/pihole
+    - Container = /etc/dnsmasq.d Host = /etc/dnsmasq.d
+  - env:
+    - TZ = Europe/Brussels
+    - WEBPASSWORD = <password>
+  - restart policy = unless stopped
+
+*localhost/admin*
+
+*** Begin reverse proxy (traefik)
+- namual network port publishing:
+  - 53:53 TCP
+  - 53:53 UDP
+- Advanced container setting:
+  - volumes:
+    - ~$ sudo mkdir /etc/pihole /etc/dnsmasq.d~
+    - Container = /etc/pihole Host = /etc/pihole
+    - Container = /etc/dnsmasq.d Host = /etc/dnsmasq.d
+  - network: traefik_default
+  - env:
+    - TZ = Europe/Brussels
+    - WEBPASSWORD = <password>
+    - #VIRTUAL_HOST = Host(`pi.<name>.duckdns.org`)
+  - labels:
+    - traefik.enable = true
+    - traefik.http.routers.pihole.entrypoint = web,websecure
+    - traefik.http.routers.pihole.rule = Host('pi.<name>.duckdns.org')
+    - traefik.http.routers.pihole.tls = true
+    - traefik.http.routers.pihole.tls.certresolver = production
+    - traefik.http.routers.pihole.loadbalancer.server = 80
+  - restart policy = unless stopped
+
+*pi.<name>.duckdns.org/admin*
+
+** Nginx-rtmp
+*RTMP Server for livestreaming*
+
+- ~$ docker run -d -p 1935:1935 -name nginx-rtmp --restart=always tiangolo/nginx-rtmp~
+
+** Zoffline
+*Offline Zwift*
+*This is hosted on my ubuntu server vm on macbook*
+
+- install ubuntu server (with option docker if prompted) in vm but network bridged
+- ~$ sudo apt install ubuntu-desktop~ (only needed for token)
+- ~$ docker create --name zwift-offline -p 443:443 -p 80:80 -p 3022:3022/udp -p 3023:3023 -v </path/to/host/storage>:/usr/src/app/zwift-offline/storage -e TZ=Europe/Brussels zoffline/zoffline~
+- ~$ docker update --restart unless-stopped zwift-offline~ (if you want it to always run)
+- add ip of client to server-ip.txt in /path/to/host/storage
+- add ~<vmip> us-or-rly101.zwift.com secure.zwift.com cdn.zwift.com launcher.zwift.com~ to /etc/hosts
+- ~$git clone https://github.com/zoffline/zwift-offline~
+- ~$ sudo apt install python3-pip~
+- ~$ sudo ln -s /usr/bin/python3 /usr/bin/python~
+- Do steps in repo for Mac OS X
+- Obtain zwift profile, use real login and password when prompted. Move profile.bin to storage
+- Obtain strava token (move to storage location but if userid dir exists, move it in there after first load)
+- ~$ docker start zwift-offline~
