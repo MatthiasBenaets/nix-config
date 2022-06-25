@@ -87,11 +87,22 @@
       };
       pulse.enable = true;
     };
-#   openssh = {                             # SSH
-#     enable = true;
-#     allowSFTP = true;
-#   };
-#   sshd.enable = true;
+    openssh = {                             # SSH: secure shell (remote connection to shell of server)
+      enable = true;                        # local: $ ssh <user>@<ip>
+                                            # public:
+                                            #   - port forward 22 TCP to server
+                                            #   - in case you want to use the domain name insted of the ip:
+                                            #       - for me, via cloudflare, create an A record with name "ssh" to the correct ip without proxy
+                                            #   - connect via ssh <user>@<ip or ssh.domain>
+                                            # generating a key:
+                                            #   - $ ssh-keygen   |  ssh-copy-id <ip/domain>  |  ssh-add
+                                            #   - if ssh-add does not work: $ eval `ssh-agent -s`
+      allowSFTP = true;                     # SFTP: secure file transfer protocol (send file to server)
+                                            # connect: $ sftp <user>@<ip/domain>
+                                            # commands:
+                                            #   - lpwd & pwd = print (local) parent working directory
+                                            #   - put/get <filename> = send or receive file
+    };
     flatpak.enable = true;                  # download flatpak file from website - sudo flatpak install <path> - reboot if not showing up
                                             # sudo flatpak uninstall --delete-data <app-id> (> flatpak list --app) - flatpak uninstall --unused
   };

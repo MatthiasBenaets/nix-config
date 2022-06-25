@@ -16,6 +16,10 @@
   #    alias rtmp='docker start nginx-rtmp'
   #  '';                                                           # Alias to easily start container
   #};
+
+  environment.systemPackages = with pkgs; [
+    docker-compose
+  ];
 }
 
 # USAGE:

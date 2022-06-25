@@ -22,7 +22,7 @@ in
         # geometry [{width}x{height}][+/-{x}+/-{y}]
         # geometry = "600x50-50+65";
         width = 300;
-        height = 100;
+        height = 200;
         origin = "top-right";
         offset = "50x50";
         shrink = "yes";

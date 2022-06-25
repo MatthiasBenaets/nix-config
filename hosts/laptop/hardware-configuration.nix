@@ -54,8 +54,8 @@
         #} ];  
       };
     };
-    #defaultGateway = "192.168.0.1";
-    #nameservers = [ "1.1.1.1" ];
+    defaultGateway = "192.168.0.1";
+    nameservers = [ "192.168.0.51" ];
   };
 
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;  }

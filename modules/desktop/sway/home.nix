@@ -24,10 +24,10 @@
 
       startup = [                                       # Run commands on Sway startup
         {command = "${pkgs.autotiling}/bin/autotiling"; always = true;} # Tiling Script
-        {command = ''
-          ${pkgs.swayidle}/bin/swayidle -w \
-              before-sleep '${pkgs.swaylock-fancy}/bin/swaylock-fancy'
-        ''; always = true;}                             # Lock on lid close
+        ##{command = ''
+        ##  ${pkgs.swayidle}/bin/swayidle -w \
+        ##      before-sleep '${pkgs.swaylock-fancy}/bin/swaylock-fancy'
+        ##''; always = true;}                             # Lock on lid close
         #{command = ''
         #  ${pkgs.swayidle}/bin/swayidle \
         #    timeout 120 '${pkgs.swaylock-fancy}/bin/swaylock-fancy' \

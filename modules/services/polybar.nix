@@ -67,7 +67,7 @@ in
             font-3 = "FontAwesome6Brands:style=Regular:size=8";
             font-4 = "FiraCodeNerdFont:size=10";
             modules-left = "logo bspwm";
-            modules-right = "mic volume pad date";
+            modules-right = "mic sink volume pad date";
 
             #override-redirect = "true";
             wm-restack = "bspwm";
@@ -97,7 +97,7 @@ in
             ramp-volume-1 = "";
             ramp-volume-2 = "";
 
-            click-left = "${pkgs.pavucontrol}/bin/pavucontrol";  # Right click opens pavucontrol, left click mutes, scroll changes levels
+            click-right = "${pkgs.pavucontrol}/bin/pavucontrol";  # Right click opens pavucontrol, left click mutes, scroll changes levels
           };
           "module/backlight" = {                  # Keeping for the futur when i have a screen that supports xbacklight
             type = "internal/backlight";          # Now doen with sxhkb shortcuts
@@ -187,6 +187,7 @@ in
           };
           "module/date" = {                       # Time/Date  Day-Month-Year Hour:Minute
             type = "internal/date";
+            #date = "%{A1:notify-send -t 0 \"$(cal -m)\":}  %%{F#999}%d-%m-%Y%%{F-} %%{F#fff}%H:%M%%{F-}%{A}";
             date = "  %%{F#999}%d-%m-%Y%%{F-} %%{F#fff}%H:%M%%{F-}";
           };
           "module/bspwm" = {                      # Workspaces
@@ -370,8 +371,11 @@ in
       text = ''
         #!/bin/sh
 
-        HEAD=$(awk '/ 44./ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status))
-        SPEAK=$(awk '/118./ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status))
+        ID1=$(awk '/ 44./ {sub(/.$/,"",$2); print $2 }' <(${pkgs.wireplumber}/bin/wpctl status))
+        ID2=$(awk '/ S10 Bluetooth Speaker/ {sub(/.$/,"",$2); print $2 }' <(${pkgs.wireplumber}/bin/wpctl status) | sed -n 2p)
+
+        HEAD=$(awk '/ 44./ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*"))
+        SPEAK=$(awk '/ S10 Bluetooth Speaker/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*"))
 
         case $1 in
           "status")
@@ -383,9 +387,9 @@ in
           ;;
           "toggle")
             if [[ $HEAD = "*" ]]; then
-              ${pkgs.wireplumber}/bin/wpctl set-default 118
+              ${pkgs.wireplumber}/bin/wpctl set-default $ID2
             elif [[ $SPEAK = "*" ]]; then
-              ${pkgs.wireplumber}/bin/wpctl set-default 44
+              ${pkgs.wireplumber}/bin/wpctl set-default $ID1
             fi
           ;;
         esac
