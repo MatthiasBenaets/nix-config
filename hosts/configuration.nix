@@ -102,6 +102,9 @@
                                             # commands:
                                             #   - lpwd & pwd = print (local) parent working directory
                                             #   - put/get <filename> = send or receive file
+      extraConfig = ''
+        HostKeyAlgorithms +ssh-rsa
+      '';                                   # Temporary extra config so ssh will work in guacamole
     };
     flatpak.enable = true;                  # download flatpak file from website - sudo flatpak install <path> - reboot if not showing up
                                             # sudo flatpak uninstall --delete-data <app-id> (> flatpak list --app) - flatpak uninstall --unused

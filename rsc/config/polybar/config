@@ -1,15 +1,15 @@
 [bar/main]
 background=#00000000
 font-0=SourceCodePro:size=10
-font-1=FontAwesome5Free:style=Solid:size=8
-font-2=FontAwesome5Free:style=Regular:size=8
-font-3=FontAwesome5Brands:style=Regular:size=8
-font-4=FiraCodeNerdFont:size=11
+font-1=FontAwesome6Free:style=Solid:size=8
+font-2=FontAwesome6Free:style=Regular:size=8
+font-3=FontAwesome6Brands:style=Regular:size=8
+font-4=FiraCodeNerdFont:size=10
 foreground=#ccffffff
 height=15
 module-margin-left=1
 modules-left=logo bspwm
-modules-right=backlight pad memory cpu pad mic volume pad battery date
+modules-right=backlight pad memory cpu pad mic sink volume pad battery date
 offset-y=2
 padding-right=2
 tray-detached=false
@@ -20,15 +20,15 @@ wm-restack=bspwm
 [bar/sec]
 background=#00000000
 font-0=SourceCodePro:size=10
-font-1=FontAwesome5Free:style=Solid:size=8
-font-2=FontAwesome5Free:style=Regular:size=8
-font-3=FontAwesome5Brands:style=Regular:size=8
-font-4=FiraCodeNerdFont:size=11
+font-1=FontAwesome6Free:style=Solid:size=8
+font-2=FontAwesome6Free:style=Regular:size=8
+font-3=FontAwesome6Brands:style=Regular:size=8
+font-4=FiraCodeNerdFont:size=10
 foreground=#ccffffff
 height=15
 module-margin-left=1
 modules-left=logo bspwm
-modules-right=mic volume pad date
+modules-right=mic sink volume pad date
 monitor=DisplayPort-1
 offset-y=2
 padding-right=2
@@ -86,7 +86,7 @@ ramp-capacity-4=
 type=internal/battery
 
 [module/bluetooth]
-click-left=/nix/store/nlqrgrkd2z4l16xwki7zk2z0jhrl0pbw-blueman-2.2.4/bin/blueman-manager
+click-left=/nix/store/fydmm5y9008injfbxdg5mad3h2sqs9dw-blueman-2.2.4/bin/blueman-manager
 content=
 type=custom/text
 
@@ -176,14 +176,26 @@ menu-1-4=
 menu-1-4-exec=sleep 0.5; systemctl reboot
 menu-2-0=
 menu-2-0-exec=google-chrome-stable &
-menu-2-1=
-menu-2-1-exec=lutris &
+menu-2-1=
+menu-2-1-exec=emacs &
+menu-2-10=
+menu-2-10-exec=steam &
 menu-2-2=
 menu-2-2-exec=libreoffice &
-menu-2-3=
-menu-2-3-exec=darktable &
-menu-2-4=
-menu-2-4-exec=obs &
+menu-2-3=
+menu-2-3-exec=plexmediaplayer &
+menu-2-4=
+menu-2-4-exec=darktable &
+menu-2-5=
+menu-2-5-exec=flatpak run com.obsproject.Studio &
+menu-2-6=
+menu-2-6-exec=gimp &
+menu-2-7=
+menu-2-7-exec=inkscape &
+menu-2-8=
+menu-2-8-exec=kdenlive &
+menu-2-9=
+menu-2-9-exec=lutris &
 type=custom/menu
 
 [module/memory]
@@ -203,6 +215,13 @@ type=custom/script
 content="    "
 type=custom/text
 
+[module/sink]
+click-left=~/.config/polybar/script/sink.sh toggle
+exec=~/.config/polybar/script/sink.sh status
+interval=1
+tail=true
+type=custom/script
+
 [module/title]
 format=<label>
 format-background=#00000000
@@ -214,7 +233,7 @@ label-maxlen=75
 type=internal/xwindow
 
 [module/volume]
-click-right=/nix/store/4cv9fbc6hln70phd0dsz1grj0f3xxk2w-pavucontrol-5.0/bin/pavucontrol
+click-right=/nix/store/6h7fkf0hxagi2qkiskmiq4x20mriggap-pavucontrol-5.0/bin/pavucontrol
 format-volume=<ramp-volume>  <label-volume>
 interval=2
 label-muted=  muted

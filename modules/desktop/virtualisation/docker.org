@@ -11,7 +11,8 @@
   - Using Portainer to manage containers
   - Using Pi-hole on a seperate server to create custom dns entries in router or pi-hole (only if everything is internal)
     - When wanting to make everything local, remove the root (@) and wildcard (*) in dns resolver website (Cloudflare)
-    - Expose only specific wildcard by adding them seperatly by name
+    - Expose only specific wildcard by adding them seperatly by name. Not recommended this this can be seen when looking up the certificate in something like https://crt.sh/, better use wildcard then.
+      - For something like ssh, you can add it seperately without a proxy
   - Forwarded port 443, 80 ((secure) web) and 22 (ssh) (so this is external (custom entries as stated above are thus not set))
   - Registered Domain at epik.com
   - Manage DNS with Cloudflare
@@ -30,6 +31,10 @@ virtualisation = {
 
 users.groups.docker.members = [ "${user}" ];
 #+end_src
+
+*** Update containers
+
+~$ docker pull <container>:<tag>~ (see docker images)
 
 ** Portainer
 *Gui for docker*
@@ -58,34 +63,39 @@ $ docker run -d -p 8000:8000 -p 9443:9443 \
 version: '3'
 
 services:
-  portainer:
-    image: portainer/portainer-ce
-    container_name: portainer
-    restart: unless-stopped
+  portainer:                                                # Service name
+    image: portainer/portainer-ce                           # Name docker image (can be found on dockerhub)
+    container_name: portainer                               # Container name
+    restart: unless-stopped                                 # Restart policy: never/always/on-failure/unless-stopped
     security_opt:
-      - no-new-privileges:true
+      - no-new-privileges:true                              # Don't allow container to get new/more privileges
     networks:
-      -
-    volumes:
+      - <traefik network name>                              # When using traefik, add the correct network here to correctly communicate
+    volumes:                                                # Volumes linked from host to container
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /home/<user>/Server/portainer/data:/data
-    labels:
-    # if you are not using traefik, comment out labels
-      - "traefik.enable=true"
-      - "traefik.http.routers.portainer.entrypoints=http"
-      - "traefik.http.routers.portainer.rule=Host(`portainer.<url>`)"
-      - "traefik.http.middlewares.portainer-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.portainer.middlewares=portainer-https-redirect"
-      - "traefik.http.routers.portainer-secure.entrypoints=https"
-      - "traefik.http.routers.portainer-secure.rule=Host(`portainer.<url>`)"
-      - "traefik.http.routers.portainer-secure.tls=true"
-      - "traefik.http.routers.portainer-secure.service=portainer"
-      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
-      - "traefik.docker.network=<traefik network name>"
+      - /home/<user>/Server/portainer/data:/data            # Personally prefer having a data directory with everything from container
+    labels:                                                 # Labels: used by traefik to correctly set up container
+      # Enable Traefik overlay
+      - "traefik.enable=true"                                                           # Enable traefik for container
+      # Router: HTTP redirect
+      - "traefik.http.routers.portainer.entrypoints=<unsecure entrypoint>"              # Unsecure http entrypoint set in traefik.yml
+      - "traefik.http.routers.portainer.rule=Host(`portainer.<url>`)"                   # Custom url, wildcard can be anything.
+      - "traefik.http.routers.portainer.middlewares=portainer-https-redirect"           # Redirect to https
+      # Router: HTTPS for TLS
+      - "traefik.http.routers.portainer-secure.entrypoints=<secure entrypoint>"         # Link to https
+      - "traefik.http.routers.portainer-secure.rule=Host(`portainer.<url>`)"            # Same custom url
+      - "traefik.http.routers.portainer-secure.tls=true"                                # Tls for certificate
+      # Middleware
+      - "traefik.http.middlewares.portainer-https-redirect.redirectscheme.scheme=https" # Redirect http to https
+      # Service
+      - "traefik.http.routers.portainer-secure.service=portainer"                       # Service name
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"                 # Port where service is active. Traefik will forward request to this port in the container.
+      # Network
+      - "traefik.docker.network=<new network name>"                                     # Traefik network so container and traefik can communicate.
 
 networks:
-  <traefik network name>:
+  <traefik network name>:                                   # Network should be the traefik network so communication work by also enabling external
     external: true
 #+end_src
 
@@ -110,76 +120,80 @@ networks:
 version: '3'
 
 services:
-  traefik:
-    image: traefik:latest
-    container_name: traefik
-    restart: unless-stopped
+  traefik:                                                              # Service Name
+    image: traefik:latest                                               # Name docker image and version
+    container_name: traefik                                             # Container Name
+    restart: unless-stopped                                             # Restart policy
     security_opt:
-      - no-new-privileges:true
+      - no-new-privileges:true                                          # Don't allow container to get new/more priviliges
     networks:
-      - <network name>
-    ports:
-      - 80:80
+      - <network name>                                                  # Declare a network that will be used by all containers that make use of traefik
+    ports:                                                              # Ports: http=80 https=443
+      - 80:80                                                           # Traefik wil manage (most) ports from containers connected to it
       - 443:443
     environment:
       #For these settings, it recommended to have a resolver that does SSL.
       #For other providers, look on traefik website under HTTPS&TLS - Let's Encrypt
       - CF_API_EMAIL=<cloudflare email>
       - CF_API_KEY=<cloudflare general account api>
-    volumes:
+    volumes:                                                            # Volumes linked from host to container
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /home/<user>/Server/traefik/data/traefik.yml:/traefik.yml:ro
-      - /home/<user>/Server/traefik/data/acme.json:/acme.json
-      - /home/<user>/Server/traefik/data/config.yml:/config.yml:ro
+      - /home/<user>/Server/traefik/data/traefik.yml:/traefik.yml:ro    # Traefik config
+      - /home/<user>/Server/traefik/data/acme.json:/acme.json           # SSL certificate
+      - /home/<user>/Server/traefik/data/config.yml:/config.yml:ro      # Config for external services you want to link to Traefik
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.traefik.entrypoints=http"
-      - "traefik.http.routers.traefik.rule=Host(`traefik.<url>`)"
-      - "traefik.http.middlewares.traefik-auth.basicauth.users=<user>:<basic auth pass>"
-      - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https"
-      - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
-      - "traefik.http.routers.traefik-secure.entrypoints=https"
-      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.<url>`)"
-      - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
-      - "traefik.http.routers.traefik-secure.tls=true"
-      - "traefik.http.routers.traefik-secure.tls.certresolver=<resolver>"
-      - "traefik.http.routers.traefik-secure.tls.domains[0].main=<url>"
-      - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.<url>"
+      # Enable Traefik overlay
+      - "traefik.enable=true"                                                 # Enable traefik for itself
+      # Router: HTTP redirect
+      - "traefik.http.routers.traefik.entrypoints=<unsecure entry>"           # Unsecure entrypoint from traefik.yml
+      - "traefik.http.routers.traefik.rule=Host(`traefik.<url>`)"             # Custom url
+      - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"     # Redirect to https
+      # Router: HTTPS for TLS
+      - "traefik.http.routers.traefik-secure.entrypoints=<secure entry>"      # Secure entrypoint from traefik.yml
+      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.<url>`)"      # Same custom url
+      - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"        # Use middleware traefik-auth = login protection
+      - "traefik.http.routers.traefik-secure.tls=true"                        # TLS for certificate
+      - "traefik.http.routers.traefik-secure.tls.certresolver=<resolver>"     # Resolver set in traefik.yml
+      - "traefik.http.routers.traefik-secure.tls.domains[0].main=<url>"       # Your domain url
+      - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.<url>"     # Wildcard for url
       - "traefik.http.routers.traefik-secure.service=api@internal"
+      # Middleware
+      - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=<secure entry>"    # Redirect http to https
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=<user>:<basic auth pass>"          # Request login before access
+      - "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=<secure entry>" # SSL/TLS to https
 
 networks:
-  <network name>:
+  <network name>:                                                        # Network that will be used by all other containers that interact with Traefik
     external: true
 #+end_src
 
-- ~$ vim ~/Server/traefic/data/traefik.yml~
+- ~$ vim ~/Server/traefik/data/traefik.yml~
 
 #+begin_src yaml
 api:                        # Enable dashboard
   dashboard: true
   debug: true
 entryPoints:                # Ports
-  http:
+  <unsecure name>:          # Entrypoint unsecure
     address: ":80"
-  https:
+  <secure name>:            # Entrypoint secure
     address: ":443"
 serversTransport:
-  insecureSkipVerify: true
+  insecureSkipVerify: true  # Allow unsecure certificates inbetween connection (normal)
 providers:
   docker:
     endpoint: "unix:///var/run/docker.sock"
     exposedByDefault: false
   file:
-    filename: /config.yml   # External services
+    filename: /config.yml   # External services can be written here
 certificatesResolvers:      # SSL
-  cloudflare:               # <Resolver> can be anything
+  <resolver>:               # Resolver/DNS Host i.e. cloudflare
     acme:
-      email: admin@matthisbenaets.xyz
-      storage: acme.json
-      dnsChallenge:
-        provider: cloudflare
+      email: admin@<url>
+      storage: acme.json    # Location to store certificate
+      dnsChallenge:         # Challenge to create certificate for SSL
+        provider: <resolver>
         resolvers:
           - "1.1.1.1:53"
           - "1.0.0.1:53"
@@ -223,12 +237,12 @@ certificatesResolvers:      # SSL
     - Network: bridge to <traefik network name>
     - Labels:
       - traefik.enable = true
-      - traefik.http.routers.nginx.entrypoint = http
+      - traefik.http.routers.nginx.entrypoint = <unsecure entry>
       - traefik.http.routers.nginx.rule = Host(`<optional wildcard>.<url>`)
       - traefik.http.services.nginx.loadbalancer.server.port = 80
       - traefik.http.routers.nginx-secure.tls = true
       - traefik.http.middlewares.nginx-https-redirect.redirectscheme.scheme = nginx-https-redirect
-      - traefik.http.routers.nginx-secure.entrypoints = https
+      - traefik.http.routers.nginx-secure.entrypoints = <secure entry>
       - traefik.http.routers.nginx-secure.rule = Host(`<optional wildcar>.<url>`)
       - traefik.http.routers.nginx-secure.service = nginx
       - traefik.http.routers.nginx-secure.tls = true
@@ -260,13 +274,13 @@ services:
     networks:
       - proxy
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.hello.rule=Host(`hello.home.lan`)"
-      - "traefik.http.services.hello.loadbalancer.server.port=80"
-      - "traefik.docker.network=proxy"
+      - "traefik.enable=true"                                           # Enable traefik
+      - "traefik.http.routers.hello.rule=Host(`home.lan`)"              # Custom url set in local DNS entry
+      - "traefik.http.services.hello.loadbalancer.server.port=80"       # Forward to port 80 in container
+      - "traefik.docker.network=proxy"                                  # Use traefik network
 
 networks:
-  proxy:
+  proxy:                                                                # Still need to declare network, even if it already exists
     external: true
 #+end_src
 
@@ -279,18 +293,18 @@ networks:
 #+begin_src yaml
 http:
 routers:
-    plex:
+  plex:
     entryPoints:
-        - "https"
-    rule: "Host(`plex.<url>`)"
+        - "<secure entrypoint>"                                         # Entrypoint set in traefik.yml
+    rule: "Host(`plex.<url>`)"                                          # Custom wildcard url
     tls:
-        certResolver: <resolver i.e. cloudflare>
-    service: plex
+        certResolver: <resolver>                                        # Resolver set in traefik.yml
+    service: plex                                                       # Referenced service name
 services:
-    plex:
+  plex:                                                                 # Service
     loadBalancer:
-        servers:
-        - url: "http://<host ip>:32400"
+      servers:
+        - url: "http://<host ip>:32400"                                 # Location of local ip and port
         passHostHeader: true
 #+end_src
 
@@ -344,7 +358,7 @@ services:
     - #VIRTUAL_HOST = Host(`pi.<url>`)
   - labels:
     - traefik.enable = true
-    - traefik.http.routers.pihole.entrypoint = http
+    - traefik.http.routers.pihole.entrypoint = <unsecure entry i.e http>
     - traefik.http.routers.pihole.rule = Host('pi.<url>')
     - traefik.http.routers.pihole.tls = true
     - traefik.http.routers.pihole.tls.certresolver = <resolver i.e. cloudflare>
@@ -360,11 +374,11 @@ services:
 - These router and service can be merged with an already existing config (for example how plex is set up)
 
 #+begin_rsc yaml
-http:
+http:                                          # See plex for documentation on this code
   routers:
     pi:
       entryPoints:
-        - "https"
+        - "<secure entrypoint>"
       rule: "Host(`pi.<domain>`)"
       tls:
         certResolver: <resolver>

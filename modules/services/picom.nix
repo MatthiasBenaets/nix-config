@@ -10,10 +10,14 @@
       enable = true;
       package = pkgs.picom.overrideAttrs(o: {
         src = pkgs.fetchFromGitHub {
+          #repo = "picom";
+          #owner = "pijulius";
+          #rev = "982bb43e5d4116f1a37a0bde01c9bda0b88705b9";
+          #sha256 = "YiuLScDV9UfgI1MiYRtjgRkJ0VuA1TExATA2nJSJMhM=";
           repo = "picom";
-          owner = "pijulius";
-          rev = "982bb43e5d4116f1a37a0bde01c9bda0b88705b9";
-          sha256 = "YiuLScDV9UfgI1MiYRtjgRkJ0VuA1TExATA2nJSJMhM=";
+          owner = "jonaburg";
+          rev = "e3c19cd7d1108d114552267f302548c113278d45";
+          sha256 = "4voCAYd0fzJHQjJo4x3RoWz5l3JJbRvgIXn1Kg6nz6Y=";
         };
       });                                           # Override picom to use pijulius' version
 
@@ -46,14 +50,23 @@
         corner-radius = 5;                          # Corners
         round-borders = 5;
 
-        # Animations
-        animations = true;                          # All Animations
-        animation-window-mass = 0.5;
-        animation-for-open-window = "zoom";
-        animation-stiffness = 350;
-        animation-clamping = false;
-        fade-out-step = 1;                          # Will fix random border dots from not disappearing
+        # Animations Pijulius
+        #animations = true;                          # All Animations
+        #animation-window-mass = 0.5;
+        #animation-for-open-window = "zoom";
+        #animation-stiffness = 350;
+        #animation-clamping = false;
+        #fade-out-step = 1;                          # Will fix random border dots from not disappearing
 
+        # Animations Jonaburg
+        transition-length = 300
+        transition-pow-x = 0.5
+        transition-pow-y = 0.5
+        transition-pow-w = 0.5
+        transition-pow-h = 0.5
+        size-transition = true
+
+        # Extras
         detect-rounded-corners = true;              # Below should fix multiple issues
         detect-client-opacity = false;
         detect-transient = true

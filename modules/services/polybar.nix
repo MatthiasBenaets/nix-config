@@ -312,28 +312,32 @@ in
             menu-1-4 = "";
             menu-1-4-exec = "sleep 0.5; systemctl reboot";
 
-            menu-2-0 = "";
-            menu-2-0-exec = "google-chrome-stable &";
-            menu-2-1 = "";
-            menu-2-1-exec = "emacs &";
-            menu-2-2 = "";
-            menu-2-2-exec = "libreoffice &";
-            menu-2-3 = "";
-            menu-2-3-exec = "plexmediaplayer &";
-            menu-2-4 = "";
-            menu-2-4-exec = "darktable &";
-            menu-2-5 = "";
-            menu-2-5-exec = "flatpak run com.obsproject.Studio &";
-            menu-2-6 = "";
-            menu-2-6-exec = "gimp &";
-            menu-2-7 = "";
-            menu-2-7-exec = "inkscape &";
-            menu-2-8 = "";
-            menu-2-8-exec = "kdenlive &";
-            menu-2-9 = "";
-            menu-2-9-exec = "lutris &";
-            menu-2-10 = "";
-            menu-2-10-exec = "steam &";
+            menu-2-0 = "";
+            menu-2-0-exec = "alacritty &";
+            menu-2-1 = "";
+            #menu-2-1 = "";
+            #menu-2-1-exec = "google-chrome-stable &";
+            menu-2-1-exec = "firefox &";
+            menu-2-2 = "";
+            menu-2-2-exec = "emacs &";
+            menu-2-3 = "";
+            menu-2-3-exec = "libreoffice &";
+            menu-2-4 = "";
+            menu-2-4-exec = "plexmediaplayer &";
+            menu-2-5 = "";
+            menu-2-5-exec = "darktable &";
+            menu-2-6 = "";
+            menu-2-6-exec = "flatpak run com.obsproject.Studio &";
+            menu-2-7 = "";
+            menu-2-7-exec = "gimp &";
+            menu-2-8 = "";
+            menu-2-8-exec = "inkscape &";
+            menu-2-9 = "";
+            menu-2-9-exec = "kdenlive &";
+            menu-2-10 = "";
+            menu-2-10-exec = "lutris &";
+            menu-2-11 = "";
+            menu-2-11-exec = "steam &";
           };
           "module/bluetooth" = {
             type = "custom/text";
@@ -371,11 +375,11 @@ in
       text = ''
         #!/bin/sh
 
-        ID1=$(awk '/ 44./ {sub(/.$/,"",$2); print $2 }' <(${pkgs.wireplumber}/bin/wpctl status))
+        ID1=$(awk '/ Built-in Audio Analog Stereo/ {sub(/.$/,"",$2); print $2 }' <(${pkgs.wireplumber}/bin/wpctl status) | head -n 1)
         ID2=$(awk '/ S10 Bluetooth Speaker/ {sub(/.$/,"",$2); print $2 }' <(${pkgs.wireplumber}/bin/wpctl status) | sed -n 2p)
 
-        HEAD=$(awk '/ 44./ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*"))
-        SPEAK=$(awk '/ S10 Bluetooth Speaker/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*"))
+        HEAD=$(awk '/ Built-in Audio Analog Stereo/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | sed -n 2p)
+        SPEAK=$(awk '/ S10 Bluetooth Speaker/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | head -n 1)
 
         case $1 in
           "status")

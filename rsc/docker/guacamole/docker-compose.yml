@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  guacamole:
+    image: maxwaldorf/guacamole
+    container_name: guacamole
+    networks:
+      - proxy
+    restart: unless-stopped
+    volumes:
+      - /home/matthias/Server/guacamole/config:/config
+    #ports:
+    #  - 8080:8080
+    labels:
+      # Enable Traefik overlay
+      - "traefik.enable=true"
+      # Router: HTTP redirect
+      - "traefik.http.routers.guacamole.entrypoints=http"
+      - "traefik.http.routers.guacamole.rule=Host(`guac.benaets.com`)"
+      - "traefik.http.middlewares.guacamole-https-redirect.redirectscheme.scheme=https"
+      # Router: HTTPS for TLs
+      - "traefik.http.routers.guacamole-secure.entrypoints=https"
+      - "traefik.http.routers.guacamole-secure.rule=Host(`guac.benaets.com`)"
+      - "traefik.http.routers.guacamole-secure.tls=true"
+      # Middleware
+      - "traefik.http.routers.guacamole.middlewares=guacamole-https-redirect"
+      # Service
+      - "traefik.http.routers.guacamole-secure.service=guacamole"
+      - "traefik.http.services.guacamole.loadbalancer.server.port=8080"
+      # Network
+      - "traefik.docker.network=proxy"
+
+networks:
+  proxy:
+    external: true
+
+# this is an all-in-one image forked from oznu/guacamole
+# base login: guacadmin - guacadmin
+# create new user - tick all options below - logout - login - delete guacadmin
+# add connection.
+# default vnc port: 5900/5901
+# default ssh port: 22
+# connect with internal ip
+# give username and password in parameters
