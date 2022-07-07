@@ -34,7 +34,9 @@ users.groups.docker.members = [ "${user}" ];
 
 *** Update containers
 
-~$ docker pull <container>:<tag>~ (see docker images)
+docker-compose if using latest tag: ~$ docker-compose up -d --force-recreate~
+
+docker: docker stop ... - delete container - delete image - docker run ...
 
 ** Portainer
 *Gui for docker*

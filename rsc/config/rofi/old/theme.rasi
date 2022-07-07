@@ -1,0 +1,84 @@
+configuration {
+#  modi: "window,run,drun,ssh,combi";
+#  combi-modi: "window,drun,ssh";
+  terminal: "/usr/bin/alacritty";
+  font: "Fira Code Nerd Font 10";
+  location: 0;
+  xoffset: 0;
+  yoffset: 0;
+}
+@theme "/dev/null"
+* {
+background-color: transparent;
+spacing: 0;
+text-color: #dfdfdf;
+}
+
+button selected {
+background-color: #50536b;
+border-radius: 3px;
+padding: 5px;
+}
+
+element {
+border-radius: 3px;
+highlight: bold #95be65;
+padding: 5px;
+text-color: #b2b2b2;
+}
+
+element active, element selected active {
+text-color: #c678dd;
+}
+
+element selected {
+background-color: #50536b;
+text-color: #dfdfdf;
+}
+
+element urgent, element selected urgent {
+text-color: #ff6c6b;
+}
+
+entry {
+margin: 0px 10px;
+}
+
+inputbar {
+children: [prompt, textbox-prompt-colon, entry, case-indicator];
+margin: 0px 0px 20px 0px;
+}
+
+listview {
+dynamic: true;
+scrollbar: false;
+spacing: 5px;
+}
+
+mainbox {
+padding: 30% 30%;
+}
+
+message {
+background-color: #50536b;
+border: 1px;
+border-color: #6cdcf7;
+border-radius: 3px;
+padding: 5px;
+}
+
+prompt {
+text-color: #6eaafb;
+}
+
+textbox-prompt-colon {
+expand: false;
+str: ":";
+text-color: #b2b2b2;
+}
+
+window {
+background-color: #282c34;
+fullscreen: true;
+transparency: "real";
+}

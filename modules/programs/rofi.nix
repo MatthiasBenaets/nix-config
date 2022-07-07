@@ -16,78 +16,102 @@ in
       location = "center";
       theme =  with colors.scheme.doom; {
         "*" = {
-          spacing = 0;
+          bg0 = mkLiteral "#${bg}";
+          bg1 = mkLiteral "#414868";
+          fg0 = mkLiteral "#${text}";
+          fg1 = mkLiteral "#${text-alt}";
+
           background-color = mkLiteral "transparent";
-          text-color = mkLiteral "#${text}";
+          text-color = mkLiteral "@fg0";
+
+          margin = 0;
+          padding = 0;
+          spacing = 0;
+        };
+
+        "element-icon, element-text, scrollbar" = {
+          cursor = mkLiteral "pointer";
         };
 
         "window" = {
-          transparency = "real";
-          fullscreen = true;
-          background-color = mkLiteral "#${bg}";
-        };
+          location = mkLiteral "northwest";
+          width = mkLiteral "280px";
+          x-offset = mkLiteral "8px";
+          y-offset = mkLiteral "24px";
 
-        "mainbox" = {
-          padding = mkLiteral "30% 30%";
+          background-color = mkLiteral "@bg0";
+          border = mkLiteral "1px";
+          border-color = mkLiteral "@bg1";
+          border-radius = mkLiteral "6px";
         };
 
         "inputbar" = {
-          margin = mkLiteral "0px 0px 20px 0px";
-          children = mkLiteral "[prompt, textbox-prompt-colon, entry, case-indicator]";
+          spacing = mkLiteral "8px";
+          padding = mkLiteral "4px 8px";
+          children = mkLiteral "[ icon-search, entry ]";
+
+          #background-color = mkLiteral "@bg0";
+          background-color = mkLiteral "@bg0";
         };
 
-        "prompt" = {
-          text-color = mkLiteral "#${blue}";
+        "icon-search, entry, element-icon, element-text" = {
+          vertical-align = mkLiteral "0.5";
         };
 
-        "textbox-prompt-colon" = {
+        "icon-search" = {
           expand = false;
-          str = ":";
-          text-color = mkLiteral "#${text-alt}";
+          filename = mkLiteral "[ search-symbolic ]";
+          size = mkLiteral "14px";
         };
 
-        "entry" = {
-          margin = mkLiteral "0px 10px";
+        "textbox" = {
+          padding = mkLiteral "4px 8px";
+          background-color = mkLiteral "@bg0";
         };
 
         "listview" = {
-          spacing = mkLiteral "5px";
+          padding = mkLiteral "4px 0px";
+          lines = 12;
+          columns = 1;
+          scrollbar = true;
+          fixed-height = false;
           dynamic = true;
-          scrollbar = false;
         };
 
         "element" = {
-          padding = mkLiteral "5px";
-          text-color = mkLiteral "#${text-alt}";
-          highlight = mkLiteral "bold #${green}";
-          border-radius = mkLiteral "3px";
+          padding = mkLiteral "4px 8px";
+          spacing = mkLiteral "8px";
+        };
+
+        "element normal urgent" = {
+          text-color = mkLiteral "@fg1";
+        };
+
+        "element normal active" = {
+          text-color = mkLiteral "@fg1";
         };
 
         "element selected" = {
-          background-color = mkLiteral "#${emphasis}";
-          text-color = mkLiteral "#${text}";
+          text-color = mkLiteral "@bg0"; #1
+          background-color = mkLiteral "@fg1";
         };
 
-        "element urgent, element selected urgent" = {
-          text-color = mkLiteral "#${red}";
+        "element selected urgent" = {
+          background-color = mkLiteral "@fg1";
         };
 
-        "element active, element selected active" = {
-          text-color = mkLiteral "#${magenta}";
+        "element-icon" = {
+          size = mkLiteral "0.8em";
         };
 
-        "message" = {
-          padding = mkLiteral "5px";
-          border-radius = mkLiteral "3px";
-          background-color = mkLiteral "#${emphasis}";
-          border = mkLiteral "1px";
-          border-color = mkLiteral "#${cyan}";
+        "element-text" = {
+          text-color = mkLiteral "inherit";
         };
 
-        "button selected" = {
-          padding = mkLiteral "5px";
-          border-radius = mkLiteral "3px";
-          background-color = mkLiteral "#${emphasis}";
+        "scrollbar" = {
+          handle-width = mkLiteral "4px";
+          handle-color = mkLiteral "@fg1";
+          padding = mkLiteral "0 4px";
         };
       };
     };

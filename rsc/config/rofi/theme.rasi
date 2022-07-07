@@ -10,75 +10,94 @@ configuration {
 @theme "/dev/null"
 * {
 background-color: transparent;
+bg0: #282c34;
+bg1: #414868;
+fg0: #dfdfdf;
+fg1: #b2b2b2;
+margin: 0;
+padding: 0;
 spacing: 0;
-text-color: #dfdfdf;
-}
-
-button selected {
-background-color: #50536b;
-border-radius: 3px;
-padding: 5px;
+text-color: @fg0;
 }
 
 element {
-border-radius: 3px;
-highlight: bold #95be65;
-padding: 5px;
-text-color: #b2b2b2;
+padding: 4px 8px;
+spacing: 8px;
 }
 
-element active, element selected active {
-text-color: #c678dd;
+element normal active {
+text-color: @fg1;
+}
+
+element normal urgent {
+text-color: @fg1;
 }
 
 element selected {
-background-color: #50536b;
-text-color: #dfdfdf;
+background-color: @fg1;
+text-color: @bg0;
 }
 
-element urgent, element selected urgent {
-text-color: #ff6c6b;
+element selected urgent {
+background-color: @fg1;
 }
 
-entry {
-margin: 0px 10px;
+element-icon {
+size: 0.8em;
+}
+
+element-icon, element-text, scrollbar {
+cursor: pointer;
+}
+
+element-text {
+text-color: inherit;
+}
+
+icon-search {
+expand: false;
+filename: [ search-symbolic ];
+size: 14px;
+}
+
+icon-search, entry, element-icon, element-text {
+vertical-align: 0.5;
 }
 
 inputbar {
-children: [prompt, textbox-prompt-colon, entry, case-indicator];
-margin: 0px 0px 20px 0px;
+background-color: @bg0;
+children: [ icon-search, entry ];
+padding: 4px 8px;
+spacing: 8px;
 }
 
 listview {
+columns: 1;
 dynamic: true;
-scrollbar: false;
-spacing: 5px;
+fixed-height: false;
+lines: 12;
+padding: 4px 0px;
+scrollbar: true;
 }
 
-mainbox {
-padding: 30% 30%;
+scrollbar {
+handle-color: @fg1;
+handle-width: 4px;
+padding: 0 4px;
 }
 
-message {
-background-color: #50536b;
-border: 1px;
-border-color: #6cdcf7;
-border-radius: 3px;
-padding: 5px;
-}
-
-prompt {
-text-color: #6eaafb;
-}
-
-textbox-prompt-colon {
-expand: false;
-str: ":";
-text-color: #b2b2b2;
+textbox {
+background-color: @bg0;
+padding: 4px 8px;
 }
 
 window {
-background-color: #282c34;
-fullscreen: true;
-transparency: "real";
+background-color: @bg0;
+border: 1px;
+border-color: @bg1;
+border-radius: 6px;
+location: northwest;
+width: 280px;
+x-offset: 8px;
+y-offset: 24px;
 }

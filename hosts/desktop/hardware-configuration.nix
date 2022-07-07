@@ -87,5 +87,6 @@
     };
     defaultGateway = "192.168.0.1";
     nameservers = [ "192.168.0.51" ];           # Pi-Hole DNS
+    #nameservers = [ "1.1.1.1" "1.0.0.1" ];     # Cloudflare (when Pi-Hole is down)
   };
 }

@@ -84,3 +84,10 @@
 )
 
 
+;; org-babel-tangle languages
+(org-babel-do-load-languages
+  'org-babel-load-languages
+  '((yaml . t)))
+
+(setq org-confirm-babel-evaluate nil)
+

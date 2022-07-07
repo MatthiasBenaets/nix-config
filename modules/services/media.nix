@@ -10,25 +10,31 @@
       enable = true;
       user = "root";
       group = "users";
+      openFirewall = true;
     };
     sonarr = {                  #8989
       enable = true;
       user = "root";
       group = "users";
+      openFirewall = true;
     };
     bazarr = {                  #6767
       enable = true;
       user = "root";
       group = "users";
+      openFirewall = true;
     };
     prowlarr = {                #9696
       enable = true;
+      openFirewall = true;
     };
     deluge = {                  #8112
       enable = true;
       web.enable = true;
       user = "root";
       group = "users";
+      openFirewall = true;
+      web.openFirewall = true;
     };
   };
 }
