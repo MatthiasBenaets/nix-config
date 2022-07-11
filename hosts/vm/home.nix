@@ -21,7 +21,7 @@
 
   home = {                                  # Specific packages for desktop
     packages = with pkgs; [
-      google-chrome
+      firefox
     ];
   };
 }

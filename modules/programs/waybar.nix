@@ -2,7 +2,7 @@
 # Bar
 #
 
-{ config, lib, pkgs, ...}:
+{ config, lib, pkgs, protocol, ...}:
 
 {
   environment.systemPackages = with pkgs; [
@@ -20,7 +20,11 @@
   home-manager.users.matthias = {                           # Home-manager waybar config
     programs.waybar = {
       enable = true;
-      systemd.enable = true;
+      systemd ={
+        enable = true;
+        target = "sway-session.target";                     # Needed for waybar to start automatically
+      };
+
       style = ''
         * {
           border: none;
@@ -28,8 +32,8 @@
           font-weight: bold;
         }
         window#waybar {
-          background-color: #1a1b26;
-          /*background: transparent;*/
+          background-color: rgba(0,0,0,0.5);
+          background: transparent;
           transition-property: background-color;
           transition-duration: .5s;
           border-bottom: none;
@@ -50,46 +54,19 @@
         #disk,
         #battery,
         #tray {
-          background-color: #252734;
-          padding: 0 12px;
-          margin: 4px 4px 4px 4px;
-          border-radius: 90px;
+          color: #999999;
+          margin: 2px 16px 2px 16px;
           background-clip: padding-box;
         }
         #workspaces button {
           padding: 0 5px;
-          color: #7aa2f7;
-          min-width: 20px;
+          min-width: 15px;
         }
         #workspaces button:hover {
-          background-color: rgba(0, 0, 0, 0.2);
+          background-color: rgba(0,0,0,0.2);
         }
         #workspaces button.focused {
-          color: #c678dd;
-        }
-        #workspaces button.urgent {
-          color: #e06c75;
-        }
-        #mode {
-          color: #e06c75;
-        }
-        #disk {
-          color: #56b6c2;
-        }
-        #cpu {
-          color: #d19a66;
-        }
-        #memory {
-          color: #c678dd;
-        }
-        #clock {
-          color: #7aa2f7;
-        }
-        #window {
-          color: #9ece6a;
-        }
-        #battery {
-          color: #9ece6a;
+          color: #ccffff;
         }
         #battery.warning {
           color: #ff5d17;
@@ -100,32 +77,25 @@
         #battery.charging {
           color: #9ece6a;
         }
-        #network {
-          color: #c678dd;
-        }
-        #pulseaudio {
-          color: #d19a66;
-        }
-        #pulseaudio.muted {
-          color: #c678dd;
-          background-color: #252734;
-        }
       '';
       settings = [{
-        layer = "top";
+        layer = "bottom";
         position = "top";
-        height = 30;
+        height = 16;
         output = [
-          "eDP-1"
+          #"eDP-1"
+          "DP-2"
+          "HDMI-A-2"
         ];
         tray = { spacing = 10; };
-        modules-center = [ "clock" ];
-        modules-left = [ "sway/workspaces" "sway/window" "sway/mode" ];
+        #modules-center = [ "clock" ];
+        #modules-left = [ "sway/workspaces" "sway/window" "sway/mode" ];
         #modules-left = [ "wlr/workspaces" ];
-        modules-right = [ "cpu" "memory" "disk" "pulseaudio" "battery" "network" "tray" ];
+        #modules-right = [ "cpu" "memory" "disk" "pulseaudio" "battery" "network" "tray" ];
+        modules-right = [ "cpu" "memory" "pulseaudio" "clock" "tray" ];
 
         "sway/workspaces" = {
-          format = "<span font='14'>{icon}</span>";
+          format = "<span font='12'>{icon}</span>";
           format-icons = {
             "1"="";
             "2"="";
@@ -143,7 +113,7 @@
           };
         };
         "wlr/workspaces" = {
-          format = "<span font='14'>{icon}</span>";
+          format = "<span font='12'>{icon}</span>";
           format-icons = {
             "1"="";
             "2"="";
@@ -156,22 +126,22 @@
           on-click = "activate";
         };
         clock = {
-          format = "{:%b %d %H:%M} <span font='14'></span>";
+          format = "{:%b %d %H:%M}";
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
           format-alt = "{:%A, %B %d, %Y} ";
         };
         cpu = {
-          format = "{usage}% <span font='14'></span>";
+          format = "{usage}% <span font='11'></span>";
           tooltip = false;
           interval = 1;
         };
         disk = {
-          format = "{percentage_used}% <span font='14'></span>";
+          format = "{percentage_used}% <span font='11'></span>";
           path = "/";
           interval = 30;
         };
         memory = {
-          format = "{}% <span font='14'></span>";
+          format = "{}% <span font='11'></span>";
           interval = 1;
         };
         battery = {
@@ -180,26 +150,27 @@
             warning = 30;
             critical = 15;
           };
-          format = "{capacity}% <span font='16'>{icon}</span>";
-          format-charging = "{capacity}% <span font='14'></span>";
+          format = "{capacity}% <span font='11'>{icon}</span>";
+          format-charging = "{capacity}% <span font='11'></span>";
           format-icons = ["" "" "" "" ""];
           max-length = 25;
         };
         network = {
-          format-wifi = "<span font='14'></span>";
-          format-ethernet = "<span font='14'></span> {ifname}: {ipaddr}/{cidr}";
-          format-linked = "<span font='14'>睊</span> {ifname} (No IP)";
-          format-disconnected = "<span font='14'>睊</span> Not connected";
+          format-wifi = "<span font='11'></span>";
+          format-ethernet = "<span font='11'></span> {ifname}: {ipaddr}/{cidr}";
+          format-linked = "<span font='11'>睊</span> {ifname} (No IP)";
+          format-disconnected = "<span font='11'>睊</span> Not connected";
           format-alt = "{ifname}: {ipaddr}/{cidr}";
           tooltip-format = "{essid} {signalStrength}%";
           on-click-right = "${pkgs.alacritty}/bin/alacritty -e nmtui";
         };
         pulseaudio = {
-          format = "<span font='14'>{icon}</span> {volume}% {format_source}";
-          format-bluetooth = "<span font='14'>{icon}</span> {volume}% {format_source}";
-          format-bluetooth-muted = "<span font='14'></span> {volume}% {format_source}";
-          format-muted = "<span font='13'></span> {format_source}";
-          format-source = "{volume}% <span font='11'></span>";
+          format = "<span font='11'>{icon}</span> {volume}% {format_source}";
+          format-bluetooth = "<span font='11'>{icon}</span> {volume}% {format_source}";
+          format-bluetooth-muted = "<span font='11'></span> {volume}% {format_source}";
+          format-muted = "<span font='11'></span> {format_source}";
+          #format-source = "{volume}% <span font='11'></span>";
+          format-source = "<span font='11'></span>";
           format-source-muted = "<span font='11'></span>";
           format-icons = {
             default = [ "" "" "" ];
@@ -216,7 +187,7 @@
           on-click-middle = "${pkgs.pavucontrol}/bin/pavucontrol";
         };
         tray = {
-          icon-size = 14;
+          icon-size = 11;
         };
       }];
     };

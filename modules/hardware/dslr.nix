@@ -5,7 +5,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  #config = lib.mkIf (config.services.xserver.enable) {
   boot = {
     kernelModules = [ "v4l2loopback" ];           # Enable video for linux
     extraModulePackages = with config.boot.kernelPackages; [v4l2loopback.out];  # Get latest version for current kernel

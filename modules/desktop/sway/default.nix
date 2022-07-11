@@ -11,9 +11,11 @@
 #               └─ sway.nix *
 #
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, protocol, ... }:
 
 {
+  imports = [ ../../programs/waybar.nix ];
+
   hardware.opengl.enable = true;
 
   environment = {
@@ -37,8 +39,10 @@
         wev             # Input viewer
         wl-clipboard    # Commandline Clipboard #alternative clipman/wayclip
         #kanshi         # Autorandr #not needed with single laptopscreen. need to find something like arandr
+        xwayland
+        wayvnc
       ];
     };
-    hyprland.enable = true;
   };
+  networking.firewall.allowedTCPPorts = [ 5900 ];   # Since x11vpn defaults to port 5900. Open this port in firewall
 }

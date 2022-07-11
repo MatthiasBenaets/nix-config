@@ -26,7 +26,7 @@ in
 {
   desktop = lib.nixosSystem {                               # Desktop profile
     inherit system;
-    specialArgs = { inherit inputs user location; };        # Pass flake variable
+    specialArgs = { inherit inputs user location; }; # Pass flake variable
     modules = [                                             # Modules that are used.
       nur.nixosModules.nur
       ./desktop

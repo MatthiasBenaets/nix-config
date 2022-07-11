@@ -2,10 +2,10 @@
 # Keyboard shortcuts
 #
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, protocol, ... }:
 
 {
-  config = lib.mkIf (config.xsession.enable) {                 # Only evaluate code if using X11 
+  config = lib.mkIf (config.xsession.enable) {                  # Only evaluate code if using X11 
     services = {
       sxhkd = {
         enable = true;

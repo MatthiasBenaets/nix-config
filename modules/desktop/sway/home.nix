@@ -11,8 +11,11 @@
 #               └─ home.nix *
 #
 
-{ config, lib, pkgs, ... }:
+{ config, nixosConfig, lib, pkgs, protocol, ... }:
 
+let
+  inherit (nixosConfig.networking) hostName;
+in
 {
   wayland.windowManager.sway = {
     enable = true;
@@ -45,8 +48,8 @@
       };
 
       gaps = {                                          # Gaps for containters
-        inner = 3;
-        outer = 3;
+        inner = 5;
+        outer = 5;
       };
 
       input = {                                         # Input modules: $ man sway-input
@@ -66,6 +69,30 @@
       output = {
         "*".bg = "~/.config/wall fill";
         "*".scale = "1";
+        "DP-2".mode = "1920x1080";
+        "DP-2".pos = "0 0";
+        "HDMI-A-2".mode = "1920x1080";
+        "HDMI-A-2".pos = "1920 0";
+        "HDMI-A-1".mode = "1280x1024";
+        "HDMI-A-1".pos = "3840 0";
+      };
+
+      workspaceOutputAssign = lib.mkIf (hostName == "nixos") [
+        {output = "HDMI-A-2"; workspace = "2";}
+        {output = "DP-2"; workspace = "1";}
+        {output = "HDMI-A-1"; workspace = "3";}
+        {output = "HDMI-A-2"; workspace = "5";}
+        {output = "DP-2"; workspace = "4";}
+        {output = "HDMI-A-1"; workspace = "6";}
+      ];
+      defaultWorkspace = "workspace number 2";
+
+      colors.focused = {
+        background = "#999999"; 
+        border = "#999999"; 
+        childBorder = "#999999"; 
+        indicator = "#212121"; 
+        text = "#999999";
       };
 
       keybindings = {                                   # Hotkeys
@@ -90,14 +117,16 @@
         "${modifier}+Shift+Up" = "move up";
         "${modifier}+Shift+Down" = "move down";
 
-        "Alt+Left" = "workspace prev";                  # Navigate to previous or next workspace if it exists
-        "Alt+Right" = "workspace next";
+        #"Alt+Left" = "workspace prev";                  # Navigate to previous or next workspace if it exists
+        #"Alt+Right" = "workspace next";
+        "Alt+Left" = "workspace prev_on_output";         # Navigate to previous or next workspace on output if it exists
+        "Alt+Right" = "workspace next_on_output";
 
         "Alt+1" = "workspace number 1";                 # Open workspace x
         "Alt+2" = "workspace number 2";
         "Alt+3" = "workspace number 3";
-        "Alt+4" = "workspace number 4";
-        "Alt+5" = "workspace number 5";
+        #"Alt+4" = "workspace number 4";
+        #"Alt+5" = "workspace number 5";
 
         "Alt+Shift+Left" = "move container to workspace prev, workspace prev";    # Move container to next available workspace and focus
         "Alt+Shift+Right" = "move container to workspace next, workspace next";
@@ -129,11 +158,12 @@
     };
     extraConfig = ''
       set $opacity 0.8
+      for_window [class=".*"] opacity 0.95
+      for_window [app_id=".*"] opacity 0.95
       for_window [app_id="pcmanfm"] opacity 0.95, floating enable
       for_window [app_id="Alacritty"] opacity $opacity
       for_window [title="drun"] opacity $opacity
-      for_window [class="Google-chrome"] move container to workspace number 2, workspace number 2
-      for_window [class="Emacs"] opacity $opacity, move container to workspace number 3, workspace number 3
+      for_window [class="Emacs"] opacity $opacity
       for_window [app_id="pavucontrol"] floating enable, sticky
       for_window [app_id=".blueman-manager-wrapped"] floating enable
       for_window [title="Picture in picture"] floating enable, move position 1205 634, resize set 700 400, sticky enable
@@ -145,30 +175,4 @@
       export XDG_CURRENT_DESKTOP=sway
     '';
   };
-
-  #services = {                             # Dynamic display configuration
-  #  kanshi = {
-  #    enable = true;
-  #    profiles = {
-  #      screen1 = {                        # Profile 1
-  #        outputs = [{
-  #          criteria = "<display> or wildcard *";
-  #          mode = "1920x1080@60Hz";
-  #        }];
-  #      };
-  #      screen2 = {                        # Profile 2
-  #        outputs = [
-  #          {
-  #            criteria = "<display1>";
-  #            mode = "1920x1080@60Hz";
-  #          }
-  #          {
-  #            criteria = "<display2";
-  #            mode = "1920x1080@60Hz";
-  #          }
-  #        ];
-  #      };
-  #    };
-  #  };
-  #};
 }

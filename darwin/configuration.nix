@@ -147,6 +147,7 @@
     autoUpdate = true;                    # Auto update packages
     cleanup = "zap";                      # Uninstall not listed packages and casks
     brews = [
+      "wireguard-tools"
     ];
     casks = [
       "plex-media-player"

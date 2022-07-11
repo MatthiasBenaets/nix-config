@@ -11,7 +11,7 @@
 #               └─ home.nix *
 #
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, protocol, ... }:
 
 {
   xsession = {

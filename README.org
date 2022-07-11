@@ -26,7 +26,7 @@
 | *Shell*         | Zsh               | Zsh               | Zsh               |
 | *DM*            | LightDM           | TTY1 Login        | /                 |
 | *WM*            | Bspwm             | Sway              | Yabai             |
-| *Compositor*    | Picom (pijulius)  | Sway              | /                 |
+| *Compositor*    | Picom (jonaburg)  | Sway              | /                 |
 | *Bar*           | Polybar           | Waybar            | /                 |
 | *Hotkeys*       | Sxhkd             | Sway              | Skhd              |
 | *Launcher*      | Rofi              | Rofi              | /                 |
@@ -34,7 +34,7 @@
 | *Notifications* | Dunst             | Dunst             | /                 |
 | *Terminal*      | Alacritty         | Alacritty         | Alacritty         |
 | *Editor*        | Nvim + Doom Emacs | Nvim + Doom Emacs | Nvim + Doom Emacs |
-| *Used by host*  | Desktop & VM      | Laptop            | Macbook           |
+| *Used by host*  | Desktop & VM      | Desktop & Laptop  | Macbook           |
 
 * NixOS Installation Guide
 This flake currently has *3* hosts
