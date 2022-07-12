@@ -50,12 +50,13 @@
     let                                                                     # Variables that can be used in the config files.
       user = "matthias";
       location = "$HOME/.setup";
+      protocol = "X";         # Desktop choice "X" and "Wayland" | Laptop ONLY choice "Wayland"
     in                                                                      # Use above variables in ...
     {
       nixosConfigurations = (                                               # NixOS configurations
         import ./hosts {                                                    # Imports ./hosts/default.nix
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager nur user location hyprland;   # Also inherit home-manager so it does not need to be defined here.
+          inherit inputs nixpkgs home-manager nur user location hyprland protocol;   # Also inherit home-manager so it does not need to be defined here.
         }
       );
 

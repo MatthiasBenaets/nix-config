@@ -27,8 +27,9 @@
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
     [(import ../../modules/programs/games.nix)] ++        # Gaming
     [(import ../../modules/services/media.nix)] ++        # Media Center
-    [(import ../../modules/desktop/bspwm/default.nix)] ++   # Window Manager
+    #[(import ../../modules/desktop/bspwm/default.nix)] ++   # Window Manager
     #[(import ../../modules/desktop/sway/default.nix)] ++     # Window Manager
+    (import ../../modules/desktop) ++
     (import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC
     (import ../../modules/hardware);                      # Hardware devices
 

@@ -73,7 +73,7 @@
 
   networking = {
     useDHCP = false;                            # Deprecated
-    hostName = "nixos";
+    hostName = "desktop";
     #networkmanager.enable = true;
     interfaces = {
       enp3s0 = {                                # Change to correct network driver

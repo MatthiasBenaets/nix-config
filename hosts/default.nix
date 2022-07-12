@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ lib, inputs, nixpkgs, home-manager, nur, user, location, hyprland, ... }:
+{ lib, inputs, nixpkgs, home-manager, nur, user, location, hyprland, protocol, test, ... }:
 
 let
   system = "x86_64-linux";                             	    # System architecture
@@ -26,7 +26,7 @@ in
 {
   desktop = lib.nixosSystem {                               # Desktop profile
     inherit system;
-    specialArgs = { inherit inputs user location; }; # Pass flake variable
+    specialArgs = { inherit inputs user location protocol test; }; # Pass flake variable
     modules = [                                             # Modules that are used.
       nur.nixosModules.nur
       ./desktop
@@ -35,7 +35,7 @@ in
       home-manager.nixosModules.home-manager {              # Home-Manager module that is used.
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = { inherit user; };  # Pass flake variable
+        home-manager.extraSpecialArgs = { inherit user protocol test; };  # Pass flake variable
         home-manager.users.${user} = {
           imports = [(import ./home.nix)] ++ [(import ./desktop/home.nix)];
         };

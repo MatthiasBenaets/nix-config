@@ -36,7 +36,7 @@
   
   networking = {
     useDHCP = false;                        # Deprecated
-    hostName = "nixos";
+    hostName = "laptop";
     networkmanager.enable = true;
     interfaces = {
       enp0s25 = {
