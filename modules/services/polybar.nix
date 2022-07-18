@@ -2,7 +2,7 @@
 # Bar
 #
 
-{ config, lib, pkgs, protocol, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   mypolybar = pkgs.polybar.override {             # Extra packages to run polybar (mostly sound atm)

@@ -18,6 +18,7 @@
     [
       ../../modules/desktop/bspwm/home.nix  # Window Manager
       ../../modules/desktop/sway/home.nix
+      #../../modules/desktop/hyprland/home.nix
     ];
 
   home = {                                # Specific packages for desktop

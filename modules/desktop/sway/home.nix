@@ -67,7 +67,8 @@ in
           };
         };
 
-        output = lib.mkIf (hostName == "desktop"){
+        output = lib.mkIf config.enable (lib.mkMerge [
+          (lib.mkIf (hostName == "desktop"){
           "*".bg = "~/.config/wall fill";
           "*".scale = "1";
           "DP-2".mode = "1920x1080";
@@ -76,7 +77,12 @@ in
           "HDMI-A-2".pos = "1920 0";
           "HDMI-A-1".mode = "1280x1024";
           "HDMI-A-1".pos = "3840 0";
-        };
+          })
+          (lib.mkIf (hostName == "laptop"){
+          "*".bg = "~/.config/wall fill";
+          "*".scale = "1";
+          })
+        ]);
         
         workspaceOutputAssign = lib.mkIf (hostName == "desktop") [
           {output = "HDMI-A-2"; workspace = "2";}

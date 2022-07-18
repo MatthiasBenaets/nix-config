@@ -2,10 +2,10 @@
 # Bar
 #
 
-{ config, lib, pkgs, protocol, ...}:
+{ config, lib, pkgs, ...}:
 
 {
-  config = lib.mkIf ( protocol == "Wayland" ) {
+  config = lib.mkIf (config.programs.sway.enable) {
     environment.systemPackages = with pkgs; [
       waybar
     ];

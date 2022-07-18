@@ -2,7 +2,7 @@
 # System notifications
 #
 
-{ config, lib, pkgs, protocol, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   colors = import ../themes/colors.nix;                 # Import colors theme
