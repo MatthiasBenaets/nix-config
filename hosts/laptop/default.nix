@@ -82,6 +82,17 @@
         userServices = true;
       };
     };
+    samba = {
+      enable = true;
+      shares = {
+        share = {
+          "path" = "/home/${user}";
+          "guest ok" = "no";
+          "read only" = "no";
+        };
+      };
+      openFirewall = true;
+    };
     #xserver = {
     #  libinput = {                          # Trackpad support & gestures
     #    touchpad = {

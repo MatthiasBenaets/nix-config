@@ -57,8 +57,9 @@
     defaultGateway = "192.168.0.1";
     nameservers = [ "192.168.0.51" ];
     firewall = {
-      allowedUDPPorts = [ 53 67 ];
-      allowedTCPPorts = [ 53 80 443 9443 ];
+      enable = false;
+      #allowedUDPPorts = [ 53 67 ];
+      #allowedTCPPorts = [ 53 80 443 9443 ];
     };
   };
 
