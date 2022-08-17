@@ -14,5 +14,7 @@
    ./alacritty.nix
    ./rofi.nix
    #./waybar.nix
+   #./games.nix
 ]
-# Steam.nix is pulled from desktop/default.nix
+# Waybar.nix is pulled from modules/desktop/..
+# Games.nix is pulled from desktop/default.nix

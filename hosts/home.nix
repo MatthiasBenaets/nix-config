@@ -100,7 +100,6 @@
       #waybar           # Bar
       #
       # Desktop
-      #bazarr           # Subtitles
       #blueman          # Bluetooth
       #darktable        # Raw Image Processing
       #deluge           # Torrents
@@ -112,10 +111,6 @@
       #libreoffice      # Office Tools
       #lutris           # Game Launcher
       #new-lg4ff        # Logitech Drivers
-      #plex             # Plex Server
-      #prowlarr         # Indexer Manager
-      #radarr           # Movies
-      #sonarr           # TV Shows
       #steam            # Games
       #shotcut          # Video editor
       #shotwell         # Raw Image Manager

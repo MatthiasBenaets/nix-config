@@ -41,24 +41,37 @@
     { #device = "/dev/disk/by-uuid/7491ea96-a62d-4202-ada7-8d0310dfc967";
       device = "/dev/disk/by-label/toshiba";
       fsType = "ext4";
+      options = [ "nofail" ];
     };
 
   fileSystems."/toshiba2" =
     { #device = "/dev/disk/by-uuid/21307718-de74-4a24-aaa7-dd09f7e89e32";
       device = "/dev/disk/by-label/toshiba2";
       fsType = "ext4";
+      options = [ "nofail" ];
     };
 
   fileSystems."/toshiba3" =
     { #device = "/dev/disk/by-uuid/7f5e9ea1-2bc3-44c5-9b6a-d8fe2a311b73"; 
       device = "/dev/disk/by-label/toshiba3";
       fsType = "ext4";
+      options = [ "nofail" ];
     };
 
   fileSystems."/maxtor" =
     { #device = "/dev/disk/by-uuid/36E6613DE660FE8D";
       device = "/dev/disk/by-label/maxtor";
       fsType = "ntfs";
+      options = [ "nofail" ];
+    };
+
+  fileSystems."/storage" =
+    {
+      device = "//192.168.0.3/storage";
+      fsType = "cifs";
+      options = let
+        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+      in ["${automount_opts},uid=1000,gid=100,credentials=/home/matthias/smb"];
     };
 
   swapDevices =
@@ -86,7 +99,7 @@
       #wlp2s0.useDHCP = true;                   # Wireless card
     };
     defaultGateway = "192.168.0.1";
-    nameservers = [ "192.168.0.51" ];           # Pi-Hole DNS
+    nameservers = [ "192.168.0.4" ];           # Pi-Hole DNS
     #nameservers = [ "1.1.1.1" "1.0.0.1" ];     # Cloudflare (when Pi-Hole is down)
   };
 }

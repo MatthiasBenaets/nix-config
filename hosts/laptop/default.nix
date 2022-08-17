@@ -65,8 +65,8 @@
   };
 
   services = {
-    #tlp.enable = true;                      # TLP and auto-cpufreq for power management
-    logind.lidSwitch = "ignore";            # Laptop does not go to sleep when lid is closed
+    tlp.enable = true;                      # TLP and auto-cpufreq for power management
+    #logind.lidSwitch = "ignore";            # Laptop does not go to sleep when lid is closed
     auto-cpufreq.enable = true;
     blueman.enable = true;
     printing = {                            # Printing and drivers for TS5300
