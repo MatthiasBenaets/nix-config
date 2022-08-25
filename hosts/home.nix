@@ -48,6 +48,7 @@
       remmina           # XRDP & VNC Client
 
       # File Management
+      okular            # PDF viewer
       gnome.file-roller # Archive Manager
       pcmanfm           # File Manager
       rsync             # Syncer $ rsync -r dir1/ dir2/
