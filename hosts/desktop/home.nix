@@ -23,13 +23,16 @@
   home = {                                # Specific packages for desktop
     packages = with pkgs; [
       # Applications
-      darktable         # Raw Image Processing
-      gimp              # Graphical Editor
-      inkscape          # Vector Graphical Editor
-      kdenlive          # Video Editor
-      libreoffice       # Office Packages
+      #darktable         # Raw Image Processing
+      #gimp              # Graphical Editor
+      handbrake         # Encoder
+      hugo              # Static Website Builder
+      #inkscape          # Vector Graphical Editor
+      #kdenlive          # Video Editor
+      #libreoffice       # Office Packages
+      mkvtoolnix        # Matroska Tools
       plex-media-player # Media Player
-      shotcut           # Video Editor
+      #shotcut           # Video Editor
 
       # Dependencies
       gmtp              # Used for mounting gopro
@@ -39,14 +42,10 @@
       #discord          # Comms           # See overlay default.nix
       #ffmpeg           # Video Support
       #gphoto2          # Digital Photography
-      #handbrake        # Encoder
       #radarr           # Media Movies    # See services/media.nix for radarr, sonarr and bazarr
-      #shotwell         # Raw Photo Manager
+      ##shotwell         # Raw Photo Manager
       #sonarr           # Media TV Shows
       #steam            # Game Launcher
-
-      # Future
-      #MKVtoolnix
     ];
   };
 

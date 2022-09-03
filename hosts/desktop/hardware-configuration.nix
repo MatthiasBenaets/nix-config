@@ -10,8 +10,8 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "uas" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = [ "kvm-intel"];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ ];
 
   fileSystems."/" =
     { #device = "/dev/disk/by-uuid/6ec8ce24-0535-4dce-9e71-9925938b807c";
@@ -25,11 +25,12 @@
       fsType = "vfat";
     };
 
-  fileSystems."/ssd" =
-    { #device = "/dev/disk/by-uuid/748e6628-0f4e-4479-8940-daa8531d3390";
-      device = "/dev/disk/by-label/ssd";
-      fsType = "ext4";
-    };
+  #fileSystems."/ssd" =
+  #  { #device = "/dev/disk/by-uuid/748e6628-0f4e-4479-8940-daa8531d3390";
+  #    device = "/dev/disk/by-label/ssd";
+  #    fsType = "ntfs";
+  #    options = [ "nofail" ];
+  #  };
 
   fileSystems."/hdd" =
     { #device = "/dev/disk/by-uuid/bbab0f8a-50f4-4a7c-a0d3-0ccb036f11d5";
@@ -37,14 +38,14 @@
       fsType = "ext4";
     };
 
-  fileSystems."/toshiba" =
+  fileSystems."/mnt/toshiba1" =
     { #device = "/dev/disk/by-uuid/7491ea96-a62d-4202-ada7-8d0310dfc967";
       device = "/dev/disk/by-label/toshiba";
       fsType = "ext4";
       options = [ "nofail" ];
     };
 
-  fileSystems."/toshiba2" =
+  fileSystems."/mnt/toshiba2" =
     { #device = "/dev/disk/by-uuid/21307718-de74-4a24-aaa7-dd09f7e89e32";
       device = "/dev/disk/by-label/toshiba2";
       fsType = "ext4";
@@ -58,7 +59,7 @@
       options = [ "nofail" ];
     };
 
-  fileSystems."/maxtor" =
+  fileSystems."/mnt/maxtor" =
     { #device = "/dev/disk/by-uuid/36E6613DE660FE8D";
       device = "/dev/disk/by-label/maxtor";
       fsType = "ntfs";
@@ -89,7 +90,7 @@
     hostName = "desktop";
     #networkmanager.enable = true;
     interfaces = {
-      enp3s0 = {                                # Change to correct network driver
+      enp2s0 = {                                # Change to correct network driver
         # useDHCP = true;                       # Disabled because fixed ip
         ipv4.addresses = [ {                    # Ip settings: *.0.50 for main machine
           address = "192.168.0.50";

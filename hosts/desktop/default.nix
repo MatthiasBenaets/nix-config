@@ -33,7 +33,7 @@
 
   boot = {                                      # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
-    initrd.kernelModules = [ "amdgpu" ];        # Video drivers
+    #initrd.kernelModules = [ "amdgpu" ];        # Video drivers
     
     loader = {                                  # For legacy boot:
       systemd-boot = {
@@ -45,15 +45,17 @@
     };
   };
 
-  hardware.sane = {                           # Used for scanning with Xsane
-    enable = true;
-    extraBackends = [ pkgs.sane-airscan ];
+  hardware = {
+    sane = {                           # Used for scanning with Xsane
+      enable = true;
+      extraBackends = [ pkgs.sane-airscan ];
+    };
   };
 
   environment = {                               # Packages installed system wide
     systemPackages = with pkgs; [               # This is because some options need to be configured.
       discord
-      plex
+      #plex
       simple-scan
       x11vnc
       wacomtablet
@@ -86,10 +88,6 @@
       };
       openFirewall = true;
     };
-    plex = {                                    # Plex Server
-      enable = true;
-      openFirewall = true;
-    };
   };
 
   nixpkgs.overlays = [                          # This overlay will pull the latest version of Discord
@@ -97,7 +95,7 @@
       discord = super.discord.overrideAttrs (
         _: { src = builtins.fetchTarball {
           url = "https://discord.com/api/download?platform=linux&format=tar.gz"; 
-          sha256 = "0hdgif8jpp5pz2c8lxas88ix7mywghdf9c9fn95n0dwf8g1c1xbb";
+          sha256 = "1kwqn1xr96kvrlbjd14m304g2finc5f5ljvnklg6fs5k4avrvmn4";
         };}
       );
     })

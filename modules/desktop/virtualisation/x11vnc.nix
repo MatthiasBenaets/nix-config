@@ -19,8 +19,8 @@
     requires = [ "display-manager.service" ];
     after = [ "display-manager.service" ];
     serviceConfig = {                               # Password is stored in document passwd at $HOME. This needs auth and link to display. Otherwise x11vnc won't detect the display
-      #ExecStart = "${pkgs.x11vnc}/bin/x11vnc -passwdfile /home/${user}/passwd -noxdamage -nap -many -repeat -clear_keys -capslock -xkb -forever -loop100 -auth /var/run/lightdm/root/:0 -display :0 -clip 1920x1080+1920+0";
-      ExecStart = "${pkgs.x11vnc}/bin/x11vnc -passwdfile /home/${user}/passwd -noxdamage -nap -many -repeat -clear_keys -capslock -xkb -forever -loop100 -auth /var/run/lightdm/root/:0 -display :0";
+      ExecStart = "${pkgs.x11vnc}/bin/x11vnc -passwdfile /home/${user}/passwd -noxdamage -nap -many -repeat -clear_keys -capslock -xkb -forever -loop100 -auth /var/run/lightdm/root/:0 -display :0 -clip 1920x1080+1920+0";
+      #ExecStart = "${pkgs.x11vnc}/bin/x11vnc -passwdfile /home/${user}/passwd -noxdamage -nap -many -repeat -clear_keys -capslock -xkb -forever -loop100 -auth /var/run/lightdm/root/:0 -display :0";
       ExecStop = "${pkgs.x11vnc}/bin/x11vnc -R stop";
     };
     wantedBy = [ "multi-user.target" ];

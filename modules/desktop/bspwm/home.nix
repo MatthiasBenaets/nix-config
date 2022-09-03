@@ -73,7 +73,7 @@
           };
         };
         extraConfig = ''
-          bspc monitor -d 1 2 3 4 5               # Workspace tag names (need to be the same as the polybar config to work)
+          bspc monitor HDMI-3 -d 1 2 3 4 5               # Workspace tag names (need to be the same as the polybar config to work)
 
           bspc config border_width      3
           bspc config window_gaps      12
@@ -97,12 +97,14 @@
           polybar main & #2>~/log &               # To lazy to figure out systemd service order
 
           #Setting for desktop:
-          if [[ $(xrandr -q | grep 'DisplayPort-1 connected') ]]; then   # If second monitor, also enable second polybar
+          #if [[ $(xrandr -q | grep 'DisplayPort-1 connected') ]]; then   # If second monitor, also enable second polybar
             #bspc monitor DisplayPort-1 -s HDMI-A-1
-            bspc monitor DisplayPort-1 -d 6 7 8 9 10
-            bspc wm -O HDMI-A-1 DisplayPort-1
+            #bspc monitor DisplayPort-1 -d 6 7 8 9 10
+            #bspc wm -O HDMI-A-1 DisplayPort-1
+            bspc monitor DP-1 -d 6 7 8 9 10
+            bspc wm -O HDMI-3 DP-1
             polybar sec &
-          fi
+          #fi
         '';
       };
     };

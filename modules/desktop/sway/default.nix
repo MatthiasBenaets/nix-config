@@ -45,4 +45,9 @@
     };
   };
   networking.firewall.allowedTCPPorts = [ 5900 ];   # Used for vnc
+
+  xdg.portal = {                                  # Required for flatpak with windowmanagers
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
 }

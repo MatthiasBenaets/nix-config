@@ -17,5 +17,8 @@
   #./polybar.nix
   #./sxhkd.nix
   ./udiskie.nix
-  ./redshift.nix
+  #./redshift.nix
 ]
+
+# picom, polybar and sxhkd are pulled from desktop module
+# redshift temporarely disables

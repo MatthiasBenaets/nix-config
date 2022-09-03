@@ -22,6 +22,7 @@ in
         config = {
           "bar/main" = {                          # Bar name = Top
             #monitor = "HDMI-A-1";
+            monitor = "HDMI-3";
             width = "100%";
             height = 15;
             background = "#00000000";
@@ -49,7 +50,8 @@ in
             wm-restack = "bspwm";
           };
           "bar/sec" = {
-            monitor = "DisplayPort-1";
+            #monitor = "DisplayPort-1";
+            monitor = "DP-1";
             width = "100%";
             height = 15;
             background = "#00000000";
@@ -330,14 +332,14 @@ in
             menu-2-6-exec = "flatpak run com.obsproject.Studio &";
             menu-2-7 = "";
             menu-2-7-exec = "gimp &";
-            menu-2-8 = "";
-            menu-2-8-exec = "inkscape &";
-            menu-2-9 = "";
-            menu-2-9-exec = "kdenlive &";
-            menu-2-10 = "";
-            menu-2-10-exec = "lutris &";
-            menu-2-11 = "";
-            menu-2-11-exec = "steam &";
+            #menu-2-8 = "";
+            #menu-2-8-exec = "inkscape &";
+            #menu-2-9 = "";
+            #menu-2-9-exec = "kdenlive &";
+            menu-2-8 = "";
+            menu-2-8-exec = "lutris &";
+            menu-2-9 = "";
+            menu-2-9-exec = "steam &";
           };
           "module/bluetooth" = {
             type = "custom/text";

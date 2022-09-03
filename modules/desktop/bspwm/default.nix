@@ -52,21 +52,28 @@
         };
       };
 
-      videoDrivers = [                            # Video Settings
-        "amdgpu"
-      ];
+      #videoDrivers = [                            # Video Settings
+      #  "amdgpu"
+      #];
+
 
       displayManager.sessionCommands = ''
+        ${pkgs.xorg.xrandr}/bin/xrandr --output DP-1 --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-3 --primary --mode 1920x1080 --pos 1920x0 --rotate normal
+      '';
+
+      #displayManager.sessionCommands = ''
         #!/bin/sh
-        SCREEN=$(${pkgs.xorg.xrandr}/bin/xrandr | grep " connected " | wc -l)
-        if [[ $SCREEN -eq 1 ]]; then
-          ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal
-        elif [[ $SCREEN -eq 2 ]]; then
-          ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal --output DisplayPort-1 --mode 1920x1080 --rotate normal --left-of HDMI-A-1
-        elif [[ $SCREEN -eq 3 ]]; then
-          ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal --output DisplayPort-1 --mode 1920x1080 --rotate normal --left-of HDMI-A-1 --output HDMI-A-0 --mode 1280x1024 --rotate normal --right-of HDMI-A-1
-        fi
-      '';                                         # Settings for correct display configuration; This can also be done with setupCommands when X server start for smoother transition (if setup is static)
+        
+        #SCREEN=$(${pkgs.xorg.xrandr}/bin/xrandr | grep " connected " | wc -l)
+        #if [[ $SCREEN -eq 1 ]]; then
+        #  ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal
+        #elif [[ $SCREEN -eq 2 ]]; then
+        #  ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal --output DisplayPort-1 --mode 1920x1080 --rotate normal --left-of HDMI-A-1
+        #elif [[ $SCREEN -eq 3 ]]; then
+        #  ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal --output DisplayPort-1 --mode 1920x1080 --rotate normal --left-of HDMI-A-1 --output HDMI-A-0 --mode 1280x1024 --rotate normal --right-of HDMI-A-1
+        #fi
+
+      #'';                                         # Settings for correct display configuration; This can also be done with setupCommands when X server start for smoother transition (if setup is static)
                                                   # Another option to research in future is arandr
       serverFlagsSection = ''
         Option "BlankTime" "0"
@@ -94,4 +101,9 @@
     #alacritty
     #sxhkd
   ];
+
+  xdg.portal = {                                  # Required for flatpak with windowmanagers
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
 }

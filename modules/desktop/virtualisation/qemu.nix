@@ -29,6 +29,7 @@
   environment = {
     systemPackages = with pkgs; [
       virt-manager
+      virt-viewer
       qemu
       OVMF
       gvfs                                    # Used for shared folders between linux and windows

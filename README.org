@@ -28,13 +28,14 @@
 | *WM*            | Bspwm             | Hyprland          | Yabai             |
 | *Compositor*    | Picom (jonaburg)  | Hyprland          | /                 |
 | *Bar*           | Polybar           | Waybar            | /                 |
-| *Hotkeys*       | Sxhkd             | Sway              | Skhd              |
+| *Hotkeys*       | Sxhkd             | Hyprland          | Skhd              |
 | *Launcher*      | Rofi              | Rofi              | /                 |
 | *GTK Theme*     | Dracula           | Dracula           | /                 |
 | *Notifications* | Dunst             | Dunst             | /                 |
 | *Terminal*      | Alacritty         | Alacritty         | Alacritty         |
 | *Editor*        | Nvim + Doom Emacs | Nvim + Doom Emacs | Nvim + Doom Emacs |
-| *Used by host*  | Desktop           | Laptop            | Macbook           |
+| *Used by host*  | Desktop & VM      | Desktop & Laptop  | Macbook           |
+There are some other desktop environments/window manager. Just link to correct default.nix in ~~/hosts/<host>/default.nix~
 
 * NixOS Installation Guide
 This flake currently has *3* hosts
@@ -110,7 +111,6 @@ This will depend on the host chosen.
 
 *** Mounting Extras
 *In these commands*
-- Directory to mount a ssd:
   - ~/mnt/ssd~
 - Label of storage:
   - ssd2
@@ -303,6 +303,7 @@ This will rebuild the configuration and automatically activate it.
     - [[https://nixos.wiki/wiki/Resources][Wiki Resources]]
     - [[https://nixos.org/guides/nix-pills/][Nix Pills]]
     - [[https://www.ianthehenry.com/posts/how-to-learn-nix/][Some]] [[https://christine.website/blog][Blogs]]
+    - [[https://nixos.wiki/wiki/Configuration_Collection][Config Collection]]
     - [[https://nixos.wiki/wiki/Configuration_Collection][Config Collection]]
   - Home-manager
     - [[https://github.com/nix-community/home-manager][Official Repo]]
