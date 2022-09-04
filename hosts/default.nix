@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ lib, inputs, nixpkgs, home-manager, nur, user, location, hyprland, ... }:
+{ lib, inputs, nixpkgs, home-manager, nur, user, location, doom-emacs, hyprland, ... }:
 
 let
   system = "x86_64-linux";                                  # System architecture
@@ -36,7 +36,7 @@ in
       home-manager.nixosModules.home-manager {              # Home-Manager module that is used.
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = { inherit user; };  # Pass flake variable
+        home-manager.extraSpecialArgs = { inherit user doom-emacs; };  # Pass flake variable
         home-manager.users.${user} = {
           imports = [(import ./home.nix)] ++ [(import ./desktop/home.nix)];
         };

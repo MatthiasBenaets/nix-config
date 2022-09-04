@@ -139,17 +139,17 @@ Optional if you are not me
 #+end_src
 
 *** Possible Extra Steps
-1. If you are planning on using doom emacs, don't forget to rebuild after the initial installation
+1. Switch specific host hardware-configuration.nix with generated ~/mnt/etc/nixos/hardware-configuration.nix~
+2. Change existing network card name with the one in your system
+   - Look in generated hardware-configuration.nixos
+   - Or enter ~$ ip a~
+3. Change username in flake.nix
+4. Set a ~users.users.${user}.initialPassword = ...~
+   - Not really recommended. It's maybe better to follow last steps
+5. If you are planning on using default2.nix doom emacs, don't forget to rebuild after the initial installation when you link to this nix file.
    - Don't forget to change the flake location in flake.nix
    - This is because userActivationScript is used for the setup and some locations are partially hardcoded
    - It will automatically install if ~~/.emacs.d~ does not exist
-2. Switch specific host hardware-configuration.nix with generated ~/mnt/etc/nixos/hardware-configuration.nix~
-3. Change existing network card name with the one in your system
-   - Look in generated hardware-configuration.nixos
-   - Or enter ~$ ip a~
-4. Change username in flake.nix
-5. Set a ~users.users.${user}.initialPassword = ...~
-   - Not really recommended. It's maybe better to follow last steps
 
 *** Install
 *In these commands*
@@ -186,8 +186,6 @@ Optional if you are not me
      - ~$ sudo nixos-rebuild switch --flake .#<host>~
 6. Rebuilds:
    - ~<flakelocation>$ sudo nixos-rebuild switch --flake .#<host>~
-   - First rebuild will probably hang on "updating user environment" or "reloading user units".
-     - This is because it is syncing or installing doom-emacs
 
 * Nix Installation Guide
 This flake currently has *1* host

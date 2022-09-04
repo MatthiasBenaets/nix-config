@@ -15,7 +15,7 @@
 {
   imports =                                 # Import window or display manager.
     [
-      ../modules/editors/emacs              # ! Comment this out on first install !
+      #../modules/editors/emacs              # ! Comment this out on first install !
     ];
 
   users.users.${user} = {                   # System User
