@@ -102,27 +102,20 @@
       #
       # Desktop
       #blueman          # Bluetooth
-      ##darktable       # Raw Image Processing
       #deluge           # Torrents
       #discord          # Chat
       #ffmpeg           # Video Support (dslr)
-      ##gimp            # Graphical Editor
       #gmtp             # Mount MTP (GoPro)
       #gphoto2          # Digital Photography
       #handbrake        # Encoder
       #heroic           # Game Launcher
       #hugo             # Static Website Builder
-      #inkscape         # Office Packages 
-      #kdenlive         # Video Editor
-      ##libreoffice     # Office Tools
       #lutris           # Game Launcher
       #mkvtoolnix       # Matroska Tool
       #new-lg4ff        # Logitech Drivers
       #plex-media-player# Media Player
       #polymc           # MC Launcher
       #steam            # Games
-      ##shotcut         # Video editor
-      ##shotwell        # Raw Image Manager
       #simple-scan      # Scanning
       # 
       # Laptop

@@ -52,7 +52,7 @@
       options = [ "nofail" ];
     };
 
-  fileSystems."/toshiba3" =
+  fileSystems."/mnt/toshiba3" =
     { #device = "/dev/disk/by-uuid/7f5e9ea1-2bc3-44c5-9b6a-d8fe2a311b73"; 
       device = "/dev/disk/by-label/toshiba3";
       fsType = "ext4";
@@ -67,7 +67,7 @@
     };
 
   fileSystems."/storage" =
-    {
+    { #truenas smb storage
       device = "//192.168.0.3/storage";
       fsType = "cifs";
       options = let
@@ -100,7 +100,7 @@
       #wlp2s0.useDHCP = true;                   # Wireless card
     };
     defaultGateway = "192.168.0.1";
-    nameservers = [ "192.168.0.4" ];           # Pi-Hole DNS
+    nameservers = [ "192.168.0.4" ];            # Pi-Hole DNS
     #nameservers = [ "1.1.1.1" "1.0.0.1" ];     # Cloudflare (when Pi-Hole is down)
   };
 }

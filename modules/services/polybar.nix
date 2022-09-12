@@ -22,7 +22,7 @@ in
         config = {
           "bar/main" = {                          # Bar name = Top
             #monitor = "HDMI-A-1";
-            monitor = "HDMI-3";
+            monitor = "HDMI3";
             width = "100%";
             height = 15;
             background = "#00000000";
@@ -51,7 +51,7 @@ in
           };
           "bar/sec" = {
             #monitor = "DisplayPort-1";
-            monitor = "DP-1";
+            monitor = "DP1";
             width = "100%";
             height = 15;
             background = "#00000000";
@@ -316,30 +316,30 @@ in
 
             menu-2-0 = "";
             menu-2-0-exec = "alacritty &";
-            menu-2-1 = "";
             #menu-2-1 = "";
             #menu-2-1-exec = "google-chrome-stable &";
+            menu-2-1 = "";
             menu-2-1-exec = "firefox &";
             menu-2-2 = "";
             menu-2-2-exec = "emacs &";
-            menu-2-3 = "";
-            menu-2-3-exec = "libreoffice &";
-            menu-2-4 = "";
-            menu-2-4-exec = "plexmediaplayer &";
-            menu-2-5 = "";
-            menu-2-5-exec = "darktable &";
-            menu-2-6 = "";
-            menu-2-6-exec = "flatpak run com.obsproject.Studio &";
-            menu-2-7 = "";
-            menu-2-7-exec = "gimp &";
+            #menu-2-3 = "";
+            #menu-2-3-exec = "libreoffice &";
+            menu-2-3 = "";
+            menu-2-3-exec = "plexmediaplayer &";
+            #menu-2-5 = "";
+            #menu-2-5-exec = "darktable &";
+            menu-2-4 = "";
+            menu-2-4-exec = "flatpak run com.obsproject.Studio &";
+            #menu-2-7 = "";
+            #menu-2-7-exec = "gimp &";
             #menu-2-8 = "";
             #menu-2-8-exec = "inkscape &";
             #menu-2-9 = "";
             #menu-2-9-exec = "kdenlive &";
-            menu-2-8 = "";
-            menu-2-8-exec = "lutris &";
-            menu-2-9 = "";
-            menu-2-9-exec = "steam &";
+            menu-2-5 = "";
+            menu-2-5-exec = "lutris &";
+            menu-2-6 = "";
+            menu-2-6-exec = "steam &";
           };
           "module/bluetooth" = {
             type = "custom/text";

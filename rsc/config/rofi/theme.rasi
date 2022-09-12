@@ -8,6 +8,7 @@ configuration {
   yoffset: 0;
 }
 @theme "/dev/null"
+
 * {
 background-color: transparent;
 bg0: #282c34;

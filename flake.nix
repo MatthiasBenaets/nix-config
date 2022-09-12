@@ -32,26 +32,26 @@
       };
 
       nur = {
-        url = "github:nix-community/NUR";                                   # NUR packages
+        url = "github:nix-community/NUR";                                   # NUR Packages
       };
 
-      nixgl = {                                                             #OpenGL 
+      nixgl = {                                                             # OpenGL
         url = "github:guibou/nixGL";
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
-      emacs-overlay = {
+      emacs-overlay = {                                                     # Emacs Overlays
         url = "github:nix-community/emacs-overlay";
         flake = false;
       };
 
-      doom-emacs = {
+      doom-emacs = {                                                        # Nix-community Doom Emacs
         url = "github:nix-community/nix-doom-emacs";
         inputs.nixpkgs.follows = "nixpkgs";
         inputs.emacs-overlay.follows = "emacs-overlay";
       };
 
-      hyprland = {
+      hyprland = {                                                          # Official Hyprland flake
         url = "github:vaxerski/Hyprland";
         inputs.nixpkgs.follows = "nixpkgs";
       };

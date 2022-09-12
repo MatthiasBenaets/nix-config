@@ -28,12 +28,13 @@
     [(import ../../modules/programs/games.nix)] ++        # Gaming
     [(import ../../modules/desktop/bspwm/default.nix)] ++   # Window Manager
     #[(import ../../modules/desktop/hyprland/default.nix)] ++ # Window Manager
+    #[(import ../../modules/desktop/gnome/default.nix)] ++ # Desktop Environment
     (import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC
     (import ../../modules/hardware);                      # Hardware devices
 
   boot = {                                      # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
-    #initrd.kernelModules = [ "amdgpu" ];        # Video drivers
+    #initrd.kernelModules = [ "amdgpu" ];       # Video drivers
     
     loader = {                                  # For legacy boot:
       systemd-boot = {
@@ -46,7 +47,7 @@
   };
 
   hardware = {
-    sane = {                           # Used for scanning with Xsane
+    sane = {                                    # Used for scanning with Xsane
       enable = true;
       extraBackends = [ pkgs.sane-airscan ];
     };

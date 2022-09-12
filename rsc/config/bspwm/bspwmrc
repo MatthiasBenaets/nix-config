@@ -5,7 +5,7 @@
 bspc monitor -d 1 2 3 4 5             # Workspace tag names (need to be the same as the polybar config to work)
 
 # Window Information
-bspc config border_width      2
+bspc config border_width      3
 bspc config window_gaps      12
 bspc config split_ratio     0.5
 
@@ -21,12 +21,13 @@ bspc config gapless_monocle          false
 # Rules
 bspc rule -r '*'
 bspc rule -a '*:*:Picture in picture' 'state=floating' 'sticky=on'
+bspc rule -a '*:*:Picture-in-Picture' 'state=floating' 'sticky=on'
 bspc rule -a '.blueman-manager-wrapped' 'state=floating' 'sticky=on'
 bspc rule -a 'Emacs' 'desktop=3' 'follow=on' 'state=tiled'
 bspc rule -a 'Lutris' 'desktop=5' 'follow=on'
 bspc rule -a 'Pavucontrol' 'state=floating' 'sticky=on'
 bspc rule -a 'Pcmanfm' 'state=floating'
-bspc rule -a 'Steam' 'desktop=5' 'follow=on'
+bspc rule -a 'Steam' 'desktop=5'
 bspc rule -a 'libreoffice' 'desktop=3' 'follow=on'
 bspc rule -a 'plexmediaplayer' 'desktop=4' 'follow=on' 'state=fullscreen'
 
@@ -45,8 +46,8 @@ while pgrep -u $UID -x polybar >/dev/null; do sleep 1;done
 polybar main & #2>~/log &             # To lazy to figure out systemd service order
 
 if [[ $(xrandr -q | grep 'DisplayPort-1 connected') ]]; then   # If second monitor, also enable second polybar
-  bspc monitor DisplayPort-1 -d 6 7 8 9 10
-  bspc wm -O HDMI-A-1 DisplayPort-1
+  bspc monitor DP1 -d 6 7 8 9 10
+  bspc wm -O HDMI3 DP1
   polybar sec &
 fi
 

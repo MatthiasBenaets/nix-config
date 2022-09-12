@@ -24,20 +24,32 @@
         };
       };
     };
+    udev.packages = with pkgs; [
+      gnome.gnome-settings-daemon
+    ];
   };
 
   programs.zsh.enable = true;                     # Weirdly needs to be added to have default user on lightdm
 
   hardware.pulseaudio.enable = false;
 
-  environment.systemPackages = with pkgs; [       # Packages installed
-    #gnome.adwaita-icon-theme
-    xclip
-    xorg.xev
-    xorg.xkill
-    xorg.xrandr
-    xterm
-    #alacritty
-    #sxhkd
-  ];
+  environment = {
+    systemPackages = with pkgs; [       # Packages installed
+      gnome.adwaita-icon-theme
+      gnomeExtensions.appindicator
+      gnomeExtensions.pop-shell
+    ];
+    gnome.excludePackages = (with pkgs; [
+      gnome-tour
+    ]) ++ (with pkgs.gnome; [
+      gedit
+      epiphany
+      geary
+      evince
+      tali
+      iagno
+      hitori
+      atomix
+    ]);
+  };
 }

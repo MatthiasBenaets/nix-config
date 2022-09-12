@@ -52,13 +52,13 @@
         };
       };
 
-      #videoDrivers = [                            # Video Settings
-      #  "amdgpu"
-      #];
-
+      videoDrivers = [                            # Video Settings
+        #"amdgpu"
+        "intel"
+      ];
 
       displayManager.sessionCommands = ''
-        ${pkgs.xorg.xrandr}/bin/xrandr --output DP-1 --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-3 --primary --mode 1920x1080 --pos 1920x0 --rotate normal
+        ${pkgs.xorg.xrandr}/bin/xrandr --output DP1 --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI3 --primary --mode 1920x1080 --pos 1920x0 --rotate normal
       '';
 
       #displayManager.sessionCommands = ''
