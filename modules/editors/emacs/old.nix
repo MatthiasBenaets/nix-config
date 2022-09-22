@@ -1,6 +1,6 @@
 #
 # Doom Emacs: home-manager alternative in "home.nix". Personally not a fan of github:nix-community/nix-doom-emacs due to performance issues
-# recommended to comment out this part on first install because script will cause issues. It your want to use doom emacs, use the correct location or change in script
+# recommended to comment out this part on first install because script will cause issues. If your want to use doom emacs, use the correct location or change in script
 #
 # flake.nix
 #   ├─ ./hosts
