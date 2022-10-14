@@ -8,7 +8,7 @@
 #   └─ ./modules
 #       └─ ./desktop
 #           └─ ./sway
-#               └─ sway.nix *
+#               └─ default.nix *
 #
 
 { config, lib, pkgs, ... }:

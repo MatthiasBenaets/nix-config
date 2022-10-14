@@ -7,10 +7,10 @@
 { config, pkgs, nur, lib, ... }:
 
 {
-  hardware.new-lg4ff.enable = true;             # Force Feedback Packaged myself :)
+  #hardware.new-lg4ff.enable = true;             # Force Feedback Packaged myself :)
 
   environment.systemPackages = [
-    config.nur.repos.c0deaddict.oversteer       # Steering Wheel Configuration
+    #config.nur.repos.c0deaddict.oversteer       # Steering Wheel Configuration
     pkgs.lutris                                 # Game Launcher
     pkgs.heroic
     pkgs.polymc

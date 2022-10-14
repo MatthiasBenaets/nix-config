@@ -91,4 +91,5 @@
 
 (setq org-confirm-babel-evaluate nil)
 
-(add-hook! 'emacs-startup-hook #'doom-init-ui-h)
+
+;;(add-hook! 'emacs-startup-hook #'doom-init-ui-h)

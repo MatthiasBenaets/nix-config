@@ -46,9 +46,9 @@
       };
 
       doom-emacs = {                                                        # Nix-community Doom Emacs
-        url = "github:nix-community/nix-doom-emacs";
-        inputs.nixpkgs.follows = "nixpkgs";
-        inputs.emacs-overlay.follows = "emacs-overlay";
+         url = "github:nix-community/nix-doom-emacs";
+         inputs.nixpkgs.follows = "nixpkgs";
+         inputs.emacs-overlay.follows = "emacs-overlay";
       };
 
       hyprland = {                                                          # Official Hyprland flake

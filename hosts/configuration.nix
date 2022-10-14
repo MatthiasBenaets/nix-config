@@ -13,11 +13,6 @@
 { config, lib, pkgs, inputs, user, location, ... }:
 
 {
-  imports =                                 # Import window or display manager.
-    [
-      #../modules/editors/emacs              # ! Comment this out on first install !
-    ];
-
   users.users.${user} = {                   # System User
     isNormalUser = true;
     extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" ];
@@ -99,6 +94,7 @@
                                             #   - if ssh-add does not work: $ eval `ssh-agent -s`
       allowSFTP = true;                     # SFTP: secure file transfer protocol (send file to server)
                                             # connect: $ sftp <user>@<ip/domain>
+                                            #   or with file browser: sftp://<ip address>
                                             # commands:
                                             #   - lpwd & pwd = print (local) parent working directory
                                             #   - put/get <filename> = send or receive file
@@ -114,11 +110,6 @@
                                             # com.usebottles.bottles
   };
 
-  #xdg.portal = {                            # Required for flatpak
-  #  enable = true;
-  #  extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  #};
-
   nix = {                                   # Nix Package Manager settings
     settings ={
       auto-optimise-store = true;           # Optimise syslinks
@@ -126,9 +117,9 @@
     gc = {                                  # Automatic garbage collection
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 7d";
+      options = "--delete-older-than 2d";
     };
-    package = pkgs.nixFlakes;               # Enable nixFlakes on system
+    package = pkgs.nixVersions.unstable;    # Enable nixFlakes on system
     registry.nixpkgs.flake = inputs.nixpkgs;
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -139,7 +130,7 @@
   nixpkgs.config.allowUnfree = true;        # Allow proprietary software.
 
   system = {                                # NixOS settings
-    autoUpgrade = {                         # Allow auto update
+    autoUpgrade = {                         # Allow auto update (not useful in flakes)
       enable = true;
       channel = "https://nixos.org/channels/nixos-unstable";
     };

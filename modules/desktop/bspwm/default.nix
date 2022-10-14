@@ -8,7 +8,7 @@
 #   └─ ./modules
 #       └─ ./desktop
 #           └─ ./bspwm
-#               └─ bspwm.nix *
+#               └─ default.nix *
 #
 
 { config, lib, pkgs, ... }:

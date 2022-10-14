@@ -36,6 +36,7 @@
     { #device = "/dev/disk/by-uuid/bbab0f8a-50f4-4a7c-a0d3-0ccb036f11d5";
       device = "/dev/disk/by-label/hdd";
       fsType = "ext4";
+      options = [ "nofail" ];
     };
 
   fileSystems."/mnt/toshiba1" =
@@ -100,7 +101,7 @@
       #wlp2s0.useDHCP = true;                   # Wireless card
     };
     defaultGateway = "192.168.0.1";
-    nameservers = [ "192.168.0.4" ];            # Pi-Hole DNS
+    nameservers = [ "192.168.0.4" "1.1.1.1" ];            # Pi-Hole DNS
     #nameservers = [ "1.1.1.1" "1.0.0.1" ];     # Cloudflare (when Pi-Hole is down)
   };
 }

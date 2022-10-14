@@ -84,13 +84,13 @@
         height = 16;
         output = [
           #"eDP-1"
-          "DP-2"
-          "HDMI-A-2"
+          #"DP-2"
+          "HDMI-A-3"
         ];
         tray = { spacing = 10; };
         #modules-center = [ "clock" ];
         #modules-left = [ "sway/workspaces" "sway/window" "sway/mode" ];
-        #modules-left = [ "wlr/workspaces" ];
+        modules-left = [ "wlr/workspaces" ];
         #modules-right = [ "cpu" "memory" "disk" "pulseaudio" "battery" "network" "tray" ];
         modules-right = [ "cpu" "memory" "pulseaudio" "clock" "tray" ];
 
