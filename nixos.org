@@ -635,31 +635,33 @@ D. Installed through nix-env:
 *** NixOS
 **** Flake.nix
 #+begin_src nix
+{
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     #nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
   };
-  outputs = { nixpkgs, home-manager, … }:
+  outputs = { nixpkgs, home-manager, ... }:
     let
-      system = “x86_64-linux”;
+      system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
       };
 
       lib = nixpkgs.lib;
-   in {
-     nixosConfigurations = {
-       <user> = lib.nixosSystem {
-         inherit system;
-         modules = [ ./configuration.nix ];
-       };
-       #<second user> = lib.nixosSystem {
-         #inherit system;
-         #modules = [ ./configuration.nix ];
-       #};
-     };
-  }
+    in {
+      nixosConfigurations = {
+         <user> = lib.nixosSystem {
+          inherit system pkgs;
+          modules = [ ./configuration.nix ];
+        };
+        #<second user> = lib.nixosSystem {
+        #inherit system;
+        #modules = [ ./configuration.nix ];
+        #};
+      };
+    };
+}
 #+end_src
 
 **** Build
