@@ -13,7 +13,7 @@
     #config.nur.repos.c0deaddict.oversteer       # Steering Wheel Configuration
     pkgs.lutris                                 # Game Launcher
     pkgs.heroic
-    pkgs.polymc
+    pkgs.prismlauncher
   ];
 
   programs = {                                  # Needed to succesfully start Steam

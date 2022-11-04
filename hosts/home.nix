@@ -87,7 +87,7 @@
       #
       # Xorg home-manager
       #picom            # Compositer
-      #polybar          # Bar
+      #prismlauncher    # Bar
       #sxhkd            # Shortcuts
       #
       # Wayland configuration
