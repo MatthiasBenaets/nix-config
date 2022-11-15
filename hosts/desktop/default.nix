@@ -8,8 +8,8 @@
 #   │        └─ hardware-configuration.nix
 #   └─ ./modules
 #       ├─ ./desktop
-#       │   ├─ ./bspwm
-#       │   │   └─ bspwm.nix
+#       │   ├─ ./hyprland
+#       │   │   └─ default.nix
 #       │   └─ ./virtualisation
 #       │       └─ default.nix
 #       ├─ ./programs
@@ -26,9 +26,8 @@
   imports =                                               # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
     [(import ../../modules/programs/games.nix)] ++        # Gaming
-    [(import ../../modules/desktop/bspwm/default.nix)] ++   # Window Manager
-    #[(import ../../modules/desktop/hyprland/default.nix)] ++ # Window Manager
-    #[(import ../../modules/desktop/gnome/default.nix)] ++ # Desktop Environment
+    #[(import ../../modules/desktop/bspwm/default.nix)] ++   # Window Manager
+    [(import ../../modules/desktop/hyprland/default.nix)] ++ # Window Manager
     [(import ../../modules/editors/emacs/native.nix)] ++  # Native doom emacs instead of nix-community flake
     (import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC
     (import ../../modules/hardware);                      # Hardware devices

@@ -20,9 +20,8 @@
       monitor=HDMI-A-3,1920x1080@60,1920x0,1
       #monitor=HDMI-A-1,1280x1028@60,3840x0,1
 
-      
-      #workspace=DP-2,1
-      #workspace=HDMI-A-2,2
+      workspace=HDMI-A-3,1
+      #workspace=DP-1,0
       #workspace=HDMI-A-1,3
 
       wsbind=1,HDMI-A-3
@@ -34,16 +33,16 @@
       wsbind=7,DP-1
       wsbind=8,DP-1
       wsbind=9,DP-1
-      wsbind=0,DP-1
+      wsbind=10,DP-1
 
       general {
+        sensitivity=1
         main_mod=SUPER
-        border_size=4
+        border_size=3
         gaps_in=5
         gaps_out=7
         col.active_border=0x80ffffff
         col.inactive_border=0x66333333
-        damage_tracking=full # leave it on full unless you hate your GPU and want to make it suffer
         layout=dwindle
       }
       
@@ -71,7 +70,12 @@
       }
 
       dwindle {
-        pseudotile=0
+        pseudotile=false
+        force_split=2
+      }
+
+      debug {
+        damage_tracking=2
       }
 
       bindm=SUPER,mouse:272,movewindow
@@ -90,6 +94,11 @@
       bind=SUPER,right,movefocus,r
       bind=SUPER,up,movefocus,u
       bind=SUPER,down,movefocus,d
+
+      bind=SUPER_SHIFT,left,movewindow,l
+      bind=SUPER_SHIFT,right,movewindow,r
+      bind=SUPER_SHIFT,up,movewindow,u
+      bind=SUPER_SHIFT,down,movewindow,d
 
       bind=ALT,1,workspace,1
       bind=ALT,2,workspace,2

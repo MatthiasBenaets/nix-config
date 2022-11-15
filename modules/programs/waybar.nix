@@ -45,6 +45,7 @@
         #mode,
         #clock,
         #pulseaudio,
+        #custom-sink,
         #network,
         #mpd,
         #memory,
@@ -55,7 +56,7 @@
         #battery,
         #tray {
           color: #999999;
-          margin: 2px 16px 2px 16px;
+          /*margin: 2px 16px 2px 16px;*/
           background-clip: padding-box;
         }
         #workspaces button {
@@ -92,8 +93,11 @@
         #modules-left = [ "sway/workspaces" "sway/window" "sway/mode" ];
         modules-left = [ "wlr/workspaces" ];
         #modules-right = [ "cpu" "memory" "disk" "pulseaudio" "battery" "network" "tray" ];
-        modules-right = [ "cpu" "memory" "pulseaudio" "clock" "tray" ];
+        modules-right = [ "cpu" "custom/pad" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "custom/pad" "tray" ];
 
+        "custom/pad" = {
+          format = "  ";
+        };
         "sway/workspaces" = {
           format = "<span font='12'>{icon}</span>";
           format-icons = {
@@ -118,8 +122,14 @@
             "1"="";
             "2"="";
             "3"="";
-            "4"="";
-            "5"="";
+            "4"="";
+            "5"="";
+            "6"="";
+            "7"="";
+            "8"="";
+            "9"="";
+            "10"="";
+
           };
           all-outputs = true;
           active-only = false;
@@ -186,10 +196,32 @@
           on-click-right = "${pkgs.pamixer}/bin/pamixer --default-source -t";
           on-click-middle = "${pkgs.pavucontrol}/bin/pavucontrol";
         };
+        "custom/sink" = {
+          format = "蓼";
+          on-click = "$HOME/.config/waybar/script/sink.sh";
+        };
         tray = {
           icon-size = 11;
         };
       }];
+    };
+    home.file.".config/waybar/script/sink.sh" = {              # Custom script: Toggle speaker/headset
+      text = ''
+        #!/bin/sh
+
+        ID1=$(awk '/ Built-in Audio Analog Stereo/ {sub(/.$/,"",$2); print $2 }' <(${pkgs.wireplumber}/bin/wpctl status) | head -n 1)
+        ID2=$(awk '/ S10 Bluetooth Speaker/ {sub(/.$/,"",$2); print $2 }' <(${pkgs.wireplumber}/bin/wpctl status) | sed -n 2p)
+
+        HEAD=$(awk '/ Built-in Audio Analog Stereo/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | sed -n 2p)
+        SPEAK=$(awk '/ S10 Bluetooth Speaker/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | head -n 1)
+
+        if [[ $HEAD = "*" ]]; then
+          ${pkgs.wireplumber}/bin/wpctl set-default $ID2
+        elif [[ $SPEAK = "*" ]]; then
+          ${pkgs.wireplumber}/bin/wpctl set-default $ID1
+        fi
+      '';
+      executable = true;
     };
   };
 }
