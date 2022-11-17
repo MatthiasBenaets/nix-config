@@ -48,20 +48,13 @@ in
         "inputbar" = {
           spacing = mkLiteral "8px";
           padding = mkLiteral "4px 8px";
-          children = mkLiteral "[ icon-search, entry ]";
+          children = mkLiteral "[ entry ]";
 
-          #background-color = mkLiteral "@bg0";
           background-color = mkLiteral "@bg0";
         };
 
-        "icon-search, entry, element-icon, element-text" = {
+        "entry, element-icon, element-text" = {
           vertical-align = mkLiteral "0.5";
-        };
-
-        "icon-search" = {
-          expand = false;
-          filename = mkLiteral "[ search-symbolic ]";
-          size = mkLiteral "14px";
         };
 
         "textbox" = {
@@ -74,8 +67,6 @@ in
           lines = 12;
           columns = 1;
           scrollbar = true;
-          fixed-height = false;
-          dynamic = true;
         };
 
         "element" = {

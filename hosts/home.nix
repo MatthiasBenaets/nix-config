@@ -87,11 +87,12 @@
       #
       # Xorg home-manager
       #picom            # Compositer
-      #prismlauncher    # Bar
       #sxhkd            # Shortcuts
       #
       # Wayland configuration
       #autotiling       # Tiling Script
+      #grim             # Image Grabber
+      #slurp            # Region Selector
       #swayidle         # Idle Management Daemon
       #wev              # Input viewer
       #wl-clipboard     # Console Clipboard
@@ -113,9 +114,8 @@
       #hugo             # Static Website Builder
       #lutris           # Game Launcher
       #mkvtoolnix       # Matroska Tool
-      #new-lg4ff        # Logitech Drivers
       #plex-media-player# Media Player
-      #polymc           # MC Launcher
+      #prismlauncher    # MC Launcher
       #steam            # Games
       #simple-scan      # Scanning
       # 

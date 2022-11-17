@@ -35,12 +35,12 @@
   };
 
   security.rtkit.enable = true;
-  sound = {                                 # ALSA sound enable
-    enable = true;
-    mediaKeys = {                           # Keyboard Media Keys (for minimal desktop)
-      enable = true;
-    };
-  };
+  #sound = {                                # Deprecated due to pipewire
+  #  enable = true;
+  #  mediaKeys = {
+  #    enable = true;
+  #  };
+  #};
 
   fonts.fonts = with pkgs; [                # Fonts
     carlito                                 # NixOS
@@ -81,6 +81,7 @@
         support32Bit = true;
       };
       pulse.enable = true;
+      jack.enable = true;
     };
     openssh = {                             # SSH: secure shell (remote connection to shell of server)
       enable = true;                        # local: $ ssh <user>@<ip>

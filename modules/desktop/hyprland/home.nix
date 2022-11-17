@@ -86,7 +86,7 @@
       bind=SUPER,Escape,exit,
       bind=SUPER,E,exec,${pkgs.pcmanfm}/bin/pcmanfm
       bind=SUPER,H,togglefloating,
-      bind=SUPER,Space,exec,${pkgs.rofi}/bin/rofi -show drun -o DP-3
+      bind=SUPER,Space,exec,${pkgs.rofi}/bin/rofi -show drun
       bind=SUPER,P,pseudo,
       bind=SUPER,F,fullscreen,
 
@@ -144,7 +144,7 @@
       windowrule=float,title:^(Picture-in-Picture)$
       windowrule=float,title:^(Volume Control)$
 
-      exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+      exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland
       exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
       exec-once=${pkgs.waybar}/bin/waybar
       exec-once=${pkgs.blueman}/bin/blueman-applet
