@@ -1,8 +1,8 @@
 [
   {
     "battery": {
-      "format": "{capacity}% <span font='16'>{icon}</span>",
-      "format-charging": "{capacity}% <span font='14'></span>",
+      "format": "{capacity}% <span font='11'>{icon}</span>",
+      "format-charging": "{capacity}% <span font='11'></span>",
       "format-icons": [
         "",
         "",
@@ -18,84 +18,88 @@
       }
     },
     "clock": {
-      "format": "{:%b %d %H:%M} <span font='14'></span>",
-      "format-alt": "{:%A, %B %d, %Y} ",
+      "format": "{:%b %d %H:%M}",
       "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
     "cpu": {
-      "format": "{usage}% <span font='14'></span>",
-      "interval": 1,
+      "format": "{usage}% <span font='11'></span>",
+      "interval": 1
+    },
+    "custom/menu": {
+      "format": "<span font='16'></span>",
+      "on-click": "rofi -show p -modi p:rofi-power-menu -theme $HOME/.config/rofi/config.rasi",
+      "on-click-right": "rofi -show drun"
+    },
+    "custom/pad": {
+      "format": " ",
+      "tooltip": false
+    },
+    "custom/sink": {
+      "format": "<span font='9'>蓼</span>",
+      "on-click": "$HOME/.config/waybar/script/sink.sh",
       "tooltip": false
     },
     "disk": {
-      "format": "{percentage_used}% <span font='14'></span>",
+      "format": "{percentage_used}% <span font='11'></span>",
       "interval": 30,
       "path": "/"
     },
-    "height": 30,
+    "height": 16,
     "layer": "top",
     "memory": {
-      "format": "{}% <span font='14'></span>",
+      "format": "{}% <span font='11'></span>",
       "interval": 1
     },
-    "modules-center": [
-      "clock"
-    ],
+    "modules-center": [],
     "modules-left": [
-      "sway/workspaces",
-      "sway/window",
-      "sway/mode"
+      "custom/menu",
+      "wlr/workspaces"
     ],
     "modules-right": [
+      "network",
       "cpu",
       "memory",
-      "disk",
+      "custom/pad",
       "pulseaudio",
-      "battery",
-      "network",
+      "custom/sink",
+      "custom/pad",
+      "clock",
       "tray"
     ],
     "network": {
-      "format-alt": "{ifname}: {ipaddr}/{cidr}",
-      "format-disconnected": "<span font='14'>睊</span> Not connected",
-      "format-ethernet": "<span font='14'></span> {ifname}: {ipaddr}/{cidr}",
-      "format-linked": "<span font='14'>睊</span> {ifname} (No IP)",
-      "format-wifi": "<span font='14'></span>",
-      "on-click-right": "/nix/store/ikjaqc2sb7ylm9kyag1dbqhh6kivbqar-alacritty-0.10.1/bin/alacritty -e nmtui",
-      "tooltip-format": "{essid} {signalStrength}%"
+      "format-disconnected": "<span font='11'>睊</span> Not connected",
+      "format-ethernet": "<span font='11'></span>",
+      "format-linked": "<span font='11'>睊</span> {ifname} (No IP)",
+      "format-wifi": "<span font='11'></span>",
+      "tooltip-format": "{essid} {ipaddr}/{cidr}"
     },
     "output": [
-      "eDP-1"
+      "HDMI-A-3"
     ],
     "position": "top",
     "pulseaudio": {
-      "format": "<span font='14'>{icon}</span> {volume}% {format_source}",
-      "format-bluetooth": "<span font='14'>{icon}</span> {volume}% {format_source}",
-      "format-bluetooth-muted": "<span font='14'></span> {volume}% {format_source}",
+      "format": "<span font='11'>{icon}</span> {volume}% {format_source}",
+      "format-bluetooth": "<span font='11'>{icon}</span> {volume}% {format_source}",
+      "format-bluetooth-muted": "<span font='11'></span> {volume}% {format_source}",
       "format-icons": {
-        "car": "",
         "default": [
           "",
           "",
           ""
         ],
-        "hands-free": "",
-        "headphone": "",
-        "headset": "",
-        "phone": "",
-        "portable": ""
+        "headphone": ""
       },
-      "format-muted": "<span font='13'></span> {format_source}",
-      "format-source": "{volume}% <span font='11'></span>",
+      "format-muted": "<span font='11'></span> {format_source}",
+      "format-source": "<span font='11'></span>",
       "format-source-muted": "<span font='11'></span>",
-      "on-click": "/nix/store/6hjsih6laihfcdl897fdmqpma0ndzzvw-pamixer-1.5/bin/pamixer -t",
-      "on-click-middle": "/nix/store/9k2652xjhg0x0lxa1wi7i6qwhj4c293g-pavucontrol-5.0/bin/pavucontrol",
-      "on-click-right": "/nix/store/6hjsih6laihfcdl897fdmqpma0ndzzvw-pamixer-1.5/bin/pamixer --default-source -t",
+      "on-click": "pamixer -t",
+      "on-click-middle": "pavucontrol",
+      "on-click-right": "pamixer --default-source -t",
       "tooltip-format": "{desc}, {volume}%"
     },
     "sway/workspaces": {
       "all-outputs": true,
-      "format": "<span font='14'>{icon}</span>",
+      "format": "<span font='11'>{icon}</span>",
       "format-icons": {
         "1": "",
         "2": "",
@@ -112,8 +116,75 @@
       }
     },
     "tray": {
-      "icon-size": 14,
-      "spacing": 10
+      "icon-size": 13,
+      "spacing": 5
+    },
+    "wlr/workspaces": {
+      "active-only": false,
+      "format": "<span font='11'>{name}</span>",
+      "on-click": "activate"
+    }
+  },
+  {
+    "clock": {
+      "format": "{:%b %d %H:%M}",
+      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    "custom/menu": {
+      "format": "<span font='16'></span>",
+      "on-click": "rofi -show p -modi p:rofi-power-menu -theme $HOME/.config/rofi/config.rasi",
+      "on-click-right": "rofi -show drun"
+    },
+    "custom/pad": {
+      "format": " ",
+      "tooltip": false
+    },
+    "custom/sink": {
+      "format": "<span font='10'>蓼</span>",
+      "on-click": "$HOME/.config/waybar/script/sink.sh",
+      "tooltip": false
+    },
+    "height": 16,
+    "layer": "top",
+    "modules-center": [],
+    "modules-left": [
+      "custom/menu",
+      "wlr/workspaces"
+    ],
+    "modules-right": [
+      "pulseaudio",
+      "custom/sink",
+      "custom/pad",
+      "clock"
+    ],
+    "output": [
+      "DP-1"
+    ],
+    "position": "top",
+    "pulseaudio": {
+      "format": "<span font='11'>{icon}</span> {volume}% {format_source}",
+      "format-bluetooth": "<span font='11'>{icon}</span> {volume}% {format_source}",
+      "format-bluetooth-muted": "<span font='11'></span> {volume}% {format_source}",
+      "format-icons": {
+        "default": [
+          "",
+          "",
+          ""
+        ],
+        "headphone": ""
+      },
+      "format-muted": "<span font='11'></span> {format_source}",
+      "format-source": "<span font='11'></span>",
+      "format-source-muted": "<span font='11'></span>",
+      "on-click": "pamixer -t",
+      "on-click-middle": "pavucontrol",
+      "on-click-right": "pamixer --default-source -t",
+      "tooltip-format": "{desc}, {volume}%"
+    },
+    "wlr/workspaces": {
+      "active-only": false,
+      "format": "<span font='11'>{name}</span>",
+      "on-click": "activate",
     }
   }
 ]

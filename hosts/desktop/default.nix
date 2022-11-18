@@ -28,7 +28,6 @@
     [(import ../../modules/programs/games.nix)] ++        # Gaming
     #[(import ../../modules/desktop/bspwm/default.nix)] ++   # Window Manager
     [(import ../../modules/desktop/hyprland/default.nix)] ++ # Window Manager
-    [(import ../../modules/editors/emacs/native.nix)] ++  # Native doom emacs instead of nix-community flake
     (import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC
     (import ../../modules/hardware);                      # Hardware devices
 

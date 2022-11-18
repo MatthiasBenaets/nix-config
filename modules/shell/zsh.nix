@@ -8,18 +8,17 @@
   programs = {
     zsh = {
       enable = true;
-      dotDir = ".config/zsh_nix";
-      enableAutosuggestions = true;             # Auto suggest options and highlights syntact, searches in history for options
-      enableSyntaxHighlighting = true;
-      history.size = 10000;
+      autosuggestions.enable = true;              # Auto suggest options and highlights syntact, searches in history for options
+      syntaxHighlighting.enable = true;
+      enableCompletion = true;
+      histSize = 100000;
 
-      oh-my-zsh = {                             # Extra plugins for zsh
+      ohMyZsh = {                                 # Extra plugins for zsh
         enable = true;
         plugins = [ "git" ];
-        custom = "$HOME/.config/zsh_nix/custom";
       };
 
-      initExtra = ''                            # Zsh theme
+      shellInit = ''                            # Zsh theme
         # Spaceship
         source ${pkgs.spaceship-prompt}/share/zsh/site-functions/prompt_spaceship_setup
         autoload -U promptinit; promptinit

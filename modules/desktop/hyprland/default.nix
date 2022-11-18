@@ -31,7 +31,9 @@
     };
     systemPackages = with pkgs; [
       grim
+      mpvpaper
       slurp
+      swappy
       wl-clipboard
       wlr-randr
     ];

@@ -21,8 +21,7 @@
   imports =                                   # Home Manager Modules
     (import ../modules/editors) ++
     (import ../modules/programs) ++
-    (import ../modules/services) ++
-    (import ../modules/shell);
+    (import ../modules/services);
 
   home = {
     username = "${user}";
@@ -33,7 +32,8 @@
       btop              # Resource Manager
       pfetch            # Minimal fetch
       ranger            # File Manager
-      
+      tldr              # Helper
+
       # Video/Audio
       feh               # Image Viewer
       mpv               # Media Player
@@ -71,10 +71,10 @@
       #alacritty        # Terminal Emulator
       #dunst            # Notifications
       #doom emacs       # Text Editor
-      #flameshot        # Screenshot
       #libnotify        # Dep for Dunst
       #neovim           # Text Editor
       #rofi             # Menu
+      #rofi-power-menu  # Power Menu
       #udiskie          # Auto Mounting
       #vim              # Text Editor
       #
@@ -86,13 +86,16 @@
       #xterm            # Terminal
       #
       # Xorg home-manager
+      #flameshot        # Screenshot
       #picom            # Compositer
       #sxhkd            # Shortcuts
       #
       # Wayland configuration
       #autotiling       # Tiling Script
       #grim             # Image Grabber
+      #mpvpaper         # Video Wallpaper
       #slurp            # Region Selector
+      #swappy           # Screenshot Editor
       #swayidle         # Idle Management Daemon
       #wev              # Input viewer
       #wl-clipboard     # Console Clipboard
@@ -129,9 +132,12 @@
       #obs-studio       # Recording/Live Streaming
     ];
     file.".config/wall".source = ../modules/themes/wall;
+    file.".config/wall.mp4".source = ../modules/themes/wall.mp4;
     pointerCursor = {                         # This will set cursor systemwide so applications can not choose their own
-      name = "Dracula-cursors";
-      package = pkgs.dracula-theme;
+      #name = "Dracula-cursors";
+      name = "Catppuccin-Mocha-Dark-Cursors";
+      #package = pkgs.dracula-theme;
+      package = pkgs.catppuccin-cursors.mochaDark;
       size = 16;
     };
     stateVersion = "22.05";
@@ -145,7 +151,9 @@
     enable = true;
     theme = {
       name = "Dracula";
+      #name = "Catppuccin-Dark";
       package = pkgs.dracula-theme;
+      #package = pkgs.catppuccin-gtk;
     };
     iconTheme = {
       name = "Papirus-Dark";

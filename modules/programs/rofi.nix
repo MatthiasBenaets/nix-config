@@ -9,11 +9,18 @@ let
   colors = import ../themes/colors.nix;
 in
 {
+  home = {
+    packages = with pkgs; [
+      rofi-power-menu
+    ];
+  };
+
   programs = {
     rofi = {
       enable = true;
       terminal = "${pkgs.alacritty}/bin/alacritty";           # Alacritty is default terminal emulator
       location = "center";
+      font = "FiraCode Nerd Font Mono 11";
       theme =  with colors.scheme.doom; {
         "*" = {
           bg0 = mkLiteral "#${bg}";
@@ -37,7 +44,7 @@ in
           location = mkLiteral "northwest";
           width = mkLiteral "280px";
           x-offset = mkLiteral "8px";
-          y-offset = mkLiteral "24px";
+          y-offset = mkLiteral "34px";
 
           background-color = mkLiteral "@bg0";
           border = mkLiteral "1px";
@@ -49,7 +56,6 @@ in
           spacing = mkLiteral "8px";
           padding = mkLiteral "4px 8px";
           children = mkLiteral "[ entry ]";
-
           background-color = mkLiteral "@bg0";
         };
 
@@ -64,7 +70,7 @@ in
 
         "listview" = {
           padding = mkLiteral "4px 0px";
-          lines = 12;
+          lines = 6;
           columns = 1;
           scrollbar = true;
         };

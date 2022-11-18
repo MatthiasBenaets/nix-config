@@ -49,10 +49,10 @@
       decoration {
         rounding=5
         multisample_edges=true
-        active_opacity=1
-        inactive_opacity=1
+        active_opacity=0.93
+        inactive_opacity=0.93
         fullscreen_opacity=1
-        blur=false
+        blur=true
         drop_shadow=false
       }
 
@@ -89,16 +89,18 @@
       bind=SUPER,Space,exec,${pkgs.rofi}/bin/rofi -show drun
       bind=SUPER,P,pseudo,
       bind=SUPER,F,fullscreen,
+      bind=SUPER,R,forcerendererreload
+      bind=SUPERSHIFT,R,exec,${pkgs.hyprland}/bin/hyprctl reload
 
       bind=SUPER,left,movefocus,l
       bind=SUPER,right,movefocus,r
       bind=SUPER,up,movefocus,u
       bind=SUPER,down,movefocus,d
 
-      bind=SUPER_SHIFT,left,movewindow,l
-      bind=SUPER_SHIFT,right,movewindow,r
-      bind=SUPER_SHIFT,up,movewindow,u
-      bind=SUPER_SHIFT,down,movewindow,d
+      bind=SUPERSHIFT,left,movewindow,l
+      bind=SUPERSHIFT,right,movewindow,r
+      bind=SUPERSHIFT,up,movewindow,u
+      bind=SUPERSHIFT,down,movewindow,d
 
       bind=ALT,1,workspace,1
       bind=ALT,2,workspace,2
@@ -131,7 +133,7 @@
       bind=CTRL,up,resizeactive,0 -20
       bind=CTRL,down,resizeactive,0 20
 
-      bind=,print,exec,${pkgs.flameshot}/bin/flameshot gui
+      bind=,print,exec,${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.swappy}/bin/swappy -f - -o ~/Pictures/$(date +%Hh_%Mm_%Ss_%d_%B_%Y).png && notify-send "Saved to ~/Pictures/$(date +%Hh_%Mm_%Ss_%d_%B_%Y).png"
 
       bind=,XF86AudioLowerVolume,exec,${pkgs.pamixer}/bin/pamixer -d 10
       bind=,XF86AudioRaiseVolume,exec,${pkgs.pamixer}/bin/pamixer -i 10
@@ -145,7 +147,8 @@
       windowrule=float,title:^(Volume Control)$
 
       exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland
-      exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
+      #exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
+      exec-once=${pkgs.mpvpaper}/bin/mpvpaper -sf -v -o "--loop --panscan=1" '*' $HOME/.config/wall.mp4
       exec-once=${pkgs.waybar}/bin/waybar
       exec-once=${pkgs.blueman}/bin/blueman-applet
     '';

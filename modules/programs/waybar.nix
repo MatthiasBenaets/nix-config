@@ -13,6 +13,9 @@
     (self: super: {
       waybar = super.waybar.overrideAttrs (oldAttrs: {
         mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+        patchPhase = ''
+          substituteInPlace src/modules/wlr/workspace_manager.cpp --replace "zext_workspace_handle_v1_activate(workspace_handle_);" "const std::string command = \"hyprctl dispatch workspace \" + name_; system(command.c_str());"
+        '';
       });
     })
   ];
@@ -31,6 +34,10 @@
           font-family: FiraCode Nerd Font Mono;
           /*font-weight: bold;*/
           font-size: 12px;
+          text-shadow: 0px 0px 5px #000000;
+        }
+        button:hover {
+          background-color: rgba(80,100,100,0.4);
         }
         window#waybar {
           background-color: rgba(0,0,0,0.5);
@@ -59,16 +66,22 @@
           color: #999999;
           background-clip: padding-box;
         }
+        #custom-menu {
+          color: #A7C7E7;
+          padding: 0px 5px 0px 5px;
+        }
         #workspaces button {
           padding: 0px 5px;
           min-width: 5px;
+          color: rgba(255,255,255,0.8);
         }
         #workspaces button:hover {
           background-color: rgba(0,0,0,0.2);
         }
         /*#workspaces button.focused {*/
         #workspaces button.active {
-          color: #ccffff;
+          color: rgba(255,255,255,0.8);
+          background-color: rgba(80,100,100,0.4);
         }
         #workspaces button.visible {
           color: #ccffff;
@@ -99,12 +112,18 @@
           tray = { spacing = 5; };
           #modules-center = [ "clock" ];
           #modules-left = [ "sway/workspaces" "sway/window" "sway/mode" ];
-          modules-left = [ "wlr/workspaces" ];
+          modules-left = [ "custom/menu" "wlr/workspaces" ];
           #modules-right = [ "cpu" "memory" "disk" "pulseaudio" "battery" "network" "tray" ];
-          modules-right = [ "cpu" "custom/pad" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" ];
+          modules-right = [ "network" "cpu" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" ];
 
           "custom/pad" = {
             format = " ";
+            tooltip = false;
+          };
+          "custom/menu" = {
+            format = "<span font='16'></span>";
+            on-click = "${pkgs.rofi}/bin/rofi -show p -modi p:${pkgs.rofi-power-menu}/bin/rofi-power-menu -theme $HOME/.config/rofi/config.rasi";
+            on-click-right = "${pkgs.rofi}/bin/rofi -show drun";
             tooltip = false;
           };
           "sway/workspaces" = {
@@ -126,25 +145,23 @@
             };
           };
           "wlr/workspaces" = {
-            format = "<span font='12'>{icon}</span>";
-            format-icons = {
-              "1"="";
-              "2"="";
-              "3"="";
-              "4"="";
-              "5"="";
-              "6"="";
-              "7"="";
-              "8"="";
-              "9"="";
-              "10"="";
-
-            };
+            format = "<span font='11'>{name}</span>";
+            #format = "<span font='12'>{icon}</span>";
+            #format-icons = {
+            #  "1"="";
+            #  "2"="";
+            #  "3"="";
+            #  "4"="";
+            #  "5"="";
+            #  "6"="";
+            #  "7"="";
+            #  "8"="";
+            #  "9"="";
+            #  "10"="";
+            #};
             #all-outputs = true;
             active-only = false;
             on-click = "activate";
-            on-scroll-up = "hyprctl dispatch workspace e+1";
-            on-scroll-down = "hyprctl dispatch workspace e-1";
           };
           clock = {
             format = "{:%b %d %H:%M}";
@@ -153,7 +170,6 @@
           };
           cpu = {
             format = "{usage}% <span font='11'></span>";
-            tooltip = false;
             interval = 1;
           };
           disk = {
@@ -178,12 +194,13 @@
           };
           network = {
             format-wifi = "<span font='11'></span>";
-            format-ethernet = "<span font='11'></span> {ifname}: {ipaddr}/{cidr}";
+            format-ethernet = "<span font='11'></span>";
+            #format-ethernet = "<span font='11'></span> {ifname}: {ipaddr}/{cidr}";
             format-linked = "<span font='11'>睊</span> {ifname} (No IP)";
             format-disconnected = "<span font='11'>睊</span> Not connected";
-            format-alt = "{ifname}: {ipaddr}/{cidr}";
-            tooltip-format = "{essid} {signalStrength}%";
-            on-click-right = "${pkgs.alacritty}/bin/alacritty -e nmtui";
+            #format-alt = "{ifname}: {ipaddr}/{cidr}";
+            tooltip-format = "{essid} {ipaddr}/{cidr}";
+            #on-click-right = "${pkgs.alacritty}/bin/alacritty -e nmtui";
           };
           pulseaudio = {
             format = "<span font='11'>{icon}</span> {volume}% {format_source}";
@@ -208,8 +225,9 @@
             on-click-middle = "${pkgs.pavucontrol}/bin/pavucontrol";
           };
           "custom/sink" = {
-            format = "<span font='10'>蓼</span>";
+            format = "<span font='9'>蓼</span>";
             on-click = "$HOME/.config/waybar/script/sink.sh";
+            tooltip = false;
           };
           tray = {
             icon-size = 13;
@@ -222,31 +240,38 @@
           output = [
             "DP-1"
           ];
-          modules-left = [ "wlr/workspaces" ];
+          modules-left = [ "custom/menu" "wlr/workspaces" ];
           modules-right = [ "pulseaudio" "custom/sink" "custom/pad" "clock"];
 
           "custom/pad" = {
             format = " ";
             tooltip = false;
           };
+          "custom/menu" = {
+            format = "<span font='16'></span>";
+            on-click = "${pkgs.rofi}/bin/rofi -show p -modi p:${pkgs.rofi-power-menu}/bin/rofi-power-menu -theme $HOME/.config/rofi/config.rasi";
+            on-click-right = "${pkgs.rofi}/bin/rofi -show drun";
+            tooltip = false;
+          };
           "wlr/workspaces" = {
-            format = "<span font='12'>{icon}</span>";
-            format-icons = {
-              "1"="";
-              "2"="";
-              "3"="";
-              "4"="";
-              "5"="";
-              "6"="";
-              "7"="";
-              "8"="";
-              "9"="";
-              "10"="";
-            };
+            format = "<span font='11'>{name}</span>";
+            #format = "<span font='12'>{icon}</span>";
+            #format-icons = {
+            #  "1"="";
+            #  "2"="";
+            #  "3"="";
+            #  "4"="";
+            #  "5"="";
+            #  "6"="";
+            #  "7"="";
+            #  "8"="";
+            #  "9"="";
+            #  "10"="";
+            #};
             active-only = false;
             on-click = "activate";
-            on-scroll-up = "hyprctl dispatch workspace e+1";
-            on-scroll-down = "hyprctl dispatch workspace e-1";
+            #on-scroll-up = "hyprctl dispatch workspace e+1";
+            #on-scroll-down = "hyprctl dispatch workspace e-1";
           };
           clock = {
             format = "{:%b %d %H:%M}";
@@ -278,6 +303,7 @@
           "custom/sink" = {
             format = "<span font='10'>蓼</span>";
             on-click = "$HOME/.config/waybar/script/sink.sh";
+            tooltip = false;
           };
         };
       };

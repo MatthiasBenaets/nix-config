@@ -12,7 +12,7 @@
 
 [
   ./dunst.nix
-  ./flameshot.nix
+  #./flameshot.nix
   #./picom.nix
   #./polybar.nix
   #./sxhkd.nix
@@ -20,5 +20,5 @@
   #./redshift.nix
 ]
 
-# picom, polybar and sxhkd are pulled from desktop module
+# flameshot, picom, polybar and sxhkd are pulled from desktop module
 # redshift temporarely disables

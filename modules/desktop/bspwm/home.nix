@@ -15,6 +15,7 @@
 
 {
   imports = [
+    ../../services/flameshot.nix
     ../../services/picom.nix
     ../../services/polybar.nix
     ../../services/sxhkd.nix

@@ -5,14 +5,20 @@
 #   ├─ ./hosts
 #   │   └─ configuration.nix *
 #   └─ ./modules
-#       └─ ./editors
-#           └─ ./emacs
-#               └─ default.nix
+#       ├─ ./editors
+#       │   └─ ./emacs
+#       │      └─ default.nix
+#       └─ ./shell
+#           └─ ./default.nix
 #
 
 { config, lib, pkgs, inputs, user, location, ... }:
 
 {
+  imports =
+    [(import ../modules/editors/emacs/native.nix)] ++  # Native doom emacs instead of nix-community flake
+    ( import ../modules/shell );
+
   users.users.${user} = {                   # System User
     isNormalUser = true;
     extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" ];
