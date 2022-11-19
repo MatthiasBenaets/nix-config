@@ -58,11 +58,16 @@
 
       animations {
         enabled=true
+        bezier = myBezier,0.1,0.7,0.1,1.05
+        animation=fade,1,7,default
+        animation=windows,1,7,myBezier
+        animation=windowsOut,1,3,default,popin 60%
+        animation=windowsMove,1,7,myBezier
       }
 
       input {
         kb_layout=us
-        follow_mouse=1
+        follow_mouse=2
         repeat_delay=250
         numlock_by_default=1
         force_no_accel=1
@@ -146,7 +151,7 @@
       windowrule=float,title:^(Picture-in-Picture)$
       windowrule=float,title:^(Volume Control)$
 
-      exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland
+      exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
       #exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
       exec-once=${pkgs.mpvpaper}/bin/mpvpaper -sf -v -o "--loop --panscan=1" '*' $HOME/.config/wall.mp4
       exec-once=${pkgs.waybar}/bin/waybar

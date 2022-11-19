@@ -208,7 +208,7 @@
             format-bluetooth-muted = "<span font='11'></span> {volume}% {format_source}";
             format-muted = "<span font='11'></span> {format_source}";
             #format-source = "{volume}% <span font='11'></span>";
-            format-source = "<span font='11'></span>";
+            format-source = "<span font='10'></span>";
             format-source-muted = "<span font='11'></span>";
             format-icons = {
               default = [ "" "" "" ];
@@ -284,7 +284,7 @@
             format-bluetooth-muted = "<span font='11'></span> {volume}% {format_source}";
             format-muted = "<span font='11'></span> {format_source}";
             #format-source = "{volume}% <span font='11'></span>";
-            format-source = "<span font='11'></span>";
+            format-source = "<span font='10'></span>";
             format-source-muted = "<span font='11'></span>";
             format-icons = {
               default = [ "" "" "" ];
