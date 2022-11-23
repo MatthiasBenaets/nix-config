@@ -17,7 +17,7 @@
 {
   imports =  [                                  # For now, if applying to other system, swap files
     ./hardware-configuration.nix                # Current system hardware config @ /etc/nixos/hardware-configuration.nix
-    ../../modules/desktop/bspwm/bspwm.nix        # Window Manager
+    ../../modules/desktop/bspwm/default.nix     # Window Manager
   ];
 
   boot = {                                      # Boot options
@@ -27,7 +27,7 @@
       grub = {
         enable = true;
         version = 2;
-        device = "/dev/vda";                    # Name of harddrive (can also be vda)
+        device = "/dev/sda";                    # Name of harddrive (can also be vda)
       };
       timeout = 1;                              # Grub auto select time
     };
