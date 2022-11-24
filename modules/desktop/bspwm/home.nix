@@ -74,7 +74,7 @@
           };
         };
         extraConfig = ''
-          bspc monitor HDMI3 -d 1 2 3 4 5               # Workspace tag names (need to be the same as the polybar config to work)
+          bspc monitor -d 1 2 3 4 5               # Workspace tag names (need to be the same as the polybar config to work)
 
           bspc config border_width      3
           bspc config window_gaps      12

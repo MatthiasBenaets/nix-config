@@ -21,20 +21,20 @@
 - [[#faq][FAQ]]
 
 * System Components
-|                 | *NixOS - Xorg*    | *NixOS - Wayland* | *Darwin*          |
-|-----------------+-------------------+-------------------+-------------------|
-| *Shell*         | Zsh               | Zsh               | Zsh               |
-| *DM*            | LightDM           | TTY1 Login        | /                 |
-| *WM*            | Bspwm             | Hyprland          | Yabai             |
-| *Compositor*    | Picom (jonaburg)  | Hyprland          | /                 |
-| *Bar*           | Polybar           | Waybar            | /                 |
-| *Hotkeys*       | Sxhkd             | Hyprland          | Skhd              |
-| *Launcher*      | Rofi              | Rofi              | /                 |
-| *GTK Theme*     | Dracula           | Dracula           | /                 |
-| *Notifications* | Dunst             | Dunst             | /                 |
-| *Terminal*      | Alacritty         | Alacritty         | Alacritty         |
-| *Editor*        | Nvim + Doom Emacs | Nvim + Doom Emacs | Nvim + Doom Emacs |
-| *Used by host*  | Desktop & VM      | Desktop & Laptop  | Macbook           |
+|                 | *NixOS - Wayland*  | *NixOS - Xorg*    | *Darwin*          |
+|-----------------+--------------------+-------------------+-------------------|
+| *Shell*         | Zsh                | Zsh               | Zsh               |
+| *DM*            | TTY1 Login         | LightDM           | /                 |
+| *WM*            | Hyprland           | Bspwm             | Yabai             |
+| *Compositor*    | Hyprland           | Picom (jonaburg)  | /                 |
+| *Bar*           | Waybar             | Polybar           | /                 |
+| *Hotkeys*       | Hyprland           | Sxhkd             | Skhd              |
+| *Launcher*      | Rofi               | Rofi              | /                 |
+| *GTK Theme*     | Dracula            | Dracula           | /                 |
+| *Notifications* | Dunst              | Dunst             | /                 |
+| *Terminal*      | Alacritty          | Alacritty         | Alacritty         |
+| *Editor*        | Nvim + Doom Emacs  | Nvim + Doom Emacs | Nvim + Doom Emacs |
+| *Used by host*  | Desktop & Laptop   | Desktop & VM      | Macbook           |
 There are some other desktop environments/window manager. Just link to correct default.nix in ~~/hosts/<host>/default.nix~
 
 * NixOS Installation Guide

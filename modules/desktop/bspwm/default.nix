@@ -22,7 +22,10 @@
 
       layout = "us";                              # Keyboard layout & €-sign
       xkbOptions = "eurosign:e";
-      libinput.enable = true;
+      libinput = {
+        enable = true;
+        touchpad.naturalScrolling = true;
+      };
       modules = [ pkgs.xf86_input_wacom ];        # Both needed for wacom tablet usage
       wacom.enable = true;
 
@@ -52,15 +55,21 @@
         };
       };
 
-      videoDrivers = [                            # Video Settings
+      #Drivers for AMD GPU
+      #videoDrivers = [                            # Video Settings
         #"amdgpu"
-        "intel"
-      ];
+      #];
 
       displayManager.sessionCommands = ''
-        ${pkgs.xorg.xrandr}/bin/xrandr --output DP1 --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI3 --primary --mode 1920x1080 --pos 1920x0 --rotate normal
+        ${pkgs.xorg.xrandr}/bin/xrandr --mode 1920x1080 --pos 0x0 --rotate normal
       '';
 
+      #Desktop w/ iGPU
+      #displayManager.sessionCommands = ''
+        #${pkgs.xorg.xrandr}/bin/xrandr --output DP1 --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI3 --primary --mode 1920x1080 --pos 1920x0 --rotate normal
+      #'';
+
+      #Desktop w/ AMD GPU
       #displayManager.sessionCommands = ''
         #!/bin/sh
         
