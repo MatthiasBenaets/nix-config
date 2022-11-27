@@ -15,4 +15,4 @@
   #./emacs
 ]
 
-# Comment out emacs if you are using native doom emacs. (imported from host configuration.nix)
+# Comment out emacs if you are not using native doom emacs. (imported from host configuration.nix)

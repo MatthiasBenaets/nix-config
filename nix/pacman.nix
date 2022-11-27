@@ -12,14 +12,14 @@
 {
   home = {
     packages = [
-      (import nixgl { inherit pkgs; }).nixGLIntel       # OpenGL for GUI apps. Add to aliases is recommended
+      (import nixgl { inherit pkgs; }).nixGLIntel       # OpenGL for GUI apps. Add to aliases is recommended.
                                      #.nixVulkanIntel
       pkgs.hello
       pkgs.emacs
     ];
 
-    activation = {                                      # Run script during rebuild/switch
-      linkDesktopApplications = {                       # Script that will add all packages to the system menu
+    activation = {                                      # Run script during rebuild/switch.
+      linkDesktopApplications = {                       # Script that will add all packages to the system menu. Mainly tested on Gnome.
         after = [ "writeBoundary" "createXdgUserDirectories" ];
         before = [ ];
         data = ''
@@ -27,8 +27,8 @@
           mkdir -p ${config.xdg.dataHome}/"applications/home-manager"
           cp -Lr ${config.home.homeDirectory}/.nix-profile/share/applications/* ${config.xdg.dataHome}/"applications/home-manager/"
         '';
-      };
-    };
+      };                                                # An alternative it adding ~$HOME/.nix-profile/share~ to XDG_DATA_DIRS, but I've noticed it sometimes does not work.
+    };                                                  # XDG_DATA_DIRS=$HOME/.nix-profile/share:$XDG_DATA_DIRS
 
     #file.".bash_aliases".text = ''
     #  alias alacritty="nixGLIntel ${pkgs.alacritty}/bin/alacritty"

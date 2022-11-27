@@ -4,11 +4,11 @@
 
 * Terminal
 ** Shell
-- Create a shell where package is available
+- Create a shell where a package is available.
   - ~$ nix-shell -p <packages>~
-- Install package and run command. Only temporarly enter shell.
+- Install a package and run command. Only temporarly enter shell.
   - ~$ nix-shell -p <package> --run <cmd>~  or --command
-- Install packages in the current active $SHELL (current terminal)
+- Install package in the current active $SHELL (current terminal)
   - ~$ nix shell nixpkgs#<package>~
   - Since nixpkgs is used, you can also specify the branch.
     - ~$ nix shell nixpkgs/<branch>#<package>~
@@ -66,6 +66,8 @@ mkShell {
   - ~$ NIXPKGS_ALLOW_INSECURE=1 nix run nixpkgs#etcher --impure~
 
 ** Appimages
+- This is mainly an issue for NixOS users.
+- Recommended solution: You can use the shell below or use a package called "appimage-run". You can then ~$ appimage-run <appimage>~.
 #+begin_src nix
 let
   version = "number";
@@ -80,8 +82,7 @@ pkgs.appimageTools.wrapType2 {
   # src = /home/matthias/app.AppImage
 }
 #+end_src
-
-- But a better option might be to just ~$ nix build -f shell.nix~
+- If you want to run the shell it is recommended to use ~$ nix build -f shell.nix~.
 
 ** Shell Hook
 - Initialisation: Commands to run after everything is sourced.

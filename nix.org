@@ -1,0 +1,232 @@
+#+title: Nix Fresh Install guide
+#+description: A basic introductional guide on building a Nix config on your personal Linux machine
+#+author: Matthias Benaets
+
+#+attr_html: :width 280
+#+attr_org: :width 280
+[[file:rsc/Nix.svg]]
+
+* Nix
+** Introduction
+1. Just like NixOS, it supports declarative reproductible system configurations using home-manager.
+2. Install packages at user level without having to change system state.
+3. SELinux is currently unsupported. You need to disable it.
+4. Primary used on systemd but can be used on other init systems. You will have to enable the nix daemon manually.
+
+** Getting Started
+*** Nix and home-manager Website
+*Nix*
+- [[https://nixos.org/download.html][Nix Website]]
+- [[https://nixos.org/manual/nix/stable][Manual]]
+*Home-Manager*
+- [[https://github.com/nix-community/home-manager][Github]]
+- [[https://nix-community.github.io/home-manager/][Manual]]
+- [[https://nix-community.github.io/home-manager/options.html][Appendix A]]
+- [[https://nix-community.github.io/home-manager/nixos-options.html][Appendix B]]
+
+
+*** Installing Nix
+This command will install the Nix Package Manager on your system. More information can be found [[https://nixos.org/manual/nix/stable/installation/installing-binary.html][here]].
+When prompted, allow the installer to use root priviliges and to set up Nix as a Multi User.
+- ~$ sh <(curl -L https://nixos.org/nix/install)~
+
+**** Installing Packages
+If you just want to use the Nix Package Manager, great, you are done. You can install new packages using the command below. Available packages can be found [[https://search.nixos.org/packages][here]]:
+- ~$ nix-env -iA nixpkgs.<package name>~
+- ~$ nix-shell -p <package name>~
+A couple more useful commands:
+- ~$ nix-env --uninstall <package name>~
+- ~$ nix-env -q~
+- ~$ nix-env --upgrade~
+If you would also like to configure these packages using their options, it's recommended that you keep reading.
+
+*** Garbage Collection
+- Remove undeclared packages, dependencies and symlinks:
+  - ~$ sudo nix-collect-garbage -d~
+
+** Installation
+- Home-manager can be installed by using the commands below:
+
+*** Setup
+**** Initial
+*As a user*
+- Add the channel:
+  - ~$ nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager~
+  - ~$ nix-channel --add https://github.com/nix-community/home-manager/archive/release-21.11.tar.gz home-manager~
+- ~$ nix-channel --update~
+- Just to be sure, relog.
+
+**** Installation
+- If installation give NIX-PATH errors
+  - ~$ sudo nix-collect-garbage -d~
+  - ~$ export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}~
+- Installation:
+  - ~$ nix-shell '<home-manager>' -A install~
+- Configuration file:
+  - ~$ cd ~/.config/nixpkgs/home.nix~
+
+** Configuration
+*** Links
+- [[https://nix-community.github.io/home-manager/options.html][Home-Manager Options]]
+- ~$ man home-configuration.nix~
+
+*** Declare user packages
+#+begin_src nix
+  home.packages = with pkgs; [
+    firefox
+  ];
+
+  services.dunst = {
+    enable = true;
+  };
+#+end_src
+
+*** Applying
+- ~$ home-manager switch~
+
+* Flakes
+** Introduction
+- Flakes are an "upcoming feature" of the Nix package manager.
+- Specify code dependencies declaratively (will be stored in flake.lock)
+  - For example: home-manager
+- Rebuilding and updating whole system made easy
+- Very useful tool to build your own config
+  - Multiple configs in one
+  - People with github dotfiles will feel right at home
+
+** Getting Started
+*** Flakes Wiki
+- [[https://nixos.wiki/wiki/Flakes][Wiki]]
+
+*** Preparing the System
+ *Allowing experimental features such as flake to be installed*
+
+#+begin_src
+  $ mkdir -p ~/.config/nix
+  $ echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
+#+end_src
+
+** Installation
+**** Generate
+*This command will generate a flake.nix and flake.lock file*
+- ~cd~ into a location to store in your system
+- ~$ nix flake init~
+
+#+begin_src nix
+  {
+    description = "A very basic flake";
+
+    outputs = { self, nixpkgs}: {
+      packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
+    };
+  }
+#+end_src
+
+**** Inputs and Outputs
+***** Inputs
+*attribute set of all the dependencies used in the flake*
+#+begin_src nix
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixgl = {
+      url = "gihub:guibou/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+#+end_src
+
+***** Outputs
+*function of an argument that uses the inputs for reference*
+- Configure what you imported
+- Can be pretty much anything: Packages / configurations / modules / etc...
+
+** Configuration
+
+#+begin_src nix
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+  outputs = { self, nixpkgs, home-manager, ...}: {
+    let
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
+    homeConfigurations  = {
+      "<host>" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = { inherit inputs; };
+        modules = [
+          ./<path.nix>
+          {
+            home = {
+              username = "<user>";
+              homeDirectory = "/home/${user}";
+              packages = [ pkgs.home-manager ];
+              stateVersion = "22.05";
+            };
+          }
+        ];
+      };
+      #"<second host>" = home-manager.lib.homeManagerConfiguration {
+      #  pkgs = nixpkgs.legacyPackages."x86_64-linux";
+      #  extraSpecialArgs = { inherit inputs; };
+      #  modules = [
+      #    ./<path.nix>
+      #    {
+      #      home = {
+      #        ...
+     };
+  };
+#+end_src
+
+**** First build
+*This is only for those who don't have nix-darwin installed and have an existing flake they want to install on a fresh system*
+*If this is not your situation, move on to rebuild*
+- For the first initial installation it recommended that your use ~$ nix build~
+- The location of ~/result~ depends on what location you are building from. It's maybe recommended that your build inside the flake.
+
+#+begin_src
+  $ cd <flake>
+  $ nix build .#homeConfigurations.<host>.activationPackage
+  $ ./result/activate
+#+end_src
+
+**** Rebuild
+- After the first installation, you don't need to target ~/activate~ inside ~/result~
+- ~$ home-manager~ is now installed and can be used from anywhere. Example:
+  - ~/HOME/<USER>/ $ home-manager switch --flake <flake path>#<host>~
+
+* Uninstall
+** Nix Package Manager
+
+- [[https://nixos.org/manual/nix/stable/installation/installing-binary.html?highlight=uninstall#uninstalling][Full guide]]
+- Commands are based on a systemd distribution, but I guess can be modified for your distro of choice.
+
+#+begin_src
+  $ sudo systemctl stop nix-daemon.socket
+  $ sudo systemctl stop nix-daemon.service
+  $ sudo systemctl disable nix-daemon.socket
+  $ sudo systemctl disable nix-daemon.service
+  $ sudo systemctl daemon-reload
+#+end_src
+
+- reboot
+
+* Resources
+1. [[https://nixos.org/][NixOS Website]]
+2. [[https://nixos.org/learn.html/][NixOS Learn]]
+3. [[https://nixos.org/manual/nix/stable/introduction.html][Nix Manual]]
+4. [[https://nixos.wiki/wiki/Main_Page][NixOS Wiki]]
+5. [[https://nixos.org/guides/nix-pills/][Nix Pills]]
+6. [[https://github.com/nix-community/home-manager/][Home-Manager Github]]
+7. [[https://nix-community.github.io/home-manager/][Home-Manager Manual]]
+8. [[https://nix-community.github.io/home-manager/options.html][Home-Manager Appendix_A]]
+9. [[https://nix-community.github.io/home-manager/nixos-options.html][Home-Manager Appendix B]]

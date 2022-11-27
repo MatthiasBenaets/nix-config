@@ -2,7 +2,8 @@
 #+description: A basic introductional guide on building a NixOS config on your personal machine
 #+author: Matthias Benaets
 
-#+attr_org: :width 500
+#+attr_html: :width 800
+#+attr_org: :width 800
 [[file:rsc/NixOS.svg]]
 
 * NixOS
@@ -28,7 +29,7 @@
 - On boot: Esc / Del / F1-12
 
 **** Virt-Manager
-- Download KDE ISO
+- Download GUI ISO
 - Optional minimal ISO
 - No password needed
 - Root
@@ -125,7 +126,7 @@
       devices = ["nodev"];            # Install grub
       efiSupport = true;
       useOSProber = true;             # Or use extraEntries like seen with Legacy
-    };                                # OSProber will probably not find windows partition on first install
+    };                                # OSProber will probably not find windows partition on first install. Just do a rebuild than.
   };
 #+end_src
 
@@ -157,7 +158,7 @@
 
 **** Networking
 - Uncomment: ~networking.hostName="nixos";~
-- Network card details #could.be.moved.to.hardware-configuration.nix
+- Network card details. Note: some of these options might have moved to ~hardware-configuration.nix~
   - Deprecated but keep: ~networking.useDHCP = false;~
   - Just internet via ethernet: ~networking.interfaces.<networkcard-id>.useDHCP = true;~
 
@@ -169,7 +170,7 @@
     interfaces ={
       enp0s3 = {
         #useDHCP = true;
-        ipv4.addresses = [ {                  # Ofcourse not compatible with networkmanager
+        ipv4.addresses = [ {                  # Of course not compatible with networkmanager
           address = "192.168.0.50";
           prefixLength = 24;
         } ];
@@ -229,8 +230,9 @@
 ***** Audio & Bluetooth
 - [[https://nixos.wiki/wiki/PulseAudio][PulseAudio Wiki]]
 - [[https://nixos.wiki/wiki/Bluetooth][Bluetooth Wifi (+ configuring it with PulseAudio)]]
+- [[https://nixos.wiki/wiki/PipeWire][PipeWire Wiki]]
 
-****** Example
+****** PulseAudio Example
 #+begin_src nix
   { pkgs, ... }:
 
@@ -260,6 +262,31 @@
   }
 #+end_src
 
+****** Pipewire Example
+#+begin_src nix
+  services = {
+    pipewire = {
+      enable = true;
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
+      pulse.enable = true;
+      jack.enable = true;
+    };
+  };
+  hardware = {
+    bluetooth = {
+      enable = true;
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+        };
+      };
+    };
+  };
+#+end_src
+
 ***** Touchpad
 - [[https://search.nixos.org/options?channel=21.11&show=services.xserver.libinput.tapping&from=0&size=50&sort=relevance&type=packages&query=libinput][Libinput Options]]
 #+begin_src nix
@@ -268,7 +295,7 @@
     #tapping = true;
     #naturalScrolling = true;
     #...
-  }
+  };
 #+end_src
 
 **** Users
@@ -278,7 +305,7 @@
     extraGroups = [ "wheel" "video" "audio" "networkmanager" "lp" "scanner"]
     #initialPassword = "password";
     #shell = pkgs.zsh;
-  }
+  };
 #+end_src
 
 **** Packages
@@ -297,6 +324,7 @@
 - Nothing to do with the version of the system.
 - Just tells the version of state/config
 - Can be updated to a stable version if you are really sure.
+  - Do consult the release notes first.
 
 *** Hardware-configuration.nix
 **** Generate
@@ -353,7 +381,7 @@
 - ~$ man configuration.nix~
 
 *** Declaring Packages
-*Installed Systemwide with configuration.nix*
+*Installed system-wide with configuration.nix*
 #+begin_src nix
   environment = {
     systemPackages = with pkgs; [
@@ -449,7 +477,7 @@ D. Installed through nix-env:
 **** Command-line
 - Remove undeclared packages, dependencies and symlinks:
   - ~$ nix-collect-garbage~
-- Remove above of older generations:
+- Remove older generations:
   - ~$ nix-collect-garbage --delete-old~
   - List generations:
     - ~$ nix-env --list-generations~
@@ -459,7 +487,7 @@ D. Installed through nix-env:
   - Optimize store:
     - ~$ nix-store --gc~
 - All in one:
-  - ~$ nix-collect-garbage -d~
+  - ~# nix-collect-garbage -d~
 
 **** Configuration.nix
 #+begin_src nix
@@ -515,9 +543,9 @@ D. Installed through nix-env:
 #+end_src
 
 **** Standalone
-- Installation:
-  - ~$ nix-shell ‘<home-manager>’ -A install~
-- Configuration file:
+Installation:
+  - ~$ nix-shell '<home-manager>' -A install~
+Configuration file:
   - ~$ cd ~/.config/nixpkgs/home.nix~
 
 ** Configuration
@@ -551,7 +579,8 @@ D. Installed through nix-env:
   };
 #+end_src
 
-**** Stored files (also with no link to NixOS)
+**** Stored files
+*Which also don't have any links with NixOS*
 #+begin_src nix
   home.file.".doom.d" = {
     source = ./doom.d;
@@ -614,7 +643,7 @@ D. Installed through nix-env:
 
 **** Generate
 *This command will generate a flake.nix and flake.lock file*
-- pick a location to store in your system
+- ~cd~ into a location to store in your system
 - ~$ nix flake init~
 
 **** Inputs and Outputs
@@ -666,7 +695,7 @@ D. Installed through nix-env:
 
 **** Build
 *a ".(#)" will just build host found in location*
-*specify host with ".#<host>" appended*
+*specify host with "<config path>#<host>" appended*
 - *optional* ~$ cp /etc/nixos/* <flake location>~
 - ~$ nixos-rebuild build --flake .#~
 or build and automatically switch
@@ -687,19 +716,25 @@ or build and automatically switch
     outputs = { self, nixpkgs, home-manager, ... }:
       let
         #variables
+        system = "x86_64-linux";
+        pkgs = nixpkgs.legacyPackages.system.${system};
       in {
         #other outputs
-        hmConfig = {
+        homeManagerConfigurations = {
           <user> = home-manager.lib.homeManagerConfiguration {
-            inherit system pkgs;
-            username = “<user>”;
-            homeDirectory = “/home/<user>”;
-            #stateVersion = "22.05";  # If there is any complaining about differing stateVersions, specifically state here.
-            configuration = {
-              imports = [
-                /home/<user>/.config/home/home.nix
-              ];
-            };
+            inherit pkgs;
+            extraSpecialArgs = { inherit <variables>; };
+            modules = [
+              </relative/path/to/home.nix>
+              {
+                home = {
+                  username = “<user>”;
+                  homeDirectory = “/home/<user>”;
+                  packages = [ pkgs.home-manager ];
+                  stateVersion = "22.05";
+                };
+              }
+            ];
           };
         };
       };
@@ -742,7 +777,7 @@ or build and automatically switch
 **** Build
 ***** Seperate
 *This will build a directory with everything home-manager needs. An activation script is also located inside this dir*
-- ~$ nix build .#hmConfig.<user>.activationPackage~
+- ~$ nix build .#homeManagerConfigurations.<user>.activationPackage~
 - ~$ ./result/activate~
 
 Afterwards you will be able to build home-manager from the flake using
@@ -767,7 +802,7 @@ Afterwards you will be able to build home-manager from the flake using
   # reboot
   /* login */
   $ sudo rm -r /etc/nixos/configuration.nix
-  /* move build to desired location */
+  /* move config to desired location */
 #+end_src
 
 * Resources

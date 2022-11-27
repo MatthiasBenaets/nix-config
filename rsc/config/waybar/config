@@ -27,8 +27,9 @@
     },
     "custom/menu": {
       "format": "<span font='16'></span>",
-      "on-click": "rofi -show p -modi p:rofi-power-menu -theme $HOME/.config/rofi/config.rasi",
-      "on-click-right": "rofi -show drun"
+      "on-click": "/nix/store/ji6385q5iy4357wchvyshhyrazj7yj4h-rofi-1.7.5/bin/rofi -show p -modi p:/nix/store/ahdq42jlka94bqg7w9i8b0j8iyssd96i-rofi-power-menu-3.0.2/bin/rofi-power-menu -theme $HOME/.config/rofi/config.rasi",
+      "on-click-right": "/nix/store/ji6385q5iy4357wchvyshhyrazj7yj4h-rofi-1.7.5/bin/rofi -show drun",
+      "tooltip": false
     },
     "custom/pad": {
       "format": " ",
@@ -90,7 +91,7 @@
         "headphone": ""
       },
       "format-muted": "<span font='11'></span> {format_source}",
-      "format-source": "<span font='11'></span>",
+      "format-source": "<span font='10'></span>",
       "format-source-muted": "<span font='11'></span>",
       "on-click": "pamixer -t",
       "on-click-middle": "pavucontrol",
@@ -132,8 +133,9 @@
     },
     "custom/menu": {
       "format": "<span font='16'></span>",
-      "on-click": "rofi -show p -modi p:rofi-power-menu -theme $HOME/.config/rofi/config.rasi",
-      "on-click-right": "rofi -show drun"
+      "on-click": "/nix/store/ji6385q5iy4357wchvyshhyrazj7yj4h-rofi-1.7.5/bin/rofi -show p -modi p:/nix/store/ahdq42jlka94bqg7w9i8b0j8iyssd96i-rofi-power-menu-3.0.2/bin/rofi-power-menu -theme $HOME/.config/rofi/config.rasi",
+      "on-click-right": "/nix/store/ji6385q5iy4357wchvyshhyrazj7yj4h-rofi-1.7.5/bin/rofi -show drun",
+      "tooltip": false
     },
     "custom/pad": {
       "format": " ",
@@ -174,7 +176,7 @@
         "headphone": ""
       },
       "format-muted": "<span font='11'></span> {format_source}",
-      "format-source": "<span font='11'></span>",
+      "format-source": "<span font='10'></span>",
       "format-source-muted": "<span font='11'></span>",
       "on-click": "pamixer -t",
       "on-click-middle": "pavucontrol",

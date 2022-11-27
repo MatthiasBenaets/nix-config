@@ -1,14 +1,5 @@
 #
-#  Bspwm configuration
-#
-#  flake.nix
-#   ├─ ./hosts
-#   │   └─ ./<host>
-#   │       └─ default.nix
-#   └─ ./modules
-#       └─ ./desktop
-#           └─ ./river
-#               └─ default.nix *
+# River configuration
 #
 
 { config, lib, pkgs, ... }:
@@ -24,7 +15,7 @@
       if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
         exec river
       fi
-    '';                                   # Will automatically open sway when logged into tty1
+    '';                                   # Will automatically open River when logged into tty1
     variables = {
       #LIBCL_ALWAYS_SOFTWARE = "1";       # For applications in VM like alacritty to work
       #WLR_NO_HARDWARE_CURSORS = "1";     # For cursor in VM
@@ -38,9 +29,9 @@
 
   programs.dconf.enable = true;
 
-  xdg.portal = {                          # Required for flatpak with windowmanagers
+  xdg.portal = {                          # Required for flatpak with window managers
     enable = true;
-    wlr.enable = true;                    # Xdg for wayland
+    wlr.enable = true;                    # XDG for Wayland
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     #gtkUsePortal = true;
   };

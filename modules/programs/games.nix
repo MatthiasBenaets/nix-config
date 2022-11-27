@@ -7,10 +7,10 @@
 { config, pkgs, nur, lib, ... }:
 
 {
-  #hardware.new-lg4ff.enable = true;             # Force Feedback Packaged myself :)
+  #hardware.new-lg4ff.enable = true;            # Force Feedback Packaged myself :)
 
   environment.systemPackages = [
-    #config.nur.repos.c0deaddict.oversteer       # Steering Wheel Configuration
+    #config.nur.repos.c0deaddict.oversteer      # Steering Wheel Configuration
     pkgs.lutris                                 # Game Launcher
     pkgs.heroic
     pkgs.prismlauncher
@@ -19,7 +19,7 @@
   programs = {                                  # Needed to succesfully start Steam
     steam = {
       enable = true;
-      #remotePlay.openFirewall = true;           # Ports for Stream Remote Play
+      #remotePlay.openFirewall = true;          # Ports for Stream Remote Play
     };
     gamemode.enable = true;                     # Better gaming performance
                                                 # Steam: Right-click game - Properties - Launch options: gamemoderun %command%

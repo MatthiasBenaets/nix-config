@@ -1,15 +1,6 @@
 #
 #  Sway Home manager configuration
 #
-#  flake.nix
-#   ├─ ./hosts
-#   │   └─ ./laptop
-#   │       └─ home.nix
-#   └─ ./modules
-#       └─ ./desktop
-#           └─ ./sway
-#               └─ home.nix *
-#
 
 { config, nixosConfig, lib, pkgs, ... }:
 
@@ -30,7 +21,7 @@ in
         ##{command = ''
         ##  ${pkgs.swayidle}/bin/swayidle -w \
         ##      before-sleep '${pkgs.swaylock-fancy}/bin/swaylock-fancy'
-        ##''; always = true;}                             # Lock on lid close (currently disabled because using laptop as temporary server)
+        ##''; always = true;}                           # Lock on lid close (currently disabled because using laptop as temporary server)
         #{command = ''
         #  ${pkgs.swayidle}/bin/swayidle \
         #    timeout 120 '${pkgs.swaylock-fancy}/bin/swaylock-fancy' \
@@ -42,7 +33,7 @@ in
 
       bars = [];                                        # No bar because using Waybar
 
-      fonts = {                                         # Font usedfor window tiles, navbar, ...
+      fonts = {                                         # Font used for window tiles, navbar, ...
         names = [ "Source Code Pro" ];
         size = 10.0;
       };
@@ -117,9 +108,9 @@ in
         "${modifier}+Shift+Up" = "move up";
         "${modifier}+Shift+Down" = "move down";
 
-        #"Alt+Left" = "workspace prev";                  # Navigate to previous or next workspace if it exists
+        #"Alt+Left" = "workspace prev";                 # Navigate to previous or next workspace if it exists
         #"Alt+Right" = "workspace next";
-        "Alt+Left" = "workspace prev_on_output";         # Navigate to previous or next workspace on output if it exists
+        "Alt+Left" = "workspace prev_on_output";        # Navigate to previous or next workspace on output if it exists
         "Alt+Right" = "workspace next_on_output";
 
         "Alt+1" = "workspace number 1";                 # Open workspace x

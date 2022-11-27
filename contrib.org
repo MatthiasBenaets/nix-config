@@ -30,7 +30,7 @@
   - etc..
 
 *** module
-- In these modules you will create the options to setup the package in a system
+- In these modules you will create the options to set up the package in a system
 - ~$ touch nixpkgs/nixos/<subdir>/<pkgname>.nix~
 
 - Add module to ~nixpkgs/nixos/modules/module-list.nix~
@@ -53,7 +53,7 @@
 * Pull request
 ** Commit
 - See paragraph packaging-maintainer. If you are not a maintainer yet, add yourself to the list and commit.
-- Before committing read https://github.com/NixOS/nixpkgs/blob/master/CONTRIBUTING.md . Make needed changes.
+- Before committing, read https://github.com/NixOS/nixpkgs/blob/master/CONTRIBUTING.md. Make needed changes.
 - New package
   - ~$ git commit -m "<pkgsname>: init at <version>"~
 
@@ -73,3 +73,4 @@
   - ~$ git push -f origin <branch (pkgsname)~
 
 - After a merge to master, you can delete the branch.
+- Propagation to nixos-unstable from master can take a while (multiple days). Sit back and relax!

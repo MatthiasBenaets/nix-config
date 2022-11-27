@@ -1,14 +1,5 @@
 #
-#  Hyprland NixOS & Home manager configuration
-#
-#  flake.nix
-#   ├─ ./hosts
-#   │   └─ ./laptop
-#   │       └─ home.nix
-#   └─ ./modules
-#       └─ ./desktop
-#           └─ ./river
-#               └─ home.nix *
+#  River Home-manager configuration
 #
 
 { config, lib, pkgs, ... }:
@@ -25,7 +16,7 @@
         riverctl spawn ${pkgs.wlr-randr}/bin/wlr-randr --output DP-1 --mode 1920x1080@60 --pos 0,0 --output HDMI-A-3 --mode 1920x1080@60 --pos 1920,0
         riverctl spawn ${pkgs.waybar}/bin/waybar
 
-        riverctl map normal Super+Shift E exit                                                      # Exit river
+        riverctl map normal Super+Shift E exit                                                      # Exit River
         riverctl map normal Super Q close                                                           # Close window
 
         riverctl map normal Super Return spawn alacritty                                            # Terminal Emulator

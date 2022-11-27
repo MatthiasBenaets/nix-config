@@ -32,7 +32,7 @@
     };
     zsh = {                                       # Post installation script is run in configuration.nix to make it default shell
       enable = true;
-      enableAutosuggestions = true;               # Auto suggest options and highlights syntact, searches in history for options
+      enableAutosuggestions = true;               # Auto suggest options and highlights syntax. It searches in history for options
       enableSyntaxHighlighting = true;
       history.size = 10000;
 

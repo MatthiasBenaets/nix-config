@@ -24,14 +24,21 @@
       xkbOptions = "eurosign:e";
       libinput = {
         enable = true;
-        touchpad.naturalScrolling = true;
+        touchpad = {
+          tapping = true;
+          scrollMethod = "twofinger";
+          naturalScrolling = true;                # The correct way of scrolling
+          accelProfile = "adaptive";              # Speed settings
+          #accelSpeed = "-0.5";
+          disableWhileTyping = true;
+        };
       };
       modules = [ pkgs.xf86_input_wacom ];        # Both needed for wacom tablet usage
       wacom.enable = true;
 
       displayManager = {                          # Display Manager
         lightdm = {
-          enable = true;                          # Wallpaper and gtk theme
+          enable = true;                          # Wallpaper and GTK theme
           background = pkgs.nixos-artwork.wallpapers.nineish-dark-gray.gnomeFilePath;
           greeters = {
             gtk = {
@@ -56,7 +63,7 @@
       };
 
       #Drivers for AMD GPU
-      #videoDrivers = [                            # Video Settings
+      #videoDrivers = [                           # Video Settings
         #"amdgpu"
       #];
 
@@ -82,7 +89,7 @@
         #  ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal --output DisplayPort-1 --mode 1920x1080 --rotate normal --left-of HDMI-A-1 --output HDMI-A-0 --mode 1280x1024 --rotate normal --right-of HDMI-A-1
         #fi
 
-      #'';                                         # Settings for correct display configuration; This can also be done with setupCommands when X server start for smoother transition (if setup is static)
+      #'';                                        # Settings for correct display configuration; This can also be done with setupCommands when X server start for smoother transition (if setup is static)
                                                   # Another option to research in future is arandr
       serverFlagsSection = ''
         Option "BlankTime" "0"
@@ -111,7 +118,7 @@
     #sxhkd
   ];
 
-  xdg.portal = {                                  # Required for flatpak with windowmanagers
+  xdg.portal = {                                  # Required for flatpak with window managers
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };

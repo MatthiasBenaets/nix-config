@@ -5,11 +5,15 @@
 #   ├─ ./hosts
 #   │   └─ ./<host>
 #   │       └─ home.nix
-#   └─ ./modules
-#       └─ ./desktop
-#           └─ ./bspwm
-#               └─ home.nix *
-#
+#   ├─ ./modules
+#   │   └─ ./desktop
+#   │       └─ ./bspwm
+#   │           └─ home.nix *
+#   └─ ./services
+#       ├─ ./flameshot.nix
+#       ├─ ./picom.nix
+#       ├─ ./polybar.nix
+#       └─ ./sxhkd.nix
 
 { config, lib, pkgs, ... }:
 
@@ -26,7 +30,7 @@
     windowManager = {
       bspwm = {
         enable = true;
-#        monitors = {                            # Multiple monitors
+#        monitors = {                           # Multiple monitors
 #          HDMI-A-1 = [ "1" "2" "3" "4" "5" ];
 #          HDMI-A-0 = [ "6" "7" "8" "9" "0" ];
 #        };

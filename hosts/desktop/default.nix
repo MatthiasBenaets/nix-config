@@ -14,8 +14,6 @@
 #       │       └─ default.nix
 #       ├─ ./programs
 #       │   └─ games.nix
-#       ├─ ./services
-#       │   └─ default.nix
 #       └─ ./hardware
 #           └─ default.nix
 #
@@ -26,7 +24,6 @@
   imports =                                               # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
     [(import ../../modules/programs/games.nix)] ++        # Gaming
-    #[(import ../../modules/desktop/bspwm/default.nix)] ++   # Window Manager
     [(import ../../modules/desktop/hyprland/default.nix)] ++ # Window Manager
     (import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC
     (import ../../modules/hardware);                      # Hardware devices

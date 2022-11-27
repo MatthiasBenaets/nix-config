@@ -1,9 +1,9 @@
 #
-#  Hyprland NixOS & Home manager configuration
+#  Hyprland Home-manager configuration
 #
 #  flake.nix
 #   ├─ ./hosts
-#   │   └─ ./laptop
+#   │   └─ ./<host>
 #   │       └─ home.nix
 #   └─ ./modules
 #       └─ ./desktop

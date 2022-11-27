@@ -1,3 +1,7 @@
+#
+# Gnome configuration
+#
+
 { config, lib, pkgs, ... }:
 
 {
@@ -34,12 +38,12 @@
   hardware.pulseaudio.enable = false;
 
   environment = {
-    systemPackages = with pkgs; [       # Packages installed
+    systemPackages = with pkgs; [                 # Packages installed
       gnome.adwaita-icon-theme
       gnomeExtensions.appindicator
       gnomeExtensions.pop-shell
     ];
-    gnome.excludePackages = (with pkgs; [
+    gnome.excludePackages = (with pkgs; [         # Gnome ignored packages
       gnome-tour
     ]) ++ (with pkgs.gnome; [
       gedit

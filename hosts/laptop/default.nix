@@ -8,8 +8,10 @@
 #   │        └─ hardware-configuration.nix       
 #   └─ ./modules
 #       ├─ ./desktop
-#       │   └─ ./hyprland
-#       │       └─ hyprland.nix
+#       │   ├─ ./bspwm
+#       │   │   └─ default.nix
+#       │   └─ ./virtualisation
+#       │       └─ docker.nix
 #       ├─ ./modules
 #       │   └─ ./programs
 #       │       └─ waybar.nix
@@ -46,7 +48,7 @@
     };
   };
 
-  hardware.sane = {                           # Used for scanning with Xsane
+  hardware.sane = {                         # Used for scanning with Xsane
     enable = true;
     extraBackends = [ pkgs.sane-airscan ];
   };
@@ -64,7 +66,7 @@
 
   services = {
     tlp.enable = true;                      # TLP and auto-cpufreq for power management
-    #logind.lidSwitch = "ignore";            # Laptop does not go to sleep when lid is closed
+    #logind.lidSwitch = "ignore";           # Laptop does not go to sleep when lid is closed
     auto-cpufreq.enable = true;
     blueman.enable = true;
     printing = {                            # Printing and drivers for TS5300
@@ -91,23 +93,6 @@
       };
       openFirewall = true;
     };
-    #xserver = {
-    #  libinput = {                          # Trackpad support & gestures
-    #    touchpad = {
-    #      tapping = true;
-    #      scrollMethod = "twofinger";
-    #      naturalScrolling = true;            # The correct way of scrolling
-    #      accelProfile = "adaptive";          # Speed settings
-    #      #accelSpeed = "-0.5";
-    #      disableWhileTyping = true;
-    #    };
-    #  };
-    #  resolutions = [
-    #    { x = 1600; y = 920; }
-    #    { x = 1280; y = 720; }
-    #    { x = 1920; y = 1080; }
-    #  ];
-    #};
   };
 
   #temporary bluetooth fix

@@ -21,21 +21,22 @@
 - [[#faq][FAQ]]
 
 * System Components
-|                 | *NixOS - Wayland*  | *NixOS - Xorg*    | *Darwin*          |
-|-----------------+--------------------+-------------------+-------------------|
-| *Shell*         | Zsh                | Zsh               | Zsh               |
-| *DM*            | TTY1 Login         | LightDM           | /                 |
-| *WM*            | Hyprland           | Bspwm             | Yabai             |
-| *Compositor*    | Hyprland           | Picom (jonaburg)  | /                 |
-| *Bar*           | Waybar             | Polybar           | /                 |
-| *Hotkeys*       | Hyprland           | Sxhkd             | Skhd              |
-| *Launcher*      | Rofi               | Rofi              | /                 |
-| *GTK Theme*     | Dracula            | Dracula           | /                 |
-| *Notifications* | Dunst              | Dunst             | /                 |
-| *Terminal*      | Alacritty          | Alacritty         | Alacritty         |
-| *Editor*        | Nvim + Doom Emacs  | Nvim + Doom Emacs | Nvim + Doom Emacs |
-| *Used by host*  | Desktop & Laptop   | Desktop & VM      | Macbook           |
-There are some other desktop environments/window manager. Just link to correct default.nix in ~~/hosts/<host>/default.nix~
+|                 | *NixOS - Wayland* | *NixOS - Xorg*    | *Darwin*          |
+|-----------------+-------------------+-------------------+-------------------|
+| *Shell*         | Zsh               | Zsh               | Zsh               |
+| *DM*            | TTY1 Login        | LightDM           | /                 |
+| *WM*            | Hyprland          | Bspwm             | Yabai             |
+| *Compositor*    | Hyprland          | Picom (jonaburg)  | /                 |
+| *Bar*           | Waybar            | Polybar           | /                 |
+| *Hotkeys*       | Hyprland          | Sxhkd             | Skhd              |
+| *Launcher*      | Rofi              | Rofi              | /                 |
+| *GTK Theme*     | Dracula           | Dracula           | /                 |
+| *Notifications* | Dunst             | Dunst             | /                 |
+| *Terminal*      | Alacritty         | Alacritty         | Alacritty         |
+| *Editor*        | Nvim + Doom Emacs | Nvim + Doom Emacs | Nvim + Doom Emacs |
+| *Used by host*  | Desktop           | Laptop & VM       | Macbook           |
+There are some other desktop environments/window manager. Just link to correct default/home.nix in ~./hosts/<host>/default.nix~.
+There is also a general Nix config with hostname ~pacman~ that can be used on pretty much any disto.
 
 * NixOS Installation Guide
 This flake currently has *3* hosts
@@ -64,14 +65,14 @@ This will depend on the host chosen.
 - No Swap: Ignore line 3 & 7
 
 #+begin_src
-# parted /dev/sda -- mklabel gpt
-# parted /dev/sda -- mkpart primary 512MiB -8GiB
-# parted /dev/sda -- mkpart primary linux-swap -8GiB 100%
-# parted /dev/sda -- mkpart ESP fat32 1MiB 512MiB
-# parted /dev/sda -- set 3 esp
-# mkfs.ext4 -L nixos /dev/sda1
-# mkswap -L /dev/sda2
-# mkfs.fat -F 32 -n boot /dev/sda3
+  # parted /dev/sda -- mklabel gpt
+  # parted /dev/sda -- mkpart primary 512MiB -8GiB
+  # parted /dev/sda -- mkpart primary linux-swap -8GiB 100%
+  # parted /dev/sda -- mkpart ESP fat32 1MiB 512MiB
+  # parted /dev/sda -- set 3 esp
+  # mkfs.ext4 -L nixos /dev/sda1
+  # mkswap -L /dev/sda2
+  # mkfs.fat -F 32 -n boot /dev/sda3
 #+end_src
 
 *** Legacy
@@ -85,28 +86,28 @@ This will depend on the host chosen.
 - No swap: Ignore line 3 and 5
 
 #+begin_src
-# parted /dev/sda -- mklabel msdos
-# parted /dev/sda -- mkpart primary 1MiB -8GiB
-# parted /dev/sda -- mkpart primary linux-swap -8GiB 100%
-# mkfs.ext4 -L nixos /dev/sda1
-# mkswap -L /dev/sda2
+  # parted /dev/sda -- mklabel msdos
+  # parted /dev/sda -- mkpart primary 1MiB -8GiB
+  # parted /dev/sda -- mkpart primary linux-swap -8GiB 100%
+  # mkfs.ext4 -L nixos /dev/sda1
+  # mkswap -L /dev/sda2
 #+end_src
 
 ** Installation
 *** UEFI
 *In these commands*
-- Partition with label ... to ...
+- Mount partition with label ... on ...
   - "nixos" -> ~/mnt~
   - "boot" -> ~/mnt/boot~
 #+begin_src
-# mount /dev/disk/by-label/nixos /mnt
-# mkdir -p /mnt/boot
-# mount /dev/disk/by-label/boot /mnt/boot
+  # mount /dev/disk/by-label/nixos /mnt
+  # mkdir -p /mnt/boot
+  # mount /dev/disk/by-label/boot /mnt/boot
 #+end_src
 
 *** Legacy
 #+begin_src
-# mount /dev/disk/by-label/nixos /mnt
+  # mount /dev/disk/by-label/nixos /mnt
 #+end_src
 
 *** Mounting Extras
@@ -117,8 +118,8 @@ This will depend on the host chosen.
 - If storage has no label:
   - ~mount /dev/disk/by-uuid/ssd2 /mnt/ssd~
 #+begin_src
-# mkdir -p /mnt/ssd
-# mount /dev/disk/by-label/ssd2 /mnt/ssd
+  # mkdir -p /mnt/ssd
+  # mount /dev/disk/by-label/ssd2 /mnt/ssd
 #+end_src
 
 *** Generate
@@ -129,27 +130,27 @@ This will depend on the host chosen.
   - If you are me, you don't need to do this. Hardware-configuration.nix already in flake.
 - Clone repository
 #+begin_src
-# swapon /dev/sda2
-# nixos-generate-config --root /mnt
-# nix-env -iA nixos.git
-# git clone https://github.com/matthiasbenaets/nixos-config /mnt/etc/nixos/<name>
+  # swapon /dev/sda2
+  # nixos-generate-config --root /mnt
+  # nix-env -iA nixos.git
+  # git clone https://github.com/matthiasbenaets/nixos-config /mnt/etc/nixos/<name>
 
-Optional if you are not me
-# cp /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/nixos-config/hosts/<host>/.
+  Optional if you are not me
+  # cp /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/nixos-config/hosts/<host>/.
 #+end_src
 
 *** Possible Extra Steps
 1. Switch specific host hardware-configuration.nix with generated ~/mnt/etc/nixos/hardware-configuration.nix~
 2. Change existing network card name with the one in your system
-   - Look in generated hardware-configuration.nixos
+   - Look in generated hardware-configuration.nix
    - Or enter ~$ ip a~
 3. Change username in flake.nix
 4. Set a ~users.users.${user}.initialPassword = ...~
    - Not really recommended. It's maybe better to follow last steps
-5. If you are planning on using default2.nix doom emacs, don't forget to rebuild after the initial installation when you link to this nix file.
-   - Don't forget to change the flake location in flake.nix
+5. If you are planning on using the native.nix doom emacs, don't forget to rebuild after the initial installation when you link to this nix file.
    - This is because userActivationScript is used for the setup and some locations are partially hardcoded
    - It will automatically install if ~~/.emacs.d~ does not exist
+     - If this dir already exist, move or delete it.
 
 *** Install
 *In these commands*
@@ -160,8 +161,8 @@ Optional if you are not me
   - laptop
   - vm
 #+begin_src
-# cd /mnt/etc/nixos/<name>
-# nixos-install --flake .#<host>
+  # cd /mnt/etc/nixos/<name>
+  # nixos-install --flake .#<host>
 #+end_src
 
 ** Finalization
@@ -176,16 +177,16 @@ Optional if you are not me
       - login as user
 4. Optional:
    - ~$ sudo mv <location of cloned directory> <prefered location>~
-   - ~$ sudo chown -R <user>:users <new directory>~
-   - ~$ sudo rm /etc/nixos/configuration.nix~
+   - ~$ sudo chown -R <user>:users <new directory location>~
+   - ~$ sudo rm /etc/nixos/configuration.nix~ - This is done because in the past it would auto update this config if you would have auto update in your configuration.
    - or just clone flake again do apply same changes.
 5. Dual boot:
    - OSProber probably did not find your Windows partion after the first install
    - There is a high likelyhood it will find it after:
-     - ~$ cd <repo directory>~
-     - ~$ sudo nixos-rebuild switch --flake .#<host>~
+     - ~$ sudo nixos-rebuild switch --flake <config path>#<host>~
 6. Rebuilds:
-   - ~<flakelocation>$ sudo nixos-rebuild switch --flake .#<host>~
+   - ~$ sudo nixos-rebuild switch --flake <config path>#<host>~
+   - For example ~$ sudo nixos-rebuild switch --flake ~/.setup#matthias~
 
 * Nix Installation Guide
 This flake currently has *1* host
@@ -193,7 +194,7 @@ This flake currently has *1* host
 
 The Linux distribution must have the nix package manager installed.
 ~$ sh <(curl -L https://nixos.org/nix/install) --daemon~
-To be able to have a easy reproducible setup when using the nix package manager on a non-NixOS system, home-manager is a wonderful tool to achieve this.
+To be able to have an easy reproducible setup when using the nix package manager on a non-NixOS system, home-manager is a wonderful tool to achieve this.
 So this is how it is set up in this flake.
 
 ** Installation
@@ -202,19 +203,19 @@ So this is how it is set up in this flake.
 - Get git
 - Clone repository
 - First build of the flake
-  - This is done so we can use the nix flake commands
+  - This is done so we can use the home-manager command is part of PATH.
 
 #+begin_src
-$ nix-env -iA nixpkgs.git
-$ git clone https://github.com/matthiasbenaets/nixos-config ~/.setup
-$ cd ~/.setup
-$ nix build --extra-experimental-features 'nix-command flakes' .#homeConfigurations.<host>.activationPackage
-$ ./result/activate
+  $ nix-env -iA nixpkgs.git
+  $ git clone https://github.com/matthiasbenaets/nixos-config ~/.setup
+  $ cd ~/.setup
+  $ nix build --extra-experimental-features 'nix-command flakes' .#homeConfigurations.<host>.activationPackage
+  $ ./result/activate
 #+end_src
 
 *** Rebuild
 Since home-manager is now a valid command we can rebuild the system using this command. In this example it is build from inside the flake directory:
-- ~$ home-manager switch --flake .#<host>~
+- ~$ home-manager switch --flake <config path>#<host>~
 This will rebuild the configuration and automatically activate it.
 
 ** Finalization
@@ -231,7 +232,7 @@ This flake currently has *1* host
   1. macbook
 
 The Apple computer must have the nix package manager installed.
-~$ sh <(curl -L https://nixos.org/nix/install)~
+In terminal run command: ~$ sh <(curl -L https://nixos.org/nix/install)~
 
 ** Setup
 *In these commands*
@@ -239,8 +240,8 @@ The Apple computer must have the nix package manager installed.
 - Allow experimental features to use flakes
 
 #+begin_src
-$ mkdir ~/.config/nix
-$ echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
+  $ mkdir ~/.config/nix
+  $ echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
 #+end_src
 
 ** Installation
@@ -252,17 +253,17 @@ $ echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
   - This is done because the darwin command is not yet available
 
 #+begin_src
-$ nix-env -iA nixpkgs.git
-$ git clone https://github.com/matthiasbenaets/nixos-config ~/.setup
-$ cd ~/.setup
-$ nix build .#darwinConfigurations.<host>.system
-$ ./result/sw/bin/darwin-rebuild switch --flake .#<host>
+  $ nix-env -iA nixpkgs.git
+  $ git clone https://github.com/matthiasbenaets/nixos-config ~/.setup
+  $ cd ~/.setup
+  $ nix build .#darwinConfigurations.<host>.system
+  $ ./result/sw/bin/darwin-rebuild switch --flake .#<host>
 #+end_src
 
 ~/result~ is located depending on where you build the system.
 
 *** Rebuild
-Since darwin is now added to the PATH, you can build it from anywhere in the system. In this example it is rebuild from inside the flake directory:
+Since darwin is now added to the PATH, you can build it from anywhere in the system. In this example it is rebuilt from inside the flake directory:
 - ~$ darwin-rebuild switch --flake .#<host>~
 This will rebuild the configuration and automatically activate it.
 

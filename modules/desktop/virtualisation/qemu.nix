@@ -32,7 +32,7 @@
       virt-viewer
       qemu
       OVMF
-      gvfs                                    # Used for shared folders between linux and windows
+      gvfs                                    # Used for shared folders between Linux and Windows
     ];
   };
 

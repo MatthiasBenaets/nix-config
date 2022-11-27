@@ -18,3 +18,7 @@ pkgs.appimageTools.wrapType2 {
 # Rather than using nix-shell, it better to run $ nix build -f app.nix
 # and move the result symlink to your desired location or in a location within path.
 #
+# An even better solution is to install a package called "appimage-run".
+# You will then be able to $ appimage-run <appimage> and start it without issues.
+# Personally I recommend this solution.
+#

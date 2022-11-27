@@ -16,7 +16,6 @@
 {
   imports =
     [
-      #../../modules/desktop/bspwm/home.nix    # Window Manager
       ../../modules/desktop/hyprland/home.nix  # Window Manager
     ];
 

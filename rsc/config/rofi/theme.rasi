@@ -46,9 +46,7 @@ padding: 4px 8px;
 
 listview {
 columns: 1;
-dynamic: true;
-fixed-height: false;
-lines: 12;
+lines: 6;
 padding: 4px 0px;
 scrollbar: true;
 }

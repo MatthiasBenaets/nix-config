@@ -1,5 +1,5 @@
 #
-#  Specific system configuration settings for macbook
+#  Specific system configuration settings for MacBook
 #
 #  flake.nix
 #   └─ ./darwin
@@ -84,9 +84,7 @@
         yabai -m rule --add app='Activity Monitor' manage=off layer=above
         yabai -m rule --add app='Finder' manage=off layer=above
         yabai -m rule --add app='^System Information$' manage=off layer=above
-        #yabai -m rule --add=
-        #yabai -m rule --add=
-      '';                                 # Specific rules for if it is managed and on which layer
+      '';                                 # Specific rules for what is managed and layered.
     };
     skhd = {                              # Hotkey daemon
       enable = true;

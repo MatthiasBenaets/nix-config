@@ -3,6 +3,7 @@
 #+author: Matthias Benaets
 
 #+attr_org: :width 300
+#+attr_html: :width 300
 [[file:rsc/Nix-Darwin.svg]]
 
 * Nix-Darwin
@@ -34,25 +35,25 @@ If you would also like to configure these packages using their options, it's rec
 - Nix-Darwin can be installed by using the commands below:
 
 #+begin_src
-$ nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-$ ./result/bin/darwin-installer
+  $ nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
+  $ ./result/bin/darwin-installer
 #+end_src
 
 - The script above will not take care of files in ~/etc~. If, after the installation, you get prompted that the script was not able to create a symlink in ~/etc~, it's probably because the file already exists. In this case its best to ~# mv~. For example:
 
 #+begin_src
-# mv /etc/bashrc /etc/bashrc.orig
-$ darwin-rebuild switch
+  # mv /etc/bashrc /etc/bashrc.orig
+  $ darwin-rebuild switch
 #+end_src
 
 ** Declaring Packages
 *** Links
-- [[https://search.nixos.org/packages][Packages]]: Don't forget to check that the package is available for your system
+- [[https://search.nixos.org/packages][Packages]]: Don't forget to check that the package is available for your system: x86_64-darwin (older MacBooks) or aarch64-darwin (Apple silicon).
 - [[https://lnl7.github.io/nix-darwin/manual/index.html][Options]]
 - ~$ man 5 configuration.nix~
 
 *** Declaring Packages
-After installation a ~darwin-configuation.nix~ file will be created in ~~/.nixpkgs/~
+After installation a ~darwin-configuation.nix~ file will be created in ~/Users/<user>/.nixpkgs~
 #+begin_src nix
   { pkgs, ... }:
   {
@@ -71,8 +72,9 @@ After installation a ~darwin-configuation.nix~ file will be created in ~~/.nixpk
 - ~$ darwin-rebuild switch~
 
 *** Running apps
-- Apps will be installed in ~/nix/store~ but if a .app file is available, it can also be found in ~~/Applications~
-- From here you can ~$ ln -s ~/Applications/Nix Apps/<name>.app /Applications~
+- In the past nix-darwin *.app files where places in ~/Users/<user>/Applications~
+- Now nix-darwin should create a "Nix App" dir inside ~/Applications~, so symlinking is no longer required.
+- They should all become available in the Launchpad.
 - If your app is not available:
 
 #+begin_src
@@ -150,13 +152,16 @@ nix = {
 *** Setup
 **** Initial
 *As a user*
-- Add the channel: *need to be run with root privileges if you want to us the NixOS Module*
+- Add the channel:
   - ~$ nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager~
   - ~$ nix-channel --add https://github.com/nix-community/home-manager/archive/release-21.11.tar.gz home-manager~
 - ~$ nix-channel --update~
 - Just to be sure, relog.
 
 **** Standalone
+- If installation give NIX-PATH errors
+  - ~$ sudo nix-collect-garbage -d~
+  - ~$ export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}~
 - Installation:
   - ~$ nix-shell ‘<home-manager>’ -A install~
 - Configuration file:
@@ -199,7 +204,6 @@ nix = {
 *** Applying
 - ~$ home-manager switch~
 
-** Extras
 * Flakes
 ** Introduction
 - Flakes are an "upcoming feature" of the Nix package manager.
@@ -243,7 +247,7 @@ $ echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
     description = "A basic flake";
 
     inputs = {
-      nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable"; #nixpkgs-21.11-darwin
+      nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable"; #nixpkgs-22.05-darwin
       darwin.url = "github:lnl7/nix-darwin/master";
       darwin.inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -315,7 +319,7 @@ $ ./result/sw/bin/darwin-rebuild switch --flake .#<host>
 
 **** Build
 *a ".(#)" will just build host found in location*
-*specify host with ".#<host>" appended*
+*specify host with "<config path>#<host>" appended*
 - ~$ darwin-rebuild build --flake .#~
 or build and automatically switch
 - ~$ darwin-rebuild switch --flake .#~
@@ -336,26 +340,31 @@ or build and automatically switch
       let
         #variables
         system = "x86_64-darwin";
+        pkgs = nixpkgs.legacyPackages.system.${system};
       in {
         #other outputs
-        hmConfig = {
+        homeManagerConfigurations = {
           <user> = home-manager.lib.homeManagerConfiguration {
-            inherit system
-            username = “<user>”;
-            homeDirectory = “/User/<user>”;
-            #stateVersion = "22.05";  # If there is any complaining about differing stateVersions, specifically state here.
-            configuration = {
-              imports = [
-                <path to home.nix>
-              ];
-            };
+            inherit pkgs;
+            extraSpecialArgs = { inherit <variables>; };
+            modules = [
+              </relative/path/to/home.nix>
+              {
+                home = {
+                  username = “<user>”;
+                  homeDirectory = “/Users/<user>”;
+                  packages = [ pkgs.home-manager ];
+                  stateVersion = "22.05";
+                };
+              }
+            ];
           };
         };
       };
   }
 #+end_src
 
-***** Inside nixosConfigurations
+***** Inside darwinConfigurations
 #+begin_src nix
   {
     inputs = {
@@ -392,12 +401,14 @@ or build and automatically switch
 **** Build
 ***** Seperate
 *This will build a directory with everything home-manager needs. An activation script is also located inside this dir*
-- ~$ nix build .#hmConfig.<user>.activationPackage~
+- ~$ nix build .#homeManagerConfigurations.<user>.activationPackage~
 - ~$ ./result/activate~
+Since home-manager is not installed, from now you can rebuild with:
+- ~$ home-manager switch --flake <config path>#<host>~
 
 ***** Inside nixosConfiguraitons
 *Can be build with default rebuild command*
-- ~$ sudo nixos-rebuild switch --flake .#<host>~
+- ~$ sudo darwin-rebuild switch --flake .#<host>~
 
 ** Updating
 *This will update the flake.lock file*

@@ -36,7 +36,7 @@
   # xkb: Use xkeyboard
   # forever: Keep listening for connection after disconnect
   # loop100: Loop to restart service but wait 100ms
-  # auth: X authority file location so vnc also works from displaymanager (lightdm)
+  # auth: X authority file location so vnc also works from display manager (lightdm)
   # display: Which display to show. Even with multiple monitors it's 0
-  # clip: Only show specific monitor using xinerama<displaynumber> or pixel coordinated you can find using $ xrandr -q. Can be removed to show all.
+  # clip: Only show specific monitor using xinerama<displaynumber> or pixel coordinates you can find using $ xrandr -q. Can be removed to show all.
 } 

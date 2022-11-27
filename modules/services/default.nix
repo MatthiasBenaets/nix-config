@@ -21,4 +21,4 @@
 ]
 
 # flameshot, picom, polybar and sxhkd are pulled from desktop module
-# redshift temporarely disables
+# redshift and media temporarely disables

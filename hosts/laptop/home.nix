@@ -7,8 +7,8 @@
 #   │       └─ home.nix *
 #   └─ ./modules
 #       └─ ./desktop
-#           └─ ./hyprland
-#              └─ hyprland.nix
+#           └─ ./bspwm
+#              └─ home.nix
 #
 
 { pkgs, ... }:

@@ -1,15 +1,6 @@
 #
 #  Sway configuration
 #
-#  flake.nix
-#   ├─ ./hosts
-#   │   └─ ./laptop
-#   │       └─ default.nix
-#   └─ ./modules
-#       └─ ./desktop
-#           └─ ./sway
-#               └─ default.nix *
-#
 
 { config, lib, pkgs, ... }:
 
@@ -35,7 +26,7 @@
       enable = true;
       extraPackages = with pkgs; [
         autotiling      # Tiling Script
-        ##swayidle        # Idle Management Daemon
+        ##swayidle      # Idle Management Daemon
         wev             # Input viewer
         wl-clipboard    # Commandline Clipboard #alternative clipman/wayclip
         #kanshi         # Autorandr #not needed with single laptopscreen. need to find something like arandr
@@ -44,9 +35,9 @@
       ];
     };
   };
-  networking.firewall.allowedTCPPorts = [ 5900 ];   # Used for vnc
+  networking.firewall.allowedTCPPorts = [ 5900 ]; # Used for vnc
 
-  xdg.portal = {                                  # Required for flatpak with windowmanagers
+  xdg.portal = {                                  # Required for flatpak with window managers
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };

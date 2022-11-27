@@ -1,6 +1,6 @@
 #
-# Doom Emacs: home-manager alternative in "home.nix". Personally not a fan of github:nix-community/nix-doom-emacs due to performance issues
-# recommended to comment out this part on first install because script will cause issues. It your want to use doom emacs, use the correct location or change in script
+# Doom Emacs: home-manager alternative below. Personally not a fan of github:nix-community/nix-doom-emacs due to performance issues
+# Recommended to comment out this import first install because script will cause issues. It your want to use doom emacs, use the correct location or change in script
 #
 # flake.nix
 #   ├─ ./hosts
@@ -17,7 +17,7 @@
 {
   services.emacs.enable = true;
 
-  system.userActivationScripts = {                    # Installation script every time nixos-rebuild is run. So not during initial install.
+  system.userActivationScripts = {               # Installation script every time nixos-rebuild is run. So not during initial install.
     doomEmacs = {
       text = ''
         source ${config.system.build.setEnvironment}
@@ -32,7 +32,7 @@
         else
           $DOOM/bin/doom sync
         fi
-      '';
+      '';                                        # It will always sync when rebuild is done. So changes will always be applied.
     };
   };
   
@@ -41,7 +41,7 @@
     ripgrep
     coreutils
     fd
-  ];                                                 # Dependencies
+  ];                                             # Dependencies
 }
 
 # HOME MANAGER ALTERNATIVE

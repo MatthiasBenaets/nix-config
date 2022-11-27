@@ -1,9 +1,9 @@
 #
-#  Sway configuration
+#  Hyprland configuration
 #
 #  flake.nix
 #   ├─ ./hosts
-#   │   └─ ./laptop
+#   │   └─ ./<host>
 #   │       └─ default.nix
 #   └─ ./modules
 #       └─ ./desktop
@@ -23,7 +23,7 @@
       if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
         exec Hyprland
       fi
-    '';                                   # Will automatically open sway when logged into tty1
+    '';                                   # Will automatically open Hyprland when logged into tty1
     variables = {
       XDG_CURRENT_DESKTOP="Hyprland";
       XDG_SESSION_TYPE="wayland";

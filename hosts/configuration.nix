@@ -7,7 +7,7 @@
 #   └─ ./modules
 #       ├─ ./editors
 #       │   └─ ./emacs
-#       │      └─ default.nix
+#       │      └─ native.nix
 #       └─ ./shell
 #           └─ ./default.nix
 #
@@ -37,7 +37,7 @@
 
   console = {
     font = "Lat2-Terminus16";
-    keyMap = "us";	                    # or us/azerty/etc
+    keyMap = "us";	                        # or us/azerty/etc
   };
 
   security.rtkit.enable = true;
@@ -68,7 +68,7 @@
       EDITOR = "nvim";
       VISUAL = "nvim";
     };
-    systemPackages = with pkgs; [           # Default packages install system-wide
+    systemPackages = with pkgs; [           # Default packages installed system-wide
       #vim
       #git
       killall

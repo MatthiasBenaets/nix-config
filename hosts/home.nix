@@ -9,9 +9,7 @@
 #       │   └─ default.nix
 #       ├─ ./programs
 #       │   └─ default.nix
-#       ├─ ./services
-#       │   └─ default.nix
-#       └─ ./shell
+#       └─ ./services
 #           └─ default.nix
 #
 
@@ -37,7 +35,7 @@
       # Video/Audio
       feh               # Image Viewer
       mpv               # Media Player
-      pavucontrol       # Audio control
+      pavucontrol       # Audio Control
       plex-media-player # Media Player
       vlc               # Media Player
       stremio           # Media Streamer
@@ -49,20 +47,20 @@
       remmina           # XRDP & VNC Client
 
       # File Management
-      okular            # PDF viewer
+      okular            # PDF Viewer
       gnome.file-roller # Archive Manager
       pcmanfm           # File Manager
-      rsync             # Syncer $ rsync -r dir1/ dir2/
-      unzip             # Zip files
-      unrar             # Rar files
+      rsync             # Syncer - $ ssync -r dir1/ dir2/
+      unzip             # Zip Files
+      unrar             # Rar Files
 
       # General configuration
       #git              # Repositories
       #killall          # Stop Applications
       #nano             # Text Editor
-      #pciutils         # Computer utility info
+      #pciutils         # Computer Utility Info
       #pipewire         # Sound
-      #usbutils         # USB utility info
+      #usbutils         # USB Utility Info
       #wacomtablet      # Wacom Tablet
       #wget             # Downloader
       #zsh              # Shell
@@ -71,7 +69,7 @@
       #alacritty        # Terminal Emulator
       #dunst            # Notifications
       #doom emacs       # Text Editor
-      #libnotify        # Dep for Dunst
+      #libnotify        # Dependency for Dunst
       #neovim           # Text Editor
       #rofi             # Menu
       #rofi-power-menu  # Power Menu
@@ -80,9 +78,9 @@
       #
       # Xorg configuration
       #xclip            # Console Clipboard
-      #xorg.xev         # Input viewer
+      #xorg.xev         # Input Viewer
       #xorg.xkill       # Kill Applications
-      #xorg.xrandr      # Screen settings
+      #xorg.xrandr      # Screen Settings
       #xterm            # Terminal
       #
       # Xorg home-manager
@@ -97,7 +95,7 @@
       #slurp            # Region Selector
       #swappy           # Screenshot Editor
       #swayidle         # Idle Management Daemon
-      #wev              # Input viewer
+      #wev              # Input Viewer
       #wl-clipboard     # Console Clipboard
       #
       # Wayland home-manager
@@ -133,7 +131,7 @@
     ];
     file.".config/wall".source = ../modules/themes/wall;
     file.".config/wall.mp4".source = ../modules/themes/wall.mp4;
-    pointerCursor = {                         # This will set cursor systemwide so applications can not choose their own
+    pointerCursor = {                         # This will set cursor system-wide so applications can not choose their own
       #name = "Dracula-cursors";
       name = "Catppuccin-Mocha-Dark-Cursors";
       #package = pkgs.dracula-theme;
