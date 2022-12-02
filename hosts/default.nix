@@ -26,7 +26,14 @@ in
 {
   desktop = lib.nixosSystem {                               # Desktop profile
     inherit system;
-    specialArgs = { inherit inputs user location; }; # Pass flake variable
+    specialArgs = {
+      inherit inputs user location;
+      host = {
+        hostName = "desktop";
+        mainMonitor = "HDMI-A-3";
+        secondMonitor = "DP-1";
+      };
+    };                                                      # Pass flake variable
     modules = [                                             # Modules that are used.
       nur.nixosModules.nur
       hyprland.nixosModules.default
@@ -36,7 +43,14 @@ in
       home-manager.nixosModules.home-manager {              # Home-Manager module that is used.
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = { inherit user doom-emacs; };  # Pass flake variable
+        home-manager.extraSpecialArgs = {
+          inherit user doom-emacs;
+          host = {
+            hostName = "desktop";
+            mainMonitor = "HDMI-A-3";
+            secondMonitor = "DP-1";
+          };
+        };                                                  # Pass flake variable
         home-manager.users.${user} = {
           imports = [(import ./home.nix)] ++ [(import ./desktop/home.nix)];
         };
@@ -46,7 +60,13 @@ in
 
   laptop = lib.nixosSystem {                                # Laptop profile
     inherit system;
-    specialArgs = { inherit inputs user location hyprland; };
+    specialArgs = {
+      inherit inputs user location hyprland;
+      host = {
+        hostName = "desktop";
+        mainMonitor = "eDP-1";
+      };
+    };
     modules = [
       hyprland.nixosModules.default
       ./laptop
@@ -55,7 +75,13 @@ in
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = { inherit user; };
+        home-manager.extraSpecialArgs = {
+          inherit user;
+          host = {
+            hostName = "desktop";
+            mainMonitor = "eDP-1";
+          };
+        };
         home-manager.users.${user} = {
           imports = [(import ./home.nix)] ++ [(import ./laptop/home.nix)];
         };
@@ -65,7 +91,13 @@ in
 
   vm = lib.nixosSystem {                                    # VM profile
     inherit system;
-    specialArgs = { inherit inputs user location; };
+    specialArgs = {
+      inherit inputs user location;
+      host = {
+        hostName = "vm";
+        mainMonitor = "Virtual-1";
+      };
+    };
     modules = [
       ./vm
       ./configuration.nix
@@ -73,7 +105,13 @@ in
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = { inherit user; }; 
+        home-manager.extraSpecialArgs = {
+          inherit user;
+          host = {
+            hostName = "vm";
+            mainMonitor = "Virtual-1";
+          };
+        };
         home-manager.users.${user} = {
           imports = [(import ./home.nix)] ++ [(import ./vm/home.nix)];
         };

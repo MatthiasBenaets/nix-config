@@ -80,6 +80,19 @@
   };
 
   services = {
+    printing = {                                # Printing and drivers for TS5300
+      enable = true;
+      #drivers = [ pkgs.cnijfilter2 ];          # There is the possibility cups will complain about missing cmdtocanonij3. I guess this is just an error that can be ignored for now. Also no longer need required since server uses ipp to share printer over network.
+    };
+    avahi = {                                   # Needed to find wireless printer
+      enable = true;
+      nssmdns = true;
+      publish = {                               # Needed for detecting the scanner
+        enable = true;
+        addresses = true;
+        userServices = true;
+      };
+    };
     pipewire = {                            # Sound
       enable = true;
       alsa = {
