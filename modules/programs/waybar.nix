@@ -117,7 +117,7 @@
           modules-right = [ "network" "cpu" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" ];
 
           "custom/pad" = {
-            format = " ";
+            format = "      ";
             tooltip = false;
           };
           "custom/menu" = {
@@ -164,12 +164,12 @@
             on-click = "activate";
           };
           clock = {
-            format = "{:%b %d %H:%M}";
+            format = "{:%b %d %H:%M}  ";
             tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
             #format-alt = "{:%A, %B %d, %Y} ";
           };
           cpu = {
-            format = "{usage}% <span font='11'></span>";
+            format = " {usage}% <span font='11'></span> ";
             interval = 1;
           };
           disk = {
@@ -203,13 +203,13 @@
             #on-click-right = "${pkgs.alacritty}/bin/alacritty -e nmtui";
           };
           pulseaudio = {
-            format = "<span font='11'>{icon}</span> {volume}% {format_source}";
-            format-bluetooth = "<span font='11'>{icon}</span> {volume}% {format_source}";
-            format-bluetooth-muted = "<span font='11'></span> {volume}% {format_source}";
-            format-muted = "<span font='11'></span> {format_source}";
+            format = "<span font='11'>{icon}</span> {volume}% {format_source} ";
+            format-bluetooth = "<span font='11'>{icon}</span> {volume}% {format_source} ";
+            format-bluetooth-muted = "<span font='11'></span> {volume}% {format_source} ";
+            format-muted = "<span font='11'></span> {format_source} ";
             #format-source = "{volume}% <span font='11'></span>";
-            format-source = "<span font='10'></span>";
-            format-source-muted = "<span font='11'></span>";
+            format-source = "<span font='10'></span> ";
+            format-source-muted = "<span font='11'> </span> ";
             format-icons = {
               default = [ "" "" "" ];
               headphone = "";
@@ -244,7 +244,7 @@
           modules-right = [ "pulseaudio" "custom/sink" "custom/pad" "clock"];
 
           "custom/pad" = {
-            format = " ";
+            format = "      ";
             tooltip = false;
           };
           "custom/menu" = {
@@ -279,13 +279,13 @@
             #format-alt = "{:%A, %B %d, %Y} ";
           };
           pulseaudio = {
-            format = "<span font='11'>{icon}</span> {volume}% {format_source}";
-            format-bluetooth = "<span font='11'>{icon}</span> {volume}% {format_source}";
-            format-bluetooth-muted = "<span font='11'></span> {volume}% {format_source}";
-            format-muted = "<span font='11'></span> {format_source}";
-            #format-source = "{volume}% <span font='11'></span>";
-            format-source = "<span font='10'></span>";
-            format-source-muted = "<span font='11'></span>";
+            format = "<span font='11'>{icon}</span> {volume}% {format_source} ";
+            format-bluetooth = "<span font='11'>{icon}</span> {volume}% {format_source} ";
+            format-bluetooth-muted = "<span font='11'></span> {volume}% {format_source} ";
+            format-muted = "<span font='11'></span> {format_source} ";
+            #format-source = "{volume}% <span font='11'></span> ";
+            format-source = "<span font='10'></span> ";
+            format-source-muted = "<span font='11'></span> ";
             format-icons = {
               default = [ "" "" "" ];
               headphone = "";

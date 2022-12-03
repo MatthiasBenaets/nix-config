@@ -147,7 +147,8 @@ let
         monitor=${toString mainMonitor},1920x1080@60,1920x0,1
         monitor=${toString secondMonitor},1920x1080@60,0x0,1
 
-        workspace=${toString mainMonitor}
+        workspace=${toString mainMonitor},1
+        workspace=${toString secondMonitor},6
 
         wsbind=1,${toString mainMonitor}
         wsbind=2,${toString mainMonitor}

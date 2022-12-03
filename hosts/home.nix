@@ -104,6 +104,7 @@
       #waybar           # Bar
       #
       # Desktop
+      #ansible          # Automation
       #blueman          # Bluetooth
       #deluge           # Torrents
       #discord          # Chat
@@ -119,6 +120,7 @@
       #prismlauncher    # MC Launcher
       #steam            # Games
       #simple-scan      # Scanning
+      #sshpass          # Ansible dependency
       # 
       # Laptop
       #blueman          # Bluetooth

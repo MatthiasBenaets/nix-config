@@ -22,6 +22,8 @@
   home = {                                # Specific packages for desktop
     packages = with pkgs; [
       # Applications
+      ansible           # Automation
+      sshpass           # Ansible Dependency
       handbrake         # Encoder
       hugo              # Static Website Builder
       mkvtoolnix        # Matroska Tools
