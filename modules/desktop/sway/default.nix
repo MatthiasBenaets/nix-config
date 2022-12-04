@@ -26,16 +26,13 @@
       enable = true;
       extraPackages = with pkgs; [
         autotiling      # Tiling Script
-        ##swayidle      # Idle Management Daemon
         wev             # Input viewer
         wl-clipboard    # Commandline Clipboard #alternative clipman/wayclip
-        #kanshi         # Autorandr #not needed with single laptopscreen. need to find something like arandr
+        wlr-randr
         xwayland
-        wayvnc
       ];
     };
   };
-  networking.firewall.allowedTCPPorts = [ 5900 ]; # Used for vnc
 
   xdg.portal = {                                  # Required for flatpak with window managers
     enable = true;

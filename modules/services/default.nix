@@ -12,13 +12,11 @@
 
 [
   ./dunst.nix
-  #./flameshot.nix
-  #./picom.nix
-  #./polybar.nix
-  #./sxhkd.nix
+  ./flameshot.nix
+  ./picom.nix
+  ./polybar.nix
+  ./sxhkd.nix
   ./udiskie.nix
-  #./redshift.nix
 ]
 
-# flameshot, picom, polybar and sxhkd are pulled from desktop module
 # redshift and media temporarely disables

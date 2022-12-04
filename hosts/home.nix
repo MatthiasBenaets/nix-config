@@ -97,6 +97,8 @@
       #swayidle         # Idle Management Daemon
       #wev              # Input Viewer
       #wl-clipboard     # Console Clipboard
+      #wlr-randr        # Screen Settings
+      #xwayland         # X for Wayland
       #
       # Wayland home-manager
       #pamixer          # Pulse Audio Mixer
