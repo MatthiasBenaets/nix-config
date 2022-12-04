@@ -59,12 +59,6 @@ let
   "${extra}";
 in
 {
-  imports = [
-    ../../services/flameshot.nix
-    ../../services/picom.nix
-    ../../services/polybar.nix
-    ../../services/sxhkd.nix
-  ];
   xsession = {
     enable = true;
     numlock.enable = true;

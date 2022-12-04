@@ -99,19 +99,22 @@
           color: #9ece6a;
         }
       '';
-      settings = {
+      settings = with host; {
         Main = {
           layer = "top";
           position = "top";
           height = 16;
-          output = with host; [
+          output = [
             "${mainMonitor}"
           ];
           tray = { spacing = 5; };
           #modules-center = [ "clock" ];
-          #modules-left = [ "sway/workspaces" "sway/window" "sway/mode" ];
-          modules-left = [ "custom/menu" "wlr/workspaces" ];
-          #modules-right = [ "cpu" "memory" "disk" "pulseaudio" "battery" "network" "tray" ];
+          modules-left = with config; 
+            if programs.hyprland.enable == true then 
+              [ "custom/menu" "wlr/workspaces" ] 
+            else if programs.sway.enable == true then
+              [ "sway/workspaces" "sway/window" "sway/mode" ]
+            else [];
           modules-right = [ "network" "cpu" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" ];
 
           "custom/pad" = {
@@ -231,11 +234,11 @@
             icon-size = 13;
           };
         };
-        Sec = {
+        Sec = if ( hostName == "desktop" ) then {
           layer = "top";
           position = "top";
           height = 16;
-          output = with host; [
+          output = [
             "${secondMonitor}"
           ];
           modules-left = [ "custom/menu" "wlr/workspaces" ];
@@ -303,7 +306,7 @@
             on-click = "$HOME/.config/waybar/script/sink.sh";
             tooltip = false;
           };
-        };
+        } else {};
       };
     };
     home.file.".config/waybar/script/sink.sh" = {              # Custom script: Toggle speaker/headset
