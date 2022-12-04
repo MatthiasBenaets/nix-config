@@ -46,9 +46,9 @@ in
         home-manager.extraSpecialArgs = {
           inherit user doom-emacs;
           host = {
-            hostName = "desktop";
-            mainMonitor = "HDMI-A-3";
-            secondMonitor = "DP-1";
+            hostName = "desktop";     #For Xorg iGPU  | Videocard 
+            mainMonitor = "HDMI-A-3"; #HDMIA3         | HDMI-A-1
+            secondMonitor = "DP-1";   #DP1            | DisplayPort-1
           };
         };                                                  # Pass flake variable
         home-manager.users.${user} = {

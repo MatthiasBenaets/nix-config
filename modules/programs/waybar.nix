@@ -2,7 +2,7 @@
 # Bar
 #
 
-{ config, lib, pkgs, ...}:
+{ config, lib, pkgs, host, ...}:
 
 {
   environment.systemPackages = with pkgs; [
@@ -104,10 +104,8 @@
           layer = "top";
           position = "top";
           height = 16;
-          output = [
-            #"eDP-1"
-            #"DP-2"
-            "HDMI-A-3"
+          output = with host; [
+            "${mainMonitor}"
           ];
           tray = { spacing = 5; };
           #modules-center = [ "clock" ];
@@ -237,8 +235,8 @@
           layer = "top";
           position = "top";
           height = 16;
-          output = [
-            "DP-1"
+          output = with host; [
+            "${secondMonitor}"
           ];
           modules-left = [ "custom/menu" "wlr/workspaces" ];
           modules-right = [ "pulseaudio" "custom/sink" "custom/pad" "clock"];

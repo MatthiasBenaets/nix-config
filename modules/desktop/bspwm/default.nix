@@ -11,8 +11,16 @@
 #               └─ default.nix *
 #
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, host, ... }:
 
+let
+  monitor = with host;
+    if hostName == "desktop" then
+      "${pkgs.xorg.xrandr}/bin/xrandr --output ${secondMonitor} --mode 1920x1080 --pos 0x0 --rotate normal --output ${mainMonitor} --primary --mode 1920x1080 --pos 1920x0 --rotate normal"
+    else if hostName == "laptop" || hostName == "vm" then
+      "${pkgs.xorg.xrandr}/bin/xrandr --mode 1920x1080 --pos 0x0 --rotate normal"
+    else false;
+in
 {
   programs.dconf.enable = true;
 
@@ -67,14 +75,7 @@
         #"amdgpu"
       #];
 
-      displayManager.sessionCommands = ''
-        ${pkgs.xorg.xrandr}/bin/xrandr --mode 1920x1080 --pos 0x0 --rotate normal
-      '';
-
-      #Desktop w/ iGPU
-      #displayManager.sessionCommands = ''
-        #${pkgs.xorg.xrandr}/bin/xrandr --output DP1 --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI3 --primary --mode 1920x1080 --pos 1920x0 --rotate normal
-      #'';
+      displayManager.sessionCommands = monitor;
 
       #Desktop w/ AMD GPU
       #displayManager.sessionCommands = ''
@@ -88,7 +89,6 @@
         #elif [[ $SCREEN -eq 3 ]]; then
         #  ${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-A-1 --primary --mode 1920x1080 --rotate normal --output DisplayPort-1 --mode 1920x1080 --rotate normal --left-of HDMI-A-1 --output HDMI-A-0 --mode 1280x1024 --rotate normal --right-of HDMI-A-1
         #fi
-
       #'';                                        # Settings for correct display configuration; This can also be done with setupCommands when X server start for smoother transition (if setup is static)
                                                   # Another option to research in future is arandr
       serverFlagsSection = ''

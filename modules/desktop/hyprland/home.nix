@@ -130,8 +130,11 @@ let
     bind=,XF86MonBrightnessUP,exec,${pkgs.light}/bin/light -A 5
 
     windowrule=float,^(Rofi)$
-    windowrule=float,title:^(Picture-in-Picture)$
     windowrule=float,title:^(Volume Control)$
+    windowrule=float,title:^(Picture-in-Picture)$
+    windowrule=pin,title:^(Picture-in-Picture)$
+    windowrule=move 75% 75% ,title:^(Picture-in-Picture)$
+    windowrule=size 24% 24% ,title:^(Picture-in-Picture)$
 
     exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
     #exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
@@ -142,8 +145,7 @@ let
 
   hyprlandConf = with host; builtins.replaceStrings ["MONITORS"]
     [
-      (if hostName == "desktop"
-      then ''
+      (if hostName == "desktop" then ''
         monitor=${toString mainMonitor},1920x1080@60,1920x0,1
         monitor=${toString secondMonitor},1920x1080@60,0x0,1
 
@@ -160,8 +162,7 @@ let
         wsbind=9,${toString secondMonitor}
         wsbind=10,${toString secondMonitor}
       ''
-      else if hostName == "laptop"
-      then ''
+      else if hostName == "laptop" || hostname == "vm" then ''
         monitor=${toString mainMonitor},1920x1080@60,0x0,1
       ''
       else false)
@@ -169,5 +170,6 @@ let
     "${confFile}";
 in
 {
-  xdg.configFile."hypr/hyprland.conf".text = "${hyprlandConf}";
+  #xdg.configFile."hypr/hyprland.conf".text = "${hyprlandConf}";
+  xdg.configFile."hypr/hyprland.conf".text = hyprlandConf;
 }

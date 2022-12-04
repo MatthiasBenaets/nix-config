@@ -22,8 +22,11 @@
     };
     systemPackages = with pkgs; [
       river
+      wev
+      wl-clipboard
       wlr-randr
       xdg-desktop-portal-wlr
+      xwayland
     ];
   };
 
