@@ -13,11 +13,6 @@
 { pkgs, ... }:
 
 {
-  imports =
-    [
-      ../modules/programs/alacritty.nix
-    ];
-
   home = {                                        # Specific packages for macbook
     packages = with pkgs; [
       # Terminal
@@ -27,9 +22,6 @@
   };
 
   programs = {
-    alacritty = {                                 # Terminal Emulator
-      enable = true;
-    };
     zsh = {                                       # Post installation script is run in configuration.nix to make it default shell
       enable = true;
       enableAutosuggestions = true;               # Auto suggest options and highlights syntax. It searches in history for options
