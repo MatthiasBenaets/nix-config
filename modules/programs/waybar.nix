@@ -109,9 +109,9 @@
           ];
           tray = { spacing = 5; };
           #modules-center = [ "clock" ];
-          modules-left = with config; 
-            if programs.hyprland.enable == true then 
-              [ "custom/menu" "wlr/workspaces" ] 
+          modules-left = with config;
+            if programs.hyprland.enable == true then
+              [ "custom/menu" "wlr/workspaces" ]
             else if programs.sway.enable == true then
               [ "sway/workspaces" "sway/window" "sway/mode" ]
             else [];
@@ -206,8 +206,8 @@
           pulseaudio = {
             format = "<span font='11'>{icon}</span> {volume}% {format_source} ";
             format-bluetooth = "<span font='11'>{icon}</span> {volume}% {format_source} ";
-            format-bluetooth-muted = "<span font='11'></span> {volume}% {format_source} ";
-            format-muted = "<span font='11'></span> {format_source} ";
+            format-bluetooth-muted = "<span font='11'>x</span> {volume}% {format_source} ";
+            format-muted = "<span font='11'>x</span> {format_source} ";
             #format-source = "{volume}% <span font='11'></span>";
             format-source = "<span font='10'></span> ";
             format-source-muted = "<span font='11'> </span> ";

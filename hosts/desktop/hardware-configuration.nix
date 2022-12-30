@@ -100,6 +100,7 @@
     useDHCP = false;                            # Deprecated
     hostName = "desktop";
     #networkmanager.enable = true;
+    enableIPv6 = false;
     interfaces = {
       enp2s0 = {                                # Change to correct network driver
         # useDHCP = true;                       # Disabled because fixed ip
@@ -111,7 +112,7 @@
       #wlp2s0.useDHCP = true;                   # Wireless card
     };
     defaultGateway = "192.168.0.1";
-    nameservers = [ "192.168.0.4" "1.1.1.1" ];  # Pi-Hole DNS with Cloudflare fallback
+    nameservers = [ "192.168.0.4" ];            # Pi-Hole DNS
     #nameservers = [ "1.1.1.1" "1.0.0.1" ];     # Cloudflare (when Pi-Hole is down)
   };
 }

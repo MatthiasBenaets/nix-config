@@ -33,7 +33,7 @@
 | *GTK Theme*     | Dracula           | Dracula           | /                 |
 | *Notifications* | Dunst             | Dunst             | /                 |
 | *Terminal*      | Alacritty         | Alacritty         | Alacritty         |
-| *Editor*        | Nvim + Doom Emacs | Nvim + Doom Emacs | Nvim + Doom Emacs |
+| *Editor*        | Nvim + Emacs      | Nvim + Emacs      | Nvim + Emacs      |
 | *Used by host*  | Desktop           | Laptop & VM       | Macbook           |
 There are some other desktop environments/window manager. Just link to correct default/home.nix in ~./hosts/<host>/default.nix~.
 There is also a general Nix config with hostname ~pacman~ that can be used on pretty much any disto.

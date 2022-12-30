@@ -136,10 +136,10 @@
     file.".config/wall".source = ../modules/themes/wall;
     file.".config/wall.mp4".source = ../modules/themes/wall.mp4;
     pointerCursor = {                         # This will set cursor system-wide so applications can not choose their own
-      #name = "Dracula-cursors";
-      name = "Catppuccin-Mocha-Dark-Cursors";
-      #package = pkgs.dracula-theme;
-      package = pkgs.catppuccin-cursors.mochaDark;
+      name = "Dracula-cursors";
+      #name = "Catppuccin-Mocha-Dark-Cursors";
+      package = pkgs.dracula-theme;
+      #package = pkgs.catppuccin-cursors.mochaDark;
       size = 16;
     };
     stateVersion = "22.05";

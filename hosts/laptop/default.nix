@@ -5,16 +5,13 @@
 #   ├─ ./hosts
 #   │   └─ ./laptop
 #   │        ├─ default.nix *
-#   │        └─ hardware-configuration.nix       
+#   │        └─ hardware-configuration.nix
 #   └─ ./modules
 #       ├─ ./desktop
 #       │   ├─ ./bspwm
 #       │   │   └─ default.nix
 #       │   └─ ./virtualisation
 #       │       └─ docker.nix
-#       ├─ ./modules
-#       │   └─ ./programs
-#       │       └─ waybar.nix
 #       └─ ./hardware
 #           └─ default.nix
 #

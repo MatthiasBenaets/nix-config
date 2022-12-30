@@ -31,7 +31,7 @@
   boot = {                                      # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
     #initrd.kernelModules = [ "amdgpu" ];       # Video drivers
-    
+
     loader = {                                  # For legacy boot:
       systemd-boot = {
         enable = true;
@@ -51,6 +51,7 @@
 
   environment = {                               # Packages installed system wide
     systemPackages = with pkgs; [               # This is because some options need to be configured.
+      nil
       discord
       #plex
       simple-scan
@@ -78,7 +79,7 @@
     (self: super: {
       discord = super.discord.overrideAttrs (
         _: { src = builtins.fetchTarball {
-          url = "https://discord.com/api/download?platform=linux&format=tar.gz"; 
+          url = "https://discord.com/api/download?platform=linux&format=tar.gz";
           sha256 = "1kwqn1xr96kvrlbjd14m304g2finc5f5ljvnklg6fs5k4avrvmn4";
         };}
       );

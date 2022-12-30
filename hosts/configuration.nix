@@ -16,7 +16,7 @@
 
 {
   imports =
-    [(import ../modules/editors/emacs/native.nix)] ++  # Native doom emacs instead of nix-community flake
+    #[(import ../modules/editors/emacs/native.nix)] ++  # Native doom emacs instead of nix-community flake
     ( import ../modules/shell );
 
   users.users.${user} = {                   # System User
@@ -37,7 +37,7 @@
 
   console = {
     font = "Lat2-Terminus16";
-    keyMap = "us";	                        # or us/azerty/etc
+    keyMap = "us";                          # or us/azerty/etc
   };
 
   security.rtkit.enable = true;
@@ -157,4 +157,3 @@
     stateVersion = "22.05";
   };
 }
-

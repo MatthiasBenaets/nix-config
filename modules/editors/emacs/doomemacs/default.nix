@@ -11,31 +11,24 @@
 #
 
 
-{ config, pkgs, ... }:
+{ config, pkgs, doom-emacs, ... }:
 
 {
+  imports = [ doom-emacs.hmModule ];
+
   services.emacs = {
     enable = true;
+    package = doom-emacs;
   };
 
-  programs.emacs = {
+  programs.doom-emacs = {
     enable = true;
+    doomPrivateDir = ./doom.d;
   };
 
-  home = {
-    #packages = with pkgs; [
-    #  ripgrep
-    #  coreutils
-    #  fd
-    #];
-    activation = {
-      emacs = ''
-        CONFIG="$HOME/.emacs.d"
-
-        if [ ! -d "$CONFIG" ]; then
-          git clone https://github.com/matthiasbenaets/emacs.d.git $CONFIG
-        fi
-      '';
-    };
-  };
+  home.packages = with pkgs; [
+    ripgrep
+    coreutils
+    fd
+  ];                                             # Dependencies
 }
