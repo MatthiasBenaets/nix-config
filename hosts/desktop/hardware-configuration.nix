@@ -18,19 +18,19 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "uas" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "uas" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel"];
   boot.extraModulePackages = with config.boot.kernelPackages; [ ];
 
   fileSystems."/" =
-    { #device = "/dev/disk/by-uuid/6ec8ce24-0535-4dce-9e71-9925938b807c";
+    { #device = "/dev/disk/by-uuid/80e0d316-954b-4959-8c5d-06be7255a036";
       device = "/dev/disk/by-label/nixos";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { #device = "/dev/disk/by-uuid/7791-9A11";
+    { #device = "/dev/disk/by-uuid/FCCC-9ECD";
       device = "/dev/disk/by-label/boot";
       fsType = "vfat";
     };
@@ -86,12 +86,12 @@
       in ["${automount_opts},uid=1000,gid=100,credentials=/home/matthias/smb"];
     };
 
-  swapDevices =
-    [ 
-      { #device = "/dev/disk/by-uuid/7d0c3f66-c6eb-413c-956f-dfdd8ceb0cae"; 
-        device = "/dev/disk/by-label/swap";
-      }
-    ];
+  #swapDevices =
+  #  [
+  #    { #device = "/dev/disk/by-uuid/7d0c3f66-c6eb-413c-956f-dfdd8ceb0cae";
+  #      device = "/dev/disk/by-label/swap";
+  #    }
+  #  ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
@@ -112,7 +112,7 @@
       #wlp2s0.useDHCP = true;                   # Wireless card
     };
     defaultGateway = "192.168.0.1";
-    nameservers = [ "192.168.0.4" ];            # Pi-Hole DNS
+    nameservers = [ "192.168.0.4" "1.1.1.1"];            # Pi-Hole DNS
     #nameservers = [ "1.1.1.1" "1.0.0.1" ];     # Cloudflare (when Pi-Hole is down)
   };
 }

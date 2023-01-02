@@ -19,7 +19,7 @@ let
 
     general {
       sensitivity=1
-      main_mod=SUPER
+      #main_mod=SUPER
       border_size=3
       gaps_in=5
       gaps_out=7
