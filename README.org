@@ -5,20 +5,26 @@
 #+attr_org: :width 600
 [[file:rsc/Header.svg]]
 
-* Table of Content :toc:
+* Table of Content
+:PROPERTIES:
+:TOC:      :include all :depth 3 :force (depth) :ignore (this) :local (nothing)
+:END:
+:CONTENTS:
 - [[#system-components][System Components]]
 - [[#nixos-installation-guide][NixOS Installation Guide]]
   - [[#partitioning][Partitioning]]
   - [[#installation][Installation]]
   - [[#finalization][Finalization]]
 - [[#nix-installation-guide][Nix Installation Guide]]
-  - [[#installation-1][Installation]]
-  - [[#finalization-1][Finalization]]
+  - [[#installation][Installation]]
+  - [[#finalization][Finalization]]
 - [[#nix-darwin-installation-guide][Nix-Darwin Installation Guide]]
   - [[#setup][Setup]]
-  - [[#installation-2][Installation]]
-  - [[#finalization-2][Finalization]]
+  - [[#installation][Installation]]
+  - [[#finalization][Finalization]]
+- [[#guides][Guides]]
 - [[#faq][FAQ]]
+:END:
 
 * System Components
 |                 | *NixOS - Wayland* | *NixOS - Xorg*    | *Darwin*          |
@@ -275,6 +281,13 @@ This will rebuild the configuration and automatically activate it.
    - ~Terminal/iTerm > Secure Keyboard Entry~
 3. Install XCode to get complete development environment.
    - ~$ xcode-select --install~
+
+* Guides
+- [[./nixos.org][NixOS general guide]]
+- [[./nix.org][Nix on other Linux distributions]]
+- [[./darwin.org][Nix on MacOS with Nix-Darwin]]
+- [[./contrib.org][Contribution to nixpkgs]]
+- [[./shell.org][Using nix shells]]
 
 * FAQ
 - What is NixOS?
