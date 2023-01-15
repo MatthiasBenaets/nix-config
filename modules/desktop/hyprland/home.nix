@@ -72,7 +72,7 @@ let
     bind=SUPER,Return,exec,${pkgs.alacritty}/bin/alacritty
     bind=SUPER,Q,killactive,
     bind=SUPER,Escape,exit,
-    bind=SUPER,E,exec,${pkgs.pcmanfm}/bin/pcmanfm
+    bind=SUPER,E,exec,${pkgs.cinnamon.nemo}/bin/nemo
     bind=SUPER,H,togglefloating,
     bind=SUPER,Space,exec,${pkgs.rofi}/bin/rofi -show drun
     bind=SUPER,P,pseudo,
