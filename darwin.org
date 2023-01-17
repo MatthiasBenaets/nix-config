@@ -6,6 +6,18 @@
 #+attr_html: :width 300
 [[file:rsc/Nix-Darwin.svg]]
 
+* Table of Content
+:PROPERTIES:
+:TOC:      :include all :depth 1 :force (nothing) :ignore (this)
+:END:
+:CONTENTS:
+- [[#nix-darwin][Nix-Darwin]]
+- [[#home-manager][Home-Manager]]
+- [[#flakes][Flakes]]
+- [[#uninstall][Uninstall]]
+- [[#resources][Resources]]
+:END:
+
 * Nix-Darwin
 ** Introduction
 1. Used to run Nix Modules on macOS using the Darwin Unix-based core set of components

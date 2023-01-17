@@ -6,6 +6,17 @@
 #+attr_org: :width 280
 [[file:rsc/Nix.svg]]
 
+* Table of Content
+:PROPERTIES:
+:TOC:      :include all :depth 1 :force (nothing) :ignore (this)
+:END:
+:CONTENTS:
+- [[#nix][Nix]]
+- [[#flakes][Flakes]]
+- [[#uninstall][Uninstall]]
+- [[#resources][Resources]]
+:END:
+
 * Nix
 ** Introduction
 1. Just like NixOS, it supports declarative reproductible system configurations using home-manager.

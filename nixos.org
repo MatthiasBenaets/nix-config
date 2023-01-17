@@ -6,6 +6,17 @@
 #+attr_org: :width 800
 [[file:rsc/NixOS.svg]]
 
+* Table of Content
+:PROPERTIES:
+:TOC:      :include all :depth 1 :force (nothing) :ignore (this)
+:END:
+:CONTENTS:
+- [[#nixos][NixOS]]
+- [[#home-manager][Home-Manager]]
+- [[#flakes][Flakes]]
+- [[#resources][Resources]]
+:END:
+
 * NixOS
 ** Introduction
 1. Linux distribution based on Nix package manager

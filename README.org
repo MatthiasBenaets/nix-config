@@ -7,21 +7,13 @@
 
 * Table of Content
 :PROPERTIES:
-:TOC:      :include all :depth 3 :force (depth) :ignore (this) :local (nothing)
+:TOC:      :include all :depth 2 :force (depth) :ignore (this)
 :END:
 :CONTENTS:
 - [[#system-components][System Components]]
 - [[#nixos-installation-guide][NixOS Installation Guide]]
-  - [[#partitioning][Partitioning]]
-  - [[#installation][Installation]]
-  - [[#finalization][Finalization]]
 - [[#nix-installation-guide][Nix Installation Guide]]
-  - [[#installation][Installation]]
-  - [[#finalization][Finalization]]
 - [[#nix-darwin-installation-guide][Nix-Darwin Installation Guide]]
-  - [[#setup][Setup]]
-  - [[#installation][Installation]]
-  - [[#finalization][Finalization]]
 - [[#guides][Guides]]
 - [[#faq][FAQ]]
 :END:

@@ -2,6 +2,17 @@
 #+description: Just a few personal notes on how to contribute to the NixOS/nixpkgs repository
 #+author: Matthias Benaets
 
+* Table of Content
+:PROPERTIES:
+:TOC:      :include all :depth 1 :force (nothing) :ignore (this)
+:END:
+:CONTENTS:
+- [[#initial-setup][Initial setup]]
+- [[#packaging][Packaging]]
+- [[#pull-request][Pull request]]
+- [[#review-process][Review process]]
+:END:
+
 * Initial setup
 ** Forking
 - Fork http://github.com/NixOS/nixpkgs

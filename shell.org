@@ -2,6 +2,17 @@
 #+description: A beginner guide to using nix-shell
 #+author: Matthias Benaets
 
+* Table of Content
+:PROPERTIES:
+:TOC:      :include all :depth 1 :force (nothing) :ignore (this)
+:END:
+:CONTENTS:
+- [[#terminal][Terminal]]
+- [[#shellnix][Shell.nix]]
+- [[#create-shellnix-files][Create shell.nix files]]
+- [[#remove-shell-packages][Remove shell packages]]
+:END:
+
 * Terminal
 ** Shell
 - Create a shell where a package is available.
@@ -22,7 +33,7 @@
 - ~$ nix-shell~ will default to an existing file named shell.nix
 - to specify a specific nix-file use ~$ nix-shell <nix-file.nix>~
 
-* Creation of these shell.nix files
+* Create shell.nix files
 ** General
 #+begin_src nix
 with import <nixpkgs> {};
