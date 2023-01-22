@@ -51,3 +51,4 @@
 
 (package! evil-tutor)
 (package! org-bullets)
+(package! rotate)

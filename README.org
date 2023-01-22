@@ -31,7 +31,7 @@
 | *GTK Theme*     | Dracula           | Dracula           | /                 |
 | *Notifications* | Dunst             | Dunst             | /                 |
 | *Terminal*      | Alacritty         | Alacritty         | Alacritty         |
-| *Editor*        | Nvim + Emacs      | Nvim + Emacs      | Nvim + Emacs      |
+| *Editor*        | Nvim + Doom Emacs | Nvim + Doom Emacs | Nvim + Doom Emacs |
 | *Used by host*  | Desktop           | Laptop & VM       | Macbook           |
 There are some other desktop environments/window manager. Just link to correct default/home.nix in ~./hosts/<host>/default.nix~.
 There is also a general Nix config with hostname ~pacman~ that can be used on pretty much any disto.
@@ -145,9 +145,9 @@ This will depend on the host chosen.
 3. Change username in flake.nix
 4. Set a ~users.users.${user}.initialPassword = ...~
    - Not really recommended. It's maybe better to follow last steps
-5. If you are planning on using the native.nix doom emacs, don't forget to rebuild after the initial installation when you link to this nix file.
-   - This is because userActivationScript is used for the setup and some locations are partially hardcoded
-   - It will automatically install if ~~/.emacs.d~ does not exist
+5. If you are planning on using the doom-emacs alternative home.nix, don't forget to rebuild after the initial installation when you link to this nix file.
+   - This is because userActivationScript is used for this setup and this will time out during the rebuild.
+   - It will automatically install if ~$HOME/.emacs.d~ does not exist
      - If this dir already exist, move or delete it.
 
 *** Install
@@ -165,7 +165,7 @@ This will depend on the host chosen.
 
 ** Finalization
 1. Set a root password after installation is done
-2. Reboot without livecd
+2. Reboot without liveCD
 3. Login
    1. If initialPassword is not set use TTY:
       - ~Ctrl - Alt - F1~
@@ -179,8 +179,8 @@ This will depend on the host chosen.
    - ~$ sudo rm /etc/nixos/configuration.nix~ - This is done because in the past it would auto update this config if you would have auto update in your configuration.
    - or just clone flake again do apply same changes.
 5. Dual boot:
-   - OSProber probably did not find your Windows partion after the first install
-   - There is a high likelyhood it will find it after:
+   - OSProber probably did not find your Windows partition after the first install
+   - There is a high likelihood it will find it after:
      - ~$ sudo nixos-rebuild switch --flake <config path>#<host>~
 6. Rebuilds:
    - ~$ sudo nixos-rebuild switch --flake <config path>#<host>~
@@ -220,7 +220,7 @@ This will rebuild the configuration and automatically activate it.
 *Mostly optional or already correct by default*
 1. NixGL gets set up by default, so if you are planning on using GUI applications that use OpenGL or Vulkan:
    - ~$ nixGLIntel <package>~
-   - or add it to your aliasses file
+   - or add it to your aliases file
 2. Every rebuild, and activation-script will run to add applications to the system menu.
    - it's pretty much the same as adding the path to XDG_DATA_DIRS
    - if you do not want to or if the locations are different, change this.

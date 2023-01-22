@@ -12,11 +12,11 @@
 #           └─ ./default.nix
 #
 
-{ config, lib, pkgs, inputs, user, location, ... }:
+{ config, lib, pkgs, inputs, user, ... }:
 
 {
   imports =
-    #[(import ../modules/editors/emacs/native.nix)] ++  # Native doom emacs instead of nix-community flake
+    ( import ../modules/editors ) ++  # Native doom emacs instead of nix-community flake
     ( import ../modules/shell );
 
   users.users.${user} = {                   # System User

@@ -61,7 +61,7 @@ in
   laptop = lib.nixosSystem {                                # Laptop profile
     inherit system;
     specialArgs = {
-      inherit inputs user location hyprland;
+      inherit inputs user location;
       host = {
         hostName = "desktop";
         mainMonitor = "eDP-1";

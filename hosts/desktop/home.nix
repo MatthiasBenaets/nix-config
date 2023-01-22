@@ -24,13 +24,14 @@
       # Applications
       ansible           # Automation
       sshpass           # Ansible Dependency
-      handbrake         # Encoder
+      #handbrake         # Encoder
       hugo              # Static Website Builder
       mkvtoolnix        # Matroska Tools
       plex-media-player # Media Player
 
       # Dependencies
       gmtp              # Used for mounting gopro
+      ispell            # Emacs spelling
       
       # Imported in default or from modules
       #discord          # Comms           # See overlay default.nix
