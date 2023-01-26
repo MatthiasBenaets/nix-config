@@ -91,12 +91,15 @@
         }
         #battery.warning {
           color: #ff5d17;
+          background-color: rgba(0,0,0,0);
         }
         #battery.critical {
           color: #ff200c;
+          background-color: rgba(0,0,0,0);
         }
         #battery.charging {
           color: #9ece6a;
+          background-color: rgba(0,0,0,0);
         }
       '';
       settings = with host; {
@@ -115,7 +118,12 @@
             else if programs.sway.enable == true then
               [ "sway/workspaces" "sway/window" "sway/mode" ]
             else [];
-          modules-right = [ "network" "cpu" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" ];
+
+          modules-right =
+            if hostName == "desktop" then
+              [ "network" "cpu" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" ]
+            else
+              [ "network" "cpu" "memory" "custom/pad" "battery" "custom/pad" "pulseaudio" "custom/pad" "clock" "tray" ];
 
           "custom/pad" = {
             format = "      ";

@@ -14,11 +14,57 @@
 { config, lib, pkgs, host, ... }:
 
 let
-  confFile = with host; ''
-    MONITORS
+  touchpad = with host;
+    if hostName == "laptop" || hostName == "work" then ''
+      touchpad {
+        natural_scroll=true
+        middle_button_emulation=true
+        tap-to-click=true
+      }
+    '' else "";
+  gestures = with host;
+    if hostName == "laptop" || hostName == "work" then ''
+      gestures {
+        workspace_swipe=true
+        workspace_swipe_fingers=3
+        workspace_swipe_distance=100
+      }
+    '' else "";
+  monitors = with host;
+    if hostName == "desktop" then ''
+      monitor=${toString mainMonitor},1920x1080@60,1920x0,1
+      monitor=${toString secondMonitor},1920x1080@60,0x0,1
+
+      workspace=${toString mainMonitor},1
+      workspace=${toString secondMonitor},6
+
+      wsbind=1,${toString mainMonitor}
+      wsbind=2,${toString mainMonitor}
+      wsbind=3,${toString mainMonitor}
+      wsbind=4,${toString mainMonitor}
+      wsbind=5,${toString mainMonitor}
+      wsbind=6,${toString secondMonitor}
+      wsbind=7,${toString secondMonitor}
+      wsbind=8,${toString secondMonitor}
+      wsbind=9,${toString secondMonitor}
+      wsbind=10,${toString secondMonitor}
+    ''
+    else ''
+      monitor=${toString mainMonitor},1920x1080@60,0x0,1
+    '';
+  execute = with host;
+    if hostName == "desktop" then ''
+      exec-once=${pkgs.mpvpaper}/bin/mpvpaper -sf -v -o "--loop --panscan=1" '*' $HOME/.config/wall.mp4
+    '' else ''
+      exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
+      exec-once=${pkgs.networkmanagerapplet}/bin/nm-applet --indicator
+    '';
+in
+let
+  hyprlandConf = with host; ''
+    ${monitors}
 
     general {
-      sensitivity=1
       #main_mod=SUPER
       border_size=3
       gaps_in=5
@@ -55,7 +101,10 @@ let
       numlock_by_default=1
       force_no_accel=1
       sensitivity=1
+      ${touchpad}
     }
+
+    ${gestures}
 
     dwindle {
       pseudotile=false
@@ -139,38 +188,10 @@ let
     windowrule=size 24% 24% ,title:^(Picture-in-Picture)$
 
     exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-    #exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
-    exec-once=${pkgs.mpvpaper}/bin/mpvpaper -sf -v -o "--loop --panscan=1" '*' $HOME/.config/wall.mp4
     exec-once=${pkgs.waybar}/bin/waybar
     exec-once=${pkgs.blueman}/bin/blueman-applet
+    ${execute}
   '';
-
-  hyprlandConf = with host; builtins.replaceStrings ["MONITORS"]
-    [
-      (if hostName == "desktop" then ''
-        monitor=${toString mainMonitor},1920x1080@60,1920x0,1
-        monitor=${toString secondMonitor},1920x1080@60,0x0,1
-
-        workspace=${toString mainMonitor},1
-        workspace=${toString secondMonitor},6
-
-        wsbind=1,${toString mainMonitor}
-        wsbind=2,${toString mainMonitor}
-        wsbind=3,${toString mainMonitor}
-        wsbind=4,${toString mainMonitor}
-        wsbind=5,${toString mainMonitor}
-        wsbind=6,${toString secondMonitor}
-        wsbind=7,${toString secondMonitor}
-        wsbind=8,${toString secondMonitor}
-        wsbind=9,${toString secondMonitor}
-        wsbind=10,${toString secondMonitor}
-      ''
-      else if hostName == "laptop" || hostname == "vm" then ''
-        monitor=${toString mainMonitor},1920x1080@60,0x0,1
-      ''
-      else false)
-    ]
-    "${confFile}";
 in
 {
   #xdg.configFile."hypr/hyprland.conf".text = "${hyprlandConf}";

@@ -32,17 +32,19 @@
 | *Notifications* | Dunst             | Dunst             | /                 |
 | *Terminal*      | Alacritty         | Alacritty         | Alacritty         |
 | *Editor*        | Nvim + Doom Emacs | Nvim + Doom Emacs | Nvim + Doom Emacs |
-| *Used by host*  | Desktop           | Laptop & VM       | Macbook           |
+| *Used by host*  | Desktop & Work    | Laptop & VM       | Macbook           |
 There are some other desktop environments/window manager. Just link to correct default/home.nix in ~./hosts/<host>/default.nix~.
 There is also a general Nix config with hostname ~pacman~ that can be used on pretty much any disto.
 
 * NixOS Installation Guide
-This flake currently has *3* hosts
+This flake currently has *4* hosts
  1. desktop
     - UEFI boot w/ systemd-boot
  2. laptop
     - UEFI boot w/ grub (Dual Boot)
- 3. vm
+ 3. work
+    - UEFI boot w/ grub (Dual Boot)
+ 4. vm
     - Legacy boot w/ grub
 
 Flakes can be build with:

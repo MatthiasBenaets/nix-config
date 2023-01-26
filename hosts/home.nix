@@ -91,7 +91,6 @@
       # Wayland configuration
       #autotiling       # Tiling Script
       #grim             # Image Grabber
-      #mpvpaper         # Video Wallpaper
       #slurp            # Region Selector
       #swappy           # Screenshot Editor
       #swayidle         # Idle Management Daemon
@@ -101,7 +100,9 @@
       #xwayland         # X for Wayland
       #
       # Wayland home-manager
+      #mpvpaper         # Video Wallpaper
       #pamixer          # Pulse Audio Mixer
+      #swaybg           # Background
       #swaylock-fancy   # Screen Locker
       #waybar           # Bar
       #
@@ -125,6 +126,7 @@
       #sshpass          # Ansible dependency
       # 
       # Laptop
+      #cbatticon        # Battery Notifications
       #blueman          # Bluetooth
       #light            # Display Brightness
       #libreoffice      # Office Tools

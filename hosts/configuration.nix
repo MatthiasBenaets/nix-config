@@ -16,8 +16,8 @@
 
 {
   imports =
-    ( import ../modules/editors ) ++  # Native doom emacs instead of nix-community flake
-    ( import ../modules/shell );
+    (import ../modules/editors) ++          # Native doom emacs instead of nix-community flake
+    (import ../modules/shell);
 
   users.users.${user} = {                   # System User
     isNormalUser = true;

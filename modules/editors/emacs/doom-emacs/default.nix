@@ -24,16 +24,16 @@
     doomEmacs = {
       text = ''
         source ${config.system.build.setEnvironment}
-        DOOM="$HOME/.emacs.d"
+        EMACS="$HOME/.emacs.d"
 
-        if [ ! -d "$DOOM" ]; then
-          git clone https://github.com/hlissner/doom-emacs.git $DOOM
-          yes | $DOOM/bin/doom install
+        if [ ! -d "$EMACS" ]; then
+          ${pkgs.git}/bin/git clone https://github.com/hlissner/doom-emacs.git $EMACS
+          yes | $EMACS/bin/doom install
           rm -r $HOME/.doom.d
           ln -s ${location}/modules/editors/emacs/doom-emacs/doom.d $HOME/.doom.d
-          $DOOM/bin/doom sync
+          $EMACS/bin/doom sync
         else
-          $DOOM/bin/doom sync
+          $EMACS/bin/doom sync
         fi
       '';                                        # It will always sync when rebuild is done. So changes will always be applied.
     };
@@ -43,5 +43,6 @@
     ripgrep
     coreutils
     fd
+    #git
   ];                                             # Dependencies
 }

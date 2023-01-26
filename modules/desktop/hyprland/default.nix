@@ -11,7 +11,7 @@
 #               └─ default.nix *
 #
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, host, ... }:
 
 {
   imports = [ ../../programs/waybar.nix ];
@@ -43,6 +43,9 @@
   };
 
   programs = {
-    hyprland.enable = true;
+    hyprland = {
+      enable = true;
+      nvidiaPatches = with host; if hostName == "work" then true else false;
+    };
   };
 }
