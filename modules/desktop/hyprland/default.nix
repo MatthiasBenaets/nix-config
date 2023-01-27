@@ -12,16 +12,16 @@
 #
 
 { config, lib, pkgs, host, ... }:
-
+let
+  exec = with host; if hostName == "work" then "exec nvidia-offload Hyprland" else "exec Hyprland";
+in
 {
   imports = [ ../../programs/waybar.nix ];
-
-  services.dbus.enable = true;
 
   environment = {
     loginShellInit = ''
       if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
-        exec Hyprland
+        ${exec}
       fi
     '';                                   # Will automatically open Hyprland when logged into tty1
 
@@ -37,9 +37,16 @@
       mpvpaper
       slurp
       swappy
+      swaylock
       wl-clipboard
       wlr-randr
     ];
+  };
+
+  security.pam.services.swaylock = {
+    text = ''
+     auth include login
+    '';
   };
 
   programs = {

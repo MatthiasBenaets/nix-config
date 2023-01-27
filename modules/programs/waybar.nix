@@ -123,7 +123,7 @@
             if hostName == "desktop" then
               [ "network" "cpu" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" ]
             else
-              [ "network" "cpu" "memory" "custom/pad" "battery" "custom/pad" "pulseaudio" "custom/pad" "clock" "tray" ];
+              [ "cpu" "memory" "custom/pad" "battery" "custom/pad" "pulseaudio" "custom/pad" "clock" "tray" ];
 
           "custom/pad" = {
             format = "      ";

@@ -58,6 +58,7 @@ let
     '' else ''
       exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
       exec-once=${pkgs.networkmanagerapplet}/bin/nm-applet --indicator
+      #exec-once=${pkgs.swaylock}/bin/swaylock
     '';
 in
 let
@@ -121,6 +122,7 @@ let
     bind=SUPER,Return,exec,${pkgs.alacritty}/bin/alacritty
     bind=SUPER,Q,killactive,
     bind=SUPER,Escape,exit,
+    bind=SUPER,L,exec,${pkgs.swaylock}/bin/swaylock
     bind=SUPER,E,exec,${pkgs.cinnamon.nemo}/bin/nemo
     bind=SUPER,H,togglefloating,
     bind=SUPER,Space,exec,${pkgs.rofi}/bin/rofi -show drun
@@ -128,7 +130,7 @@ let
     bind=SUPER,F,fullscreen,
     bind=SUPER,R,forcerendererreload
     bind=SUPERSHIFT,R,exec,${pkgs.hyprland}/bin/hyprctl reload
-    bind=SUPER,T,exec,${pkgs.emacs}/bin/emacs
+    bind=SUPER,T,exec,${pkgs.emacs}/bin/emacsclient -c
 
     bind=SUPER,left,movefocus,l
     bind=SUPER,right,movefocus,r
@@ -196,4 +198,38 @@ in
 {
   #xdg.configFile."hypr/hyprland.conf".text = "${hyprlandConf}";
   xdg.configFile."hypr/hyprland.conf".text = hyprlandConf;
+
+  programs.swaylock.settings = {
+    #image = "$HOME/.config/wall";
+    color = "000000f0";
+    font-size = "24";
+    indicator-idle-visible = false;
+    indicator-radius = 100;
+    indicator-thickness = 20;
+    inside-color = "000000f0";
+    inside-clear-color = "000000f0";
+    inside-ver-color = "000000f0";
+    inside-wrong-color = "000000f0";
+    key-hl-color = "79b360";
+    line-color = "000000f0";
+    line-clear-color = "000000f0";
+    line-ver-color = "000000f0";
+    line-wrong-color = "000000f0";
+    ring-color = "ffffff50";
+    ring-clear-color = "bbbbbb50";
+    ring-ver-color = "bbbbbb50";
+    ring-wrong-color = "b3606050";
+    text-color = "ffffff";
+    text-ver-color = "ffffff";
+    text-wrong-color = "ffffff";
+    show-failed-attempts = true;
+  };
+  services.swayidle = {
+    enable = true;
+    events = [
+      { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock"; }
+      { event = "lock"; command = "lock"; }
+    ];
+    systemdTarget = "xdg-desktop-portal-hyprland.service";
+  };
 }

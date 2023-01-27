@@ -47,6 +47,7 @@
         efiSupport = true;
         useOSProber = true;                     # Find all boot options
         configurationLimit = 2;
+        default=2;
       };
       timeout = 5;                              # Grub auto select time
     };
