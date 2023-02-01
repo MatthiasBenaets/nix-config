@@ -4,7 +4,7 @@
 #  flake.nix
 #   ├─ ./hosts
 #   │   └─ ./work
-#   │       └─ ./home.nix
+#   │       └─ ./home.nix *
 #   └─ ./modules
 #       └─ ./desktop
 #           └─ ./hyprland
@@ -23,11 +23,12 @@
     packages = with pkgs; [
       # Applications
       ansible           # Automation
-      sshpass           # Ansible Dependency
       onlyoffice-bin    # Office packages
+      rclone            # Gdrive mount  ($ rclone config | rclone mount --daemon gdrive: <mount> | fusermount -u <mount>)
+      wdisplays         # Display Configurator
 
       # Dependencies
-      ispell            # Emacs spelling
+      sshpass           # Ansible
     ];
   };
 

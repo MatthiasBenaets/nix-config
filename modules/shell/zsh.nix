@@ -26,7 +26,7 @@
         # Hook direnv
 #       emulate zsh -c "$(direnv hook zsh)"
         # Swag
-        pfetch                                  # Show fetch logo on terminal start
+        ${pkgs.nitch}/bin/nitch
       '';
     };
   };

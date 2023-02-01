@@ -1,0 +1,11 @@
+--- wpa_supplicant-2.10/src/crypto/tls_openssl.c
++++ src/crypto/tls_openssl.c.legacy
+@@ -1048,7 +1048,7 @@
+
+	SSL_CTX_set_options(ssl, SSL_OP_NO_SSLv2);
+	SSL_CTX_set_options(ssl, SSL_OP_NO_SSLv3);
+-
++        SSL_CTX_set_options(ssl, SSL_OP_LEGACY_SERVER_CONNECT);
+	SSL_CTX_set_mode(ssl, SSL_MODE_AUTO_RETRY);
+
+ #ifdef SSL_MODE_NO_AUTO_CHAIN

@@ -16,12 +16,13 @@
 let
   touchpad = with host;
     if hostName == "laptop" || hostName == "work" then ''
-      touchpad {
-        natural_scroll=true
-        middle_button_emulation=true
-        tap-to-click=true
+        touchpad {
+          natural_scroll=true
+          middle_button_emulation=true
+          tap-to-click=true
+        }
       }
-    '' else "";
+      '' else "";
   gestures = with host;
     if hostName == "laptop" || hostName == "work" then ''
       gestures {
@@ -31,9 +32,9 @@ let
       }
     '' else "";
   monitors = with host;
-    if hostName == "desktop" then ''
-      monitor=${toString mainMonitor},1920x1080@60,1920x0,1
-      monitor=${toString secondMonitor},1920x1080@60,0x0,1
+    if hostName == "desktop" || hostName == "work" then ''
+      monitor=${toString mainMonitor},1920x1080@60,0x0,1
+      monitor=${toString secondMonitor},1920x1080@60,1920x0,1
 
       workspace=${toString mainMonitor},1
       workspace=${toString secondMonitor},6
@@ -55,11 +56,12 @@ let
   execute = with host;
     if hostName == "desktop" then ''
       exec-once=${pkgs.mpvpaper}/bin/mpvpaper -sf -v -o "--loop --panscan=1" '*' $HOME/.config/wall.mp4
-    '' else ''
+    '' else if hostName == "work" then ''
       exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
       exec-once=${pkgs.networkmanagerapplet}/bin/nm-applet --indicator
-      #exec-once=${pkgs.swaylock}/bin/swaylock
-    '';
+      #exec-once=${pkgs.google-drive-ocamlfuse}/bin/google-drive-ocamlfuse /GDrive
+      exec-once=${pkgs.rclone}/bin/rclone mount --daemon gdrive: /GDrive
+    '' else "";
 in
 let
   hyprlandConf = with host; ''
@@ -100,8 +102,8 @@ let
       follow_mouse=2
       repeat_delay=250
       numlock_by_default=1
-      force_no_accel=1
-      sensitivity=1
+      accel_profile=flat
+      sensitivity=0.8
       ${touchpad}
     }
 
@@ -123,7 +125,7 @@ let
     bind=SUPER,Q,killactive,
     bind=SUPER,Escape,exit,
     bind=SUPER,L,exec,${pkgs.swaylock}/bin/swaylock
-    bind=SUPER,E,exec,${pkgs.cinnamon.nemo}/bin/nemo
+    bind=SUPER,E,exec,${pkgs.pcmanfm}/bin/pcmanfm
     bind=SUPER,H,togglefloating,
     bind=SUPER,Space,exec,${pkgs.rofi}/bin/rofi -show drun
     bind=SUPER,P,pseudo,
@@ -179,8 +181,8 @@ let
     bind=,XF86AudioRaiseVolume,exec,${pkgs.pamixer}/bin/pamixer -i 10
     bind=,XF86AudioMute,exec,${pkgs.pamixer}/bin/pamixer -t
     bind=,XF86AudioMicMute,exec,${pkgs.pamixer}/bin/pamixer --default-source -t
-    bind=,XF86MonBrightnessDown,exec,${pkgs.light}/bin/light -U 5
-    bind=,XF86MonBrightnessUP,exec,${pkgs.light}/bin/light -A 5
+    bind=,XF86MonBrightnessDown,exec,${pkgs.light}/bin/light -U 10
+    bind=,XF86MonBrightnessUP,exec,${pkgs.light}/bin/light -A 10
 
     windowrule=float,^(Rofi)$
     windowrule=float,title:^(Volume Control)$
@@ -206,10 +208,10 @@ in
     indicator-idle-visible = false;
     indicator-radius = 100;
     indicator-thickness = 20;
-    inside-color = "000000f0";
-    inside-clear-color = "000000f0";
-    inside-ver-color = "000000f0";
-    inside-wrong-color = "000000f0";
+    inside-color = "00000000";
+    inside-clear-color = "00000000";
+    inside-ver-color = "00000000";
+    inside-wrong-color = "00000000";
     key-hl-color = "79b360";
     line-color = "000000f0";
     line-clear-color = "000000f0";
@@ -227,8 +229,11 @@ in
   services.swayidle = {
     enable = true;
     events = [
-      { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock"; }
+      { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock -f"; }
       { event = "lock"; command = "lock"; }
+    ];
+    timeouts = [
+      { timeout= 300; command = "${pkgs.swaylock}/bin/swaylock -f";}
     ];
     systemdTarget = "xdg-desktop-portal-hyprland.service";
   };

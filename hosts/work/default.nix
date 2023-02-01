@@ -14,7 +14,8 @@
 #       │       └─ default.nix
 #       └─ ./hardware
 #           ├─ default.nix
-#           └─ nvidia.nix
+#           └─ ./work
+#               └─ default.nix
 #
 
 { pkgs, lib, user, ... }:
@@ -25,7 +26,7 @@
     [(import ../../modules/desktop/hyprland/default.nix)] ++ # Window Manager
     (import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC
     (import ../../modules/hardware) ++                    # Hardware devices
-    [(import ../../modules/hardware/nvidia.nix)];
+    (import ../../modules/hardware/work);                 # Hardware specific quirks
 
   boot = {                                      # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
@@ -49,7 +50,7 @@
         configurationLimit = 2;
         default=2;
       };
-      timeout = 5;                              # Grub auto select time
+      timeout = null;                           # Grub auto select time
     };
   };
 

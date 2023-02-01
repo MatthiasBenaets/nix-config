@@ -29,7 +29,10 @@ in
         intelBusId = "PCI:0:2:0";
         nvidiaBusId = "PCI:45:0:0";
       };
+      modesetting.enable = true;
       powerManagement.enable = true;
     };
   };
+
+  #boot.kernelParams = [ "modules_blacklist=i915" ];
 }

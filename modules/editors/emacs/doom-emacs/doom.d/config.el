@@ -98,7 +98,27 @@
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
-;; Change specific characters to unicode symbols
+;; Org customization
+(defun mb/set-org-vars ()
+  (setq org-ellipsis " ▼"
+        org-hide-emphasis-markers nil
+        org-src-fontify-natively t
+        org-fontify-quote-and-verse-blocks t
+        org-src-tab-acts-natively t
+        org-edit-src-content-indentation 0
+        org-src-preserve-indentation t
+        org-hide-block-startup nil
+        org-startup-folded 'showeverything
+        org-startup-with-inline-images t
+        org-cycle-separator-lines 2))
+(add-hook 'org-mode-hook 'mb/set-org-vars)
+
+(defun mb/org-mode-visual-fill ()
+  (setq visual-fill-column-width 110
+        visual-fill-column-center-text t)
+        (visual-fill-column-mode 1))
+(add-hook 'org-mode-hook 'mb/org-mode-visual-fill)
+
 (defun mb/load-prettify-symbols ()
   (interactive)
   (setq prettify-symbols-alist
@@ -135,6 +155,7 @@
       "C-<up>"          #'+evil/window-move-up
       "C-<right>"       #'+evil/window-move-right)
 (map! :leader ;;SPC
+      "r"               #'rotate-layout
       "<left>"          #'evil-window-left
       "<down>"          #'evil-window-down
       "<up>"            #'evil-window-up
@@ -166,6 +187,31 @@
 
 ;; Ispell and Flyspell
 (setq ispell-alternate-dictionary "en_GB,nl_BE")
+
+;; Custom one kye bindings on dashboard
+(defun +doom-dashboard-setup-modified-keymap ()
+  (setq +doom-dashboard-mode-map (make-sparse-keymap))
+  (map! :map +doom-dashboard-mode-map
+        :desc "Find file" :ng "f" #'find-file
+        :desc "Recent files" :ng "r" #'consult-recent-file
+        :desc "Switch buffer" :ng "b" #'consult-buffer
+        :desc "Quit" :ng "q" #'save-buffers-kill-emacs
+        :desc "Show keybindings" :ng "h" (cmd! (which-key-show-keymap '+doom-dashboard-mode-map))))
+(add-transient-hook! #'+doom-dashboard-mode (+doom-dashboard-setup-modified-keymap))
+(add-transient-hook! #'+doom-dashboard-mode :append (+doom-dashboard-setup-modified-keymap))
+(add-hook! 'doom-init-ui-hook :append (+doom-dashboard-setup-modified-keymap))
+;; Open dashboard
+(map! :leader :desc "Dashboard" "d" #'+doom-dashboard/open)
+
+;; Dashboard Widgets
+(setq +doom-dashboard-functions
+      '(doom-dashboard-widget-banner
+        ;;doom-dashboard-widget-shortmenu
+        doom-dashboard-widget-loaded
+        doom-dashboard-widget-footer))
+
+;; YASnippets
+;; (setq yas-triggers-in-field t)
 
 ;; Load dashboard instead of scratchpad. Only needs to be enable when using nix-community/nix-doom-emacs modules is used
 ;;(add-hook! 'emacs-startup-hook #'doom-init-ui-h)

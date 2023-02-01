@@ -45,7 +45,9 @@
   networking = {
     useDHCP = lib.mkDefault true;
     hostName = "work";
+    enableIPv6 = false;
     networkmanager.enable = true;
+    networkmanager.wifi.scanRandMacAddress = false;
     firewall = {
       # if packets are still dropped, they will show up in dmesg
       logReversePathDrops = true;
@@ -62,7 +64,6 @@
     # interfaces.enp0s31f6.useDHCP = lib.mkDefault true;
     # interfaces.wlp0s20f3.useDHCP = lib.mkDefault true;
   };
-
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";

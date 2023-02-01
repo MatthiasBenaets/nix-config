@@ -1,8 +1,8 @@
 #
 # Terminal Emulator
 #
-
 # Hardcoded as terminal for rofi and doom emacs
+#
 
 { pkgs, ... }:
 
@@ -12,7 +12,7 @@
       enable = true;
       settings = {
         font = rec {                          # Font - Laptop has size manually changed at home.nix
-          normal.family = "Source Code Pro";
+          normal.family = "FiraCode Nerd Font";
           bold = { style = "Bold"; };
           #size = 8;
         };

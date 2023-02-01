@@ -61,6 +61,7 @@
         #window,
         #cpu,
         #disk,
+        #backlight,
         #battery,
         #tray {
           color: #999999;
@@ -123,7 +124,7 @@
             if hostName == "desktop" then
               [ "network" "cpu" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" ]
             else
-              [ "cpu" "memory" "custom/pad" "battery" "custom/pad" "pulseaudio" "custom/pad" "clock" "tray" ];
+              [ "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/pad" "clock" "tray" ];
 
           "custom/pad" = {
             format = "      ";
@@ -131,7 +132,7 @@
           };
           "custom/menu" = {
             format = "<span font='16'></span>";
-            on-click = "${pkgs.rofi}/bin/rofi -show p -modi p:${pkgs.rofi-power-menu}/bin/rofi-power-menu -theme $HOME/.config/rofi/config.rasi";
+            on-click = ''${pkgs.rofi}/bin/rofi -show power-menu -modi "power-menu:rofi-power-menu --choices=logout/suspend/reboot/shutdown"'';
             on-click-right = "${pkgs.rofi}/bin/rofi -show drun";
             tooltip = false;
           };
@@ -190,6 +191,13 @@
             format = "{}% <span font='11'></span>";
             interval = 1;
           };
+          backlight = {
+            device = "intel_backlight";
+            format= "{percent}% <span font='11'>{icon}</span>";
+            format-icons = ["" ""];
+            on-scroll-down = "${pkgs.light}/bin/light -U 5";
+            on-scroll-up = "${pkgs.light}/bin/light -A 5";
+          };
           battery = {
             interval = 60;
             states = {
@@ -242,7 +250,7 @@
             icon-size = 13;
           };
         };
-        Sec = if ( hostName == "desktop" ) then {
+        Sec = if hostName == "desktop" || hostName == "work" then {
           layer = "top";
           position = "top";
           height = 16;
@@ -250,7 +258,12 @@
             "${secondMonitor}"
           ];
           modules-left = [ "custom/menu" "wlr/workspaces" ];
-          modules-right = [ "pulseaudio" "custom/sink" "custom/pad" "clock"];
+
+          modules-right =
+            if hostName == "desktop" then
+              [ "pulseaudio" "custom/sink" "custom/pad" "clock"]
+            else
+              [ "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/pad" "clock" ];
 
           "custom/pad" = {
             format = "      ";
@@ -287,11 +300,42 @@
             tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
             #format-alt = "{:%A, %B %d, %Y} ";
           };
+          cpu = {
+            format = " {usage}% <span font='11'></span> ";
+            interval = 1;
+          };
+          disk = {
+            format = "{percentage_used}% <span font='11'></span>";
+            path = "/";
+            interval = 30;
+          };
+          memory = {
+            format = "{}% <span font='11'></span>";
+            interval = 1;
+          };
+          backlight = {
+            device = "intel_backlight";
+            format= "{percent}% <span font='11'>{icon}</span>";
+            format-icons = ["" ""];
+            on-scroll-down = "${pkgs.light}/bin/light -U 5";
+            on-scroll-up = "${pkgs.light}/bin/light -A 5";
+          };
+          battery = {
+            interval = 60;
+            states = {
+              warning = 30;
+              critical = 15;
+            };
+            format = "{capacity}% <span font='11'>{icon}</span>";
+            format-charging = "{capacity}% <span font='11'></span>";
+            format-icons = ["" "" "" "" ""];
+            max-length = 25;
+          };
           pulseaudio = {
             format = "<span font='11'>{icon}</span> {volume}% {format_source} ";
             format-bluetooth = "<span font='11'>{icon}</span> {volume}% {format_source} ";
-            format-bluetooth-muted = "<span font='11'></span> {volume}% {format_source} ";
-            format-muted = "<span font='11'></span> {format_source} ";
+            format-bluetooth-muted = "<span font='11'>x</span> {volume}% {format_source} ";
+            format-muted = "<span font='11'>x</span> {format_source} ";
             #format-source = "{volume}% <span font='11'></span> ";
             format-source = "<span font='10'></span> ";
             format-source-muted = "<span font='11'></span> ";

@@ -6,10 +6,9 @@
 #   │   └─ configuration.nix *
 #   └─ ./modules
 #       ├─ ./editors
-#       │   └─ ./emacs
-#       │      └─ native.nix
+#       │   └─ default.nix
 #       └─ ./shell
-#           └─ ./default.nix
+#           └─ default.nix
 #
 
 { config, lib, pkgs, inputs, user, ... }:
@@ -41,6 +40,7 @@
   };
 
   security.rtkit.enable = true;
+  security.polkit.enable = true;
   #sound = {                                # Deprecated due to pipewire
   #  enable = true;
   #  mediaKeys = {

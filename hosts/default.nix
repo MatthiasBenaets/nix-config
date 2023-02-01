@@ -6,7 +6,7 @@
 #       ├─ default.nix *
 #       ├─ configuration.nix
 #       ├─ home.nix
-#       └─ ./desktop OR ./laptop OR ./vm
+#       └─ ./desktop OR ./laptop OR ./work OR ./vm
 #            ├─ ./default.nix
 #            └─ ./home.nix 
 #
@@ -96,6 +96,7 @@ in
       host = {
         hostName = "work";
         mainMonitor = "eDP-1";
+        secondMonitor = "HDMI-A-2";
       };
     };
     modules = [
@@ -111,6 +112,7 @@ in
           host = {
             hostName = "work";
             mainMonitor = "eDP-1";
+            secondMonitor = "HDMI-A-2";
           };
         };
         home-manager.users.${user} = {

@@ -5,8 +5,6 @@
 #   ├─ ./hosts
 #   │   └─ home.nix *
 #   └─ ./modules
-#       ├─ ./editors
-#       │   └─ default.nix
 #       ├─ ./programs
 #       │   └─ default.nix
 #       └─ ./services
@@ -27,7 +25,7 @@
     packages = with pkgs; [
       # Terminal
       btop              # Resource Manager
-      pfetch            # Minimal fetch
+      nitch             # Minimal fetch
       ranger            # File Manager
       tldr              # Helper
 
@@ -46,13 +44,13 @@
       remmina           # XRDP & VNC Client
 
       # File Management
-      cinnamon.nemo     # File Manager
       gnome.file-roller # Archive Manager
       okular            # PDF Viewer
       pcmanfm           # File Manager
       rsync             # Syncer - $ rsync -r dir1/ dir2/
       unzip             # Zip Files
       unrar             # Rar Files
+      zip               # Zip
 
       # General configuration
       #git              # Repositories
@@ -165,7 +163,8 @@
       package = pkgs.papirus-icon-theme;
     };
     font = {
-      name = "JetBrains Mono Medium";         # or FiraCode Nerd Font Mono Medium
+      #name = "JetBrains Mono Medium";
+      name = "FiraCode Nerd Font Mono Medium";
     };                                        # Cursor is declared under home.pointerCursor
   };
 }

@@ -51,7 +51,6 @@
 
   environment = {                               # Packages installed system wide
     systemPackages = with pkgs; [               # This is because some options need to be configured.
-      nil
       discord
       #plex
       simple-scan

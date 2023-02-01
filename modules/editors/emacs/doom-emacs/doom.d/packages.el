@@ -49,6 +49,7 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
+(package! rotate)
 (package! evil-tutor)
 (package! org-bullets)
-(package! rotate)
+(package! visual-fill-column)

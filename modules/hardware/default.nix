@@ -6,7 +6,7 @@
 #   │   └─ ./<host>
 #   │       └─ default.nix
 #   └─ ./modules
-#       └─ ./services
+#       └─ ./hardware
 #           └─ default.nix *
 #               └─ ...
 #
