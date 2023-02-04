@@ -167,6 +167,7 @@
       "C-M-l"           #'consult-imenu)
 (map! :leader
       :desc "search"                    "s" #'consult-line
+      :desc "kill-buffer"               "k" #'kill-buffer
       (:prefix-map ("b" . "buffer")
         :desc "buffer"                  "b" #'consult-buffer
         :desc "buffer-other-window"     "." #'consult-buffer-other-window)
@@ -174,7 +175,8 @@
         :desc "find-file-other-window"  "." #'find-file-other-window)
       (:prefix-map ("e" . "eval")
         :desc "eval-region"             "r" #'eval-region
-        :desc "eval-buffer"             "b" #'eval-buffer))
+        :desc "eval-buffer"             "b" #'eval-buffer
+        :desc "doom/reload"             "d" #'doom/reload))
 (define-key! :keymaps +default-minibuffer-maps
              "M-s"      #'consult-history)
 
@@ -210,8 +212,19 @@
         doom-dashboard-widget-loaded
         doom-dashboard-widget-footer))
 
+(setq doom-modeline-major-mode-icon t)
+
 ;; YASnippets
 ;; (setq yas-triggers-in-field t)
+
+;; Python
+(setq python-shell-completion-native-disabled-interpreters '("python3")
+      python-shell-interpreter-args "-i"
+      python-shell-prompt-detect-failure-warning nil)
+
+(after! lsp-python-ms
+  (setq lsp-python-ms-executable (executable-find "python-language-server"))
+  (set-lsp-priority! 'mspyls 1))
 
 ;; Load dashboard instead of scratchpad. Only needs to be enable when using nix-community/nix-doom-emacs modules is used
 ;;(add-hook! 'emacs-startup-hook #'doom-init-ui-h)

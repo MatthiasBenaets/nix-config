@@ -61,8 +61,16 @@
         ip46tables -t mangle -D nixos-fw-rpfilter -p udp -m udp --dport 51820 -j RETURN || true
       '';
     }; # To load wireguard cert in nm-applet: nmcli connection import type wireguard file <config file>
-    # interfaces.enp0s31f6.useDHCP = lib.mkDefault true;
-    # interfaces.wlp0s20f3.useDHCP = lib.mkDefault true;
+    bridges = {
+      "br0" = {
+        interfaces = [ "enp0s31f6" ];
+      };
+    };
+    interfaces = {
+      #enp0s31f6.useDHCP = lib.mkDefault true;
+      #wlp0s20f3.useDHCP = lib.mkDefault true;
+      br0.useDHCP = true;
+    };
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

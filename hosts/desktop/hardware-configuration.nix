@@ -108,20 +108,38 @@
   networking = {
     useDHCP = false;                            # Deprecated
     hostName = "desktop";
-    #networkmanager.enable = true;
     enableIPv6 = false;
-    interfaces = {
-      enp2s0 = {                                # Change to correct network driver
-        # useDHCP = true;                       # Disabled because fixed ip
-        ipv4.addresses = [ {                    # Ip settings: *.0.50 for main machine
-          address = "192.168.0.50";
-          prefixLength = 24;
-        } ];
+    bridges = {                                 # Bridge so interface can be used with virtual machines
+      "br0" = {
+        interfaces = [ "enp2s0" ];
       };
-      #wlp2s0.useDHCP = true;                   # Wireless card
+    };
+    interfaces = {
+      # enp2s0 = {                                # Change to correct network driver
+      #   #useDHCP = true;                         # Disabled because fixed ip
+      #   ipv4.addresses = [ {                    # Ip settings: *.0.50 for main machine
+      #     address = "192.168.0.50";
+      #     prefixLength = 24;
+      #   } ];
+      # };
+      # wlp1s0.useDHCP = true;                   # Wireless card
+      br0.ipv4.addresses = [{
+        address = "192.168.0.50";
+        prefixLength = 24;
+      } ];
     };
     defaultGateway = "192.168.0.1";
-    nameservers = [ "192.168.0.4" "1.1.1.1"];            # Pi-Hole DNS
+    nameservers = [ "192.168.0.4" "1.1.1.1"];   # Pi-Hole DNS
     #nameservers = [ "1.1.1.1" "1.0.0.1" ];     # Cloudflare (when Pi-Hole is down)
   };
+
+  #services.hostapd = {                          # Wifi hotspot 
+  #  enable = true;
+  #  interface = "wlp1s0";
+  #  ssid = "desktop";
+  #  wpaPassphrase = "<password>";
+  #  extraConfig = ''
+  #    bridge=br0
+  #  '';
+  #};
 }

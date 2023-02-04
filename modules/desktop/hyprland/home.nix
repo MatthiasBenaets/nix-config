@@ -31,11 +31,18 @@ let
         workspace_swipe_distance=100
       }
     '' else "";
-  monitors = with host;
-    if hostName == "desktop" || hostName == "work" then ''
+  workspaces = with host;
+    if hostName == "desktop" then ''
+      monitor=${toString mainMonitor},1920x1080@60,1920x0,1
+      monitor=${toString secondMonitor},1920x1080@60,0x0,1
+    '' else if hostName == "work" then ''
       monitor=${toString mainMonitor},1920x1080@60,0x0,1
       monitor=${toString secondMonitor},1920x1080@60,1920x0,1
-
+    '' else ''
+      monitor=${toString mainMonitor},1920x1080@60,0x0,1
+    '';
+  monitors = with host;
+    if hostName == "desktop" || hostName == "work" then ''
       workspace=${toString mainMonitor},1
       workspace=${toString secondMonitor},6
 
@@ -49,10 +56,7 @@ let
       wsbind=8,${toString secondMonitor}
       wsbind=9,${toString secondMonitor}
       wsbind=10,${toString secondMonitor}
-    ''
-    else ''
-      monitor=${toString mainMonitor},1920x1080@60,0x0,1
-    '';
+    '' else "";
   execute = with host;
     if hostName == "desktop" then ''
       exec-once=${pkgs.mpvpaper}/bin/mpvpaper -sf -v -o "--loop --panscan=1" '*' $HOME/.config/wall.mp4
@@ -65,6 +69,7 @@ let
 in
 let
   hyprlandConf = with host; ''
+    ${workspaces}
     ${monitors}
 
     general {

@@ -1,4 +1,4 @@
-#+title: Nix-shell
+#+title: Nix-shell and nix develop
 #+description: A beginner guide to using nix-shell
 #+author: Matthias Benaets
 
@@ -33,8 +33,8 @@
 - ~$ nix-shell~ will default to an existing file named shell.nix
 - to specify a specific nix-file use ~$ nix-shell <nix-file.nix>~
 
-* Create shell.nix files
-** General
+** Create shell.nix files
+*** General
 #+begin_src nix
 with import <nixpkgs> {};
 mkShell {
@@ -45,7 +45,7 @@ mkShell {
 }
 #+end_src
 
-** Stable vs Unstable
+*** Stable vs Unstable
 #+begin_src nix
 let
   unstableTarball = fetchTarball https://github.com/NixOS/nixpkgs/arhive/nixos-unstable.tar.gz;
@@ -61,7 +61,7 @@ stdenv.mkDerivation {
 }
 #+end_src
 
-** Insecure
+*** Insecure
 #+begin_src nix
 with import <nixpkgs> {};
 mkShell {
@@ -76,7 +76,7 @@ mkShell {
 - In some cases this will still break the package. If the package has a flake.nix it might be better to:
   - ~$ NIXPKGS_ALLOW_INSECURE=1 nix run nixpkgs#etcher --impure~
 
-** Appimages
+*** Appimages
 - This is mainly an issue for NixOS users.
 - Recommended solution: You can use the shell below or use a package called "appimage-run". You can then ~$ appimage-run <appimage>~.
 #+begin_src nix
@@ -95,7 +95,7 @@ pkgs.appimageTools.wrapType2 {
 #+end_src
 - If you want to run the shell it is recommended to use ~$ nix build -f shell.nix~.
 
-** Shell Hook
+*** Shell Hook
 - Initialisation: Commands to run after everything is sourced.
 #+begin_src nix
 with import <nixpkgs> {};
@@ -105,6 +105,33 @@ stdenv.mkDerivation {
   shellHook = ''
     echo "hello world"
   '';
+}
+#+end_src
+
+* Nix develop
+** Shell
+- Install package in the current active $SHELL (current terminal)
+  - ~$ nix develop~
+- If the flake has multiple hosts.
+  - ~$ nix develop </path/to/flake.nix>#<host>~
+
+** Create flake.nix
+- Using the nixpkgs-unstable branch, <packages> will be installed inside a shell. This host is ~default~. You can create multiple hosts and rename them.
+#+begin_src nix
+{
+  description = "A development environment";
+  inputs = {
+    nixpkgs = { url = "github:nixos/nixpkgs/nixpkgs-unstable"; };
+  };
+  outputs = inputs:
+    let
+      pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
+    in {
+      # default host
+      devShells.x86_64-linux.default = inputs.nixpkgs.legacyPackages.x86_64-linux.mkShell {
+        buildInputs = [ <packages> ];
+      };
+    };
 }
 #+end_src
 
