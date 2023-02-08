@@ -146,7 +146,7 @@
   :after '(evil-window-split evil-window-vsplit)
   (consult-buffer))
 (map! "M-SPC"           #'other-window
-      "M-q"             #'evil-window-delete)
+      "M-q"             #'delete-window)
 (map! :map evil-window-map ;;SPC-w-...
       "SPC"             #'rotate-layout
       ;; Swapping windows
@@ -211,20 +211,51 @@
         ;;doom-dashboard-widget-shortmenu
         doom-dashboard-widget-loaded
         doom-dashboard-widget-footer))
-
 (setq doom-modeline-major-mode-icon t)
 
 ;; YASnippets
-;; (setq yas-triggers-in-field t)
+(setq yas-triggers-in-field t)
 
 ;; Python
 (setq python-shell-completion-native-disabled-interpreters '("python3")
+      python-shell-completion-native-enable nil
       python-shell-interpreter-args "-i"
       python-shell-prompt-detect-failure-warning nil)
 
+;; (map! :after python
+;;       :map python-mode-map
+;;       :prefix "C-c"
+;;       :desc "run-python" :ng "C-p" #'run-python
+;;       :desc "python-shell-send-buffer" :ng "C-c" (lambda () (interactive) (run-python) (python-shell-send-buffer)))
+
+(after! python
+  (elpy-enable))
+
+(add-hook 'elpy-mode-hook (lambda () (highlight-indentation-mode -1)))
+
+(add-hook 'python-mode-hook #'lsp-deferred) ;; Should fix problems with envrc
 (after! lsp-python-ms
   (setq lsp-python-ms-executable (executable-find "python-language-server"))
   (set-lsp-priority! 'mspyls 1))
+
+      ;; '(("\\*e?shell\\*\\|*[Pp]ython\\*"
+(setq display-buffer-alist
+      '(("\\*\\(e?shell\\|terminal\\|[Pp]ython\\)\\*"
+         (display-buffer-in-side-window)
+         (window-hight . 0.33)
+         (side . bottom)
+         (slot . -1))
+        ("\\*[Cc]ompil.*\\*"
+         (display-buffer-in-side-window)
+         (window-hight . 0.33)
+         (side . bottom)
+         (slot . 0))
+        ("\\*\\([Hh]elp.*\\|Messages\\|Warnings\\)\\*"
+         (display-buffer-in-side-window)
+         (window-hight . 0.33)
+         (side . bottom)
+         (slot . 1))))
+
 
 ;; Load dashboard instead of scratchpad. Only needs to be enable when using nix-community/nix-doom-emacs modules is used
 ;;(add-hook! 'emacs-startup-hook #'doom-init-ui-h)

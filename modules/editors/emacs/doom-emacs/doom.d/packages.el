@@ -49,7 +49,13 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
+;; General
 (package! rotate)
-(package! evil-tutor)
+
+;; Org mode
 (package! org-bullets)
 (package! visual-fill-column)
+
+;; Python mode
+;; (package! anaconda-mode :ignore t)
+(package! elpy)
