@@ -203,7 +203,6 @@ let
   '';
 in
 {
-  #xdg.configFile."hypr/hyprland.conf".text = "${hyprlandConf}";
   xdg.configFile."hypr/hyprland.conf".text = hyprlandConf;
 
   programs.swaylock.settings = {
@@ -231,7 +230,8 @@ in
     text-wrong-color = "ffffff";
     show-failed-attempts = true;
   };
-  services.swayidle = {
+
+  services.swayidle = with host; if hostName == "laptop" || hostName == "work" then {
     enable = true;
     events = [
       { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock -f"; }
@@ -241,5 +241,7 @@ in
       { timeout= 300; command = "${pkgs.swaylock}/bin/swaylock -f";}
     ];
     systemdTarget = "xdg-desktop-portal-hyprland.service";
+  } else {
+    enable = false;
   };
 }

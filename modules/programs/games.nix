@@ -1,11 +1,21 @@
 #
-# Steam
+# Gaming
+# Steam + MC + Emulation
 #
 # Do not forget to enable Steam play for all title in the settings menu
 #
 
 { config, pkgs, nur, lib, ... }:
 
+let                                             # No longer required because of retroarch but let's keep it for testing purposes
+  pcsx2 = pkgs.pcsx2.overrideAttrs (old: {      # PCSX2 runs way better on x11. This wrappers makes it use the correct GDK Backend
+    nativeBuildInputs = old.nativeBuildInputs ++ [ pkgs.makeWrapper ];
+    postFixup = ''
+      wrapProgram $out/bin/pcsx2 \
+        --set GDK_BACKEND x11
+    '';
+  });
+in
 {
   #hardware.new-lg4ff.enable = true;            # Force Feedback Packaged myself :)
 
@@ -14,6 +24,8 @@
     pkgs.lutris                                 # Game Launcher
     pkgs.heroic
     pkgs.prismlauncher
+    pkgs.retroarchFull
+    pcsx2
   ];
 
   programs = {                                  # Needed to succesfully start Steam

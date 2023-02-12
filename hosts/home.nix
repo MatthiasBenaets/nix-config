@@ -47,6 +47,7 @@
       gnome.file-roller # Archive Manager
       okular            # PDF Viewer
       pcmanfm           # File Manager
+      p7zip             # Zip Encryption
       rsync             # Syncer - $ rsync -r dir1/ dir2/
       unzip             # Zip Files
       unrar             # Rar Files

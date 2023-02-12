@@ -47,6 +47,15 @@
       enable = true;
       extraBackends = [ pkgs.sane-airscan ];
     };
+    opengl = {
+      enable = true;
+      extraPackages = with pkgs; [
+       #intel-media-driver
+        vaapiIntel
+        vaapiVdpau
+        libvdpau-va-gl
+      ];
+    };
   };
 
   environment = {                               # Packages installed system wide
@@ -57,6 +66,9 @@
       x11vnc
       wacomtablet
     ];
+    variables = {
+      LIBVA_DRIVER_NAME = "i965";
+    };
   };
 
   services = {
