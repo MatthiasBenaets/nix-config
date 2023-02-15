@@ -13,7 +13,8 @@
 
 { config, lib, pkgs, host, ... }:
 let
-  exec = with host; if hostName == "work" then "exec nvidia-offload Hyprland" else "exec Hyprland";
+  # exec = with host; if hostName == "work" then "exec nvidia-offload Hyprland" else "exec Hyprland"; # Starting Hyprland with nvidia (bit laggy so disabling)
+  exec = "exec Hyprland";
 in
 {
   imports = [ ../../programs/waybar.nix ];
@@ -32,7 +33,21 @@ in
       XDG_SESSION_TYPE="wayland";
       XDG_SESSION_DESKTOP="Hyprland";
     };
-    sessionVariables = {
+    sessionVariables = with host; if hostName == "work" then {
+      GBM_BACKEND = "nvidia-drm";
+      __GL_GSYNC_ALLOWED = "0";
+      __GL_VRR_ALLOWED = "0";
+      WLR_DRM_NO_ATOMIC = "1";
+      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      _JAVA_AWT_WM_NONREPARENTING = "1";
+
+      QT_QPA_PLATFORM = "wayland";
+      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+
+      GDK_BACKEND = "wayland";
+      WLR_NO_HARDWARE_CURSORS = "1";
+      MOZ_ENABLE_WAYLAND = "1";
+    } else {
       QT_QPA_PLATFORM = "wayland";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
 
@@ -60,7 +75,7 @@ in
   programs = {
     hyprland = {
       enable = true;
-      nvidiaPatches = with host; if hostName == "work" then true else false;
+      #nvidiaPatches = with host; if hostName == "work" then true else false;
     };
   };
 }

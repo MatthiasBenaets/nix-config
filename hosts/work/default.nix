@@ -59,6 +59,15 @@
       enable = true;
       extraBackends = [ pkgs.sane-airscan ];
     };
+    opengl = {
+      enable = true;
+      extraPackages = with pkgs; [
+        # intel-media-driver
+        vaapiIntel
+        vaapiVdpau
+        libvdpau-va-gl
+      ];
+    };
   };
 
   environment = {                               # Packages installed system wide
@@ -68,6 +77,9 @@
       x11vnc
       wacomtablet
     ];
+    variables = {
+      LIBVA_DRIVER_NAME = "i965";
+    };
   };
 
   programs = {                                  # No xbacklight, this is the alterantive
@@ -76,7 +88,7 @@
   };
 
   services = {
-    tlp.enable = true;                          # TLP and auto-cpufreq for power management
+    #tlp.enable = true;                          # TLP and auto-cpufreq for power management
     auto-cpufreq.enable = true;
     blueman.enable = true;                      # Bluetooth
     avahi = {                                   # Needed to find wireless printer
@@ -100,4 +112,5 @@
     #   openFirewall = true;
     # };
   };
+  systemd.services.NetworkManager-wait-online.enable = false;
 }
