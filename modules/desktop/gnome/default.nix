@@ -5,7 +5,14 @@
 { config, lib, pkgs, ... }:
 
 {
-  programs.dconf.enable = true;
+  programs = {
+    zsh.enable = true;
+    dconf.enable = true;
+    kdeconnect = {                                # For GSConnect
+      enable = true;
+      package = pkgs.gnomeExtensions.gsconnect;
+    };
+  };
 
   services = {
     xserver = {
@@ -25,16 +32,13 @@
     ];
   };
 
-  #programs.zsh.enable = true;                     # Weirdly needs to be added to have default user on lightdm
-
   hardware.pulseaudio.enable = false;
 
   environment = {
     systemPackages = with pkgs; [                 # Packages installed
+      gnome.dconf-editor
       gnome.gnome-tweaks
       gnome.adwaita-icon-theme
-      #gnomeExtensions.appindicator
-      #gnomeExtensions.pop-shell
     ];
     gnome.excludePackages = (with pkgs; [         # Gnome ignored packages
       gnome-tour

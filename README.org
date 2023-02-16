@@ -19,21 +19,22 @@
 :END:
 
 * System Components
-|                 | *NixOS - Wayland* | *NixOS - Xorg*    | *Darwin*          |
-|-----------------+-------------------+-------------------+-------------------|
-| *Shell*         | Zsh               | Zsh               | Zsh               |
-| *DM*            | TTY1 Login        | LightDM           | /                 |
-| *WM*            | Hyprland          | Bspwm             | Yabai             |
-| *Compositor*    | Hyprland          | Picom (jonaburg)  | /                 |
-| *Bar*           | Waybar            | Polybar           | /                 |
-| *Hotkeys*       | Hyprland          | Sxhkd             | Skhd              |
-| *Launcher*      | Rofi              | Rofi              | /                 |
-| *GTK Theme*     | Dracula           | Dracula           | /                 |
-| *Notifications* | Dunst             | Dunst             | /                 |
-| *Terminal*      | Alacritty         | Alacritty         | Alacritty         |
-| *Editor*        | Nvim + Doom Emacs | Nvim + Doom Emacs | Nvim + Doom Emacs |
-| *Used by host*  | Desktop & Work    | Laptop & VM       | Macbook           |
-There are some other desktop environments/window manager. Just link to correct default/home.nix in ~./hosts/<host>/default.nix~.
+|                 | *NixOS - Wayland* | *NixOS - Xorg*    | *Darwin*          | *NixOS - Other*     |
+|-----------------+-------------------+-------------------+-------------------+---------------------|
+| *Shell*         | Zsh               | Zsh               | Zsh               | Zsh                 |
+| *DM*            | GDM               | LightDM           | /                 | TTY1 Login          |
+| *WM/DE*         | Gnome             | Bspwm             | Yabai             | Hyprland/River/Sway |
+| *Compositor*    | Mutter            | Picom (jonaburg)  | /                 | Hyprland/River/Sway |
+| *Bar*           | Dock-to-Panel     | Polybar           | /                 | Waybar              |
+| *Hotkeys*       | /                 | Sxhkd             | Skhd              | Hyprland/River/Sway |
+| *Launcher*      | Gnome             | Rofi              | /                 | Rofi                |
+| *GTK Theme*     | Dracula           | Dracula           | /                 | Dracula             |
+| *Notifications* | Gnome             | Dunst             | /                 | Dunst               |
+| *Terminal*      | Alacritty         | Alacritty         | Alacritty         | Alacritty           |
+| *Editor*        | Nvim + Doom Emacs | Nvim + Doom Emacs | Nvim + Doom Emacs | Nvim + Doom Emacs   |
+| *Used by host*  | Desktop & Work    | Laptop & VM       | Macbook           | /                   |
+
+There are some other desktop environments/window manager (See NixOS - Other). Just link to correct ~default/home.nix~ in ~./hosts/<host>/default and home.nix~.
 There is also a general Nix config with hostname ~pacman~ that can be used on pretty much any disto.
 
 * NixOS Installation Guide
