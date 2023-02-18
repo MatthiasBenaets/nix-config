@@ -59,7 +59,8 @@ let
     '' else "";
   execute = with host;
     if hostName == "desktop" then ''
-      exec-once=${pkgs.mpvpaper}/bin/mpvpaper -sf -v -o "--loop --panscan=1" '*' $HOME/.config/wall.mp4
+      #exec-once=${pkgs.mpvpaper}/bin/mpvpaper -sf -v -o "--loop --panscan=1" '*' $HOME/.config/wall.mp4  # Moving wallpaper (small performance hit)
+      exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
     '' else if hostName == "work" then ''
       exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
       exec-once=${pkgs.networkmanagerapplet}/bin/nm-applet --indicator
@@ -132,7 +133,8 @@ let
     bind=SUPER,L,exec,${pkgs.swaylock}/bin/swaylock
     bind=SUPER,E,exec,${pkgs.pcmanfm}/bin/pcmanfm
     bind=SUPER,H,togglefloating,
-    bind=SUPER,Space,exec,${pkgs.rofi}/bin/rofi -show drun
+    #bind=SUPER,Space,exec,${pkgs.rofi}/bin/rofi -show drun
+    bind=SUPER,Space,exec,${pkgs.wofi}/bin/wofi --show drun
     bind=SUPER,P,pseudo,
     bind=SUPER,F,fullscreen,
     bind=SUPER,R,forcerendererreload

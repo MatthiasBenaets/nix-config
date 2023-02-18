@@ -13,6 +13,7 @@
 [
   ./alacritty.nix
   ./rofi.nix
+  ./wofi.nix
   #./waybar.nix
   #./games.nix
 ]

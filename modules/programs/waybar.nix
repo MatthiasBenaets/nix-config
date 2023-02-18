@@ -132,8 +132,10 @@
           };
           "custom/menu" = {
             format = "<span font='16'></span>";
-            on-click = ''${pkgs.rofi}/bin/rofi -show power-menu -modi "power-menu:rofi-power-menu --choices=logout/suspend/reboot/shutdown"'';
-            on-click-right = "${pkgs.rofi}/bin/rofi -show drun";
+            #on-click = ''${pkgs.rofi}/bin/rofi -show power-menu -modi "power-menu:rofi-power-menu --choices=logout/suspend/reboot/shutdown"'';
+            #on-click-right = "${pkgs.rofi}/bin/rofi -show drun";
+            on-click = ''~/.config/wofi/power.sh'';
+            on-click-right = "${pkgs.wofi}/bin/wofi --show drun";
             tooltip = false;
           };
           "sway/workspaces" = {
@@ -271,8 +273,10 @@
           };
           "custom/menu" = {
             format = "<span font='16'></span>";
-            on-click = "${pkgs.rofi}/bin/rofi -show p -modi p:${pkgs.rofi-power-menu}/bin/rofi-power-menu -theme $HOME/.config/rofi/config.rasi";
-            on-click-right = "${pkgs.rofi}/bin/rofi -show drun";
+            #on-click = "${pkgs.rofi}/bin/rofi -show p -modi p:${pkgs.rofi-power-menu}/bin/rofi-power-menu -theme $HOME/.config/rofi/config.rasi";
+            #on-click-right = "${pkgs.rofi}/bin/rofi -show drun";
+            on-click = ''~/.config/wofi/power.sh'';
+            on-click-right = "${pkgs.wofi}/bin/wofi --show drun";
             tooltip = false;
           };
           "wlr/workspaces" = {

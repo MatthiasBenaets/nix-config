@@ -24,8 +24,8 @@
         "com.parsecgaming.parsec.desktop"
         "org.remmina.Remmina.desktop"
         "virt-manager.desktop"
-        "blueman-manager.desktop"
-        "pavucontrol.desktop"
+        # "blueman-manager.desktop"
+        # "pavucontrol.desktop"
       ];
       disable-user-extensions = false;
       enabled-extensions = [
