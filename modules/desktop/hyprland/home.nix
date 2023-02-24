@@ -191,7 +191,7 @@ let
     bind=,XF86MonBrightnessDown,exec,${pkgs.light}/bin/light -U 10
     bind=,XF86MonBrightnessUP,exec,${pkgs.light}/bin/light -A 10
 
-    windowrule=float,^(Rofi)$
+    #windowrule=float,^(Rofi)$
     windowrule=float,title:^(Volume Control)$
     windowrule=float,title:^(Picture-in-Picture)$
     windowrule=pin,title:^(Picture-in-Picture)$
