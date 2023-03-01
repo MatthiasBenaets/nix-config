@@ -7,18 +7,28 @@
       package = pkgs.yabai;
       config = {                          # Other configuration options
         layout = "bsp";
-        auto_balance = "off";
+        auto_balance = "on";
         split_ratio = "0.50";
         window_border = "on";
-        window_border_width = "2";
         window_placement = "second_child";
-        focus_follows_mouse = "autoraise";
-        mouse_follows_focus = "off";
-        top_padding = "10";
+        focus_follows_mouse = "off";
+        mouse_follows_focus = "on";
+        mouse_action1 = "move";
+        mouse_action2 = "resize";
+        mouse_drop_action = "swap";
+        top_padding = "29";
         bottom_padding = "10";
         left_padding = "10";
         right_padding = "10";
-        window_gap = "10";
+        window_gap = "8";
+        external_bar = "all:28:0";
+        insert_feedback_color = "0xffd75f5f";
+        active_window_border_color = "0xff3eb489";
+        normal_window_border_color = "0xffaaaaaa";
+        active_window_border_topmost = "on";
+        window_shadow = "on";
+        window_opacity = "off";
+        window_border_width = 4;
       };
       extraConfig = ''
         yabai -m rule --add app='^Emacs$' manage=on

@@ -15,7 +15,7 @@
 #
 
 {
-  description = "My Personal NixOS and Darwin System Flake Configuration";
+  description = "Tom's Personal NixOS and Darwin System Flake Configuration";
 
   inputs =                                                                  # All flake references used to build my NixOS setup. These are dependencies.
     {
@@ -35,10 +35,6 @@
         url = "github:nix-community/NUR";                                   # NUR Packages
       };
 
-      nixgl = {                                                             # OpenGL
-        url = "github:guibou/nixGL";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
 
       emacs-overlay = {                                                     # Emacs Overlays
         url = "github:nix-community/emacs-overlay";
@@ -51,22 +47,18 @@
          inputs.emacs-overlay.follows = "emacs-overlay";
       };
 
-      hyprland = {                                                          # Official Hyprland flake
-        url = "github:vaxerski/Hyprland";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
     };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, darwin, nur, nixgl, doom-emacs, hyprland, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
+  outputs = inputs @ { self, nixpkgs, home-manager, darwin, nur, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                                     # Variables that can be used in the config files.
-      user = "matthias";
+      user = "tom";
       location = "$HOME/.setup";
     in                                                                      # Use above variables in ...
     {
       nixosConfigurations = (                                               # NixOS configurations
         import ./hosts {                                                    # Imports ./hosts/default.nix
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager nur user location doom-emacs hyprland;   # Also inherit home-manager so it does not need to be defined here.
+          inherit inputs nixpkgs home-manager nur user location;   # Also inherit home-manager so it does not need to be defined here.
         }
       );
 
@@ -80,7 +72,7 @@
       homeConfigurations = (                                                # Non-NixOS configurations
         import ./nix {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager nixgl user;
+          inherit inputs nixpkgs home-manager user;
         }
       );
     };

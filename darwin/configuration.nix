@@ -10,10 +10,10 @@
 { config, pkgs, user, ... }:
 
 {
-  #imports = [
-  #  ./modules/yabai.nix
-  #  ./modules/skhd.nix
-  #];
+  imports = [
+    ./modules/yabai.nix
+    ./modules/skhd.nix
+  ];
 
   users.users."${user}" = {               # macOS user
     home = "/Users/${user}";
@@ -21,9 +21,11 @@
   };
 
   networking = {
-    computerName = "MacBook";             # Host name
-    hostName = "MacBook";
+    computerName = "Toms MacBook";             # Host name
+    hostName = "WKSMAC151152";
   };
+
+  security.pam.enableSudoTouchIdAuth = true;
 
   fonts = {                               # Fonts
     fontDir.enable = true;
@@ -72,12 +74,34 @@
       upgrade = false;
       cleanup = "zap";                    # Uninstall not listed packages and casks
     };
+    taps = [
+      "FelixKratz/formulae"
+      "homebrew/cask-drivers"
+      "homebrew/core"
+      "homebrew/cask"
+      "homebrew/bundle"
+    ];
     brews = [
       "wireguard-tools"
+      "FelixKratz/formulae/sketchybar"
+      "ifstat"
     ];
     casks = [
-      "parsec"
+      "google-chrome"
       "plex-media-player"
+      "alacritty"
+      "slack"
+      "spotify"
+      "notion"
+      "raycast"
+      "transmission"
+      "via"
+      "vlc"
+      "visual-studio-code"
+      "insomnia"
+      "nordvpn"
+      "logi-options-plus"
+
     ];
   };
 
@@ -100,19 +124,37 @@
         KeyRepeat = 1;
         NSAutomaticCapitalizationEnabled = false;
         NSAutomaticSpellingCorrectionEnabled = false;
+        NSAutomaticWindowAnimationsEnabled = false;
+        _HIHideMenuBar = true;
+        "com.apple.swipescrolldirection" = false;
+        AppleTemperatureUnit = "Celsius";
+
       };
-      dock = {                            # Dock settings
+      dock = {               # Dock settings
         autohide = true;
-        orientation = "bottom";
+        autohide-delay = 0.0;
+        autohide-time-modifier = 0.0;
+        dashboard-in-overlay = true;
+        expose-animation-duration = 0.0;
+        launchanim = false;
+        orientation = "left";
         showhidden = true;
+        mru-spaces = false;
+        show-recents = false;
+        static-only = true;
         tilesize = 40;
       };
       finder = {                          # Finder settings
-        QuitMenuItem = false;             # I believe this probably will need to be true if using spacebar
+        QuitMenuItem = true;             # I believe this probably will need to be true if using spacebar
+        AppleShowAllExtensions = true;
+        
       };  
       trackpad = {                        # Trackpad settings
         Clicking = true;
         TrackpadRightClick = true;
+      };
+      SoftwareUpdate = {
+        AutomaticallyInstallMacOSUpdates = true;
       };
     };
     activationScripts.postActivation.text = ''sudo chsh -s ${pkgs.zsh}/bin/zsh''; # Since it's not possible to declare default shell, run this command after build
