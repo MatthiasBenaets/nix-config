@@ -1,6 +1,6 @@
-#+title: Matthias' NixOS & Nix-Darwin System Configuration Flake
+#+title: Tom's Nix-Darwin (& hopefully soon NixOS) System Configuration Flake
 #+description: General information about my flake and how to set it up
-#+author: Matthias Benaets
+#+author: Matthias Benaets (Forked by Tom Meadows)
 
 #+attr_org: :width 600
 [[file:rsc/Header.svg]]
@@ -21,16 +21,16 @@
 * System Components
 |                 | *NixOS -Wayland* | *NixOS - Wayland/Xorg* | *NixOS - Xorg*   | *Darwin*  |
 |-----------------+------------------+------------------------+------------------+-----------|
-| *DM*            | TTY1 Login       | GDM                    | LightDM          | /         |
-| *WM/DE*         | Hyprland         | Gnome                  | Bspwm            | Yabai     |
-| *Compositor*    | Hyprland         | Mutter                 | Picom (jonaburg) | /         |
-| *Bar*           | Waybar           | Dock-to-Panel          | Polybar          | /         |
-| *Hotkeys*       | Hyprland         | /                      | Sxhkd            | Skhd      |
-| *Launcher*      | Wofi             | Gnome                  | Rofi             | /         |
-| *GTK Theme*     | Dracula          | Dracula / Adwaita      | Dracula          | /         |
-| *Notifications* | Dunst            | Gnome                  | Dunst            | /         |
-| *Terminal*      | Alacritty        | Alacritty              | Alacritty        | Alacritty |
-| *Used by host*  | Desktop          | Work                   | Laptop & VM      | Macbook   |
+| *DM*            | -        	     | -                      | -          	 | /         |
+| *WM/DE*         | -		     | -                      | -            	 | Yabai     |
+| *Compositor*    | -		     | -                      | -  		 | /         |
+| *Bar*           | -		     | -         	      | -                | /         |
+| *Hotkeys*       | -		     | -                      | -                | Skhd      |
+| *Launcher*      | -		     | -                      | -                | /         |
+| *GTK Theme*     | -		     | -     		      | -                | /         |
+| *Notifications* | -		     | -                      | -             	 | /         |
+| *Terminal*      | Alacritty        | -	              |	-	         | Alacritty |
+| *Used by host*  | Desktop          | -	              |	-	      	 | Macbook   |
 
 There are some other desktop environments/window manager (See NixOS - Other). Just link to correct ~default/home.nix~ in ~./hosts/<host>/default and home.nix~.
 There is also a general Nix config with hostname ~pacman~ that can be used on pretty much any disto.
@@ -38,10 +38,10 @@ There is also a general Nix config with hostname ~pacman~ that can be used on pr
 Compontents relevant to all hosts:
 | *Shell*    | Zsh               |
 | *Terminal* | Alacritty         |
-| *Editors*  | Nvim + Doom Emacs |
+| *Editors*  | Nvim	 	 |
 
 * NixOS Installation Guide
-This flake currently has *4* hosts
+This flake currently has *4* hosts for NixOS
  1. desktop
     - UEFI boot w/ systemd-boot
  2. laptop
@@ -231,7 +231,7 @@ This will rebuild the configuration and automatically activate it.
    - it's pretty much the same as adding the path to XDG_DATA_DIRS
    - if you do not want to or if the locations are different, change this.
 
-* Nix-Darwin Installation Guide
+* Nix-Darwin Installation Guide (Only part being used by Tom currently)
 This flake currently has *1* host
   1. macbook
 
