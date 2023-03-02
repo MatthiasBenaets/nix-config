@@ -53,26 +53,29 @@
     let                                                                     # Variables that can be used in the config files.
       user = "tom";
       location = "$HOME/.setup";
+      ### --- add overlays
+      overlays = with inputs;
+        (importNixFiles ./overlays);
     in                                                                      # Use above variables in ...
     {
       nixosConfigurations = (                                               # NixOS configurations
         import ./hosts {                                                    # Imports ./hosts/default.nix
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager nur user location;   # Also inherit home-manager so it does not need to be defined here.
+          inherit inputs nixpkgs home-manager overlays nur user location;   # Also inherit home-manager so it does not need to be defined here.
         }
       );
 
       darwinConfigurations = (                                              # Darwin Configurations
         import ./darwin {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager darwin user;
+          inherit inputs nixpkgs home-manager overlays darwin user;
         }
       );
 
       homeConfigurations = (                                                # Non-NixOS configurations
         import ./nix {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager user;
+          inherit inputs nixpkgs home-manager overlays user;
         }
       );
     };

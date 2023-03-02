@@ -35,6 +35,7 @@
       (nerdfonts.override {
         fonts = [
           "FiraCode"
+          "JetBrainsMono"
         ];
       })
     ];
@@ -56,12 +57,12 @@
       emacs
       fd
       ripgrep
+
+      alacritty
     ];
   };
 
-  programs = {                            # Shell needs to be enabled
-    zsh.enable = true;
-  };
+  programs.zsh.enable = true;                            # Shell needs to be enabled
 
   services = {
     nix-daemon.enable = true;             # Auto upgrade daemon
