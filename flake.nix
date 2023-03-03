@@ -31,8 +31,8 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
-      nur = {
-        url = "github:nix-community/NUR";                                   # NUR Packages
+      nur = {                                                               # NUR Packages
+        url = "github:nix-community/NUR";                                   # Add "nur.nixosModules.nur" to the host modules
       };
 
       nixgl = {                                                             # OpenGL
@@ -46,18 +46,24 @@
       };
 
       doom-emacs = {                                                        # Nix-community Doom Emacs
-         url = "github:nix-community/nix-doom-emacs";
-         inputs.nixpkgs.follows = "nixpkgs";
-         inputs.emacs-overlay.follows = "emacs-overlay";
+        url = "github:nix-community/nix-doom-emacs";
+        inputs.nixpkgs.follows = "nixpkgs";
+        inputs.emacs-overlay.follows = "emacs-overlay";
       };
 
       hyprland = {                                                          # Official Hyprland flake
-        url = "github:vaxerski/Hyprland";
+        url = "github:vaxerski/Hyprland";                                   # Add "hyprland.nixosModules.default" to the host modules
         inputs.nixpkgs.follows = "nixpkgs";
+      };
+
+      plasma-manager = {                                                    # KDE Plasma user settings
+        url = "github:pjones/plasma-manager";                               # Add "inputs.plasma-manager.homeManagerModules.plasma-manager" to the home-manager.users.${user}.imports
+        inputs.nixpkgs.follows = "nixpkgs";
+        inputs.home-manager.follows = "nixpkgs";
       };
     };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, darwin, nur, nixgl, doom-emacs, hyprland, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
+  outputs = inputs @ { self, nixpkgs, home-manager, darwin, nur, nixgl, doom-emacs, hyprland, plasma-manager, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                                     # Variables that can be used in the config files.
       user = "matthias";
       location = "$HOME/.setup";
@@ -66,7 +72,7 @@
       nixosConfigurations = (                                               # NixOS configurations
         import ./hosts {                                                    # Imports ./hosts/default.nix
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager nur user location doom-emacs hyprland;   # Also inherit home-manager so it does not need to be defined here.
+          inherit inputs nixpkgs home-manager nur user location doom-emacs hyprland plasma-manager;   # Also inherit home-manager so it does not need to be defined here.
         }
       );
 
