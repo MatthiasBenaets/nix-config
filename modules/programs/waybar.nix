@@ -226,7 +226,7 @@
             format = "<span font='11'>{icon}</span> {volume}% {format_source} ";
             format-bluetooth = "<span font='11'>{icon}</span> {volume}% {format_source} ";
             format-bluetooth-muted = "<span font='11'>x</span> {volume}% {format_source} ";
-            format-muted = "<span font='11'>x</span> {format_source} ";
+            format-muted = "<span font='11'>x</span> {volume}% {format_source} ";
             #format-source = "{volume}% <span font='11'></span>";
             format-source = "<span font='10'></span> ";
             format-source-muted = "<span font='11'> </span> ";
@@ -347,7 +347,7 @@
             format = "<span font='11'>{icon}</span> {volume}% {format_source} ";
             format-bluetooth = "<span font='11'>{icon}</span> {volume}% {format_source} ";
             format-bluetooth-muted = "<span font='11'>x</span> {volume}% {format_source} ";
-            format-muted = "<span font='11'>x</span> {format_source} ";
+            format-muted = "<span font='11'>x</span> {volume}% {format_source} ";
             #format-source = "{volume}% <span font='11'></span> ";
             format-source = "<span font='10'></span> ";
             format-source-muted = "<span font='11'></span> ";
