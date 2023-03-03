@@ -1,0 +1,59 @@
+if test -f "$HOME/.nix-profile/etc/profile.d/nix.sh"; then
+  source $HOME/.nix-profile/etc/profile.d/nix.sh
+fi
+
+# Directories to be prepended to $PATH
+declare -a dirs_to_prepend
+dirs_to_prepend=(
+  "/usr/local/bin"
+  "/usr/bin"
+  "/bin"
+  "/usr/sbin/
+  /sbin"
+  "/usr/local/sbin"
+  "/usr/local/sketchybar/bin"
+  "/usr/local/git/bin"
+  "/usr/local/go/bin"
+  "/usr/local/mysql/bin"
+  "/usr/local/"
+  "$HOME/.local/bin"
+  "$HOME/dotfiles/bin"
+  "$HOME/go/bin"
+  "$HOME/bin"
+  "$HOME/.cargo/bin" # rust binaries
+  "$HOME/.yarn/bin"
+  "$HOME/work/arcanist/arcanist/bin"
+  "$HOME/tools/arcanist/bin"
+  "$HOME/tools/"
+  "/usr/local/opt/bison/bin"
+)
+
+for dir in ${(k)dirs_to_prepend[@]}
+do
+  if [ -d ${dir} ]; then
+    # If these directories exist, then prepend them to existing PATH
+    PATH="${dir}:$PATH"
+  fi
+done
+
+unset dirs_to_prepend
+export PATH
+
+# --- TODO nixify everything below here ---
+# Source local extra (private) settings specific to machine if it exists
+[ -f ~/.zsh.local ] && source ~/.zsh.local
+
+export TERM=xterm-256color
+
+# I want to be able to jump words
+bindkey "^[[1;3C" forward-word
+bindkey "^[[1;3D" backward-word
+
+# Nix
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+fi
+# End Nix
+
+# run starship
+eval "$(starship init zsh)"

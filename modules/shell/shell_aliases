@@ -1,0 +1,78 @@
+#! /usr/bin/env zsh
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+
+# temporary stuff
+alias argosecret="kubectl -n argo-cd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d | pbcopy"
+
+alias gnvim="goneovim &"
+alias vim="nvim"
+alias vi="nvim"
+alias watch="watch "
+alias kubectl="kube-lock kubectl --"
+alias k="kubectl"
+alias kc="kubectl"
+
+# Enable aliases to be sudo’ed
+alias sudo="sudo "
+
+# bat
+alias cat="bat "
+
+# spicetify
+alias spicetify="spicetify-cli "
+
+# Brew up new casks when they're added!
+alias yabrew="brew bundle install --file ~/.config/brew/Brewfile"
+alias sketch="brew services start sketchybar"
+alias resketch="brew services restart sketchybar"
+alias stopsketch="brew services stop sketchybar"
+
+# easily update home-manager config
+alias unix="home-manager switch"
+alias nixedit="vim ~/.config/nixpkgs/home.nix"
+alias znix="cd ~/.config/nixpkgs"
+alias snix="cd ~/.config/nixpkgs && git status && cd -"
+alias dnix="cd ~/.config/nixpkgs && git diff && cd -"
+
+# fuzzy search for file and open in vim
+alias vf="vim \$(fzf)"
+
+# Recursively delete `.DS_Store` files
+alias cleanup_dsstore="find . -name '*.DS_Store' -type f -ls -delete"
+
+# Disc utils
+alias diskspace_report="df -P -kHl"
+
+# Empty the Trash on all mounted volumes and the main HDD.
+# Also, clear Apple’s System Logs & the useless sleepimage to improve shell startup speed
+alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo grm -rf $HOME/.Trash; sudo rm -rtv /private/var/log/asl/*.asl; sudo rm /private/var/vm/sleepimage"
+
+# Show/hide hidden files in Finder
+alias showdotfiles="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+alias hidedotfiles="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+
+# Show/hide all desktop icons (useful when presenting)
+alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+
+# zshrc config
+alias zshrc="${EDITOR} ~/.zshrc"
+alias reload="source ~/.zshrc && echo 'Shell config reloaded from ~/.zshrc'"
+
+# zsh.local config
+alias localrc="if [[ -a ~/.zsh.local ]]; then ${EDITOR} ~/.zsh.local; fi"
+
+# character based diff of two files
+alias diffchar="git diff --word-diff=color --word-diff-regex=. --no-index"
+
+# use ripgrep instead of silversearcher
+alias ag=rg
+
+# use fzf to find directories
+alias findir='cd $(find . -type d -print | fzf)'
+
+# xclip clipboard
+alias xcc='xclip -selection clipboard'

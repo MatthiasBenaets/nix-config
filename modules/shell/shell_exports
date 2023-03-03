@@ -1,0 +1,27 @@
+#! /usr/bin/env zsh
+
+# Defaults
+export SHELL=zsh
+export EDITOR='nvim'
+export DEFAULT_USER=tom
+export WLR_DRM_NO_MODIFIERS=1
+
+# Directory Env Vars
+export GOPATH=$HOME/go
+export GOBIN=$HOME/go/bin
+
+export KUBECONFIG=$HOME/.kube/config
+
+# set virtualenvwrapper to global python3
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+
+# SSH
+export SSH_KEY_PATH="~/.ssh/id_ed25519"
+
+# Don’t clear the screen after quitting a manual page
+export MANPAGER="less -X"
+
+# use ripgrep for fzf
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+
+export TERM=xterm-256color

@@ -1,34 +1,46 @@
-#
-# Shell
-#
-
+# taken from https://github.com/aywrite/nix-config
 { pkgs, ... }:
-
+let
+  # this idea is from https://github.com/BrianHicks/dotfiles.nix/blob/master/dotfiles/zsh.nix
+  extras = [
+    ./zshrc
+    ./shell_exports
+    ./shell_aliases
+    ./shell_functions
+  ];
+  extraInitExtra = builtins.foldl' (soFar: new: soFar + "\n" + builtins.readFile new) "" extras;
+in
 {
-  programs = {
-    zsh = {
-      enable = true;
-      autosuggestions.enable = true;            # Auto suggest options and highlights syntax, searches in history for options
-      syntaxHighlighting.enable = true;
-      enableCompletion = true;
-      histSize = 100000;
-
-      ohMyZsh = {                               # Extra plugins for zsh
-        enable = true;
-        plugins = [ "git" ];
-      };
-
-      shellInit = ''                            # Zsh theme
-        # Spaceship
-        source ${pkgs.spaceship-prompt}/share/zsh/site-functions/prompt_spaceship_setup
-        autoload -U promptinit; promptinit
-        # Hook direnv
-        #emulate zsh -c "$(direnv hook zsh)"
-        # Swag
-        ${pkgs.nitch}/bin/nitch
-
-        #eval "$(direnv hook zsh)"
-      '';
+  # .zshenv
+  programs.zsh = {
+    enable = true;
+    # enableAutosuggestions = false;
+    enableCompletion = false;
+    shellAliases = {
+      cls = "clear";
     };
+
+    initExtra = ''
+      # Display red dots while waiting for completion
+      COMPLETION_WAITING_DOTS="true"
+    '' + extraInitExtra;
+    oh-my-zsh = {
+      enable = true;
+      plugins = [
+        "git" "z"
+      ];
+    };
+
+    plugins = [
+      {
+        name = "zsh-syntax-highlighting";
+        src = pkgs.fetchFromGitHub {
+          owner = "zsh-users";
+          repo = "zsh-syntax-highlighting";
+          rev = "0.6.0";
+          sha256 = "0zmq66dzasmr5pwribyh4kbkk23jxbpdw4rjxx0i7dx8jjp2lzl4";
+        };
+      }
+    ];
   };
 }

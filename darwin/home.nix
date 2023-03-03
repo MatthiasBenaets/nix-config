@@ -16,6 +16,7 @@
   imports = 
     [
       ../modules/programs/alacritty.nix
+      ../modules/shell/zsh.nix
     ];
   home = {                                        # Specific packages for macbook
     packages = with pkgs; [

@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# like cd but fuzzy
+cf() {
+  local dir
+  dir=$(find ${1:-.} -path '*/\.*' -prune \
+                  -o -type d -print 2> /dev/null | fzf +m) &&
+  cd "$dir" || return
+}
+
+# sync caravan repo
+push-nix() {
+    cd ~/.config/nixpkgs
+    git add .
+    git commit -a -m "$1"
+    git push
+    cd -
+  }
+
+sync-nix() {
+    cd ~/.config/nixpkgs
+    git add .
+    git stash
+    git checkout main
+    git pull origin main
+    git stash pop
+    home-manager switch
+    push-nix "sync-nix performed on $(date)"
+    cd -
+}
+
+kc-patch-secret() {
+  local value
+  value=$(echo "$3" | base64)
+  kubectl patch secret "$1" --type='json' -p='[{"op" : "replace" ,"path" : '$2' ,"value" : '$value'}]'
+}
+
+kc-decode-secret() {
+  local value
+  value=$(kubectl get secret "$1" -o jsonpath="{$2}")
+  echo "$value" | base64 -d
+}
