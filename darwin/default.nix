@@ -16,7 +16,7 @@ in
 {
   workMacbook = darwin.lib.darwinSystem {                       # MacBook Pro (14-inch, 2021), M1 Pro
     inherit system;
-    specialArgs = { inherit inputs; user = "tom.meadows"; };
+    specialArgs = { inherit inputs; user = "tom.meadows"; inherit system; };
     modules = [                                             # Modules that are used
       ./configuration.nix
 
@@ -30,7 +30,7 @@ in
 
   personalMacbook = darwin.lib.darwinSystem {                       # MacBook Pro (14-inch, 2021), M1 Pro
     inherit system;
-    specialArgs = { inherit inputs; };
+    specialArgs = { inherit inputs; inherit system; };
     modules = [                                             # Modules that are used
       ./configuration.nix
 

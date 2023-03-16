@@ -30,6 +30,8 @@ alias sketch="brew services start sketchybar"
 alias resketch="brew services restart sketchybar"
 alias stopsketch="brew services stop sketchybar"
 
+# Nix aliases
+alias switch="darwin-rebuild switch --flake /Users/tom.meadows/Git/nixos-config/.#workMacbook"
 # easily update home-manager config
 alias unix="home-manager switch"
 alias nixedit="vim ~/.config/nixpkgs/home.nix"

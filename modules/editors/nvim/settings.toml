@@ -1,0 +1,52 @@
+#MaxDisplayItems = 30# Goneovim settings.toml
+## All of the following commented configuration items have default values.
+
+[Editor]
+## Makes the application window frameless.
+BorderlessWindow = true
+
+FontFamily = "JetBrainsMono Nerd Font"
+
+FontSize = 15
+
+SmoothScroll = true
+
+FileOpenCmd = ":tabe"
+
+Transparent = 0.95
+[MiniMap]
+## To view the minimap, launch an additional nvim instance;
+## setting Disable to true will not launch this additional nvim instance
+## and will completely disable the minimap feature.
+Disable = false
+
+## Specifies whether to show the minimap or not.
+Visible = true
+
+## Specifies the width of the minimap.
+Width = 100
+
+## Specifying code highlighting styles
+CodeHlStyle = "github"
+
+[SideBar]
+## Specifies whether to show the external sidebar or not.
+Visible = false
+
+## Specify the sidebar width
+Width = 300
+
+## Specify whether or not to draw a shadow under the sidebar.
+DropShadow = false
+
+RestoreSession = true
+
+[FileExplore]
+## Specify the maximum number of items to be displayed in the file explorer.
+MaxDisplayItems = 50
+
+# [Workspace]
+# name: "Git"
+# full: "/Users/tom/Git"
+# minimum: "Git/"
+# PathStyle: "minimum"

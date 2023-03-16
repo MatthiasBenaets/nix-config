@@ -7,8 +7,20 @@
 #       └─ ./configuration.nix *
 #
 
-{ config, pkgs, user, ... }:
+{ config, pkgs, user, system, ... }:
 
+let
+   pkgs = import (builtins.fetchGit {
+       # Descriptive name to make the store path easier to identify                
+       name = "my-old-revision";                                                 
+       url = "https://github.com/NixOS/nixpkgs/";                       
+       ref = "refs/heads/nixpkgs-unstable";                     
+       rev = "b3a285628a6928f62cdf4d09f4e656f7ecbbcafb";                                           
+   }) { inherit system ; };                                                                           
+
+   kubectl_1_25_4 = pkgs.kubectl;
+
+in
 {
   imports = [
     ./modules/yabai.nix
@@ -48,18 +60,22 @@
       VISUAL = "nvim";
     };
     systemPackages = with pkgs; [         # Installed Nix packages
-      # Terminal
-      ansible
-      git
-      ranger
-
-      # Doom Emacs
-      emacs
-      fd
-      ripgrep
-
       alacritty
-    ];
+
+      # Command-line tools
+      coreutils fzf ripgrep argo argocd bat colordiff cowsay toilet colima
+      gawk kubectx kubectl_1_25_4 google-cloud-sdk kustomize
+      helmfile kubernetes-helm htop hugo k9s krew stern crane diffoscope
+
+      minikube kind neofetch octant sipcalc tmate tree wget
+      watch git-crypt gnupg gpg-tui cosign jq docker-client starship diceware glow spicetify-cli
+
+      # Development
+      git gcc gnumake python38 nodejs cargo go yarn protobuf lima goreleaser cmctl
+
+      # Extra Stuff
+      lima
+    ] ;
   };
 
   programs.zsh.enable = true;                            # Shell needs to be enabled
@@ -81,14 +97,17 @@
       "homebrew/core"
       "homebrew/cask"
       "homebrew/bundle"
+      "homebrew/services"
     ];
     brews = [
       "wireguard-tools"
       "FelixKratz/formulae/sketchybar"
       "ifstat"
+      "ddcctl"
     ];
     casks = [
       "google-chrome"
+      "now-tv-player"
       "plex-media-player"
       "alacritty"
       "slack"
@@ -102,6 +121,8 @@
       "insomnia"
       "nordvpn"
       "logi-options-plus"
+      "iterm2"
+      "readdle-spark"
 
     ];
   };
@@ -146,9 +167,8 @@
         tilesize = 40;
       };
       finder = {                          # Finder settings
-        QuitMenuItem = true;             # I believe this probably will need to be true if using spacebar
-        AppleShowAllExtensions = true;
-        
+        QuitMenuItem = true;              # I believe this probably will need to be true if using spacebar
+        AppleShowAllExtensions = true; 
       };  
       trackpad = {                        # Trackpad settings
         Clicking = true;
