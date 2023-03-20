@@ -11,7 +11,7 @@
 #               └─ default.nix *
 #
 
-{ config, lib, pkgs, host, ... }:
+{ config, lib, pkgs, host, system, hyprland, ... }:
 let
   # exec = with host; if hostName == "work" then "exec nvidia-offload Hyprland" else "exec Hyprland"; # Starting Hyprland with nvidia (bit laggy so disabling)
   exec = "exec Hyprland";
@@ -78,4 +78,10 @@ in
       #nvidiaPatches = with host; if hostName == "work" then true else false;
     };
   };
+
+  nixpkgs.overlays = [    # Waybar with experimental features
+    (final: prev: {
+      waybar = hyprland.packages.${system}.waybar-hyprland;
+    })
+  ];
 }

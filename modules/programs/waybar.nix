@@ -9,16 +9,16 @@
     waybar
   ];
 
-  nixpkgs.overlays = [                                      # Waybar needs to be compiled with the experimental flag for wlr/workspaces to work
-    (self: super: {
-      waybar = super.waybar.overrideAttrs (oldAttrs: {
-        mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-        patchPhase = ''
-          substituteInPlace src/modules/wlr/workspace_manager.cpp --replace "zext_workspace_handle_v1_activate(workspace_handle_);" "const std::string command = \"hyprctl dispatch workspace \" + name_; system(command.c_str());"
-        '';
-      });
-    })
-  ];
+  # nixpkgs.overlays = [                                      # Waybar needs to be compiled with the experimental flag for wlr/workspaces to work (for now done with hyprland.nix)
+  #   (self: super: {
+  #     waybar = super.waybar.overrideAttrs (oldAttrs: {
+  #       mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+  #       patchPhase = ''
+  #         substituteInPlace src/modules/wlr/workspace_manager.cpp --replace "zext_workspace_handle_v1_activate(workspace_handle_);" "const std::string command = \"hyprctl dispatch workspace \" + name_; system(command.c_str());"
+  #       '';
+  #     });
+  #   })
+  # ];
 
   home-manager.users.${user} = {                           # Home-manager waybar config
     programs.waybar = {
@@ -417,14 +417,18 @@
         '';
         executable = true;
       };
-      ".config/waybar/script/ds4.sh" = {              # Custom script: Toggle speaker/headset
+      ".config/waybar/script/ds4.sh" = {              # Custom script: Dualshock battery indicator
         text = ''
           #!/bin/sh
 
           FILE=/sys/class/power_supply/sony_controller_battery_e8:47:3a:05:c0:2b/capacity
+          FILE2=/sys/class/power_supply/ps-controller-battery-e8:47:3a:05:c0:2b/capacity
 
           if [[ -f $FILE ]] then
             DS4BATT=$(cat $FILE)
+            printf "<span font='13'>󰊴</span> $DS4BATT%%\n"
+          elif [[ -f $FILE2 ]] then
+            DS4BATT=$(cat $FILE2)
             printf "<span font='13'>󰊴</span> $DS4BATT%%\n"
           else
             printf "\n"
