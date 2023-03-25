@@ -67,15 +67,15 @@ in
       gawk kubectx kubectl_1_25_4 google-cloud-sdk kustomize
       helmfile kubernetes-helm htop hugo k9s krew stern crane diffoscope
 
-      minikube kind neofetch octant sipcalc tmate tree wget
+      minikube kind neofetch octant sipcalc tmate tree wget openssh
       watch git-crypt gnupg gpg-tui cosign jq docker-client starship diceware glow spicetify-cli
 
       # Development
-      git gcc gnumake python38 nodejs cargo go yarn protobuf lima goreleaser cmctl
+      git gcc gnumake python2 python38 cargo go yarn protobuf lima goreleaser cmctl niv vulnix syft grype
 
       # Extra Stuff
       lima
-    ] ;
+    ] ++ [ kubectl_1_25_4];
   };
 
   programs.zsh.enable = true;                            # Shell needs to be enabled
@@ -100,9 +100,7 @@ in
       "homebrew/services"
     ];
     brews = [
-      "wireguard-tools"
       "FelixKratz/formulae/sketchybar"
-      "ifstat"
       "ddcctl"
     ];
     casks = [
@@ -123,7 +121,10 @@ in
       "logi-options-plus"
       "iterm2"
       "readdle-spark"
-
+      "element"
+      "zoom"
+      "microsoft-teams"
+      "yubico-yubikey-manager"
     ];
   };
 

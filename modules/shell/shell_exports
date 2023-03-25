@@ -1,5 +1,8 @@
 #! /usr/bin/env zsh
 
+# PATH
+export PATH=/run/current-system/sw/bin:$PATH
+
 # Defaults
 export SHELL=zsh
 export EDITOR='nvim'
@@ -17,6 +20,10 @@ export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 
 # SSH
 export SSH_KEY_PATH="~/.ssh/id_ed25519"
+
+# COSIGN
+export CK=$HOME/.cosign/cosign.key
+export CP=$HOME/.cosign/cosign.pub
 
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X"

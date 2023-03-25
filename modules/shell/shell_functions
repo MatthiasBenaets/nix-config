@@ -40,3 +40,22 @@ kc-decode-secret() {
   value=$(kubectl get secret "$1" -o jsonpath="{$2}")
   echo "$value" | base64 -d
 }
+
+gitra() {
+  url="git@github.com:$1/$2.git"
+  git remote add $1 $url
+}
+
+gcloud-auth() {
+  gcloud init
+  gcloud auth login
+  gcloud auth application-default login
+  gcloud auth configure-docker us-central1-docker.pkg.dev,asia-northeast1-docker.pkg.dev,europe-west1-docker.pkg.dev
+}
+
+new-cosign-image() {
+  docker pull $1
+  docker tag $1 $2/$1
+  docker push $2/$1
+  cosign attest --predicate $HOME/.tmp/cosign/predicate.json --type custom $2/$1 --key $CK 
+}
