@@ -63,11 +63,11 @@ in
       alacritty
 
       # Command-line tools
-      coreutils fzf ripgrep argo argocd bat colordiff cowsay toilet colima
+      coreutils fzf ripgrep argo argocd bat colordiff cowsay colima
       gawk kubectx kubectl_1_25_4 google-cloud-sdk kustomize
       helmfile kubernetes-helm htop hugo k9s krew stern crane diffoscope
 
-      minikube kind neofetch octant sipcalc tmate tree wget openssh
+      minikube kind neofetch octant sipcalc tmate tree wget openssh keychain
       watch git-crypt gnupg gpg-tui cosign jq docker-client starship diceware glow spicetify-cli
 
       # Development
@@ -101,6 +101,8 @@ in
     ];
     brews = [
       "FelixKratz/formulae/sketchybar"
+      "ddcctl"
+      "ykman"
     ];
     casks = [
       "google-chrome"
