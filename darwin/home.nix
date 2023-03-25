@@ -32,7 +32,7 @@
     git = {
       enable = true;
       userName = "chaosinthecrd";
-      userEmail = "thomas.meadows@jetstack.io";
+      userEmail = "tom@tmlabs.co.uk";
     };
     alacritty = {
       enable = true;

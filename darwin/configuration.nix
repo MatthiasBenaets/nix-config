@@ -60,7 +60,7 @@ in
       VISUAL = "nvim";
     };
     systemPackages = with pkgs; [         # Installed Nix packages
-      alacritty
+      alacritty keybase
 
       # Command-line tools
       coreutils fzf ripgrep argo argocd bat colordiff cowsay colima
@@ -68,7 +68,7 @@ in
       helmfile kubernetes-helm htop hugo k9s krew crane diffoscope
 
       minikube kind neofetch octant sipcalc tmate tree wget openssh keychain
-      watch git-crypt gnupg gpg-tui cosign jq docker-client starship diceware glow spicetify-cli
+      watch git-crypt cosign jq docker-client starship diceware glow spicetify-cli
 
       # Development
       git gcc gnumake python2 python38 cargo go yarn protobuf lima goreleaser cmctl niv vulnix syft grype
@@ -103,8 +103,11 @@ in
       "FelixKratz/formulae/sketchybar"
       "ddcctl"
       "ykman"
+      "gpg"
+      "pinentry"
     ];
     casks = [
+      "gpg-suite"
       "google-chrome"
       "now-tv-player"
       "plex-media-player"
