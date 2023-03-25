@@ -101,7 +101,6 @@ in
     ];
     brews = [
       "FelixKratz/formulae/sketchybar"
-      "ddcctl"
     ];
     casks = [
       "google-chrome"
