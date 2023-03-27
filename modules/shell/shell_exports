@@ -35,3 +35,6 @@ export TERM=xterm-256color
 
 # That stupid thing I need for GPG
 export GPG_TTY=$(tty)
+
+# For Yubikey-Agent
+export SSH_AUTH_SOCK="$(brew --prefix)/var/run/yubikey-agent.sock"

@@ -105,9 +105,11 @@ in
       "ykman"
       "gpg"
       "pinentry"
+      "yubikey-agent"
     ];
     casks = [
       "gpg-suite"
+      "firefox"
       "google-chrome"
       "now-tv-player"
       "plex-media-player"
@@ -122,6 +124,7 @@ in
       "visual-studio-code"
       "insomnia"
       "nordvpn"
+      "nordpass"
       "logi-options-plus"
       "iterm2"
       "readdle-spark"
