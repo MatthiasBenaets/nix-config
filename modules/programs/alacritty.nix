@@ -55,6 +55,7 @@
           { key = "Right";     mods = "Alt";     chars = "\\x1bf"; }
           { key = "Left";     mods = "Alt";     chars = "\\x1bb"; }
           { key = "N";     mods = "Command";     action = "CreateNewWindow"; }
+          { key = "NumpadEnter"; chars = "\r"; }
         ];
       };
     };
