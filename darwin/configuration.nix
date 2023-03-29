@@ -64,7 +64,7 @@ in
 
       # Command-line tools
       coreutils fzf ripgrep argo argocd bat colordiff cowsay colima
-      gawk kubectx kubectl_1_25_4 google-cloud-sdk kustomize
+      gawk kubectx kubectl_1_25_4 (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin]) kustomize
       helmfile kubernetes-helm htop hugo k9s krew crane diffoscope
 
       minikube kind neofetch octant sipcalc tmate tree wget openssh keychain awscli2 vault terraform
