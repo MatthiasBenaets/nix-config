@@ -105,7 +105,6 @@ in
       "ykman"
       "gpg"
       "pinentry"
-      "yubikey-agent"
     ];
     casks = [
       "gpg-suite"
