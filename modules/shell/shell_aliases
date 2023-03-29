@@ -31,6 +31,9 @@ alias kc="kubectl"
 # Enable aliases to be sudo’ed
 alias sudo="sudo "
 
+# Yubikey stuff
+alias rgpg="rm -r ~/.gnupg/private-keys-v1.d && killall gpg-agent && gpg-agent --daemon --pinentry-program /opt/homebrew/bin/pinentry"
+
 # bat
 alias cat="bat "
 
