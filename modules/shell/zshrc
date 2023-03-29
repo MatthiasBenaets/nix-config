@@ -43,8 +43,6 @@ export PATH
 # Source local extra (private) settings specific to machine if it exists
 [ -f ~/.zsh.local ] && source ~/.zsh.local
 
-export TERM=xterm-256color
-
 # I want to be able to jump words
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word

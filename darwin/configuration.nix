@@ -67,7 +67,7 @@ in
       gawk kubectx kubectl_1_25_4 google-cloud-sdk kustomize
       helmfile kubernetes-helm htop hugo k9s krew crane diffoscope
 
-      minikube kind neofetch octant sipcalc tmate tree wget openssh keychain
+      minikube kind neofetch octant sipcalc tmate tree wget openssh keychain awscli2 vault terraform
       watch git-crypt cosign jq docker-client starship diceware glow spicetify-cli
 
       # Development

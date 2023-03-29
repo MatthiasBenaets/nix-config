@@ -8,7 +8,7 @@
 #       └─ home.nix
 #
 
-{ lib, inputs, nixpkgs, home-manager, darwin, user, ...}:
+{ lib, inputs, nixpkgs, myPkgs, home-manager, darwin, user, ...}:
 
 let
   system = "aarch64-darwin";                                 # System architecture
@@ -18,6 +18,7 @@ in
     inherit system;
     specialArgs = { inherit inputs; user = "tom.meadows"; inherit system; };
     modules = [                                             # Modules that are used
+      (myPkgs system)
       ./configuration.nix
 
       home-manager.darwinModules.home-manager {             # Home-Manager module that is used

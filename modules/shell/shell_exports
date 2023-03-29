@@ -8,10 +8,12 @@ export SHELL=zsh
 export EDITOR='nvim'
 export DEFAULT_USER=tom
 export WLR_DRM_NO_MODIFIERS=1
-
 # Directory Env Vars
 export GOPATH=$HOME/go
 export GOBIN=$HOME/go/bin
+
+# Google Cloud GKE
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 
 export KUBECONFIG=$HOME/.kube/config
 
@@ -30,8 +32,6 @@ export MANPAGER="less -X"
 
 # use ripgrep for fzf
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
-
-export TERM=xterm-256color
 
 # That stupid thing I need for GPG
 export GPG_TTY=$(tty)

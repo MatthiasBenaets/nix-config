@@ -51,11 +51,18 @@
 
   outputs = inputs @ { self, nixpkgs, home-manager, darwin, nur, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                                     # Variables that can be used in the config files.
+      lib = nixpkgs.lib;
       user = "tom";
       location = "$HOME/.setup";
       ### --- add overlays
       overlays = with inputs;
         (importNixFiles ./overlays);
+      myPkgs = sys: {
+        system.configurationRevision = lib.mkIf (self ? rev) self.rev;
+        nixpkgs = {
+            config.packageOverrides = (import ./pkgs/default.nix);
+        };
+      };
     in                                                                      # Use above variables in ...
     {
       nixosConfigurations = (                                               # NixOS configurations
@@ -68,7 +75,7 @@
       darwinConfigurations = (                                              # Darwin Configurations
         import ./darwin {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager overlays darwin user;
+          inherit inputs nixpkgs myPkgs home-manager overlays darwin user;
         }
       );
 
