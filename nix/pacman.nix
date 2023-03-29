@@ -18,25 +18,22 @@
       pkgs.emacs
     ];
 
-    activation = {                                      # Run script during rebuild/switch.
-      linkDesktopApplications = {                       # Script that will add all packages to the system menu. Mainly tested on Gnome.
-        after = [ "writeBoundary" "createXdgUserDirectories" ];
-        before = [ ];
-        data = ''
-          rm -rf ${config.xdg.dataHome}/"applications/home-manager"
-          mkdir -p ${config.xdg.dataHome}/"applications/home-manager"
-          cp -Lr ${config.home.homeDirectory}/.nix-profile/share/applications/* ${config.xdg.dataHome}/"applications/home-manager/"
-        '';
-      };                                                # An alternative it adding ~$HOME/.nix-profile/share~ to XDG_DATA_DIRS, but I've noticed it sometimes does not work.
-    };                                                  # XDG_DATA_DIRS=$HOME/.nix-profile/share:$XDG_DATA_DIRS
-
     #file.".bash_aliases".text = ''
     #  alias alacritty="nixGLIntel ${pkgs.alacritty}/bin/alacritty"
     #'';                                                 # Aliases for packages that need openGL using nixGL. Change to your shell alias file. Note that home.shellAliases does not work...
+
+    activation = {                                      # Run script during rebuild/switch.
+      linkDesktopApplications = {                       # Script that will add all packages to the system menu. (Mainly tested on Gnome)
+        after = [ "writeBoundary" "createXdgUserDirectories" ];
+        before = [ ];
+        data = "sudo /usr/bin/update-desktop-database"; # This will update the database, requires sudo. Not recommended to install via home-manager so do it manually for your distro.
+      };
+    };
   };
 
-  programs = {                                          # Home-manager
-    home-manager.enable = true;
+  xdg = {
+    enable = true;
+    systemDirs.data = [ "/home/${user}/.nix-profile/share" ]; # Will add nix packages to XDG_DATA_DIRS and thus accessible from the menus.
   };
 
   nix = {                                               # Nix Package Manager settings
