@@ -58,7 +58,6 @@
       overlays = with inputs;
         (importNixFiles ./overlays);
       myPkgs = sys: {
-        system.configurationRevision = lib.mkIf (self ? rev) self.rev;
         nixpkgs = {
             overlays = (sys);
             config.packageOverrides = (import ./pkgs/default.nix);
