@@ -18,7 +18,7 @@ in
     inherit system;
     specialArgs = { inherit inputs; user = "tom.meadows"; inherit system; };
     modules = [                                             # Modules that are used
-      (myPkgs system)
+      (myPkgs)
       ./configuration.nix
 
       home-manager.darwinModules.home-manager {             # Home-Manager module that is used

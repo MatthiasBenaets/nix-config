@@ -59,7 +59,6 @@
         (importNixFiles ./overlays);
       myPkgs = sys: {
         nixpkgs = {
-            overlays = (sys);
             config.packageOverrides = (import ./pkgs/default.nix);
         };
       };
