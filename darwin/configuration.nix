@@ -71,7 +71,7 @@ in
       watch git-crypt cosign jq docker-client starship diceware glow spicetify-cli
 
       # Development
-      git gcc gnumake python2 python38 cargo go yarn protobuf lima goreleaser cmctl niv vulnix syft grype
+      git gcc gnumake python2 python38 cargo go yarn protobuf lima goreleaser cmctl niv vulnix syft grype toilet
 
       # Extra Stuff
       lima
