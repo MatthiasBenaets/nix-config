@@ -101,6 +101,9 @@
           # move back to macOS
           shift + ctrl - 3 : ddcctl -d 1 -i 27
 
+          # switching display
+          ctrl + alt - 1  : yabai -m display --focus 1
+          ctrl + alt - 2  : yabai -m display --focus 2
 
           lalt - space : yabai -m window --toggle float; sketchybar --trigger window_focus
           shift + lalt - f : yabai -m window --toggle zoom-fullscreen; sketchybar --trigger window_focus

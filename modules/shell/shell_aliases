@@ -50,7 +50,7 @@ alias stopsketch="brew services stop sketchybar"
 alias switch="darwin-rebuild switch --flake /Users/tom.meadows/Git/nixos-config/.#workMacbook"
 # easily update home-manager config
 alias unix="home-manager switch"
-alias nixedit="vim ~/.config/nixpkgs/home.nix"
+alias nixedit="vim ~/Git/nixos-config/"
 alias znix="cd ~/.config/nixpkgs"
 alias snix="cd ~/.config/nixpkgs && git status && cd -"
 alias dnix="cd ~/.config/nixpkgs && git diff && cd -"
