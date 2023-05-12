@@ -1,3 +1,6 @@
 [submodule "modules/editors/nvim/AstroNvim"]
 	path = modules/editors/nvim/AstroNvim
 	url = https://github.com/AstroNvim/AstroNvim
+[submodule "darwin/modules/sketchybar/config/plugins/Dynamic-Island-Sketchybar"]
+	path = darwin/modules/sketchybar/config/plugins/Dynamic-Island-Sketchybar
+	url = git@github.com:crissNb/Dynamic-Island-Sketchybar.git

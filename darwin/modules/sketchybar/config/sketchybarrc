@@ -1,187 +1,53 @@
-#                          ﱦ 齃     ﮂ  ﵁ 爵        ﭵ     ﱦ  ﰊ 異 ﴱ אַ  'Y⃣'
+#!/usr/bin/env sh
 
-ITEM_HEIGHT=20
+source "$HOME/.config/sketchybar/colors.sh" # Loads all defined colors 
+source "$HOME/.config/sketchybar/icons.sh" # Loads all defined icons
 
-############## BAR ##############
-sketchybar --bar height=30 \
-                 y_offset=5 \
-                 blur_radius=0 \
-                 position=top \
-                 padding_left=4 \
-                 padding_right=2 \
-                 margin=10 \
-                 corner_radius=12 \
-                 color=0xff1e1d2e \
-                 shadow=on
+ITEM_DIR="$HOME/.config/sketchybar/items" # Directory where the items are configured
+PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
+DYNAMIC_ISLAND_DIR="$HOME/.config/sketchybar/plugins/Dynamic-Island-Sketchybar"
 
-############## GLOBAL DEFAULTS ##############
-sketchybar --default updates=when_shown \
-                     icon.font="JetBrainsMono Nerd Font:Bold:12.0" \
-                     icon.color=0xffECEFF4 \
-                     icon.highlight_color=0xffE48FA8 \
-                     label.font="JetBrainsMono Nerd Font:Bold:12.0" \
-                     label.color=0xffECEFF4 \
-                     background.corner_radius=5 \
-                     background.height=20
+SPACE_CLICK_SCRIPT="yabai -m space --focus \$SID 2>/dev/null" # The script that is run for clicking on space components
 
-sketchybar --add item logo left \
-           --set logo icon="" \
-                 icon.color=0xff1e1d2e \
-                 icon.padding_left=0 \
-                 icon.padding_right=0 \
-                 background.color=0xff1e1d2e \
-                 background.padding_right=8 \
-                 background.padding_left=4 \
-                 background.height=$ITEM_HEIGHT \
+# Define Dynamic island custom configs here
+source "$DYNAMIC_ISLAND_DIR/config.sh" # Loads Dynamic-Island config
 
-SPACE_ICONS=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10")
-SPACES=()
+# helper process
+HELPER=git.felix.helper
+killall helper
+cd $HOME/.config/sketchybar/helper && make
+$HOME/.config/sketchybar/helper/helper $HELPER > /dev/null 2>&1 &
 
-for i in "${!SPACE_ICONS[@]}"
-do
-  sid=$(($i+1))
-  SPACES+=(space.$sid)
-  sketchybar --add space space.$sid left \
-             --set space.$sid associated_space=$sid \
-                              icon=${SPACE_ICONS[i]} \
-                              icon.padding_left=20 \
-                              icon.padding_right=20 \
-                              icon.highlight_color=0xffE48FA8 \
-                              background.padding_left=-4 \
-                              background.padding_right=-4 \
-                              background.color=0xff3C3E4F \
-                              background.drawing=on \
-                              background.height=$ITEM_HEIGHT \
-                              label.drawing=off \
-                              click_script="yabai -m space --focus $sid"
-done
+ISLANDHELPER=git.crissnb.islandhelper
+killall islandhelper
+cd $DYNAMIC_ISLAND_DIR/helper && make
+$DYNAMIC_ISLAND_DIR/helper/islandhelper $ISLANDHELPER &
 
-sketchybar --add item space_separator left \
-           --set space_separator icon= \
-                                 background.padding_left=23 \
-                                 background.padding_right=23 \
-                                 label.drawing=off \
-                                 icon.color=0xff92B3F5
+FONT="SF Pro"
 
-sketchybar --add item window_title left \
-           --set window_title    script="~/.config/sketchybar/plugins/window_title.sh" \
-                                 icon.drawing=off \
-                                 label.color=0xffb7bdf4 \
-           --subscribe window_title front_app_switched
+# Set up your own custom sketchybar config here
+sketchybar --bar	color=$TRANSPARENT \
+					margin=0		 \
+					blur_radius=20                                    \
+					corner_radius=0 \
+					padding_right=14                                  \
+					padding_left=14
 
-############## ITEM DEFAULTS ###############
-sketchybar --default label.padding_left=6 \
-                     label.padding_right=6 \
-                     icon.padding_left=6 \
-                     icon.padding_right=6 \
-                     icon.font="JetBrainsMono Nerd Font:Bold:12.0" \
-                     background.height=30 \
-                     background.padding_right=4 \
-                     background.padding_left=4 \
-                     background.height=$ITEM_HEIGHT \
-                     background.corner_radius=5
+ITEM_CORNER_RADIUS=3
+ITEM_BACKGROUND_HEIGHT=26
+ITEM_PADDING=14
 
-sketchybar --add item spot_logo center \
-           --set spot_logo icon= \
-                           label.drawing=off \
-                           icon.color=0xff121219 \
-                           background.height=$ITEM_HEIGHT \
-                           background.color=0xffEDC4E5
+source "$ITEM_DIR/spaces.sh"
+source "$ITEM_DIR/front_app.sh"
+source "$ITEM_DIR/mail.sh"
+source "$ITEM_DIR/power.sh"
+source "$ITEM_DIR/calendar.sh"
+source "$ITEM_DIR/cpu.sh"
+source "$ITEM_DIR/network.sh"
 
+source "$ITEM_DIR/bracket_r.sh"
+source "$ITEM_DIR/bracket_l.sh"
 
-sketchybar --add item spot center \
-           --set spot update_freq=1 \
-                      icon.drawing=off \
-                      updates=on \
-                      script="~/.config/sketchybar/plugins/spotifyIndicator.sh" \
-                      background.color=0xff3C3E4F \
-                      background.height=$ITEM_HEIGHT \
-                      background.padding_left=0 \
-                      background.padding_right=23
+source "$DYNAMIC_ISLAND_DIR/item.sh" # Loads Dynamic-Island item
 
-sketchybar --add item flow_logo center \
-           --set flow_logo update_freq=1 \
-                      label.drawing=off \
-                      updates=on \
-                      script="~/.config/sketchybar/plugins/flowIcon.sh" \
-                      icon.color=0xff121219 \
-                      icon.font="JetBrainsMono Nerd Font:Bold:16.0" \
-                      background.color=0xff8bd5ca \
-                      background.height=$ITEM_HEIGHT \
-                      background.padding_left=0
-
-sketchybar --add item flow center \
-           --set flow update_freq=1 \
-                      icon.drawing=off \
-                      updates=on \
-                      script="~/.config/sketchybar/plugins/flowIndicator.sh" \
-                      background.color=0xff3C3E4F \
-                      background.height=$ITEM_HEIGHT \
-                      background.padding_left=0
-
-############## RIGHT ITEMS ##############
-sketchybar --add item time right \
-           --set time update_freq=1 \
-                      icon.drawing=off \
-                      script="~/.config/sketchybar/plugins/time.sh" \
-                      background.color=0xff3C3E4F \
-                      background.height=$ITEM_HEIGHT \
-                      background.padding_left=0
-
-sketchybar --add item time_logo right\
-           --set time_logo icon= \
-                           label.drawing=off \
-                           icon.color=0xff121219 \
-                           label.drawing=off \
-                           background.color=0xffF5E3B5 \
-                           background.height=$ITEM_HEIGHT
-
-sketchybar --add item date right \
-           --set date update_freq=1000 \
-                      icon.drawing=off \
-                      script="~/.config/sketchybar/plugins/date.sh" \
-                      background.color=0xff3C3E4F \
-                      background.height=$ITEM_HEIGHT \
-                      background.padding_left=0
-
-sketchybar --add item clock_logo right\
-           --set clock_logo icon= \
-                            icon.color=0xff121219\
-                            label.drawing=off \
-                            background.height=$ITEM_HEIGHT \
-                            background.color=0xff92B3F5
-
-sketchybar --add item battery right \
-           --set battery update_freq=3 \
-                         icon.drawing=off \
-                         script="~/.config/sketchybar/plugins/power.sh" \
-                         background.color=0xff3C3E4F \
-                         background.height=$ITEM_HEIGHT \
-                         background.padding_left=0
-
-sketchybar --add item power_logo right \
-           --set power_logo icon= \
-                 icon.color=0xff121219 \
-                 label.drawing=off \
-                 background.height=$ITEM_HEIGHT \
-                 background.color=0xffB3E1A7
-
-sketchybar --add item net right \
-           --set net script="~/.config/sketchybar/plugins/net.sh" \
-                     icon.drawing=off \
-                     background.color=0xff3C3E4F \
-                     background.height=$ITEM_HEIGHT \
-                     background.padding_left=0
-
-sketchybar --add item net_logo right \
-           --set net_logo icon=\
-                     icon.color=0xff121219\
-                     label.drawing=off \
-                     background.height=$ITEM_HEIGHT \
-                     background.color=0xffE0A3AD
-
-############## FINALIZING THE SETUP ##############
-sketchybar --bar sticky=on
 sketchybar --update
-
-echo "sketchybar configuration loaded..."

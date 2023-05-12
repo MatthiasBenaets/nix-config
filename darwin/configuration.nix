@@ -15,7 +15,7 @@ let
        name = "my-old-revision";                                                 
        url = "https://github.com/NixOS/nixpkgs/";                       
        ref = "refs/heads/nixpkgs-unstable";                     
-       rev = "b3a285628a6928f62cdf4d09f4e656f7ecbbcafb";                                           
+       rev = "8ad5e8132c5dcf977e308e7bf5517cc6cc0bf7d8";                                           
    }) { inherit system ; };                                                                           
 
    kubectl_1_25_4 = pkgs.kubectl;
@@ -60,18 +60,18 @@ in
       VISUAL = "nvim";
     };
     systemPackages = with pkgs; [         # Installed Nix packages
-      alacritty keybase
+      alacritty keybase stern
 
       # Command-line tools
       coreutils fzf ripgrep argo argocd bat colordiff cowsay colima
-      gawk kubectx kubectl_1_25_4 (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin]) kustomize
+      gawk kubectx kubectl_1_25_4 go_1_20 (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin]) kustomize
       helmfile kubernetes-helm htop hugo k9s krew crane diffoscope
 
       minikube kind neofetch octant sipcalc tmate tree wget openssh keychain awscli2 vault terraform
       watch git-crypt cosign jq docker-client starship diceware glow spicetify-cli
 
       # Development
-      git gcc gnumake python2 python38 cargo go yarn protobuf lima goreleaser cmctl niv vulnix syft grype toilet
+      git gcc gnumake python38 cargo yarn protobuf lima goreleaser cmctl niv vulnix syft grype toilet
 
       # Extra Stuff
       lima
@@ -111,7 +111,7 @@ in
       "firefox"
       "google-chrome"
       "now-tv-player"
-      "plex-media-player"
+      "plex"
       "alacritty"
       "slack"
       "spotify"
@@ -131,6 +131,8 @@ in
       "zoom"
       "microsoft-teams"
       "yubico-yubikey-manager"
+      "citrix-workspace"
+      "sf-symbols"
     ];
   };
 

@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+
+source "$HOME/.config/sketchybar/icons.sh"
 PERCENTAGE=$(pmset -g batt | grep -Eo "\d+%" | cut -d% -f1)
 CHARGING=$(pmset -g batt | grep 'AC Power')
 
@@ -8,19 +10,20 @@ if [ $PERCENTAGE = "" ]; then
 fi
 
 case ${PERCENTAGE} in
-  9[0-9]|100) ICON=""
+  9[0-9]|100) ICON=$BATTERY_FULL
   ;;
-  [6-8][0-9]) ICON=""
+  [6-8][0-9]) ICON=$BATTERY_75
   ;;
-  [3-5][0-9]) ICON=""
+  [3-5][0-9]) ICON=$BATTERY_50
   ;;
-  [1-2][0-9]) ICON=""
+  [1-2][0-9]) ICON=$BATTERY_25
   ;;
-  *) ICON=""
+  *) ICON=$BATTERY_0
 esac
 
 if [[ $CHARGING != "" ]]; then
-  ICON=""
+  ICON=$BATTERY_CHARGING
 fi
 
-sketchybar --set power_logo icon="$ICON" --set battery label="${PERCENTAGE}%"
+sketchybar --set battery icon="$ICON" \
+           --set battery label="${PERCENTAGE}%"

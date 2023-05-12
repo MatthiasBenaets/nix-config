@@ -1,17 +1,18 @@
 #!/usr/bin/env sh
 source "$HOME/.config/sketchybar/icons.sh"
 
-RUNNING=$(osascript -e 'if application "Mail" is running then return 0')
-COUNT=0
+total=0
 
-if [ "$RUNNING" = "0" ]; then
-  COUNT=$(osascript -e 'tell application "Mail" to return the unread count of inbox')
-  if [ "$COUNT" -gt "0" ]; then
-    sketchybar --set $NAME label="$COUNT" icon=$MAIL
-  else
-    sketchybar --set $NAME label="$COUNT" icon=$MAIL_OPEN
-  fi
+for folder in ~/.local/share/mail/*/
+do
+  count=$(find "$folder"/INBOX/new/ -type f | wc -l)
+  total=$((total + count))
+done
+echo "Total files in 'new' folders: $total"
+
+if [ "$total" -gt "0" ]; then
+  sketchybar --set $NAME label="$total" icon=$MAIL
 else
-  sketchybar --set $NAME label="!" icon=$MAIL
+  sketchybar --set $NAME label="$total" icon=$MAIL_OPEN
 fi
 

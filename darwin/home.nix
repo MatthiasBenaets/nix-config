@@ -19,6 +19,7 @@
       ../modules/shell/zsh.nix
       ../modules/editors/nvim/nvim.nix
       ./modules/sketchybar/sketchybar.nix
+      ./modules/kitty/kitty.nix
     ];
   home = {                                        # Specific packages for macbook
     packages = with pkgs; [
