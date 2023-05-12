@@ -214,10 +214,10 @@
           };
           network = {
             format-wifi = "<span font='11'></span>";
-            format-ethernet = "<span font='11'></span>";
+            format-ethernet = "<span font='11'>󰈀</span>";
             #format-ethernet = "<span font='11'></span> {ifname}: {ipaddr}/{cidr}";
-            format-linked = "<span font='11'>睊</span> {ifname} (No IP)";
-            format-disconnected = "<span font='11'>睊</span> Not connected";
+            format-linked = "<span font='11'>󱘖</span> {ifname} (No IP)";
+            format-disconnected = "<span font='11'>󱘖</span> Not connected";
             #format-alt = "{ifname}: {ipaddr}/{cidr}";
             tooltip-format = "{essid} {ipaddr}/{cidr}";
             #on-click-right = "${pkgs.alacritty}/bin/alacritty -e nmtui";
@@ -392,7 +392,7 @@
           if [[ $HEAD = "*" ]]; then
             printf "<span font='13'></span>\n"
           elif [[ $SPEAK = "*" ]]; then
-            printf "<span font='10'>蓼</span>\n"
+            printf "<span font='10'>󰓃</span>\n"
           fi
           exit 0
         '';

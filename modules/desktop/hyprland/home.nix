@@ -46,16 +46,16 @@ let
       workspace=${toString mainMonitor},1
       workspace=${toString secondMonitor},6
 
-      wsbind=1,${toString mainMonitor}
-      wsbind=2,${toString mainMonitor}
-      wsbind=3,${toString mainMonitor}
-      wsbind=4,${toString mainMonitor}
-      wsbind=5,${toString mainMonitor}
-      wsbind=6,${toString secondMonitor}
-      wsbind=7,${toString secondMonitor}
-      wsbind=8,${toString secondMonitor}
-      wsbind=9,${toString secondMonitor}
-      wsbind=10,${toString secondMonitor}
+      #wsbind=1,${toString mainMonitor}
+      #wsbind=2,${toString mainMonitor}
+      #wsbind=3,${toString mainMonitor}
+      #wsbind=4,${toString mainMonitor}
+      #wsbind=5,${toString mainMonitor}
+      #wsbind=6,${toString secondMonitor}
+      #wsbind=7,${toString secondMonitor}
+      #wsbind=8,${toString secondMonitor}
+      #wsbind=9,${toString secondMonitor}
+      #wsbind=10,${toString secondMonitor}
     '' else "";
   execute = with host;
     if hostName == "desktop" then ''
