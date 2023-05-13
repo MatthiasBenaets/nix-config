@@ -13,6 +13,6 @@
 #
 
 [
-  ./nvidia.nix
+  #./nvidia.nix
   ./wpa.nix
 ]

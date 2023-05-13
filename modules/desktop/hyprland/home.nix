@@ -37,25 +37,19 @@ let
       monitor=${toString secondMonitor},1920x1080@60,0x0,1
     '' else if hostName == "work" then ''
       monitor=${toString mainMonitor},1920x1080@60,0x0,1
-      monitor=${toString secondMonitor},1920x1080@60,1920x0,1
+      monitor=${toString secondMonitor},1920x1200@60,1920x0,1
+      monitor=${toString thirdMonitor},1920x1200@60,34840x0,1
     '' else ''
       monitor=${toString mainMonitor},1920x1080@60,0x0,1
     '';
   monitors = with host;
-    if hostName == "desktop" || hostName == "work" then ''
+    if hostName == "desktop" then ''
       workspace=${toString mainMonitor},1
       workspace=${toString secondMonitor},6
-
-      #wsbind=1,${toString mainMonitor}
-      #wsbind=2,${toString mainMonitor}
-      #wsbind=3,${toString mainMonitor}
-      #wsbind=4,${toString mainMonitor}
-      #wsbind=5,${toString mainMonitor}
-      #wsbind=6,${toString secondMonitor}
-      #wsbind=7,${toString secondMonitor}
-      #wsbind=8,${toString secondMonitor}
-      #wsbind=9,${toString secondMonitor}
-      #wsbind=10,${toString secondMonitor}
+    '' else if hostName == "work" then ''
+      workspace=${toString mainMonitor},1
+      workspace=${toString secondMonitor},4
+      workspace=${toString thirdMonitor},7
     '' else "";
   execute = with host;
     if hostName == "desktop" then ''

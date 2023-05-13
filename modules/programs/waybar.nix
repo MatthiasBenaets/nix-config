@@ -264,8 +264,11 @@
           layer = "top";
           position = "top";
           height = 16;
-          output = [
+          output = if hostName == "desktop" then [
             "${secondMonitor}"
+          ] else [
+            "${secondMonitor}"
+            "${thirdMonitor}"
           ];
           modules-left = [ "custom/menu" "wlr/workspaces" ];
 

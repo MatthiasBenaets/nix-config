@@ -105,6 +105,7 @@ in
         hostName = "work";
         mainMonitor = "eDP-1";
         secondMonitor = "HDMI-A-2";
+        thirdMonitor = "DP-1";
       };
     };
     modules = [
@@ -121,6 +122,7 @@ in
             hostName = "work";
             mainMonitor = "eDP-1";
             secondMonitor = "HDMI-A-2";
+            thirdMonitor = "DP-1";
           };
         };
         home-manager.users.${user} = {
