@@ -103,11 +103,11 @@
     "emacs-overlay": {
       "flake": false,
       "locked": {
-        "lastModified": 1683861030,
-        "narHash": "sha256-Z55ww/23CriTp12nKabfoz2o9hEw3k9JYhV3Ysd6c9Y=",
+        "lastModified": 1683943026,
+        "narHash": "sha256-G/kxYiRLWBBysS0vkyvm84AFSKCqdp2C42PfYsVZKYk=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "12024c92a6af3f4c3f96ee8b6a4f7d271fa2507e",
+        "rev": "fc1f1e0d1a4132939df71ad63b7be0e726fc1844",
         "type": "github"
       },
       "original": {
@@ -285,11 +285,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1683833146,
-        "narHash": "sha256-ELF0oXgg0NYGyKtU74HW8CeLstFJwwCGbuahnQla67I=",
+        "lastModified": 1683929392,
+        "narHash": "sha256-qJddrb/bgS58AXAv25iv5xJ+69G5g7FAYCWec1lLnW0=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "cc9f65d104e5227d103a529a9fc3687ef4ccb117",
+        "rev": "eec22729990ddf53d1e45e74624ddf667cdbe11b",
         "type": "github"
       },
       "original": {
@@ -395,6 +395,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-stable": {
+      "locked": {
+        "lastModified": 1682600000,
+        "narHash": "sha256-ha4BehR1dh8EnXSoE1m/wyyYVvHI9txjW4w5/oxsW5Y=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "50fc86b75d2744e1ab3837ef74b53f103a9b55a0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-22.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nose": {
       "flake": false,
       "locked": {
@@ -413,11 +429,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1683866302,
-        "narHash": "sha256-/OE/VFasqc4U41V6mxfgP2y63CFVhOspyDVa6taA2QU=",
+        "lastModified": 1683950916,
+        "narHash": "sha256-A6/VX7esIKVOVAwfKhF7ctYNXGR7lbWmBLPC6j1BQSo=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "6f8d15ef7a6de53c8b01828113262af48ea0fbcd",
+        "rev": "46d6805b3d36700b07187e3dad0897dc5fcc508c",
         "type": "github"
       },
       "original": {
@@ -554,6 +570,7 @@
         "hyprland": "hyprland",
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-stable": "nixpkgs-stable",
         "nur": "nur",
         "plasma-manager": "plasma-manager"
       }
