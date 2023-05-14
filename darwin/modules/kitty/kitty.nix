@@ -7,5 +7,5 @@ in
 
 {
   # Config and widgets ------------------------------------------------------------------------- {{{
-  xdg.configFile."kitty".source = mkOutOfStoreSymlink "${nixConfigDir}/darwin/modules/kitty/kitty.conf";
+  xdg.configFile."kitty".source = mkOutOfStoreSymlink "${nixConfigDir}/darwin/modules/kitty/config";
 }

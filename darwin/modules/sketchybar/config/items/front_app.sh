@@ -1,39 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 
-FRONT_APP_SCRIPT='sketchybar --set $NAME label="$INFO"'
+# Some events send additional information specific to the event in the $INFO
+# variable. E.g. the front_app_switched event sends the name of the newly
+# focused application in the $INFO variable:
+# https://felixkratz.github.io/SketchyBar/config/events#events-and-scripting
 
-yabai=(
-  script="$PLUGIN_DIR/yabai.sh"
-  updates=on
-  drawing=off
-  icon.font="$FONT:Bold:16.0"
-  label.drawing=off
-  icon.width=30
-  icon=$YABAI_GRID
-  icon.color=$ORANGE
-  associated_display=active
-)
-
-front_app=(
-  script="$FRONT_APP_SCRIPT"
-  icon.drawing=off
-  label.color=$ITEM_COLOR
-  label.font="$FONT:Black:12.0"
-  associated_display=active
-  background.color=$SPACE_SELECTED
-  background.corner_radius=$ITEM_CORNER_RADIUS
-  background.height=20
-)
-
-sketchybar --add event window_focus            \
-           --add event windows_on_spaces       \
-           --add item yabai left               \
-           --set yabai "${yabai[@]}"           \
-           --subscribe yabai window_focus      \
-                             windows_on_spaces \
-                             mouse.clicked     \
-                                               \
-           --add item front_app left           \
-           --set front_app "${front_app[@]}"   \
-           --subscribe front_app front_app_switched
-
+sketchybar --set $NAME label="$INFO"

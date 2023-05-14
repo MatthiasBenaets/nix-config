@@ -16,23 +16,24 @@
         mouse_action1 = "move";
         mouse_action2 = "resize";
         mouse_drop_action = "swap";
-        top_padding = "29";
+        top_padding = "10";
         bottom_padding = "10";
         left_padding = "10";
         right_padding = "10";
-        window_gap = "8";
+        window_gap = "10";
         external_bar = "all:28:0";
         insert_feedback_color = "0xffd75f5f";
-        active_window_border_color = "0xff3eb489";
+        active_window_border_color = "0xffAFDCA4";
         normal_window_border_color = "0xffaaaaaa";
         active_window_border_topmost = "on";
         window_shadow = "on";
         window_opacity = "off";
-        window_border_width = 4;
+        window_border_width = 5;
       };
       extraConfig = ''
         yabai -m rule --add app='^Emacs$' manage=on
         yabai -m rule --add title='Preferences' manage=off layer=above
+        yabai -m rule --add title='NordPass Password Manager' manage=off layer=above
         yabai -m rule --add title='^(Opening)' manage=off layer=above
         yabai -m rule --add title='Library' manage=off layer=above
         yabai -m rule --add app='^System Preferences$' manage=off layer=above

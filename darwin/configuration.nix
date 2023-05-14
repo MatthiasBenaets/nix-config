@@ -107,6 +107,7 @@ in
       "pinentry"
     ];
     casks = [
+      "kitty"
       "gpg-suite"
       "firefox"
       "google-chrome"

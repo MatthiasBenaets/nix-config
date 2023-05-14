@@ -9,6 +9,9 @@
           # reload yabai
           shift + alt - r : brew services restart yabai && brew services restart skhd && brew services restart sketchybar
 
+          # open kitty
+          shift + alt - t : kitty
+
           # Navigation
           alt - h : yabai -m window --focus west
           alt - j : yabai -m window --focus south
@@ -31,6 +34,7 @@
           shift + alt - 7 : yabai -m window --space 7
           shift + alt - 8 : yabai -m window --space 8
           shift + alt - 9 : yabai -m window --space 9
+          shift + alt - 0 : yabai -m window --space 10
 
           # Move focus to space
           # Yabai has the ability to do this, but only with scripting-addition
