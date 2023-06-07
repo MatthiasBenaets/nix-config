@@ -42,12 +42,12 @@
   #    options = [ "nofail" ];
   #  };
 
-  fileSystems."/hdd" =
-    { #device = "/dev/disk/by-uuid/bbab0f8a-50f4-4a7c-a0d3-0ccb036f11d5";
-      device = "/dev/disk/by-label/hdd";
-      fsType = "ext4";
-      options = [ "nofail" ];
-    };
+  #fileSystems."/hdd" =
+  #  { #device = "/dev/disk/by-uuid/bbab0f8a-50f4-4a7c-a0d3-0ccb036f11d5";
+  #    device = "/dev/disk/by-label/hdd";
+  #    fsType = "ext4";
+  #    options = [ "nofail" ];
+  #  };
 
   fileSystems."/mnt/toshiba1" =
     { #device = "/dev/disk/by-uuid/7491ea96-a62d-4202-ada7-8d0310dfc967";
@@ -93,6 +93,15 @@
       options = let
         automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
       in ["${automount_opts},mfsymlinks,uid=1000,gid=100,credentials=/home/matthias/smb"];
+    };
+
+  fileSystems."/hdd" =
+    { #proxmox smb storage
+      device = "//192.168.0.2/extra";
+      fsType = "cifs";
+      options = let
+        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+      in ["${automount_opts},mfsymlinks,uid=1000,gid=100,credentials=/home/matthias/smb2"];
     };
 
   #swapDevices =
