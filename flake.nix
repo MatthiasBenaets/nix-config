@@ -40,7 +40,7 @@
   outputs = inputs @ { self, nixpkgs, home-manager, darwin, nur, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                                     # Variables that can be used in the config files.
       lib = nixpkgs.lib;
-      user = "tom";
+      user = "chaosinthecrd";
       location = "$HOME/.setup";
     in                                                                      # Use above variables in ...
     {
