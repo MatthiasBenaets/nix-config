@@ -4,7 +4,7 @@
 { 
   imports =                               # Home Manager Modules
   [
-    ../modules/programs
+    ../modules/programs/default.nix
   ];
 
   home = {
