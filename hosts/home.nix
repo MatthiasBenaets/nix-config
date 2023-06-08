@@ -20,11 +20,7 @@
 
       # Video/Audio
       feh               # Image Viewer
-      mpv               # Media Player
-      pavucontrol       # Audio Control
       plex-media-player # Media Player
-      vlc               # Media Player
-      stremio           # Media Streamer
 
       # Apps
       appimage-run      # Runs AppImages on NixOS
