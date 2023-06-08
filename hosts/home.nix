@@ -1,22 +1,9 @@
-#
- Home-manager configuration
-#
-#  flake.nix
-#   ├─ ./hosts
-#   │   └─ home.nix *
-#   └─ ./modules
-#       ├─ ./programs
-#       │   └─ default.nix
-#       └─ ./services
-#           └─ default.nix
-#
 
 { config, lib, pkgs, user, ... }:
 
 { 
   imports =                                   # Home Manager Modules
-    (import ../modules/programs) ++
-    (import ../modules/services);
+    (import ../modules/programs)
 
   home = {
     username = "${user}";
