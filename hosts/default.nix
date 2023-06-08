@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ lib, inputs, nixpkgs, home-manager, nur, user, location, ... }:
+{ lib, inputs, nixpkgs-unstable, home-manager, nur, user, location, ... }:
 
 let
   system = "aarch64-linux";                                  # System architecture
@@ -44,7 +44,7 @@ in
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
-          inherit unstable user;
+          inherit user;
           host = {
             hostName = "desktop";     #For Xorg iGPU  | Videocard 
             mainMonitor = "HDMI-A-3"; #HDMIA3         | HDMI-A-1
