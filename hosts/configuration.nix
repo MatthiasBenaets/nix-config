@@ -86,12 +86,6 @@
         HostKeyAlgorithms +ssh-rsa
       '';                                   # Temporary extra config so ssh will work in guacamole
     };
-    flatpak.enable = true;                  # download flatpak file from website - sudo flatpak install <path> - reboot if not showing up
-                                            # sudo flatpak uninstall --delete-data <app-id> (> flatpak list --app) - flatpak uninstall --unused
-                                            # List:
-                                            # com.obsproject.Studio
-                                            # com.parsecgaming.parsec
-                                            # com.usebottles.bottles
   };
 
   nix = {                                   # Nix Package Manager settings
