@@ -43,17 +43,17 @@
     };
   };
 
-  hardware = {
-    nvidia = {
-        package = config.boot.kernelPackages.nvidiaPackages.stable;
-        modesetting.enable = true;
-      };
-  };
+  # hardware = {
+  #   nvidia = {
+  #       package = config.boot.kernelPackages.nvidiaPackages.stable;
+  #       modesetting.enable = true;
+  #     };
+  # };
 
   environment = {                               # Packages installed system wide
     systemPackages = with pkgs; [               # This is because some options need to be configured.
-      discord
-      plex
+      # discord
+      # plex
     ];
   };
 
