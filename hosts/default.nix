@@ -44,6 +44,7 @@ in
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
+          inherit unstable user;
           host = {
             hostName = "desktop";     #For Xorg iGPU  | Videocard 
             mainMonitor = "HDMI-A-3"; #HDMIA3         | HDMI-A-1
