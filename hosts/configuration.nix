@@ -83,6 +83,7 @@
     '';
   };
   nixpkgs.config.allowUnfree = true;        # Allow proprietary software.
+  nixpkgs.config.allowUnsupportedSystem = true;
 
   system = {                                # NixOS settings
     autoUpgrade = {                         # Allow auto update (not useful in flakes)
