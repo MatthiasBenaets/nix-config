@@ -13,12 +13,12 @@
 
   time.timeZone = "Europe/London";        # Time zone and internationalisation
   i18n = {
-    defaultLocale = 'en_US.UTF-8';
+    defaultLocale = "un_US.UTF-8";
   };
 
   console = {
-    font = 'JetBrainsMono';
-    keyMap = 'us';                          # I use a us keyboard
+    font = "JetBrainsMono";
+    keyMap = "us";
   };
 
   fonts.fonts = with pkgs; [                # Fonts
