@@ -2,8 +2,10 @@
 { config, lib, pkgs, user, ... }:
 
 { 
-  imports =                                   # Home Manager Modules
-    (import ../modules/programs)
+  imports =                               # Home Manager Modules
+  [
+    ../modules/programs
+  ];
 
   home = {
     username = "${user}";
