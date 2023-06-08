@@ -25,10 +25,10 @@
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
     (import ../../modules/hardware);                      # Hardware devices
 
-  # NVIDIA drivers are unfree.
-  nixpkgs.config.allowUnfree = true;
-
-  services.xserver.videoDrivers = [ "nvidia" ];
+  # # NVIDIA drivers are unfree.
+  # nixpkgs.config.allowUnfree = true;
+  #
+  # services.xserver.videoDrivers = [ "nvidia" ];
 
   boot = {                                      # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
@@ -44,19 +44,6 @@
   };
 
   hardware = {
-    sane = {                                    # Used for scanning with Xsane
-      enable = true;
-      extraBackends = [ pkgs.sane-airscan ];
-    };
-    opengl = {
-      enable = true;
-      extraPackages = with pkgs; [
-       #intel-media-driver
-        vaapiIntel
-        vaapiVdpau
-        libvdpau-va-gl
-      ];
-    };
     nvidia = {
         package = config.boot.kernelPackages.nvidiaPackages.stable;
         modesetting.enable = true;

@@ -52,7 +52,6 @@
       pciutils
       usbutils
       wget
-      stern
     ];
   };
 
