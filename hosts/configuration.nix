@@ -75,7 +75,7 @@
     gc = {                                  # Automatic garbage collection
       automatic = true;
       interval.Day = 7;
-      options = "--delete-older-than 7d";
+      options = '--delete-older-than 7d';
     };
     package = pkgs.nixVersions.unstable;
     registry.nixpkgs.flake = inputs.nixpkgs;
