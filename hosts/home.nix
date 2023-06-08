@@ -29,7 +29,6 @@
       # Apps
       appimage-run      # Runs AppImages on NixOS
       firefox           # Browser
-      google-chrome     # Browser
 
       # File Management
       gnome.file-roller # Archive Manager
