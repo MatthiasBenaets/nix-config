@@ -35,18 +35,6 @@
         url = "github:nix-community/NUR";                                   # NUR Packages
       };
 
-
-      emacs-overlay = {                                                     # Emacs Overlays
-        url = "github:nix-community/emacs-overlay";
-        flake = false;
-      };
-
-      doom-emacs = {                                                        # Nix-community Doom Emacs
-         url = "github:nix-community/nix-doom-emacs";
-         inputs.nixpkgs.follows = "nixpkgs";
-         inputs.emacs-overlay.follows = "emacs-overlay";
-      };
-
     };
 
   outputs = inputs @ { self, nixpkgs, home-manager, darwin, nur, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
@@ -54,12 +42,6 @@
       lib = nixpkgs.lib;
       user = "tom";
       location = "$HOME/.setup";
-      myPkgs = sys: {
-        nixpkgs = {
-            config.packageOverrides = (import ./pkgs/default.nix);
-            config.allowUnfree = true;
-        };
-      };
     in                                                                      # Use above variables in ...
     {
       nixosConfigurations = (                                               # NixOS configurations
@@ -72,7 +54,7 @@
       darwinConfigurations = (                                              # Darwin Configurations
         import ./darwin {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs myPkgs home-manager darwin user;
+          inherit inputs myPkgs home-manager darwin user;
         }
       );
 
