@@ -28,7 +28,7 @@ in
     inherit system;
     specialArgs = {
       inherit inputs location;
-      user = "chaosinthecrd"
+      user = "chaosinthecrd";
       host = {
         hostName = "desktop";
         mainMonitor = "HDMI-A-3";
