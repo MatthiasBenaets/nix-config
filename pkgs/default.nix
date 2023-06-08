@@ -4,8 +4,8 @@ with pkgs;
 {
   imports = [
     ./core.nix
-    ./dev.nix
-    ./kube.nix
+    # ./dev.nix
+    # ./kube.nix
   ];
 
   programs.zsh.enable = true;                            # Shell needs to be enabled
