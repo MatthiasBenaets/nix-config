@@ -5,7 +5,7 @@
 # Do not forget to enable Steam play for all title in the settings menu
 #
 
-{ config, pkgs, nur, lib, ... }:
+{ config, pkgs, nur, lib, unstable, ... }:
 
 let                                             # No longer required because of retroarch but let's keep it for testing purposes
   pcsx2 = pkgs.pcsx2.overrideAttrs (old: {      # PCSX2 runs way better on x11. This wrappers makes it use the correct GDK Backend
@@ -21,10 +21,11 @@ in
 
   environment.systemPackages = [
     #config.nur.repos.c0deaddict.oversteer      # Steering Wheel Configuration
-    pkgs.lutris                                 # Game Launcher
-    pkgs.heroic
-    pkgs.prismlauncher
+    unstable.heroic                             # Game launchers
+    unstable.lutris
+    unstable.prismlauncher
     pkgs.retroarchFull
+    unstable.steam
     pcsx2
   ];
 

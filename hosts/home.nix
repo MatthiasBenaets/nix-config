@@ -11,7 +11,7 @@
 #           └─ default.nix
 #
 
-{ config, lib, pkgs, stable, user, ... }:
+{ config, lib, pkgs, unstable, user, ... }:
 
 { 
   imports =                                   # Home Manager Modules

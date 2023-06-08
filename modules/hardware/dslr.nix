@@ -2,7 +2,7 @@
 # DSLR Camera as webcam
 #
 
-{ config, lib, pkgs, stable, ... }:
+{ config, lib, pkgs, fix, ... }:
 
 {
   boot = {
@@ -16,8 +16,8 @@
 
   environment = {
     systemPackages = [                 # Package dependencies
-      stable.gphoto2
-      stable.ffmpeg
+      pkgs.gphoto2
+      fix.ffmpeg
       #shotwell
     ];
     interactiveShellInit = ''

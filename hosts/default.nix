@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ lib, inputs, nixpkgs, nixpkgs-stable, home-manager, nur, user, location, doom-emacs, hyprland, plasma-manager, ... }:
+{ lib, inputs, nixpkgs, nixpkgs-unstable, home-manager, nur, user, location, dslr, doom-emacs, hyprland, plasma-manager, ... }:
 
 let
   system = "x86_64-linux";                                  # System architecture
@@ -21,7 +21,12 @@ let
     config.allowUnfree = true;                              # Allow proprietary software
   };
 
-  stable = import nixpkgs-stable {
+  unstable = import nixpkgs-unstable {
+    inherit system;
+    config.allowUnfree = true;                              # Allow proprietary software
+  };
+
+  fix = import dslr {
     inherit system;
     config.allowUnfree = true;                              # Allow proprietary software
   };
@@ -32,7 +37,7 @@ in
   desktop = lib.nixosSystem {                               # Desktop profile
     inherit system;
     specialArgs = {
-      inherit inputs stable system user location hyprland;
+      inherit inputs unstable system user location fix hyprland;
       host = {
         hostName = "desktop";
         mainMonitor = "HDMI-A-3";
@@ -49,7 +54,7 @@ in
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
-          inherit stable user doom-emacs;
+          inherit unstable user fix doom-emacs;
           host = {
             hostName = "desktop";     #For Xorg iGPU  | Videocard 
             mainMonitor = "HDMI-A-3"; #HDMIA3         | HDMI-A-1
@@ -69,7 +74,7 @@ in
   laptop = lib.nixosSystem {                                # Laptop profile
     inherit system;
     specialArgs = {
-      inherit stable inputs user location;
+      inherit unstable inputs user location;
       host = {
         hostName = "laptop";
         mainMonitor = "eDP-1";
@@ -84,7 +89,7 @@ in
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
-          inherit stable user;
+          inherit unstable user;
           host = {
             hostName = "laptop";
             mainMonitor = "eDP-1";
@@ -100,7 +105,7 @@ in
   work = lib.nixosSystem {                                  # Work profile
     inherit system;
     specialArgs = {
-      inherit stable inputs user location;
+      inherit unstable inputs user location;
       host = {
         hostName = "work";
         mainMonitor = "eDP-1";
@@ -117,7 +122,7 @@ in
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
-          inherit stable user;
+          inherit unstable user;
           host = {
             hostName = "work";
             mainMonitor = "eDP-1";
@@ -135,7 +140,7 @@ in
   vm = lib.nixosSystem {                                    # VM profile
     inherit system;
     specialArgs = {
-      inherit inputs stable user location;
+      inherit unstable inputs user location;
       host = {
         hostName = "vm";
         mainMonitor = "Virtual-1";
@@ -149,7 +154,7 @@ in
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
-          inherit stable user;
+          inherit unstable user;
           host = {
             hostName = "vm";
             mainMonitor = "Virtual-1";
