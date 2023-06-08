@@ -14,7 +14,7 @@
 { lib, inputs, nixpkgs, home-manager, nur, user, location, ... }:
 
 let
-  system = "x86_64-linux";                                  # System architecture
+  system = "aarch64-linux";                                  # System architecture
 
   pkgs = import nixpkgs {
     inherit system;
