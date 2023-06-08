@@ -11,7 +11,7 @@
   };
   security.sudo.wheelNeedsPassword = false; # User does not need to give password when using sudo.
 
-  time.timeZone = 'Europe/London';        # Time zone and internationalisation
+  time.timeZone = "Europe/London";        # Time zone and internationalisation
   i18n = {
     defaultLocale = 'en_US.UTF-8';
   };
