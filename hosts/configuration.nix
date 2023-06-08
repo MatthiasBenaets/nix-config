@@ -7,19 +7,18 @@
 
   users.users.${user} = {                   # System User
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" kvm" "libvirtd" "plex" ];
     shell = pkgs.zsh;                       # Default shell
   };
   security.sudo.wheelNeedsPassword = false; # User does not need to give password when using sudo.
 
-  time.timeZone = "Europe/London";        # Time zone and internationalisation
+  time.timeZone = 'Europe/London';        # Time zone and internationalisation
   i18n = {
-    defaultLocale = "en_US.UTF-8";
+    defaultLocale = 'en_US.UTF-8';
   };
 
   console = {
-    font = "JetBrainsMono";
-    keyMap = "us";                          # I use a us keyboard
+    font = 'JetBrainsMono';
+    keyMap = 'us';                          # I use a us keyboard
   };
 
   fonts.fonts = with pkgs; [                # Fonts
@@ -38,9 +37,9 @@
 
   environment = {
     variables = {
-      TERMINAL = "alacritty";
-      EDITOR = "nvim";
-      VISUAL = "nvim";
+      TERMINAL = 'alacritty';
+      EDITOR = 'nvim';
+      VISUAL = 'nvim';
     };
     systemPackages = with pkgs; [           # Default packages installed system-wide
       sudo
