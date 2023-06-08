@@ -69,13 +69,13 @@
   };
 
   nix = {                                   # Nix Package Manager settings
-    settings ={
+    settings = {
       auto-optimise-store = true;           # Optimise syslinks
     };
     gc = {                                  # Automatic garbage collection
       automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 2d";
+      interval.Day = 7;
+      options = "--delete-older-than 7d";
     };
     package = pkgs.nixVersions.unstable;
     registry.nixpkgs.flake = inputs.nixpkgs;
