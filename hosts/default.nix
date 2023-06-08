@@ -19,6 +19,7 @@ let
   pkgs = import nixpkgs {
     inherit system;
     config.allowUnfree = true;                              # Allow proprietary software
+    config.allowUnsupportedSystem = true;
   };
 
   lib = nixpkgs.lib;

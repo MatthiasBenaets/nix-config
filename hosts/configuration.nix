@@ -45,8 +45,6 @@
       sudo
       killall
       nano
-      pciutils
-      usbutils
       wget
     ];
   };
