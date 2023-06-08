@@ -16,8 +16,6 @@
 {
   home = {                                # Specific packages for desktop
     packages = with pkgs; [
-      # Applications
-      # plex-media-player # Media Player  
     ];
   };
 

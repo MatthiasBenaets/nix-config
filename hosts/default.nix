@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ lib, inputs, nixpkgs, home-manager, nur, user, location, ... }:
+{ lib, inputs, nixpkgs, home-manager, user, location, ... }:
 
 let
   system = "aarch64-linux";                                  # System architecture
@@ -31,12 +31,9 @@ in
       user = "chaosinthecrd";
       host = {
         hostName = "desktop";
-        mainMonitor = "HDMI-A-3";
-        secondMonitor = "DP-1";
       };
     };                                                      # Pass flake variable
     modules = [                                             # Modules that are used.
-      nur.nixosModules.nur
       ./desktop
       ./configuration.nix
 
@@ -47,11 +44,13 @@ in
           inherit user;
           host = {
             hostName = "desktop";     #For Xorg iGPU  | Videocard 
-            mainMonitor = "HDMI-A-3"; #HDMIA3         | HDMI-A-1
-            secondMonitor = "DP-1";   #DP1            | DisplayPort-1
           };
         };                                                  # Pass flake variable
-        home-manager.users.${user} = import ./home.nix
+        home-manager.users.${user} = {
+          imports = [ 
+            ./home.nix
+            ./desktop/home.nix
+          ];
         };
       }
     ];

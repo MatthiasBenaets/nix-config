@@ -13,14 +13,6 @@
     homeDirectory = "/home/${user}";
 
     packages = with pkgs; [
-      ranger            # File Manager
-      feh               # Image Viewer
-      plex-media-player # Media Player
-      firefox           # Browser
-      # File Management
-      unzip             # Zip Files
-      unrar             # Rar Files
-      zip               # Zip
     ];
     stateVersion = "23.05";
   };

@@ -31,13 +31,9 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
-      nur = {
-        url = "github:nix-community/NUR";                                   # NUR Packages
-      };
-
     };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, darwin, nur, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
+  outputs = inputs @ { self, nixpkgs, home-manager, darwin, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                                     # Variables that can be used in the config files.
       lib = nixpkgs.lib;
       user = "chaosinthecrd";
@@ -47,7 +43,7 @@
       nixosConfigurations = (                                               # NixOS configurations
         import ./hosts {                                                    # Imports ./hosts/default.nix
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager nur user location;   # Also inherit home-manager so it does not need to be defined here.
+          inherit inputs nixpkgs home-manager user location;   # Also inherit home-manager so it does not need to be defined here.
         }
       );
 

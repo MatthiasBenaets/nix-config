@@ -10,9 +10,7 @@ with pkgs;
     };
     systemPackages = with pkgs; [ # the essential packages
       # Command-line tools
-      coreutils fzf ripgrep bat colordiff htop tree wget openssh diceware
-      keychain watch jq starship git gcc gnumake gawk diffoscope tmate neofetch
-      glow
+      neofetch
     ];
   };
 }
