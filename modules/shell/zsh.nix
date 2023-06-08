@@ -14,22 +14,26 @@ in
   # .zshenv
   programs.zsh = {
     enable = true;
-    # enableAutosuggestions = false;
+    enableAutosuggestions = true;
     enableCompletion = false;
+    history.size = 10000;
     shellAliases = {
       cls = "clear";
     };
 
+    oh-my-zsh = {                               # Extra plugins for zsh
+      enable = true;
+      plugins = [ "git" "z" ];
+      custom = "$HOME/.config/zsh_nix/custom";
+    };
+
     initExtra = ''
+      # Spaceship
+      source ${pkgs.spaceship-prompt}/share/zsh/site-functions/prompt_spaceship_setup
+      autoload -U promptinit; promptinit
       # Display red dots while waiting for completion
       COMPLETION_WAITING_DOTS="true"
-    '' + extraInitExtra;
-    oh-my-zsh = {
-      enable = true;
-      plugins = [
-        "git" "z"
-      ];
-    };
+    '' + extraInitExtra;                                         # Zsh theme
 
     plugins = [
       {

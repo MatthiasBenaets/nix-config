@@ -3,7 +3,7 @@
 {
   services = {
     yabai = {                             # Tiling window manager
-      enable = true;
+      enable = false;
       package = pkgs.yabai;
       config = {                          # Other configuration options
         layout = "bsp";

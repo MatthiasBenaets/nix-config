@@ -23,14 +23,16 @@
 {
   imports =                                               # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
-    [(import ../../modules/programs/games.nix)] ++        # Gaming
-    [(import ../../modules/desktop/hyprland/default.nix)] ++ # Window Manager
     (import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC
     (import ../../modules/hardware);                      # Hardware devices
 
+  # NVIDIA drivers are unfree.
+  nixpkgs.config.allowUnfree = true;
+
+  services.xserver.videoDrivers = [ "nvidia" ];
+
   boot = {                                      # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
-    #initrd.kernelModules = [ "amdgpu" ];       # Video drivers
 
     loader = {                                  # For legacy boot:
       systemd-boot = {
@@ -56,34 +58,21 @@
         libvdpau-va-gl
       ];
     };
+    nvidia = {
+        package = config.boot.kernelPackages.nvidiaPackages.stable;
+        modesetting.enable = true;
+      }
   };
 
   environment = {                               # Packages installed system wide
     systemPackages = with pkgs; [               # This is because some options need to be configured.
       discord
-      #plex
-      simple-scan
-      x11vnc
-      wacomtablet
+      plex
     ];
-    variables = {
-      LIBVA_DRIVER_NAME = "i965";
-    };
   };
 
   services = {
     blueman.enable = true;                      # Bluetooth
-    samba = {                                   # File Sharing over local network
-      enable = true;                            # Don't forget to set a password:  $ smbpasswd -a <user>
-      shares = {
-        share = {
-          "path" = "/home/${user}";
-          "guest ok" = "yes";
-          "read only" = "no";
-        };
-      };
-      openFirewall = true;
-    };
   };
 
   nixpkgs.overlays = [                          # This overlay will pull the latest version of Discord

@@ -9,22 +9,11 @@
 
 { config, pkgs, user, system, ... }:
 
-let
-   pkgs = import (builtins.fetchGit {
-       # Descriptive name to make the store path easier to identify                
-       name = "my-old-revision";                                                 
-       url = "https://github.com/NixOS/nixpkgs/";                       
-       ref = "refs/heads/nixpkgs-unstable";                     
-       rev = "8ad5e8132c5dcf977e308e7bf5517cc6cc0bf7d8";                                           
-   }) { inherit system ; };                                                                           
-
-   kubectl_1_25_4 = pkgs.kubectl;
-
-in
 {
   imports = [
     ./modules/yabai.nix
     ./modules/skhd.nix
+    ../pkgs/default.nix ## all the global packages
   ];
 
   users.users."${user}" = {               # macOS user
@@ -39,46 +28,7 @@ in
 
   security.pam.enableSudoTouchIdAuth = true;
 
-  fonts = {                               # Fonts
-    fontDir.enable = true;
-    fonts = with pkgs; [
-      source-code-pro
-      font-awesome
-      (nerdfonts.override {
-        fonts = [
-          "FiraCode"
-          "JetBrainsMono"
-        ];
-      })
-    ];
-  };
-
-  environment = {
-    shells = with pkgs; [ zsh ];          # Default shell
-    variables = {                         # System variables
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-    };
-    systemPackages = with pkgs; [         # Installed Nix packages
-      alacritty keybase stern
-
-      # Command-line tools
-      coreutils fzf ripgrep argo argocd bat colordiff cowsay colima
-      gawk kubectx kubectl_1_25_4 go_1_20 (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin]) kustomize
-      helmfile kubernetes-helm htop hugo k9s krew crane diffoscope
-
-      minikube kind neofetch octant sipcalc tmate tree wget openssh keychain awscli2 vault terraform
-      watch git-crypt cosign jq docker-client starship diceware glow spicetify-cli
-
-      # Development
-      git gcc gnumake python38 cargo yarn protobuf lima goreleaser cmctl niv vulnix syft grype toilet
-
-      # Extra Stuff
-      lima
-    ] ++ [ kubectl_1_25_4];
-  };
-
-  programs.zsh.enable = true;                            # Shell needs to be enabled
+  # Moved all the global package setup to pkgs/default.nix
 
   services = {
     nix-daemon.enable = true;             # Auto upgrade daemon
@@ -98,15 +48,22 @@ in
       "homebrew/cask"
       "homebrew/bundle"
       "homebrew/services"
+      "xwmx/tap"
+      "koekeishiya/formulae"
     ];
     brews = [
       "FelixKratz/formulae/sketchybar"
+      "koekeishiya/formulae/skhd"
+      "koekeishiya/formulae/yabai"
       "ddcctl"
       "ykman"
       "gpg"
       "pinentry"
+      "blueutil"
+      "wifi-password"
     ];
     casks = [
+      "launchcontrol"
       "kitty"
       "gpg-suite"
       "firefox"

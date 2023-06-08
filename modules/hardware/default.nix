@@ -11,6 +11,5 @@
 #               └─ ...
 #
 [
-  ./dslr.nix 
   ./bluetooth.nix
 ]

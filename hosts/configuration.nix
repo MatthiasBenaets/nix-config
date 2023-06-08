@@ -1,22 +1,9 @@
-#
-#  Main system configuration. More information available in configuration.nix(5) man page.
-#
-#  flake.nix
-#   ├─ ./hosts
-#   │   └─ configuration.nix *
-#   └─ ./modules
-#       ├─ ./editors
-#       │   └─ default.nix
-#       └─ ./shell
-#           └─ default.nix
-#
-
 { config, lib, pkgs, inputs, user, ... }:
 
 {
-  imports =
-    (import ../modules/editors) ++          # Native doom emacs instead of nix-community flake
-    (import ../modules/shell);
+  imports = [
+    ../pkgs/default.nix ## all the global packages
+  ];
 
   users.users.${user} = {                   # System User
     isNormalUser = true;
@@ -25,28 +12,18 @@
   };
   security.sudo.wheelNeedsPassword = false; # User does not need to give password when using sudo.
 
-  time.timeZone = "Europe/Brussels";        # Time zone and internationalisation
+  time.timeZone = "Europe/London";        # Time zone and internationalisation
   i18n = {
     defaultLocale = "en_US.UTF-8";
-    extraLocaleSettings = {                 # Extra locale settings that need to be overwritten
-      LC_TIME = "nl_BE.UTF-8";
-      LC_MONETARY = "nl_BE.UTF-8";
-    };
   };
 
   console = {
-    font = "Lat2-Terminus16";
-    keyMap = "us";                          # or us/azerty/etc
+    font = "JetBrainsMono";
+    keyMap = "us";                          # I use a us keyboard
   };
 
   security.rtkit.enable = true;
   security.polkit.enable = true;
-  #sound = {                                # Deprecated due to pipewire
-  #  enable = true;
-  #  mediaKeys = {
-  #    enable = true;
-  #  };
-  #};
 
   fonts.fonts = with pkgs; [                # Fonts
     carlito                                 # NixOS
@@ -69,31 +46,18 @@
       VISUAL = "nvim";
     };
     systemPackages = with pkgs; [           # Default packages installed system-wide
-      #vim
-      #git
+      sudo
       killall
       nano
       pciutils
       usbutils
       wget
+      stern
     ];
   };
 
   services = {
-    printing = {                                # Printing and drivers for TS5300
-      enable = true;
-      #drivers = [ pkgs.cnijfilter2 ];          # There is the possibility cups will complain about missing cmdtocanonij3. I guess this is just an error that can be ignored for now. Also no longer need required since server uses ipp to share printer over network.
-    };
-    avahi = {                                   # Needed to find wireless printer
-      enable = true;
-      nssmdns = true;
-      publish = {                               # Needed for detecting the scanner
-        enable = true;
-        addresses = true;
-        userServices = true;
-      };
-    };
-    pipewire = {                            # Sound
+    pipewire = {
       enable = true;
       alsa = {
         enable = true;
@@ -154,6 +118,6 @@
       enable = true;
       channel = "https://nixos.org/channels/nixos-unstable";
     };
-    stateVersion = "22.05";
+    stateVersion = "23.05";
   };
 }

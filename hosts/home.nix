@@ -1,5 +1,5 @@
 #
-#  General Home-manager configuration
+ Home-manager configuration
 #
 #  flake.nix
 #   ├─ ./hosts
@@ -25,7 +25,6 @@
     packages = with pkgs; [
       # Terminal
       btop              # Resource Manager
-      nitch             # Minimal fetch
       ranger            # File Manager
       tldr              # Helper
 
@@ -41,7 +40,6 @@
       appimage-run      # Runs AppImages on NixOS
       firefox           # Browser
       google-chrome     # Browser
-      remmina           # XRDP & VNC Client
 
       # File Management
       gnome.file-roller # Archive Manager
@@ -53,17 +51,6 @@
       unrar             # Rar Files
       zip               # Zip
 
-      # General configuration
-      #git              # Repositories
-      #killall          # Stop Applications
-      #nano             # Text Editor
-      #pciutils         # Computer Utility Info
-      #pipewire         # Sound
-      #usbutils         # USB Utility Info
-      #wacomtablet      # Wacom Tablet
-      #wget             # Downloader
-      #zsh              # Shell
-      #
       # General home-manager
       #alacritty        # Terminal Emulator
       #dunst            # Notifications

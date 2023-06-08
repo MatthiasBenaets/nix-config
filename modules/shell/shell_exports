@@ -11,6 +11,7 @@ export WLR_DRM_NO_MODIFIERS=1
 # Directory Env Vars
 export GOPATH=$HOME/go
 export GOBIN=$HOME/go/bin
+export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
 
 # Google Cloud GKE
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True

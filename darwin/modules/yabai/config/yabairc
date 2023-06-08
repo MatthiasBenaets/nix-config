@@ -1,0 +1,61 @@
+#!/usr/bin/env sh
+sudo yabai --load-sa
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+# global settings
+# focus window that your mouse hovers on (disabled due to right click bugs)
+yabai -m config focus_follows_mouse          off
+# move mouse to focused window
+yabai -m config mouse_follows_focus          on
+yabai -m config window_placement             second_child
+# floating windows always stay on top
+yabai -m config window_topmost               on
+# enable borders
+yabai -m config window_border                on
+# no clue what this is
+yabai -m config insert_feedback_color        0xffd75f5f
+yabai -m config split_ratio                  0.50
+# don't automatically rebalance windows
+yabai -m config auto_balance                 off
+# swap windows if moved with mouse
+yabai -m config mouse_action1                move
+# resize windows if resized with mouse
+yabai -m config mouse_action2                resize
+yabai -m config mouse_drop_action            swap
+
+# general space settings
+yabai -m config layout                       bsp
+yabai -m config top_padding                  13
+yabai -m config bottom_padding               10
+yabai -m config left_padding                 10
+yabai -m config right_padding                10
+yabai -m config window_gap                   10
+yabai -m config external_bar                 all:28:0
+
+# SIP Required
+# prevent border from being under the active window
+yabai -m config active_window_border_topmost on
+yabai -m config window_shadow                on
+yabai -m config window_opacity               off
+yabai -m config window_border_width          5
+yabai -m config active_window_border_color   0xffAFDCA4
+yabai -m config normal_window_border_color   0xffaaaaaa
+
+# focus window when changing space or display_changed
+# focus window after active space changes
+# yabai -m signal --add event=space_changed action="yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id)"
+
+# focus window after active display changes
+# yabai -m signal --add event=display_changed action="yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id)"
+
+# apps to not manage (ignore)
+yabai -m rule --add app="^System Preferences$" manage=off
+yabai -m rule --add app="^Archive Utility$" manage=off
+yabai -m rule --add app="^Logi Options$" manage=off
+yabai -m rule --add title='Preferences' manage=off layer=above
+yabai -m rule --add title='NordPass Password Manager' manage=off layer=above
+yabai -m rule --add title='^(Opening)' manage=off layer=above
+yabai -m rule --add title='Library' manage=off layer=above
+yabai -m rule --add app='^System Preferences$' manage=off layer=above
+yabai -m rule --add app='Activity Monitor' manage=off layer=above
+yabai -m rule --add app='Finder' manage=off layer=above
+yabai -m rule --add app='^System Information$' manage=off layer=above

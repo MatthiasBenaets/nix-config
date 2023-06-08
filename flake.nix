@@ -54,12 +54,10 @@
       lib = nixpkgs.lib;
       user = "tom";
       location = "$HOME/.setup";
-      ### --- add overlays
-      overlays = with inputs;
-        (importNixFiles ./overlays);
       myPkgs = sys: {
         nixpkgs = {
             config.packageOverrides = (import ./pkgs/default.nix);
+            config.allowUnfree = true;
         };
       };
     in                                                                      # Use above variables in ...
@@ -67,21 +65,21 @@
       nixosConfigurations = (                                               # NixOS configurations
         import ./hosts {                                                    # Imports ./hosts/default.nix
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager overlays nur user location;   # Also inherit home-manager so it does not need to be defined here.
+          inherit inputs nixpkgs home-manager nur user location;   # Also inherit home-manager so it does not need to be defined here.
         }
       );
 
       darwinConfigurations = (                                              # Darwin Configurations
         import ./darwin {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs myPkgs home-manager overlays darwin user;
+          inherit inputs nixpkgs myPkgs home-manager darwin user;
         }
       );
 
       homeConfigurations = (                                                # Non-NixOS configurations
         import ./nix {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager overlays user;
+          inherit inputs nixpkgs home-manager user;
         }
       );
     };
