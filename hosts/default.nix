@@ -27,7 +27,8 @@ in
   desktop = lib.nixosSystem {                               # Desktop profile
     inherit system;
     specialArgs = {
-      inherit inputs user location;
+      inherit inputs location;
+      user = "chaosinthecrd"
       host = {
         hostName = "desktop";
         mainMonitor = "HDMI-A-3";
