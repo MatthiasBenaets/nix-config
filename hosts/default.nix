@@ -52,7 +52,10 @@ in
           };
         };                                                  # Pass flake variable
         home-manager.users.${user} = {
-          imports = [(import ./home.nix)] ++ [(import ./desktop/home.nix)];
+          imports = [
+            ./home.nix
+            ./desktop/home.nix)
+          ];
         };
       }
     ];
