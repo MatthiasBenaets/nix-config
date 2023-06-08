@@ -73,7 +73,7 @@
     };
     gc = {                                  # Automatic garbage collection
       automatic = true;
-      interval.Day = "weekly";
+      dates = "weekly";
       options = "--delete-older-than 7d";
     };
     package = pkgs.nixVersions.unstable;
