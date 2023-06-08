@@ -4,7 +4,7 @@
 { 
   imports =                               # Home Manager Modules
   [
-    ../modules/programs/default.nix
+    ../modules/programs/alacritty.nix
   ];
 
   home = {
