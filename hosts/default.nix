@@ -11,7 +11,7 @@
 #            └─ ./home.nix 
 #
 
-{ lib, inputs, nixpkgs, home-manager, nur, user, location, doom-emacs, ... }:
+{ lib, inputs, nixpkgs, home-manager, nur, user, location, ... }:
 
 let
   system = "x86_64-linux";                                  # System architecture
@@ -43,7 +43,6 @@ in
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
-          inherit user doom-emacs;
           host = {
             hostName = "desktop";     #For Xorg iGPU  | Videocard 
             mainMonitor = "HDMI-A-3"; #HDMIA3         | HDMI-A-1

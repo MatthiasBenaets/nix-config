@@ -18,12 +18,11 @@
 #           └─ default.nix
 #
 
-{ pkgs, lib, user, ... }:
+{ pkgs, lib, user, config, ... }:
 
 {
   imports =                                               # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
-    (import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC
     (import ../../modules/hardware);                      # Hardware devices
 
   # NVIDIA drivers are unfree.
@@ -61,7 +60,7 @@
     nvidia = {
         package = config.boot.kernelPackages.nvidiaPackages.stable;
         modesetting.enable = true;
-      }
+      };
   };
 
   environment = {                               # Packages installed system wide

@@ -54,7 +54,7 @@
       darwinConfigurations = (                                              # Darwin Configurations
         import ./darwin {
           inherit (nixpkgs) lib;
-          inherit inputs myPkgs home-manager darwin user;
+          inherit inputs home-manager darwin user;
         }
       );
 
