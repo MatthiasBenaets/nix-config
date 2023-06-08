@@ -7,6 +7,8 @@
     ../modules/programs/alacritty.nix
   ];
 
+  config.xdg.portal.enable = true;
+
   home = {
     username = "${user}";
     homeDirectory = "/home/${user}";
