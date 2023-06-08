@@ -51,11 +51,7 @@ in
             secondMonitor = "DP-1";   #DP1            | DisplayPort-1
           };
         };                                                  # Pass flake variable
-        home-manager.users.${user} = {
-          imports = [
-            ./home.nix
-            ./desktop/home.nix
-          ];
+        home-manager.users.${user} = import ./home.nix
         };
       }
     ];
