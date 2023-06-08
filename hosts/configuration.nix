@@ -37,9 +37,9 @@
 
   environment = {
     variables = {
-      TERMINAL = 'alacritty';
-      EDITOR = 'nvim';
-      VISUAL = 'nvim';
+      TERMINAL = "alacritty";
+      EDITOR = "nvim";
+      VISUAL = "nvim";
     };
     systemPackages = with pkgs; [           # Default packages installed system-wide
       sudo
@@ -74,7 +74,7 @@
     gc = {                                  # Automatic garbage collection
       automatic = true;
       interval.Day = 7;
-      options = '--delete-older-than 7d';
+      options = "--delete-older-than 7d";
     };
     package = pkgs.nixVersions.unstable;
     registry.nixpkgs.flake = inputs.nixpkgs;
@@ -89,8 +89,8 @@
   system = {                                # NixOS settings
     autoUpgrade = {                         # Allow auto update (not useful in flakes)
       enable = true;
-      channel = 'https://nixos.org/channels/nixos-unstable';
+      channel = "https://nixos.org/channels/nixos-unstable";
     };
-    stateVersion = '23.05';
+    stateVersion = "23.05";
   };
 }
