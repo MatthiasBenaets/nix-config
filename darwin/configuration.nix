@@ -10,20 +10,9 @@
 { config, pkgs, user, system, ... }:
 
 {
-  imports = [
-    ./modules/yabai.nix
-    ./modules/skhd.nix
-    ../pkgs/default.nix ## all the global packages
-  ];
-
   users.users."${user}" = {               # macOS user
     home = "/Users/${user}";
     shell = pkgs.zsh;                     # Default shell
-  };
-
-  networking = {
-    computerName = "Toms MacBook";             # Host name
-    hostName = "WKSMAC151152";
   };
 
   security.pam.enableSudoTouchIdAuth = true;
@@ -92,19 +81,6 @@
       "citrix-workspace"
       "sf-symbols"
     ];
-  };
-
-  nix = {
-    package = pkgs.nix;
-    gc = {                                # Garbage collection
-      automatic = true;
-      interval.Day = 7;
-      options = "--delete-older-than 7d";
-    };
-    extraOptions = ''
-      auto-optimise-store = true
-      experimental-features = nix-command flakes
-    '';
   };
 
   system = {

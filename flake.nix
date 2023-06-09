@@ -1,19 +1,3 @@
-#
-#  G'Day
-#  Behold is my personal Nix, NixOS and Darwin Flake.
-#  I'm not the sharpest tool in the shed, so this build might not be the best out there.
-#  I refer to the README and other org document on how to use these files.
-#  Currently and possibly forever a Work In Progress.
-#
-#  flake.nix *             
-#   ├─ ./hosts
-#   │   └─ default.nix
-#   ├─ ./darwin
-#   │   └─ default.nix
-#   └─ ./nix
-#       └─ default.nix
-#
-
 {
   description = "Tom's Personal NixOS and Darwin System Flake Configuration";
 
@@ -35,30 +19,29 @@
 
   outputs = inputs @ { self, nixpkgs, home-manager, darwin, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                                     # Variables that can be used in the config files.
-      lib = nixpkgs.lib;
+      mkDarwin = import ./lib/mkdarwin.nix;
+      mkVM = import ./lib/mkvm.nix;
+      mkBM = import ./lib/mkbm.nix;
       user = "chaosinthecrd";
-      location = "$HOME/.setup";
     in                                                                      # Use above variables in ...
     {
-      nixosConfigurations = (                                               # NixOS configurations
-        import ./hosts {                                                    # Imports ./hosts/default.nix
-          inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager user location;   # Also inherit home-manager so it does not need to be defined here.
-        }
-      );
+      nixosConfigurations.vm-aarch64 = mkVM "vm-aarch64" {
+        inherit nixpkgs home-manager user;
+        system = "aarch64-linux"
+      };
 
-      darwinConfigurations = (                                              # Darwin Configurations
-        import ./darwin {
-          inherit (nixpkgs) lib;
-          inherit inputs home-manager darwin user;
-        }
-      );
+      # assuming for now that all bare-metal is going to be x86
+      nixosConfigurations.bm-x86 = mkBM "bm-x86-linux" {
+        inherit nixpkgs home-manager user;
+        system = "x86_64-linux"
+      }
 
-      homeConfigurations = (                                                # Non-NixOS configurations
-        import ./nix {
-          inherit (nixpkgs) lib;
-          inherit inputs nixpkgs home-manager user;
-        }
-      );
+      darwinConfigurations.macbook-m1 = mkDarwin "macbook-m1" {
+        inherit darwin nixpkgs home-manager overlays;
+        system = "aarch64-darwin";
+        # overriding standard user name to adhere to Venafi IT policy
+        user = "tom.meadows";
+      }
+
     };
 }

@@ -2,8 +2,8 @@
 with pkgs;
 
 {
-  environment = {
-    systemPackages = with pkgs; [         # Installed Nix packages
+  home = {
+    packages = with pkgs; [
       # Command-line tools
       go_1_20 git-crypt cargo yarn protobuf lima goreleaser vulnix
     ];
