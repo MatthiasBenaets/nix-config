@@ -1,10 +1,20 @@
 ## Essentially the shared `configuration.nix` for all the machines (including darwin)
-{ config, pkgs, user, system, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  modules = [
-    ../modules/fonts/fonts.nix
-  ];
+  fonts = {
+    fontDir.enable = true;
+    fonts = with pkgs; [
+      source-code-pro
+      font-awesome
+      (nerdfonts.override {
+        fonts = [
+          "FiraCode"
+          "JetBrainsMono"
+        ];
+      })
+    ];
+  };
 
   nix = {
     package = pkgs.nix;

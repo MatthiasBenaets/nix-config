@@ -16,8 +16,6 @@ in
     enable = true;
     enableAutosuggestions = true;
     enableCompletion = false;
-    viAlias = true;
-    vimAlias = true;
     history.size = 10000;
     shellAliases = {
       cls = "clear";

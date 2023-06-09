@@ -2,6 +2,7 @@
 
 # PATH
 export PATH=/run/current-system/sw/bin:/opt/homebrew/bin:$PATH
+export PATH=/etc/profiles/per-user/tom.meadows/bin:$PATH
 
 # Defaults
 export SHELL=zsh

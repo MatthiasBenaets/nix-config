@@ -27,21 +27,21 @@
     {
       nixosConfigurations.vm-aarch64 = mkVM "vm-aarch64" {
         inherit nixpkgs home-manager user;
-        system = "aarch64-linux"
+        system = "aarch64-linux";
       };
 
       # assuming for now that all bare-metal is going to be x86
       nixosConfigurations.bm-x86 = mkBM "bm-x86-linux" {
         inherit nixpkgs home-manager user;
-        system = "x86_64-linux"
-      }
+        system = "x86_64-linux";
+      };
 
       darwinConfigurations.macbook-m1 = mkDarwin "macbook-m1" {
-        inherit darwin nixpkgs home-manager overlays;
+        inherit darwin nixpkgs home-manager;
         system = "aarch64-darwin";
         # overriding standard user name to adhere to Venafi IT policy
         user = "tom.meadows";
-      }
+      };
 
     };
 }

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, type, ... }:
 
 let
   isDarwin = pkgs.stdenv.isDarwin;
@@ -8,20 +8,30 @@ in {
 
   xdg.enable = true;
 
-  imports = 
-    [
-      ../../modules/programs/alacritty.nix
-      ../../modules/shell/zsh.nix
-      ../../modules/editors/nvim/nvim.nix
-      # this needs to be moved at some point
-      ../../darwin/modules/kitty/kitty.nix
-      ../../pkgs/default.nix
-    ] ++ (lib.optionals isDarwin [
-      # this is where the packages specific for darwin can live.
-      # it doesn't exist at the moment though.
-      ../../darwin/home.nix
-    ]) ++ (lib.optionals isLinux [
-      # Blank for now before adding things 
-    ]);
+  # todo: the duplication here sucks but I can't for the life of me figure it out.
+  imports = if "type" == "darwin"
+       then [
+        ../../modules/shell/git.nix
+        ../../modules/programs/alacritty.nix
+        ../../modules/shell/zsh.nix
+        ../../modules/editors/nvim/nvim.nix
+        ../../pkgs/default.nix
+       ] ++
+       [
+        ../../darwin/modules/sketchybar/sketchybar.nix
+        ../../darwin/modules/yabai/yabai.nix
+        ../../darwin/modules/skhd/skhd.nix
+       ]
+       else [ 
+        ../../modules/shell/git.nix
+        ../../modules/programs/alacritty.nix
+        ../../modules/shell/zsh.nix
+        ../../modules/editors/nvim/nvim.nix
+        ../../pkgs/default.nix
+       ];
 
+
+  home = {
+    stateVersion = "23.05";
+  };
 }

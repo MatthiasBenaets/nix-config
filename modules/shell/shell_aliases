@@ -47,7 +47,7 @@ alias resketch="brew services restart sketchybar"
 alias stopsketch="brew services stop sketchybar"
 
 # Nix aliases
-alias switch="darwin-rebuild switch --flake /Users/tom.meadows/Git/nixos-config/.#workMacbook"
+alias switch="darwin-rebuild switch --flake /Users/tom.meadows/Git/nixos-config/.#macbook-m1"
 # easily update home-manager config
 alias unix="home-manager switch"
 alias nixedit="vim ~/Git/nixos-config/"
