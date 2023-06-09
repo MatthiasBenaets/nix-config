@@ -14,14 +14,5 @@ darwin.lib.darwinSystem rec {
       home-manager.useUserPackages = true;
       home-manager.users.${user} = import ../users/chaosinthecrd/home-manager.nix;
     }
-
-    # We expose some extra arguments so that our modules can parameterize
-    # better based on these values.
-    {
-      config._module.args = {
-        type = "darwin";
-      };
-    }
-
   ];
 }
