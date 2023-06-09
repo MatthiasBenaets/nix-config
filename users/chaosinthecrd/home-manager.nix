@@ -15,11 +15,10 @@ in {
         ../../modules/shell/zsh.nix
         ../../modules/editors/nvim/nvim.nix
         ../../pkgs/default.nix
-       ] ++ (lib.optionals isDarwin [
         ../../darwin/modules/sketchybar/sketchybar.nix
         ../../darwin/modules/yabai/yabai.nix
         ../../darwin/modules/skhd/skhd.nix
-       ]);
+       ];
 
   home = {
     stateVersion = "23.05";
