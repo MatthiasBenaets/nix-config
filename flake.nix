@@ -25,7 +25,7 @@
       user = "chaosinthecrd";
     in                                                                      # Use above variables in ...
     {
-      nixosConfigurations.vm-aarch64 = mkVM "vm-aarch64-prl" {
+      nixosConfigurations.vm-aarch64-prl = mkVM "vm-aarch64-prl" {
         inherit nixpkgs home-manager user;
         system = "aarch64-linux";
       };

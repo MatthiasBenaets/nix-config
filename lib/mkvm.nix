@@ -1,4 +1,4 @@
-name: { nixpkgs, home-manager, system, user, overlays }:
+name: { nixpkgs, home-manager, system, user }:
 
 nixpkgs.lib.nixosSystem rec {
   inherit system;
