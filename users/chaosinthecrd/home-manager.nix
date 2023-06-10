@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 let
   isDarwin = pkgs.stdenv.isDarwin;
@@ -15,11 +15,14 @@ in {
         ../../modules/shell/zsh.nix
         ../../modules/editors/nvim/nvim.nix
         ../../pkgs/default.nix
+        ] ++ (lib.optionals pkgs.stdenv.isDarwin [
         ../../darwin/modules/sketchybar/sketchybar.nix
         ../../darwin/modules/yabai/yabai.nix
         ../../darwin/modules/skhd/skhd.nix
-        ../../darwin/modules/kitty/kitty.nix
-       ];
+        ../../darwin/modules/kitty/kitty.nix 
+        ]) ++ (lib.optionals pkgs.stdenv.isLinux [
+        ../../modules/desktop/hyprland/home.nix
+        ]);
 
   home = {
     stateVersion = "23.05";

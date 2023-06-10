@@ -1,6 +1,6 @@
-name: { nixpkgs, home-manager, system, user }:
+name: { nixpkgs, lib, home-manager, system, user }:
 
-nixpkgs.lib.nixosSystem rec {
+lib.nixosSystem rec {
   inherit system;
 
   modules = [

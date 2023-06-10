@@ -1,6 +1,7 @@
-{ pkgs, user, ... }:
+{ pkgs, lib, user, system, ... }:
 
 {
+  imports = [(import ../../modules/desktop/hyprland/default.nix)];
   programs.zsh.enable = true;
 
   users.users.chaosinthecrd = {
