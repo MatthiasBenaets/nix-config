@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, currentSystemName, ... }:
 
 let
   isDarwin = pkgs.stdenv.isDarwin;
