@@ -1,6 +1,6 @@
 name: { pkgs, lib, home-manager, system, user, hyprland }:
 
-lib.nixosSystem rec {
+lib.nixosSystem {
   inherit system;
 
   modules = [
