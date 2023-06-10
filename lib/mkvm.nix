@@ -7,6 +7,7 @@ lib.nixosSystem rec {
 
     ../hardware/${name}.nix
     ../machines/${name}.nix
+    hyprland.nixosModules.default
     ../users/${user}/nixos.nix
 
     home-manager.nixosModules.home-manager {
