@@ -31,7 +31,7 @@
       user = "chaosinthecrd";
     in                                                                      # Use above variables in ...
     {
-      nixosConfigurations.vm-aarch64-prl = mkVM "vm-aarch64-prl" {
+      nixosConfigurations.vm-aarch64-prl = mkVM "vm-aarch64-prl" rec {
         inherit nixpkgs home-manager user hyprland;
         pkgs = import nixpkgs { inherit system; };
         lib = pkgs.lib;
