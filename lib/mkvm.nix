@@ -1,4 +1,4 @@
-name: { nixpkgs, lib, home-manager, system, user }:
+name: { nixpkgs, lib, home-manager, system, user, hyprland }:
 
 lib.nixosSystem rec {
   inherit system;

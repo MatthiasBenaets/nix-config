@@ -1,4 +1,4 @@
-{ pkgs, lib, user, system, ... }:
+{ pkgs, lib, user, system, hyprland, ... }:
 
 {
   imports = [(import ../../modules/desktop/hyprland/default.nix)];

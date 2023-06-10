@@ -5,6 +5,11 @@
     {
       nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";                  # Nix Packages
 
+      hyprland = {                                                          # Official Hyprland flake
+        url = "github:vaxerski/Hyprland";                                   # Add "hyprland.nixosModules.default" to the host modules
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+
       home-manager = {                                                      # User Package Management
         url = "github:nix-community/home-manager";
         inputs.nixpkgs.follows = "nixpkgs";
@@ -17,7 +22,7 @@
 
     };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, darwin, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
+  outputs = inputs @ { self, nixpkgs, home-manager, darwin, hyprland, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                                     # Variables that can be used in the config files.
       mkDarwin = import ./lib/mkdarwin.nix;
       mkVM = import ./lib/mkvm.nix;
@@ -26,7 +31,7 @@
     in                                                                      # Use above variables in ...
     {
       nixosConfigurations.vm-aarch64-prl = mkVM "vm-aarch64-prl" {
-        inherit nixpkgs home-manager user;
+        inherit nixpkgs home-manager user hyprland;
         system = "aarch64-linux";
         lib = nixpkgs.lib;
       };
