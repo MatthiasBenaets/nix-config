@@ -1,6 +1,6 @@
 name: { nixpkgs, pkgs, lib, home-manager, system, user, hyprland }:
 
-nixpkgs.lib.nixosSystem {
+nixpkgs.lib.nixosSystem rec {
   inherit system;
 
   modules = [
@@ -10,14 +10,6 @@ nixpkgs.lib.nixosSystem {
     hyprland.nixosModules.default
     ../users/${user}/nixos.nix
 
-    home-manager.nixosModules.home-manager {
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
-      home-manager.users.${user} = import ../users/chaosinthecrd/home-manager.nix {
-          inherit lib pkgs currentSystemName;
-        };
-    }
-
     # We expose some extra arguments so that our modules can parameterize
     # better based on these values.
     {
@@ -26,5 +18,14 @@ nixpkgs.lib.nixosSystem {
         currentSystem = system;
       };
     }
+
+    home-manager.nixosModules.home-manager {
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
+      home-manager.users.${user} = import ../users/chaosinthecrd/home-manager.nix {
+          inherit lib pkgs currentSystemName;
+        };
+    }
+
   ];
 }
