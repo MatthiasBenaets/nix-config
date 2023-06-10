@@ -89,7 +89,7 @@
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.mutableUsers = false;
+  users.mutableUsers = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
