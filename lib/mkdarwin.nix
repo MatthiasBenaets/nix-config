@@ -13,17 +13,9 @@ darwin.lib.darwinSystem {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.users.${user} = import ../users/chaosinthecrd/home-manager.nix {
-          inherit lib pkgs currentSystemName;
+          inherit lib pkgs;
       };
     }
 
-    # We expose some extra arguments so that our modules can parameterize
-    # better based on these values.
-    {
-      config._module.args = {
-        currentSystemName = name;
-        currentSystem = system;
-      };
-    }
   ];
 }

@@ -1,52 +1,29 @@
-{ config, lib, pkgs, currentSystemName, ... }:
+{ config, lib, pkgs, ... }:
 
 let
-  touchpad = with currentSystemName;
-    if currentSystemName == "vm-aarch64-prl" then ''
+  touchpad = ''
         touchpad {
           natural_scroll=true
           middle_button_emulation=true
           tap-to-click=true
         }
-      }
-      '' else "";
-  gestures = with currentSystemName;
-    if currentSystemName == "vm-aarch64-prl" then ''
+      '';
+  gestures = ''
       gestures {
         workspace_swipe=true
         workspace_swipe_fingers=3
         workspace_swipe_distance=100
       }
-    '' else "";
-  workspaces = with currentSystemName;
-    if currentSystemName == "vm-aarch64-prl" then ''
-      monitor=Virtual-1,2560x1600@60,2560x0,1
-    '' else if currentSystemName == "bm-x86" then ''
-      monitor=HDMI-0,3440x1440@60,0x0,1
-    '' else ''
-      monitor=${toString mainMonitor},2560x1600@60,0x0,1
     '';
-  monitors = with currentSystemName;
-    if currentSystemName == "vm-aarch64-prl" then ''
+  workspaces = ''
+      monitor=Virtual-1,2560x1600@60,2560x0,1
+    '';
+  monitors = ''
       workspace=Virtual-1,10
-    '' else if currentSystemName == "bm-x86" then ''
-      workspace=HDMI-0,10
-    '' else "";
-  # execute = with currentSystemName;
-  #   if currentSystemName == "bm-x86" then ''
-  #     #exec-once=${pkgs.mpvpaper}/bin/mpvpaper -sf -v -o "--loop --panscan=1" '*' $HOME/.config/wall.mp4  # Moving wallpaper (small performance hit)
-  #     exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
-  #   '' else if hostName == "work" then ''
-  #     exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
-  #     exec-once=${pkgs.networkmanagerapplet}/bin/nm-applet --indicator
-  #     #exec-once=${pkgs.google-drive-ocamlfuse}/bin/google-drive-ocamlfuse /GDrive
-  #     exec-once=${pkgs.rclone}/bin/rclone mount --daemon gdrive: /GDrive
-  #   '' else "";
+    '';
 in
 let
-  hyprlandConf = with currentSystemName; ''
-    ${workspaces}
-    ${monitors}
+  hyprlandConf = ''
 
     general {
       #main_mod=SUPER
@@ -186,29 +163,7 @@ in
     #image = "$HOME/.config/wall";
     color = "000000f0";
     font-size = "24";
-    indicator-idle-visible = false;
-    indicator-radius = 100;
-    indicator-thickness = 20;
-    inside-color = "00000000";
-    inside-clear-color = "00000000";
-    inside-ver-color = "00000000";
-    inside-wrong-color = "00000000";
-    key-hl-color = "79b360";
-    line-color = "000000f0";
-    line-clear-color = "000000f0";
-    line-ver-color = "000000f0";
-    line-wrong-color = "000000f0";
-    ring-color = "ffffff50";
-    ring-clear-color = "bbbbbb50";
-    ring-ver-color = "bbbbbb50";
-    ring-wrong-color = "b3606050";
-    text-color = "ffffff";
-    text-ver-color = "ffffff";
-    text-wrong-color = "ffffff";
-    show-failed-attempts = true;
-  };
-
-  services.swayidle = with currentSystemName; if currentSystemName == "vm-aarch64-prl" || currentSystemName == "bm-x86" then {
+    indicator-idle-vi{
     enable = true;
     events = [
       { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock -f"; }
@@ -218,7 +173,5 @@ in
       { timeout= 300; command = "${pkgs.swaylock}/bin/swaylock -f";}
     ];
     systemdTarget = "xdg-desktop-portal-hyprland.service";
-  } else {
-    enable = false;
   };
 }
