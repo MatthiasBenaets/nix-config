@@ -195,7 +195,5 @@ in
       { timeout= 300; command = "${pkgs.swaylock}/bin/swaylock -f";}
     ];
     systemdTarget = "xdg-desktop-portal-hyprland.service";
-  } else {
-    enable = false;
   };
 }
