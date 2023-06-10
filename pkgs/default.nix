@@ -3,7 +3,7 @@
 let
 in {
     imports = [
-      ./core.nix
+      # ./core.nix
       #./dev.nix
       #./kube.nix
     ];
