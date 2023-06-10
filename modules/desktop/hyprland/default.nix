@@ -19,7 +19,7 @@ in
       XDG_SESSION_TYPE="wayland";
       XDG_SESSION_DESKTOP="Hyprland";
     };
-    // keeping for nvidia times
+    # keeping for nvidia times
     # sessionVariables = {
     #   #GBM_BACKEND = "nvidia-drm";
     #   #__GL_GSYNC_ALLOWED = "0";
