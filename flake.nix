@@ -7,7 +7,7 @@
 
 
       hyprland = {                                                          # Official Hyprland flake
-        url = "github:hyprwm/Hyprland/master";                                   # Add "hyprland.nixosModules.default" to the host modules
+        url = "github:hyprwm/Hyprland/main";                                   # Add "hyprland.nixosModules.default" to the host modules
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
