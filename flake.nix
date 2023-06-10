@@ -34,8 +34,7 @@
       nixosConfigurations.vm-aarch64-prl = mkVM "vm-aarch64-prl" {
         inherit nixpkgs home-manager user hyprland;
         system = "aarch64-linux";
-        pkgs = import nixpkgs { inherit system; };
-        lib = pkgs.lib;
+        lib = nixpkgs.lib;
       };
 
       # # assuming for now that all bare-metal is going to be x86
