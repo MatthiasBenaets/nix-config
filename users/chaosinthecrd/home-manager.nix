@@ -18,6 +18,7 @@ in {
         ../../darwin/modules/sketchybar/sketchybar.nix
         ../../darwin/modules/yabai/yabai.nix
         ../../darwin/modules/skhd/skhd.nix
+        ../../darwin/modules/kitty/kitty.nix
        ];
 
   home = {
