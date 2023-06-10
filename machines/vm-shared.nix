@@ -78,7 +78,7 @@
     };
 
     windowManager = {
-      i3.enable = true;
+      awesome.enable = true;
     };
   };
 
