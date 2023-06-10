@@ -44,6 +44,8 @@ in
       MOZ_ENABLE_WAYLAND = "1";
     };
     systemPackages = with pkgs; [
+      hyprland-legacy
+      xwayland
       grim
       mpvpaper
       slurp
@@ -52,13 +54,6 @@ in
       wl-clipboard
       wlr-randr
     ];
-  };
-
-  programs = {
-    hyprland = {
-      enable = true;
-      #nvidiaPatches = with host; if hostName == "work" then true else false;
-    };
   };
 
   xdg.portal = {                                  # Required for flatpak with window managers and for file browsing
