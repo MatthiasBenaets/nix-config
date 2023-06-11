@@ -1,15 +1,10 @@
-{ config, pkgs, lib, modulesPath, ... }: {
+{ config, pkgs, lib, ... }: {
   imports = [
-    # Parallels is qemu under the covers. This brings in important kernel
-    # modules to get a lot of the stuff working.
-    (modulesPath + "/profiles/qemu-guest.nix")
-
     ./vm-shared.nix
   ];
 
   # The official parallels guest support does not work currently.
   # https://github.com/NixOS/nixpkgs/pull/153665
-  disabledModules = [ "virtualisation/parallels-guest.nix" ];
 
   # Interface is this on my M1
   networking.interfaces.enp0s5.useDHCP = true;
