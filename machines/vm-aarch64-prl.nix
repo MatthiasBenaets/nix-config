@@ -4,7 +4,6 @@
     # modules to get a lot of the stuff working.
     (modulesPath + "/profiles/qemu-guest.nix")
 
-    ../modules/vm/parallels-guest.nix
     ./vm-shared.nix
   ];
 
