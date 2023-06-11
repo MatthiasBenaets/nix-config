@@ -3,12 +3,6 @@ name: { nixpkgs, pkgs, lib, home-manager, system, user, hyprland }:
 nixpkgs.lib.nixosSystem {
   inherit system;
 
-  nixpkgs.overlays = [
-  (self: super: {
-    fcitx-engines = pkgs.fcitx5;
-  })
-  ]
-
   modules = [
 
     ../hardware/${name}.nix
