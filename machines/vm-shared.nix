@@ -13,9 +13,6 @@
       keep-derivations = true
     '';
 
-    # public binary cache that I use for all my derivations. You can keep
-    # this, use your own, or toss it. Its typically safe to use a binary cache
-    # since the data inside is checksummed.
     settings = {
       substituters = [
       "https://mitchellh-nixos-config.cachix.org"
@@ -28,71 +25,53 @@
     };
   };
 
-  nixpkgs.config.permittedInsecurePackages = [
-    # Needed for k2pdfopt 2.53.
-    "mupdf-1.17.0"
-  ];
-
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  # VMware, Parallels both only support this being 0 otherwise you see
-  # "error switching console mode" on boot.
-  boot.loader.systemd-boot.consoleMode = "0";
-
   # Define your hostname.
   networking.hostName = "dev";
 
   # Set your time zone.
-  time.timeZone = "America/Los_Angeles";
-
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking.useDHCP = false;
+  time.timeZone = "Europe/London";
 
   # Don't require password for sudo
   security.sudo.wheelNeedsPassword = false;
 
-  # Virtualization settings
-  virtualisation.docker.enable = true;
+  # # Virtualization settings
+  # virtualisation.docker.enable = true;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
   # setup windowing environment
-  services.xserver = {
-    enable = true;
-    layout = "us";
-    dpi = 220;
-
-    desktopManager = {
-      xterm.enable = false;
-      wallpaper.mode = "fill";
-    };
-
-    displayManager = {
-      defaultSession = "hyprland";
-      lightdm.enable = true;
-
-      # AARCH64: For now, on Apple Silicon, we must manually set the
-      # display resolution. This is a known issue with VMware Fusion.
-      sessionCommands = ''
-        ${pkgs.xorg.xset}/bin/xset r rate 200 40
-      '';
-    };
-
-    windowManager = {
-      awesome.enable = true;
-    };
-  };
+  # services.xserver = {
+  #   enable = true;
+  #   layout = "us";
+  #   dpi = 220;
+  #
+  #   desktopManager = {
+  #     xterm.enable = false;
+  #     wallpaper.mode = "fill";
+  #   };
+  #
+  #   displayManager = {
+  #     defaultSession = "hyprland";
+  #     lightdm.enable = true;
+  #
+  #     # AARCH64: For now, on Apple Silicon, we must manually set the
+  #     # display resolution. This is a known issue with VMware Fusion.
+  #     sessionCommands = ''
+  #       ${pkgs.xorg.xset}/bin/xset r rate 200 40
+  #     '';
+  #   };
+  #
+  #   windowManager = {
+  #     awesome.enable = true;
+  #   };
+  # };
 
   # Enable flatpak. We try not to use this (we prefer to use Nix!) but
   # some software its useful to use this and we also use it for dev tools.
-  services.flatpak.enable = true;
-  xdg.portal.enable = true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  # services.flatpak.enable = true;
+  # xdg.portal.enable = true;
+  # xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.mutableUsers = true;
@@ -116,7 +95,7 @@
     # This is needed for the vmware user tools clipboard to work.
     # You can test if you don't need this by deleting this and seeing
     # if the clipboard sill works.
-    gtkmm3
+    # gtkmm3
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
