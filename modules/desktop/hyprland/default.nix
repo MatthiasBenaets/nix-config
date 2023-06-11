@@ -58,6 +58,7 @@ in
     hyprland = {
       enable = true;
       #nvidiaPatches = with host; if hostName == "work" then true else false;
+	    package = pkgs-unstable.hyprland-no-hidpi;
     };
   };
 

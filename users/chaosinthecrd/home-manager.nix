@@ -21,7 +21,6 @@ in {
         ../../darwin/modules/skhd/skhd.nix
         ../../darwin/modules/kitty/kitty.nix 
         ]) ++ (lib.optionals pkgs.stdenv.isLinux [
-        ../../modules/desktop/hyprland/home.nix
         ]);
 
   home = {
