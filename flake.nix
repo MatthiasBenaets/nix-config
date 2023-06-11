@@ -31,6 +31,13 @@
       user = "chaosinthecrd";
     in                                                                      # Use above variables in ...
     {
+
+      nixpkgs.overlays = [
+      (self: super: {
+        fcitx-engines = nixpkgs.fcitx5;
+      })
+      ];
+
       nixosConfigurations.vm-aarch64-prl = mkVM "vm-aarch64-prl" rec {
         inherit nixpkgs home-manager user hyprland;
         system = "aarch64-linux";
