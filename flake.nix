@@ -7,7 +7,7 @@
 
 
       hyprland = {                                                          # Official Hyprland flake
-        url = "github:vaxerski/Hyprland"; 
+        url = "github:vaxerski/Hyprland/2df0d034bc4a18fafb3524401eeeceaa6b23e753"; 
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
