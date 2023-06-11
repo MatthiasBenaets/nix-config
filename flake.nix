@@ -3,11 +3,11 @@
 
   inputs =                                                                  # All flake references used to build my NixOS setup. These are dependencies.
     {
-      nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";                  # Nix Packages
+      nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";                  # Nix Packages
 
 
       hyprland = {                                                          # Official Hyprland flake
-        url = "github:hyprwm/Hyprland/89dcecba39d4f49b673f2fa976354c91413a4c3f";
+        url = "github:vaxerski/Hyprland"; 
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
