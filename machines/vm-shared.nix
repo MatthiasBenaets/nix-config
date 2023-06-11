@@ -73,7 +73,7 @@
     };
 
     displayManager = {
-      defaultSession = "none+awesome";
+      defaultSession = "hyprland";
       lightdm.enable = true;
 
       # AARCH64: For now, on Apple Silicon, we must manually set the

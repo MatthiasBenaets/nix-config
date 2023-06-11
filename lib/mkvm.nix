@@ -8,7 +8,6 @@ nixpkgs.lib.nixosSystem {
     ../hardware/${name}.nix
     ../machines/${name}.nix
     hyprland.nixosModules.default
-    {programs.hyprland.enable = true;}
     ../users/${user}/nixos.nix
 
     home-manager.nixosModules.home-manager {
