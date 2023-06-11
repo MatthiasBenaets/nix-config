@@ -1,5 +1,11 @@
 name: { nixpkgs, pkgs, lib, home-manager, system, user, hyprland }:
 
+nixpkgs.overlays = [
+(self: super: {
+  fcitx-engines = pkgs.fcitx5;
+})
+];
+
 nixpkgs.lib.nixosSystem {
   inherit system;
 
