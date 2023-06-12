@@ -22,7 +22,9 @@ in {
         ]) ++ (lib.optionals pkgs.stdenv.isLinux [
         ../../modules/desktop/hyprland/home.nix
         ../../modules/desktop/river/home.nix
-        ../../modules/programs/default.nix
+        ../../modules/programs/rofi.nix
+        ../../modules/programs/waybar.nix
+        ../../modules/programs/wofi.nix
         ]);
 
   home = {
