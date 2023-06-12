@@ -81,7 +81,7 @@ vm/copy:
 # run the nixos-rebuild switch command. This does NOT copy files so you
 # have to run vm/copy before.
 vm/switch:
-	sudo NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 nixos-rebuild switch --flake "/etc/nixos/nixos-config#${NIXNAME}" 
+	NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 nixos-rebuild switch --flake "/etc/nixos/nixos-config#${NIXNAME}" 
 
 # Build an ISO image
 iso/nixos.iso:
