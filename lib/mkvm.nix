@@ -14,7 +14,7 @@ nixpkgs.lib.nixosSystem {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.users.${user} = import ../users/chaosinthecrd/home-manager.nix {
-          inherit lib pkgs;
+          inherit lib pkgs user;
         };
     }
 
