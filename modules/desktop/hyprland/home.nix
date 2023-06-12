@@ -38,7 +38,7 @@ let
     '' else if hostName == "work" then ''
       monitor=${toString mainMonitor},1920x1080@60,0x0,1
       monitor=${toString secondMonitor},1920x1200@60,1920x0,1
-      monitor=${toString thirdMonitor},1920x1200@60,34840x0,1
+      monitor=${toString thirdMonitor},1920x1200@60,3840x0,1
     '' else ''
       monitor=${toString mainMonitor},1920x1080@60,0x0,1
     '';

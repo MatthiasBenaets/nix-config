@@ -24,8 +24,6 @@
         autoload -U promptinit; promptinit
         # Hook direnv
         #emulate zsh -c "$(direnv hook zsh)"
-        # Swag
-        ${pkgs.nitch}/bin/nitch
 
         #eval "$(direnv hook zsh)"
       '';

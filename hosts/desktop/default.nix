@@ -25,6 +25,7 @@
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
     [(import ../../modules/programs/games.nix)] ++        # Gaming
     [(import ../../modules/desktop/hyprland/default.nix)] ++ # Window Manager
+    [(import ../../modules/hardware/dslr.nix)] ++         # Temp Fix DSLR Webcam
     (import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC
     (import ../../modules/hardware);                      # Hardware devices
 
@@ -50,10 +51,8 @@
     opengl = {
       enable = true;
       extraPackages = with pkgs; [
-       #intel-media-driver
-        vaapiIntel
-        vaapiVdpau
-        libvdpau-va-gl
+        intel-media-driver
+        #vaapiIntel
       ];
     };
   };
@@ -66,9 +65,9 @@
       x11vnc
       wacomtablet
     ];
-    variables = {
-      LIBVA_DRIVER_NAME = "i965";
-    };
+    #variables = {
+    #  LIBVA_DRIVER_NAME = "i965";
+    #};
   };
 
   services = {

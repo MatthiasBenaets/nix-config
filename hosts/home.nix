@@ -25,7 +25,6 @@
     packages = with pkgs; [
       # Terminal
       btop              # Resource Manager
-      nitch             # Minimal fetch
       ranger            # File Manager
       tldr              # Helper
 
