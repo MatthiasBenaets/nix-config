@@ -41,6 +41,7 @@
 
   # Don't require password for sudo
   security.sudo.wheelNeedsPassword = false;
+  security.sudo.enable = true;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
