@@ -7,7 +7,7 @@ nixpkgs.lib.nixosSystem {
 
     ../hardware/${name}.nix
     ../machines/${name}.nix
-    hyprland.nixosModules.default
+    # hyprland.nixosModules.default
     ../users/${user}/nixos.nix
 
     home-manager.nixosModules.home-manager {

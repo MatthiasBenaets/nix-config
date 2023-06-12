@@ -2,7 +2,7 @@
 
 {
   imports = [
-    (import ../../modules/desktop/hyprland/default.nix)
+    # (import ../../modules/desktop/hyprland/default.nix)
     (import ../../modules/desktop/river/default.nix)
   ];
 

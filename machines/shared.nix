@@ -16,9 +16,6 @@
     ];
   };
 
-  security.rtkit.enable = true;
-  security.polkit.enable = true;
-
   nix = {
     package = pkgs.nix;
     gc = {                                # Garbage collection
