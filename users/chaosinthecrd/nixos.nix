@@ -4,7 +4,6 @@
   imports = [
     (import ../../modules/desktop/hyprland/default.nix)
     (import ../../modules/desktop/river/default.nix)
-    (import ../../modules/programs/default.nix)
   ];
 
   programs.zsh.enable = true;
