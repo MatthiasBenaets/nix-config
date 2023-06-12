@@ -2,15 +2,10 @@
 #  River Home-manager configuration
 #
 
-{ config, lib, pkgs, host, ... }:
+{ config, lib, pkgs, ... }:
 
 let
-  monitor = with host;
-    if hostName == "desktop" then
-      "riverctl spawn ${pkgs.wlr-randr}/bin/wlr-randr --output ${secondMonitor} --mode 1920x1080@60 --pos 0,0 --output ${mainMonitor} --mode 1920x1080@60 --pos 1920,0"
-    else if hostName == "laptop" || hostName == "vm" then
-      "riverctl spawn ${pkgs.wlr-randr}/bin/wlr-randr --output ${mainMonitor} --mode 1920x1080@60 --pos 0,0"
-    else false;
+  monitor = "riverctl spawn ${pkgs.wlr-randr}/bin/wlr-randr --output ${secondMonitor} --mode 1920x1080@60 --pos 0,0 --output ${mainMonitor} --mode 1920x1080@60 --pos 1920,0"
 in
 {
   home.file = {

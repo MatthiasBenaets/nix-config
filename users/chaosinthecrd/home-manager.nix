@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, user, ... }:
 
 let
   isDarwin = pkgs.stdenv.isDarwin;
@@ -22,9 +22,6 @@ in {
         ]) ++ (lib.optionals pkgs.stdenv.isLinux [
         ../../modules/desktop/hyprland/home.nix
         ../../modules/desktop/river/home.nix
-        ../../modules/programs/rofi.nix
-        ../../modules/programs/waybar.nix
-        ../../modules/programs/wofi.nix
         ]);
 
   home = {

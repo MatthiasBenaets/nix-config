@@ -6,7 +6,7 @@
 
 {
 
-  imports = [ ../../programs/waybar.nix ];
+  # imports = [ ../../programs/waybar.nix ];
 
   hardware.opengl.enable = true;
 
