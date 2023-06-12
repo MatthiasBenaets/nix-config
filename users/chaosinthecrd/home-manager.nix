@@ -22,6 +22,7 @@ in {
         ]) ++ (lib.optionals pkgs.stdenv.isLinux [
         ../../modules/desktop/hyprland/home.nix
         ../../modules/desktop/river/home.nix
+        ../../modules/programs/default.nix
         ]);
 
   home = {
