@@ -40,7 +40,7 @@ in
 
   programs = {
     hyprland = {
-      enable = true;
+      enable = false;
       xwayland = {
         enable = true;
         hidpi = false;

@@ -8,7 +8,6 @@ in {
 
   xdg.enable = true;
 
-  # todo: the duplication here sucks but I can't for the life of me figure it out.
   imports = [
         ../../modules/shell/git.nix
         ../../modules/programs/alacritty.nix
@@ -22,6 +21,7 @@ in {
         ../../darwin/modules/kitty/kitty.nix 
         ]) ++ (lib.optionals pkgs.stdenv.isLinux [
         ../../modules/desktop/hyprland/home.nix
+        ../../modules/desktop/river/home.nix
         ]);
 
   home = {
