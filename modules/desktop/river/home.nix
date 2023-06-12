@@ -3,9 +3,8 @@
 #
 
 { config, lib, pkgs, ... }:
-
 let
-  monitor = "riverctl spawn ${pkgs.wlr-randr}/bin/wlr-randr --output ${secondMonitor} --mode 1920x1080@60 --pos 0,0 --output ${mainMonitor} --mode 1920x1080@60 --pos 1920,0"
+  monitor = "riverctl spawn ${pkgs.wlr-randr}/bin/wlr-randr --output ${secondMonitor} --mode 1920x1080@60 --pos 0,0 --output ${mainMonitor} --mode 1920x1080@60 --pos 1920,0";
 in
 {
   home.file = {
