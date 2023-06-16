@@ -106,7 +106,7 @@ let
 
     input {
       kb_layout=us
-      kb_options=caps:ctrl_modifier
+      #kb_options=caps:ctrl_modifier
       follow_mouse=2
       repeat_delay=250
       numlock_by_default=1

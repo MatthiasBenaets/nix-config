@@ -24,7 +24,7 @@
       dslr.url = "github:nixos/nixpkgs/nixos-22.11";                        # Quick fix
 
       home-manager = {                                                      # User Package Management
-        url = "github:nix-community/home-manager";
+        url = "github:nix-community/home-manager/release-23.05";
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
