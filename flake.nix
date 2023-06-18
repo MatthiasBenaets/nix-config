@@ -43,20 +43,9 @@
         lib = pkgs.lib;
       };
 
-      homeConfigurations.fedora-desktop = home-manager.lib.homeManagerConfiguration rec {
-        pkgs = nixpkgs.legacyPackages.${fedoraSystem};
+      homeConfigurations.fedora-desktop = mkHM "fedora-desktop" rec {
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
         lib = pkgs.lib;
-        extraSpecialArgs = { inherit lib pkgs user; };
-        modules = [
-          ./users/chaosinthecrd/home-manager.nix
-          {
-            home = {
-              username = "chaosinthecrd";
-              homeDirectory = "/home/chaosinthecrd";
-              stateVersion = "22.05";
-            };
-          }
-        ];
       };
 
       # # assuming for now that all bare-metal is going to be x86
