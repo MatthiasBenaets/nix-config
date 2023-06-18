@@ -51,8 +51,8 @@
           ./users/chaosinthecrd/home-manager.nix
           {
             home = {
-              username = ${user}
-              homeDirectory = "/home/${user}"
+              username = ${user};
+              homeDirectory = "/home/${user}";
               stateVersion = "22.05";
             };
           }
