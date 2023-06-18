@@ -44,16 +44,15 @@
 
       homeConfigurations.fedora-desktop = home-manager.lib.homeManagerConfiguration rec {
         system = "x86_64-linux";
-        pkgs = import nixpkgs { inherit system; };
+        pkgs = nixpkgs.legacyPackages.${system};
         lib = pkgs.lib;
         extraSpecialArgs = { inherit lib pkgs user; };
         modules = [
           ./users/chaosinthecrd/home-manager.nix
           {
             home = {
-              username = "${user}";
-              homeDirectory = "/home/${user}";
-              packages = [ pkgs.home-manager ];
+              username = ${user}
+              homeDirectory = "/home/${user}"
               stateVersion = "22.05";
             };
           }
