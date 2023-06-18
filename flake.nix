@@ -42,13 +42,6 @@
         lib = pkgs.lib;
       };
 
-      homeConfigurations.fedora-desktop = mkHM "fedora-desktop" rec {
-        inherit home-manager user;
-        system = "x86_64-linux";
-        pkgs = import nixpkgs { inherit system; };
-        lib = pkgs.lib;
-      };
-
       homeConfigurations.fedora-desktop = home-manager.lib.homeManagerConfiguration {
         system = "x86_64-linux";
         pkgs = import nixpkgs { inherit system; };
