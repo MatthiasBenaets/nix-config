@@ -1,4 +1,4 @@
-name: { nixpkgs, pkgs, lib, home-manager, system, user, hyprland }:
+name: { pkgs, lib, home-manager, user }:
 
   home-manager.lib.homeManagerConfiguration {
     inherit pkgs;
@@ -14,4 +14,4 @@ name: { nixpkgs, pkgs, lib, home-manager, system, user, hyprland }:
         };
       }
     ];
-  };
+  }
