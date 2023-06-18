@@ -26,6 +26,7 @@
       mkBM = import ./lib/mkbm.nix;
       mkHM = import ./lib/mkhm.nix;
       user = "chaosinthecrd";
+      fedoraSystem = "x86_64-linux";
     in                                                                      # Use above variables in ...
     {
 
@@ -43,8 +44,7 @@
       };
 
       homeConfigurations.fedora-desktop = home-manager.lib.homeManagerConfiguration rec {
-        system = "x86_64-linux";
-        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs = nixpkgs.legacyPackages.${fedoraSystem};
         lib = pkgs.lib;
         extraSpecialArgs = { inherit lib pkgs user; };
         modules = [
