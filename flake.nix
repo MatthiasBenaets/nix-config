@@ -42,11 +42,20 @@
         lib = pkgs.lib;
       };
 
-      nixosConfigurations.vm-aarch64-prl = mkHM "fedora-desktop" rec {
-        inherit home-manager user;
-        system = "x86_64-linux";
-        pkgs = import nixpkgs { inherit system; };
-        lib = pkgs.lib;
+      homeConfigurations.fedora-desktop =   home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = { inherit lib pkgs user; };
+        modules = [
+          ./users/chaosinthecrd/home-manager.nix
+          {
+            home = {
+              username = "${user}";
+              homeDirectory = "/home/${user}";
+              packages = [ pkgs.home-manager ];
+              stateVersion = "23.05";
+            };
+          }
+        ];
       };
 
       # # assuming for now that all bare-metal is going to be x86
