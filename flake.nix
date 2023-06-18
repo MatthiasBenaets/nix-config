@@ -24,6 +24,7 @@
       mkDarwin = import ./lib/mkdarwin.nix;
       mkVM = import ./lib/mkvm.nix;
       mkBM = import ./lib/mkbm.nix;
+      mkHM = import ./lib/mkhm.nix;
       user = "chaosinthecrd";
     in                                                                      # Use above variables in ...
     {
@@ -37,6 +38,13 @@
       nixosConfigurations.vm-aarch64-prl = mkVM "vm-aarch64-prl" rec {
         inherit nixpkgs home-manager user hyprland;
         system = "aarch64-linux";
+        pkgs = import nixpkgs { inherit system; };
+        lib = pkgs.lib;
+      };
+
+      nixosConfigurations.vm-aarch64-prl = mkHM "fedora-desktop" rec {
+        inherit home-manager user;
+        system = "x86_64-linux";
         pkgs = import nixpkgs { inherit system; };
         lib = pkgs.lib;
       };
