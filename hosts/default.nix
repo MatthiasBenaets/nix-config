@@ -105,7 +105,7 @@ in
   work = lib.nixosSystem {                                  # Work profile
     inherit system;
     specialArgs = {
-      inherit unstable inputs user location;
+      inherit unstable inputs user location hyprland;
       host = {
         hostName = "work";
         mainMonitor = "eDP-1";

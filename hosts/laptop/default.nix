@@ -35,7 +35,6 @@
       };
       grub = {                              # Most of grub is set up for dual boot
         enable = true;
-        version = 2;
         devices = [ "nodev" ];
         efiSupport = true;
         useOSProber = true;                 # Find all boot options
