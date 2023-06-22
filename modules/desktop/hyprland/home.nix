@@ -136,7 +136,7 @@ let
     bind=SUPER,E,exec,${pkgs.pcmanfm}/bin/pcmanfm
     bind=SUPER,H,togglefloating,
     #bind=SUPER,Space,exec,${pkgs.rofi}/bin/rofi -show drun
-    bind=SUPER,Space,exec,${pkgs.wofi}/bin/wofi --show drun
+    bind=SUPER,Space,exec, pkill wofi || ${pkgs.wofi}/bin/wofi --show drun
     bind=SUPER,P,pseudo,
     bind=SUPER,F,fullscreen,
     bind=SUPER,R,forcerendererreload
@@ -189,6 +189,7 @@ let
     bind=,XF86AudioLowerVolume,exec,${pkgs.pamixer}/bin/pamixer -d 10
     bind=,XF86AudioRaiseVolume,exec,${pkgs.pamixer}/bin/pamixer -i 10
     bind=,XF86AudioMute,exec,${pkgs.pamixer}/bin/pamixer -t
+    bind=SUPER_L,c,exec,${pkgs.pamixer}/bin/pamixer --default-source -t
     bind=,XF86AudioMicMute,exec,${pkgs.pamixer}/bin/pamixer --default-source -t
     bind=,XF86MonBrightnessDown,exec,${pkgs.light}/bin/light -U 10
     bind=,XF86MonBrightnessUP,exec,${pkgs.light}/bin/light -A 10
