@@ -40,8 +40,8 @@ in
       inherit inputs unstable system user location fix hyprland;
       host = {
         hostName = "desktop";
-        mainMonitor = "HDMI-A-3";
-        secondMonitor = "DP-1";
+        mainMonitor = "HDMI-A-2";
+        secondMonitor = "DP-3";
       };
     };                                                      # Pass flake variable
     modules = [                                             # Modules that are used.
@@ -56,9 +56,9 @@ in
         home-manager.extraSpecialArgs = {
           inherit unstable user fix doom-emacs;
           host = {
-            hostName = "desktop";     #For Xorg iGPU  | Videocard 
-            mainMonitor = "HDMI-A-3"; #HDMIA3         | HDMI-A-1
-            secondMonitor = "DP-1";   #DP1            | DisplayPort-1
+            hostName = "desktop";     #For Xorg iGPU  | Videocard     | Hyprland iGPU
+            mainMonitor = "HDMI-A-2"; #HDMIA3         | HDMI-A-1      | HDMI-A-3
+            secondMonitor = "DP-3";   #DP1            | DisplayPort-1 | DP-1
           };
         };                                                  # Pass flake variable
         home-manager.users.${user} = {

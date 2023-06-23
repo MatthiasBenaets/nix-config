@@ -31,7 +31,7 @@
 
   boot = {                                      # Boot options
     kernelPackages = pkgs.linuxPackages_latest;
-    #initrd.kernelModules = [ "amdgpu" ];       # Video drivers
+    initrd.kernelModules = [ "amdgpu" ];        # Video drivers
 
     loader = {                                  # For legacy boot:
       systemd-boot = {
@@ -51,9 +51,13 @@
     opengl = {
       enable = true;
       extraPackages = with pkgs; [
-        intel-media-driver
+        #intel-media-driver                     # iGPU
         #vaapiIntel
+        rocm-opencl-icd                         # AMD
+        rocm-opencl-runtime
       ];
+      driSupport = true;
+      driSupport32Bit = true;
     };
   };
 
@@ -64,6 +68,7 @@
       simple-scan
       x11vnc
       wacomtablet
+      clinfo
     ];
     #variables = {
     #  LIBVA_DRIVER_NAME = "i965";
