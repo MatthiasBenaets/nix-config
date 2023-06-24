@@ -63,6 +63,7 @@
         #disk,
         #backlight,
         #battery,
+        #custom-hid,
         #custom-ds4,
         #tray {
           color: #999999;
@@ -123,7 +124,7 @@
 
           modules-right =
             if hostName == "desktop" then
-              [ "custom/ds4" "custom/pad" "network" "cpu" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" ]
+              [ "custom/ds4" "custom/hid" "custom/pad" "network" "cpu" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" ]
             else
               [ "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/pad" "clock" "tray" ];
 
@@ -251,6 +252,11 @@
             on-click = "$HOME/.config/waybar/script/switch.sh";
             tooltip = false;
           };
+          "custom/hid" = {
+            format = "{}";
+            exec = "$HOME/.config/waybar/script/hid.sh";
+            interval = 60;
+          };
           "custom/ds4" = {
             format = "{}";
             exec = "$HOME/.config/waybar/script/ds4.sh";
@@ -274,7 +280,7 @@
 
           modules-right =
             if hostName == "desktop" then
-              [ "custom/ds4" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock"]
+              [ "custom/ds4" "custom/hid" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock"]
             else
               [ "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/pad" "clock" ];
 
@@ -376,6 +382,11 @@
             on-click = "$HOME/.config/waybar/script/switch.sh";
             tooltip = false;
           };
+          "custom/hid" = {
+            format = "{}";
+            exec = "$HOME/.config/waybar/script/hid.sh";
+            interval = 60;
+          };
           "custom/ds4" = {
             format = "{}";
             exec = "$HOME/.config/waybar/script/ds4.sh";
@@ -433,6 +444,23 @@
           elif [[ -f $FILE2 ]] then
             DS4BATT=$(cat $FILE2)
             printf "<span font='13'>󰊴</span> $DS4BATT%%\n"
+          else
+            printf "\n"
+          fi
+
+          exit 0
+        '';
+        executable = true;
+      };
+      ".config/waybar/script/hid.sh" = {              # Custom script: Dualshock battery indicator
+        text = ''
+          #!/bin/sh
+
+          FILE=/sys/class/power_supply/hidpp_battery_0/capacity
+
+          if [[ -f $FILE ]] then
+            HIDBATT=$(cat $FILE)
+            printf "<span font='13'> 󰍽</span> $HIDBATT%%\n"
           else
             printf "\n"
           fi
