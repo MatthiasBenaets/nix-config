@@ -63,7 +63,8 @@
         #disk,
         #backlight,
         #battery,
-        #custom-hid,
+        #custom-mouse,
+        #custom-kb,
         #custom-ds4,
         #tray {
           color: #999999;
@@ -124,7 +125,7 @@
 
           modules-right =
             if hostName == "desktop" then
-              [ "custom/ds4" "custom/hid" "custom/pad" "network" "cpu" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" ]
+              [ "custom/ds4" "custom/mouse" "custom/kb" "custom/pad" "network" "cpu" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" ]
             else
               [ "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/pad" "clock" "tray" ];
 
@@ -252,9 +253,14 @@
             on-click = "$HOME/.config/waybar/script/switch.sh";
             tooltip = false;
           };
-          "custom/hid" = {
+          "custom/mouse" = {
             format = "{}";
-            exec = "$HOME/.config/waybar/script/hid.sh";
+            exec = "$HOME/.config/waybar/script/mouse.sh";
+            interval = 60;
+          };
+          "custom/kb" = {
+            format = "{}";
+            exec = "$HOME/.config/waybar/script/kb.sh";
             interval = 60;
           };
           "custom/ds4" = {
@@ -280,7 +286,7 @@
 
           modules-right =
             if hostName == "desktop" then
-              [ "custom/ds4" "custom/hid" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock"]
+              [ "custom/ds4" "custom/mouse" "custom/kb" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock"]
             else
               [ "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/pad" "clock" ];
 
@@ -382,9 +388,14 @@
             on-click = "$HOME/.config/waybar/script/switch.sh";
             tooltip = false;
           };
-          "custom/hid" = {
+          "custom/mouse" = {
             format = "{}";
-            exec = "$HOME/.config/waybar/script/hid.sh";
+            exec = "$HOME/.config/waybar/script/mouse.sh";
+            interval = 60;
+          };
+          "custom/kb" = {
+            format = "{}";
+            exec = "$HOME/.config/waybar/script/kb.sh";
             interval = 60;
           };
           "custom/ds4" = {
@@ -431,19 +442,23 @@
         '';
         executable = true;
       };
-      ".config/waybar/script/ds4.sh" = {              # Custom script: Dualshock battery indicator
+      ".config/waybar/script/mouse.sh" = {              # Custom script: Mouse battery indicator
         text = ''
           #!/bin/sh
 
-          FILE=/sys/class/power_supply/sony_controller_battery_e8:47:3a:05:c0:2b/capacity
-          FILE2=/sys/class/power_supply/ps-controller-battery-e8:47:3a:05:c0:2b/capacity
+          for cap in /sys/class/power_supply/hidpp_battery_*/capacity; do
+            BATT=$(cat "$cap")
+          done
+          for stat in /sys/class/power_supply/hidpp_battery_*/status; do
+            STAT=$(cat "$stat")
+          done
 
-          if [[ -f $FILE ]] then
-            DS4BATT=$(cat $FILE)
-            printf "<span font='13'>󰊴</span> $DS4BATT%%\n"
-          elif [[ -f $FILE2 ]] then
-            DS4BATT=$(cat $FILE2)
-            printf "<span font='13'>󰊴</span> $DS4BATT%%\n"
+          if [[ $"STAT" = "Charging" ]] then
+            printf "<span font='13'> 󰍽</span><span font='10'></span> $BATT%%\n"
+          elif [[ "$STAT" = "Full" ]] then
+            printf "<span font='13'> 󰍽</span><span font='10'></span> Full\n"
+          elif [[ "$STAT" = "Discharging" ]] then
+            printf "<span font='13'> 󰍽</span> $BATT%%\n"
           else
             printf "\n"
           fi
@@ -452,15 +467,48 @@
         '';
         executable = true;
       };
-      ".config/waybar/script/hid.sh" = {              # Custom script: Dualshock battery indicator
+      ".config/waybar/script/kb.sh" = {              # Custom script: Keyboard battery indicator
         text = ''
           #!/bin/sh
 
-          FILE=/sys/class/power_supply/hidpp_battery_0/capacity
+          for cap in /sys/class/power_supply/hid-dc:2c:26:36:79:9b-battery/capacity; do
+            BATT=$(cat "$cap")
+          done
+          for stat in /sys/class/power_supply/hid-dc:2c:26:36:79:9b-battery/status; do
+            STAT=$(cat "$stat")
+          done
 
-          if [[ -f $FILE ]] then
-            HIDBATT=$(cat $FILE)
-            printf "<span font='13'> 󰍽</span> $HIDBATT%%\n"
+          if [[ "$STAT" == "Charging" ]] then
+            printf "<span font='13'> 󰌌</span><span font='10'></span> $BATT%%\n"
+          elif [[ "$STAT" == "Full" ]] then
+            printf "<span font='13'> 󰌌</span><span font='10'></span> Full\n"
+          elif [[ "$STAT" = "Discharging" ]] then
+            printf "<span font='13'> 󰌌</span> $BATT%%\n"
+          else
+            printf "\n"
+          fi
+
+          exit 0
+        '';
+        executable = true;
+      };
+      ".config/waybar/script/ds4.sh" = {              # Custom script: Dualshock battery indicator
+        text = ''
+          #!/bin/sh
+
+          for cap in /sys/class/power_supply/*e8:47:3a:05:c0:2b/capacity; do
+            BATT=$(cat "$cap")
+          done
+          for stat in /sys/class/power_supply/*e8:47:3a:05:c0:2b/status; do
+            STAT=$(cat "$stat")
+          done
+
+          if [[ "$STAT" == "Charging" ]] then
+            printf "<span font='13'> 󰊴</span><span font='10'></span> $BATT%%\n"
+          elif [[ "$STAT" == "Full" ]] then
+            printf "<span font='13'> 󰊴</span><span font='10'></span> Full\n"
+          elif [[ "$STAT" = "Discharging" ]] then
+            printf "<span font='13'> 󰊴</span> $BATT%%\n"
           else
             printf "\n"
           fi
