@@ -453,7 +453,7 @@
             STAT=$(cat "$stat")
           done
 
-          if [[ $"STAT" = "Charging" ]] then
+          if [[ "$STAT" = "Charging" ]] then
             printf "<span font='13'> 󰍽</span><span font='10'></span> $BATT%%\n"
           elif [[ "$STAT" = "Full" ]] then
             printf "<span font='13'> 󰍽</span><span font='10'></span> Full\n"

@@ -53,8 +53,12 @@
       extraPackages = with pkgs; [
         #intel-media-driver                     # iGPU
         #vaapiIntel
-        rocm-opencl-icd                         # AMD
-        rocm-opencl-runtime
+      #  rocm-opencl-icd                         # AMD
+      #  rocm-opencl-runtime
+      amdvlk
+      ];
+      extraPackages32 = with pkgs; [
+        driversi686Linux.amdvlk
       ];
       driSupport = true;
       driSupport32Bit = true;

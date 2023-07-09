@@ -58,6 +58,11 @@ let
       workspace=${toString secondMonitor},5
       workspace=${toString secondMonitor},6
       workspace=${toString thirdMonitor},7
+
+      bindl=,switch:off:Lid Switch,exec,hyprctl keyword monitor "${toString mainMonitor}, 1920x1080, 1"
+      bindl=,switch:off:Lid Switch,exec,${pkgs.waybar}/bin/waybar
+      bindl=,switch:off:Lid Switch,exec,${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
+      bindl=,switch:on:Lid Switch,exec,hyprctl keyword monitor "${toString mainMonitor}, disable"
     '' else "";
   execute = with host;
     if hostName == "desktop" then ''

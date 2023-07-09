@@ -117,6 +117,7 @@
       #hugo             # Static Website Builder
       #lutris           # Game Launcher
       #mkvtoolnix       # Matroska Tool
+      #nvtop            # Videocard Top
       #plex-media-player# Media Player
       #prismlauncher    # MC Launcher
       #steam            # Games

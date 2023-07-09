@@ -95,15 +95,6 @@
       in ["${automount_opts},mfsymlinks,uid=1000,gid=100,credentials=/home/matthias/smb"];
     };
 
-  fileSystems."/hdd" =
-    { #proxmox smb storage
-      device = "//192.168.0.2/extra";
-      fsType = "cifs";
-      options = let
-        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-      in ["${automount_opts},mfsymlinks,uid=1000,gid=100,credentials=/home/matthias/smb2"];
-    };
-
   #swapDevices =
   #  [
   #    { #device = "/dev/disk/by-uuid/7d0c3f66-c6eb-413c-956f-dfdd8ceb0cae";
