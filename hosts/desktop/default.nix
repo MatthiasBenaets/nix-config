@@ -24,6 +24,7 @@
   imports =                                               # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
     [(import ../../modules/programs/games.nix)] ++        # Gaming
+    [(import ../../modules/programs/flatpak.nix)] ++        # Gaming
     [(import ../../modules/desktop/hyprland/default.nix)] ++ # Window Manager
     [(import ../../modules/hardware/dslr.nix)] ++         # Temp Fix DSLR Webcam
     (import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC

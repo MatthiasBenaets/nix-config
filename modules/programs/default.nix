@@ -5,7 +5,7 @@
 #   ├─ ./hosts
 #   │   └─ home.nix
 #   └─ ./modules
-#       └─ ./apps
+#       └─ ./programs
 #           └─ default.nix *
 #               └─ ...
 #
@@ -18,4 +18,4 @@
   #./games.nix
 ]
 # Waybar.nix is pulled from modules/desktop/..
-# Games.nix is pulled from desktop/default.nix
+# Games.nix and flatpak.nix are pulled from desktop/default.nix
