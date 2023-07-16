@@ -31,7 +31,7 @@
         for remove in ''${installed[*]}; do
           if [[ ! " ''${flatpaks[*]} " =~ " ''${remove} " ]]; then
             ${pkgs.flatpak}/bin/flatpak uninstall -y $remove
-            ${pkgs.flatpak}/bin/flatpak uninstall --unused
+            ${pkgs.flatpak}/bin/flatpak uninstall -y --unused
           fi
         done
       '';
