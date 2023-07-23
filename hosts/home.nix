@@ -32,7 +32,7 @@
       feh               # Image Viewer
       mpv               # Media Player
       pavucontrol       # Audio Control
-      plex-media-player # Media Player
+      #plex-media-player # Media Player
       vlc               # Media Player
       stremio           # Media Streamer
 

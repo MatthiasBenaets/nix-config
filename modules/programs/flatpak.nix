@@ -15,9 +15,10 @@
           "com.github.tchx84.Flatseal"
           "com.moonlight_stream.Moonlight"
           "com.obsproject.Studio"
-          "com.prusa3d.PrusaSlicer"
           "com.ultimaker.cura"
         )
+
+        ${pkgs.flatpak}/bin/flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
         for package in ''${flatpaks[*]}; do
           check=$(${pkgs.flatpak}/bin/flatpak list --app | ${pkgs.gnugrep}/bin/grep $package)

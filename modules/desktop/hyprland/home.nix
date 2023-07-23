@@ -32,7 +32,7 @@ let
       }
     '' else "";
   workspaces = with host;
-    if hostName == "desktop" then ''
+    if hostName == "desktop" || hostName == "beelink" then ''
       monitor=${toString mainMonitor},1920x1080@60,1920x0,1
       monitor=${toString secondMonitor},1920x1080@60,0x0,1
     '' else if hostName == "work" then ''
@@ -43,7 +43,7 @@ let
       monitor=${toString mainMonitor},1920x1080@60,0x0,1
     '';
   monitors = with host;
-    if hostName == "desktop" then ''
+    if hostName == "desktop" || hostName == "beelink" then ''
       workspace=${toString mainMonitor},1
       workspace=${toString mainMonitor},2
       workspace=${toString mainMonitor},3
@@ -65,7 +65,7 @@ let
       bindl=,switch:on:Lid Switch,exec,hyprctl keyword monitor "${toString mainMonitor}, disable"
     '' else "";
   execute = with host;
-    if hostName == "desktop" then ''
+    if hostName == "desktop" || hostName == "beelink" then ''
       #exec-once=${pkgs.mpvpaper}/bin/mpvpaper -sf -v -o "--loop --panscan=1" '*' $HOME/.config/wall.mp4  # Moving wallpaper (small performance hit)
       exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
     '' else if hostName == "work" then ''

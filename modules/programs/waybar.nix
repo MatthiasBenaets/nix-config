@@ -131,7 +131,7 @@ in
             else [];
 
           modules-right =
-            if hostName == "desktop" then
+            if hostName == "desktop" || hostName == "beelink" then
               [ "custom/ds4" "custom/mouse" "custom/kb" "custom/pad" "network" "cpu" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" ]
             else
               [ "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/pad" "clock" "tray" ];
@@ -279,11 +279,11 @@ in
             icon-size = 13;
           };
         };
-        Sec = if hostName == "desktop" || hostName == "work" then {
+        Sec = if hostName == "desktop" || hostName == "work" || hostName == "beelink" then {
           layer = "top";
           position = "top";
           height = 16;
-          output = if hostName == "desktop" then [
+          output = if hostName == "desktop" || hostName == "beelink" then [
             "${secondMonitor}"
           ] else [
             "${secondMonitor}"
@@ -292,7 +292,7 @@ in
           modules-left = [ "custom/menu" "wlr/workspaces" ];
 
           modules-right =
-            if hostName == "desktop" then
+            if hostName == "desktop" || hostName == "beelink" then
               [ "custom/ds4" "custom/mouse" "custom/kb" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock"]
             else
               [ "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/pad" "clock" ];
