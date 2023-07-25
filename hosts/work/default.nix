@@ -23,7 +23,7 @@
 {
   imports =                                               # For now, if applying to other system, swap files
     [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
-    [(import ../../modules/desktop/gnome/default.nix)] ++ # Window Manager
+    [(import ../../modules/desktop/hyprland/default.nix)] ++ # Window Manager
     (import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC
     (import ../../modules/hardware) ++                    # Hardware devices
     (import ../../modules/hardware/work);                 # Hardware specific quirks
@@ -58,15 +58,15 @@
       enable = true;
       extraBackends = [ pkgs.sane-airscan ];
     };
-    opengl = {
-      enable = true;
-      extraPackages = with pkgs; [
-        # intel-media-driver
-        vaapiIntel
-        vaapiVdpau
-        libvdpau-va-gl
-      ];
-    };
+    #opengl = {
+    #  enable = true;
+    #  extraPackages = with pkgs; [
+    #    # intel-media-driver
+    #    vaapiIntel
+    #    vaapiVdpau
+    #    libvdpau-va-gl
+    #  ];
+    #};
   };
 
   environment = {                               # Packages installed system wide

@@ -59,10 +59,7 @@ let
       workspace=${toString secondMonitor},6
       workspace=${toString thirdMonitor},7
 
-      bindl=,switch:off:Lid Switch,exec,hyprctl keyword monitor "${toString mainMonitor}, 1920x1080, 1"
-      bindl=,switch:off:Lid Switch,exec,${pkgs.waybar}/bin/waybar
-      bindl=,switch:off:Lid Switch,exec,${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
-      bindl=,switch:on:Lid Switch,exec,hyprctl keyword monitor "${toString mainMonitor}, disable"
+      bindl=,switch:Lid Switch,exec,$HOME/.config/hypr/script/clamshell.sh
     '' else "";
   execute = with host;
     if hostName == "desktop" || hostName == "beelink" then ''
@@ -253,5 +250,25 @@ in
     systemdTarget = "xdg-desktop-portal-hyprland.service";
   } else {
     enable = false;
+  };
+
+  home.file = {
+    ".config/hypr/script/clamshell.sh" = {
+      text = ''
+        #!/bin/sh
+
+        if grep open /proc/acpi/button/lid/LID/state; then
+          hyprctl keyword monitor "eDP-1, 1920x1080, 0x0, 1"
+        else
+          if [[ `hyprctl monitors | grep "Monitor" | wc -l` != 1 ]]; then
+            hyprctl keyword monitor "eDP-1, disable"
+          else
+            ${pkgs.swaylock}/bin/swaylock -f
+            systemctl sleep
+          fi
+        fi
+      '';
+      executable = true;
+    };
   };
 }

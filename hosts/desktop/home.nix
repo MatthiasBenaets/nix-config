@@ -47,8 +47,4 @@
       #shotcut          # Video Editor
     ];
   };
-
-  services = {                            # Applets
-    blueman-applet.enable = true;         # Bluetooth
-  };
 }

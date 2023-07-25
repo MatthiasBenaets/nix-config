@@ -89,4 +89,11 @@ in
       waybar = hyprland.packages.${system}.waybar-hyprland;
     })
   ];
+
+  systemd.sleep.extraConfig = ''
+    AllowSuspend=yes
+    AllowHibernation=no
+    AllowSuspendThenHibernate=no
+    AllowHybridSleep=yes
+  '';                                             # Required for clamshell mode (see script bindl lid switch and script in home.nix)
 }

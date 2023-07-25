@@ -27,7 +27,7 @@
     [(import ../../modules/programs/flatpak.nix)] ++        # Flatpak
     [(import ../../modules/desktop/hyprland/default.nix)] ++ # Window Manager
     [(import ../../modules/hardware/dslr.nix)] ++         # Temp Fix DSLR Webcam
-    #(import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC
+    (import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC
     (import ../../modules/hardware);                      # Hardware devices
 
   boot = {                                      # Boot options

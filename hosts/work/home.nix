@@ -16,7 +16,7 @@
 {
   imports =
     [
-      ../../modules/desktop/gnome/home.nix  # Window Manager
+      ../../modules/desktop/hyprland/home.nix  # Window Manager
     ];
 
   home = {                                # Specific packages for desktop
@@ -33,7 +33,6 @@
   };
 
   services = {                            # Applets
-    blueman-applet.enable = true;         # Bluetooth
     cbatticon = {
       enable = true;
       criticalLevelPercent = 10;
