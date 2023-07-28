@@ -135,7 +135,7 @@ let
     bind=SUPER,Q,killactive,
     bind=SUPER,Escape,exit,
     bind=SUPER,L,exec,${pkgs.swaylock}/bin/swaylock
-    bind=SUPER,E,exec,${pkgs.pcmanfm}/bin/pcmanfm
+    bind=SUPER,E,exec,${pkgs.xfce.thunar}/bin/thunar
     bind=SUPER,H,togglefloating,
     #bind=SUPER,Space,exec,${pkgs.rofi}/bin/rofi -show drun
     bind=SUPER,Space,exec, pkill wofi || ${pkgs.wofi}/bin/wofi --show drun

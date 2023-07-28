@@ -45,7 +45,6 @@
       # File Management
       gnome.file-roller # Archive Manager
       okular            # PDF Viewer
-      pcmanfm           # File Manager
       p7zip             # Zip Encryption
       rsync             # Syncer - $ rsync -r dir1/ dir2/
       unzip             # Zip Files
@@ -61,6 +60,7 @@
       #usbutils         # USB Utility Info
       #wacomtablet      # Wacom Tablet
       #wget             # Downloader
+      #thunar           # File Manager
       #zsh              # Shell
       #
       # General home-manager

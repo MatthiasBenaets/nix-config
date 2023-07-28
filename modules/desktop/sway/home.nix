@@ -104,7 +104,7 @@
         "${modifier}+Escape" = "exec swaymsg exit";     # Exit Sway
         "${modifier}+Return" = "exec ${terminal}";      # Open terminal
         "${modifier}+space" = "exec ${menu}";           # Open menu
-        "${modifier}+e" = "exec ${pkgs.pcmanfm}/bin/pcmanfm"; # File Manager
+        "${modifier}+e" = "exec ${pkgs.xfce.thunar}/bin/thunar"; # File Manager
         "${modifier}+l" = "exec ${pkgs.swaylock-fancy}/bin/swaylock-fancy"; # Lock Screen
 
         "${modifier}+r" = "reload";                     # Reload environment
@@ -165,7 +165,7 @@
       set $opacity 0.8
       for_window [class=".*"] opacity 0.95
       for_window [app_id=".*"] opacity 0.95
-      for_window [app_id="pcmanfm"] opacity 0.95, floating enable
+      for_window [app_id="thunar"] opacity 0.95, floating enable
       for_window [app_id="Alacritty"] opacity $opacity
       for_window [title="drun"] opacity $opacity
       for_window [class="Emacs"] opacity $opacity
