@@ -8,7 +8,7 @@ let
   sinkBuiltIn="Built-in Audio Analog Stereo";
   sinkVideocard=''Ellesmere HDMI Audio \[Radeon RX 470\/480 \/ 570\/580\/590\] Digital Stereo \(HDMI 3\)'';
   sinkBluetooth="S10 Bluetooth Speaker";
-  headset=sinkVideocard; # Change me
+  headset=sinkBuiltIn; # Change me
   speaker=sinkBluetooth;
 in
 {

@@ -55,7 +55,7 @@
 
       hyprland = {                                                          # Official Hyprland flake
         url = "github:vaxerski/Hyprland";                                   # Add "hyprland.nixosModules.default" to the host modules
-        inputs.nixpkgs.follows = "nixpkgs";
+        inputs.nixpkgs.follows = "nixpkgs-unstable";
       };
 
       plasma-manager = {                                                    # KDE Plasma user settings
