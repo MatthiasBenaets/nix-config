@@ -76,6 +76,7 @@ let
   hyprlandConf = with host; ''
     ${workspaces}
     ${monitors}
+    monitor=,highres,auto,auto
 
     general {
       #main_mod=SUPER
@@ -93,7 +94,9 @@ let
       active_opacity=0.93
       inactive_opacity=0.93
       fullscreen_opacity=1
-      blur=true
+      blur {
+        enabled=true
+      }
       drop_shadow=false
     }
 

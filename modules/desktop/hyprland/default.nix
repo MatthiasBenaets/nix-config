@@ -75,13 +75,14 @@ in
   programs = {
     hyprland = {
       enable = true;
+      package = hyprland.packages.${pkgs.system}.hyprland;
       #nvidiaPatches = with host; if hostName == "work" then true else false;
     };
   };
 
   xdg.portal = {                                  # Required for flatpak with window managers and for file browsing
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ]; #xdg-desktop-portal-hyprland pulled in by flake automatically
   };
 
   nixpkgs.overlays = [    # Waybar with experimental features
@@ -96,4 +97,9 @@ in
     AllowSuspendThenHibernate=no
     AllowHybridSleep=yes
   '';                                             # Required for clamshell mode (see script bindl lid switch and script in home.nix)
+
+  nix.settings = {
+    substituters = ["https://hyprland.cachix.org"];	# Install cached version so rebuild should not be required
+    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+  };
 }

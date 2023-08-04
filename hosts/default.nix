@@ -46,7 +46,6 @@ in
     };                                                      # Pass flake variable
     modules = [                                             # Modules that are used.
       nur.nixosModules.nur
-      hyprland.nixosModules.default
       ./beelink
       ./configuration.nix
 
@@ -81,7 +80,6 @@ in
       };
     };
     modules = [
-      hyprland.nixosModules.default
       ./laptop
       ./configuration.nix
 
@@ -114,7 +112,6 @@ in
       };
     };
     modules = [
-      hyprland.nixosModules.default
       ./work
       ./configuration.nix
 
@@ -179,7 +176,6 @@ in
     };                                                      # Pass flake variable
     modules = [                                             # Modules that are used.
       nur.nixosModules.nur
-      hyprland.nixosModules.default
       ./desktop
       ./configuration.nix
 

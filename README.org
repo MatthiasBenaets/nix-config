@@ -27,7 +27,7 @@
 | *Bar*           | Waybar           | Dock-to-Panel          | Polybar          | /         |
 | *Hotkeys*       | Hyprland         | /                      | Sxhkd            | Skhd      |
 | *Launcher*      | Wofi             | Gnome                  | Rofi             | /         |
-| *GTK Theme*     | Dracula          | Dracula / Adwaita      | Dracula          | /         |
+| *GTK Theme*     | Catppuccin       | Catppuccin / Adwaita   | Catppuccin       | /         |
 | *Notifications* | Dunst            | Gnome                  | Dunst            | /         |
 | *Terminal*      | Alacritty        | Alacritty              | Alacritty        | Alacritty |
 | *Used by host*  | Desktop          | Work                   | Laptop & VM      | Macbook   |
