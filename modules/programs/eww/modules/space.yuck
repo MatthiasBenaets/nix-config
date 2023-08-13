@@ -1,0 +1,5 @@
+(defwidget space []
+  (box
+       :class "space"
+       :orientation "h"
+       :space-evenly "true"))

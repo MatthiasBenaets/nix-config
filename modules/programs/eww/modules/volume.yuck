@@ -1,0 +1,15 @@
+(defpoll volume :interval "100ms" "amixer get Master | tail -n1 | awk -F ' ' '{print $5}' | tr -d '[%]'")
+(defpoll volume_level :interval "100ms" "$HOME/.config/eww/scripts/audio")
+(defpoll volume_icon :interval "100ms" "$HOME/.config/eww/scripts/sink")
+
+(defwidget volume [monitor]
+  (eventbox
+    (box :space-evenly "false"
+         :orientation "h"
+         :spacing "3"
+         (metric :label "${volume_level}%"
+                 :value volume
+                 :onchange "amixer sset Master {}%")
+      (eventbox :onclick "${EWW_CMD} open --toggle audio_menu --screen ${monitor}"
+                :onmiddleclick "exec pavucontrol &"
+                "${volume_icon}"))))

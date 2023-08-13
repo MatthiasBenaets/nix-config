@@ -1,0 +1,11 @@
+(defpoll mouse :interval "15s" "$HOME/.config/eww/scripts/mouse")
+(defpoll keyboard :interval "15s" "$HOME/.config/eww/scripts/keyboard")
+
+(defwidget peripheral []
+  (box :orientation "h"
+       :space-evenly "true"
+    (label :halign "center"
+           :text "${mouse}")
+    (label :halign "center"
+           :text "${keyboard}"
+           :style "padding-right:40px;")))

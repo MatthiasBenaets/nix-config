@@ -1,0 +1,32 @@
+.parent {
+  background-color: rgba($color: #000000, $alpha: 0.9);
+  border-radius: 8px;
+  padding: 8px;
+}
+.header {
+  font-weight: bold;
+  font-size: large;
+}
+.title {
+  margin-right: 50px;
+  margin-left: 1px;
+}
+.button {
+  margin: 2px;
+  background-color: #333;
+  border-radius: 8px;
+  padding: 4px 12px 4px 12px;
+  font-size: 25px;
+}
+.button:hover {
+  background-color: #222;
+}
+.button:active {
+  background-color: #111;
+}
+.exit:hover {
+  color: #f66;
+}
+.exit, .button {
+  transition: all 0.2s ease;
+}

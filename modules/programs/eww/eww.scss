@@ -1,0 +1,36 @@
+@mixin rounding {
+  border-radius: 16px;
+}
+
+@mixin window {
+  background-color: black;
+  background-position: center;
+  background-size: cover;
+  border: 1px solid rgba(0, 0, 0, .3);
+  color: white;
+  margin: 5px 5px 10px;
+  @include rounding;
+}
+
+* {
+  all: unset;
+}
+
+@import 'css/menu';
+@import 'css/workspaces';
+@import 'css/sink';
+@import 'css/system';
+@import 'css/volume';
+@import 'css/calendar';
+
+.bar {
+  color: white;
+}
+
+.tooltip {
+  background-color: black;
+}
+
+.space {
+  margin: 0px 10px 0px 10px;
+}

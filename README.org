@@ -24,7 +24,7 @@
 | *DM*            | TTY1 Login       | GDM                    | LightDM          | /         |
 | *WM/DE*         | Hyprland         | Gnome                  | Bspwm            | Yabai     |
 | *Compositor*    | Hyprland         | Mutter                 | Picom (jonaburg) | /         |
-| *Bar*           | Waybar           | Dock-to-Panel          | Polybar          | /         |
+| *Bar*           | Eww + Waybar     | Dock-to-Panel          | Polybar          | /         |
 | *Hotkeys*       | Hyprland         | /                      | Sxhkd            | Skhd      |
 | *Launcher*      | Wofi             | Gnome                  | Rofi             | /         |
 | *GTK Theme*     | Catppuccin       | Catppuccin / Adwaita   | Catppuccin       | /         |

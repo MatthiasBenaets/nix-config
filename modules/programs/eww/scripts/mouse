@@ -1,0 +1,15 @@
+#!/bin/sh
+
+for cap in /sys/class/power_supply/hidpp_battery_*/capacity; do
+  BATT=$(cat "$cap")
+done
+for stat in /sys/class/power_supply/hidpp_battery_*/status; do
+  STAT=$(cat "$stat")
+done
+
+case "$STAT" in
+  "Charging" ) printf "󰍽  $BATT%%";;
+  "Full" ) printf "󰍽  Full";;
+  "Discharging" ) printf "󰍽 $BATT%%";;
+  * ) echo "";
+esac

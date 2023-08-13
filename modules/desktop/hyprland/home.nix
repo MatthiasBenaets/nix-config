@@ -11,7 +11,7 @@
 #               └─ home.nix *
 #
 
-{ config, lib, pkgs, host, ... }:
+{ config, lib, pkgs, unstable, host, ... }:
 
 let
   touchpad = with host;
@@ -48,8 +48,10 @@ let
       workspace=${toString mainMonitor},2
       workspace=${toString mainMonitor},3
       workspace=${toString mainMonitor},4
-      workspace=${toString mainMonitor},5
+      workspace=${toString secondMonitor},5
       workspace=${toString secondMonitor},6
+      workspace=${toString secondMonitor},7
+      workspace=${toString secondMonitor},8
     '' else if hostName == "work" then ''
       workspace=${toString mainMonitor},1
       workspace=${toString mainMonitor},2
@@ -63,10 +65,7 @@ let
     '' else "";
   execute = with host;
     if hostName == "desktop" || hostName == "beelink" then ''
-      #exec-once=${pkgs.mpvpaper}/bin/mpvpaper -sf -v -o "--loop --panscan=1" '*' $HOME/.config/wall.mp4  # Moving wallpaper (small performance hit)
-      exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
     '' else if hostName == "work" then ''
-      exec-once=${pkgs.swaybg}/bin/swaybg -m center -i $HOME/.config/wall
       exec-once=${pkgs.networkmanagerapplet}/bin/nm-applet --indicator
       #exec-once=${pkgs.google-drive-ocamlfuse}/bin/google-drive-ocamlfuse /GDrive
       exec-once=${pkgs.rclone}/bin/rclone mount --daemon gdrive: /GDrive
@@ -125,6 +124,11 @@ let
     dwindle {
       pseudotile=false
       force_split=2
+    }
+
+    misc {
+      disable_hyprland_logo=true
+      disable_splash_rendering=true
     }
 
     debug {
@@ -208,6 +212,8 @@ let
 
     exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
     exec-once=${pkgs.waybar}/bin/waybar
+    exec-once=${unstable.eww-wayland}/bin/eww daemon
+    exec-once=${unstable.eww-wayland}/bin/eww open-many bar bar2
     exec-once=${pkgs.blueman}/bin/blueman-applet
     ${execute}
   '';

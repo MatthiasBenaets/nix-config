@@ -41,12 +41,6 @@
 
   security.rtkit.enable = true;
   security.polkit.enable = true;
-  #sound = {                                # Deprecated due to pipewire
-  #  enable = true;
-  #  mediaKeys = {
-  #    enable = true;
-  #  };
-  #};
 
   fonts.fonts = with pkgs; [                # Fonts
     carlito                                 # NixOS
@@ -69,11 +63,14 @@
       VISUAL = "nvim";
     };
     systemPackages = with pkgs; [           # Default packages installed system-wide
-      #vim
-      #git
+      alsa-utils
+      jq
       killall
       nano
       pciutils
+      pulseaudio
+      ripgrep
+      socat
       usbutils
       wget
     ];

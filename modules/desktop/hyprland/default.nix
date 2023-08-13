@@ -17,7 +17,10 @@ let
   exec = "exec dbus-launch Hyprland";
 in
 {
-  imports = [ ../../programs/waybar.nix ];
+  imports = [
+    ../../programs/waybar.nix
+    ../../programs/eww.nix
+  ];
 
   environment = {
     loginShellInit = ''
@@ -57,7 +60,6 @@ in
     };
     systemPackages = with pkgs; [
       grim
-      mpvpaper
       slurp
       swappy
       swaylock

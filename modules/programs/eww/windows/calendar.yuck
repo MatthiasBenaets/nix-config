@@ -1,0 +1,13 @@
+(defwindow calendar
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :anchor "top right"
+                      :width "0px"
+                      :height "0px")
+  (hover :window "calendar"
+    (cal)))
+
+(defwidget cal []
+  (box
+    :class "cal text"
+    (calendar)))

@@ -1,0 +1,32 @@
+;; use scripts/get-audio-devices and add to var.yuck
+
+(defwindow audio_menu
+  :exclusive "false"
+  :stacking "overlay"
+  :focusable false
+  :geometry (geometry :anchor "top right")
+  (hover :window "audio_menu"
+    (audio_menu)))
+
+(defwidget audio_menu []
+  (box :class "parent"
+       :space-evenly "false"
+       :orientation "v"
+    (box :class "header"
+         :space-evenly "false"
+      (label :text "Audio Devices"
+             :class "title")
+      (button :class "exit"
+              :onclick "${EWW_CMD} open --toggle audio_menu"
+        (label :text " ")))
+    (box :class "body"
+         :space-evenly "false"
+         :orientation "v"
+      (button :class "audio_button"
+              :hexpand "false"
+              :onclick "scripts/set-audio-device ${headphones}"
+        (label :text "󰋋   Headphones"))
+      (button :class "audio_button"
+              :vexpand "false"
+              :onclick "scripts/set-audio-device ${speaker}"
+        (label :text "󰓃   Speakers")))))

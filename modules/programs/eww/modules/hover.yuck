@@ -1,0 +1,3 @@
+(defwidget hover [window]
+  (eventbox :onhoverlost "${EWW_CMD} open --toggle ${window}"
+    (children)))

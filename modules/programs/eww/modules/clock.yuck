@@ -1,0 +1,29 @@
+(defvar date false)
+
+(defwidget clock [monitor]
+  (eventbox
+    :onhover "${EWW_CMD} update date=true"
+    :onhoverlost "${EWW_CMD} update date=false"
+    (overlay
+      :class "module"
+      (box
+        :space-evenly false
+        :class "text"
+        (label
+          :text {formattime(EWW_TIME, "%H")}
+          :style {date ? "color: rgba(0,0,0,0); text-shadow: none;" : ""}
+          :class "hour")
+        (label
+          :style {date ? "color: rgba(0,0,0,0); text-shadow: none;" : ""}
+          :text ":")
+        (label
+          :text {formattime(EWW_TIME, "%M")}
+          :style {date ? "color: rgba(0,0,0,0); text-shadow: none;" : ""}
+          :class "minute"))
+      (revealer
+        :reveal date
+        :transition "crossfade"
+        (button
+          :class "date text"
+          :onclick "${EWW_CMD} open --toggle calendar --screen ${monitor}"
+          {formattime(EWW_TIME, "%d/%m")})))))

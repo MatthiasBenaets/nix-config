@@ -1,0 +1,7 @@
+(defwidget icon [monitor]
+  (eventbox
+    (box :space-evenly "false"
+         :orientation "h"
+      (eventbox :onclick "${EWW_CMD} open --toggle menu --screen ${monitor}"
+        (label :text ""
+               :style "font-size:20; padding-right: 10px; color: LightSkyBlue;")))))

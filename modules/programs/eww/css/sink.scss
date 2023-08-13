@@ -1,0 +1,12 @@
+.audio_button {
+  margin: 2px;
+  background-color: #333;
+  border-radius: 8px;
+  padding: 4px 12px 4px 12px;
+}
+.audio_button:hover {
+  background-color: #222;
+}
+.audio_button:active {
+  background-color: #111;
+}

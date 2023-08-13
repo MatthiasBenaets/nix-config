@@ -52,14 +52,18 @@
       zip               # Zip
 
       # General configuration
+      #alsa-utils	# Audio Commands
       #git              # Repositories
+      #jq		# JSON processor
       #killall          # Stop Applications
       #nano             # Text Editor
       #pciutils         # Computer Utility Info
       #pipewire         # Sound
+      #pulseaudio	# Audio Commands
       #usbutils         # USB Utility Info
       #wacomtablet      # Wacom Tablet
       #wget             # Downloader
+      #socat		# Data Transfer
       #thunar           # File Manager
       #zsh              # Shell
       #
@@ -88,21 +92,20 @@
       #
       # Wayland configuration
       #autotiling       # Tiling Script
+      #eww-wayland	# Bar
       #grim             # Image Grabber
       #slurp            # Region Selector
       #swappy           # Screenshot Editor
       #swayidle         # Idle Management Daemon
+      #waybar           # Bar
       #wev              # Input Viewer
       #wl-clipboard     # Console Clipboard
       #wlr-randr        # Screen Settings
       #xwayland         # X for Wayland
       #
       # Wayland home-manager
-      #mpvpaper         # Video Wallpaper
       #pamixer          # Pulse Audio Mixer
-      #swaybg           # Background
       #swaylock-fancy   # Screen Locker
-      #waybar           # Bar
       #
       # Desktop
       #ansible          # Automation

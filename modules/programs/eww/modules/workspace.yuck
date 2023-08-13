@@ -1,0 +1,9 @@
+(deflisten workspace
+  "scripts/workspace 1")
+(defwidget workspaces []
+  (literal :content workspace))
+
+(deflisten workspace2
+  "scripts/workspace 0")
+(defwidget workspaces2 []
+  (literal :content workspace2))

@@ -1,0 +1,24 @@
+.cal {
+  @include window;
+  padding: .2em;
+}
+
+calendar {
+  padding: 5px;
+  :selected {
+     color: LightSkyBlue;
+  }
+  .header {
+    color: white;
+  }
+  .highlight {
+    color: white;
+    font-weight: bold;
+  }
+  .button {
+    color: white;
+  }
+  :indeterminate {
+    color: gray;
+  }
+}
