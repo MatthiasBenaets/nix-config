@@ -50,6 +50,13 @@
       enable = true;
       extraBackends = [ pkgs.sane-airscan ];
     };
+    opengl = {
+      enable = true;
+      extraPackages = with pkgs; [              # Hardware Accelerated Video
+        intel-media-driver                      # iHD
+        vaapiIntel                              # i965
+      ];                                        # Don't forget to set LIBVA_DRIVER_NAME (will often default to i965)
+    };                                          # Check which which one will work with 'nix-shell -p libva-utils --run vainfo'
   };
 
   environment = {                               # Packages installed system wide
@@ -57,6 +64,9 @@
       discord
       simple-scan
     ];
+    variables = {
+      LIBVA_DRIVER_NAME = "i965";
+    };
   };
 
   services = {
@@ -84,6 +94,4 @@
       );
     })
   ];
-
-
 }
