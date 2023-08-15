@@ -1,0 +1,11 @@
+#!/bin/sh
+
+MON=$(hyprctl monitors | grep ID | wc -l)
+
+eww daemon
+
+case $MON in
+	1) eww open bar0;;
+	2) eww open-many bar0 bar1;;
+	3) eww open-many bar0 bar1 bar2;;
+esac

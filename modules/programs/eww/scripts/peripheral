@@ -1,0 +1,27 @@
+#!/bin/sh
+
+args=( "$@" )
+i=0
+
+get_battery() {
+	BATT=$(cat /sys/class/power_supply/$1/capacity)
+	STAT=$(cat /sys/class/power_supply/$1/status)
+
+	case "$STAT" in
+		"Charging" ) BATTERY="$BATTERY  $2  $BATT%";;
+		"Full" ) BATTERY="$BATTERY  $2  Full";;
+		"Discharging" ) BATTERY="$BATTERY  $2 $BATT%";;
+		* ) echo "";
+	esac
+}
+
+while [ $i -lt ${#args[@]} ]; do
+	if [ $(($i % 2)) -eq 0 ]; then
+		get_battery "${args[i]}" "${args[i+1]}"
+		i=$(($i + 1))
+		continue
+	fi
+	i=$(($i + 1))
+done
+
+echo "$BATTERY"

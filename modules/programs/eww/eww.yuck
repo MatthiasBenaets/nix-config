@@ -14,12 +14,19 @@
 (include "./windows/sink.yuck")
 (include "./windows/calendar.yuck")
 
-(defwidget left [monitor]
+(defwidget left0 [monitor]
   (box
      :space-evenly false
      :halign "start"
      (icon :monitor "${monitor}")
-     (workspaces)))
+     (workspaces0)))
+
+(defwidget left1 [monitor]
+  (box
+     :space-evenly false
+     :halign "start"
+     (icon :monitor "${monitor}")
+     (workspaces1)))
 
 (defwidget left2 [monitor]
   (box
@@ -49,35 +56,13 @@
 ;  MAIN BAR  ;
 ; ---------- ;
 
-(defwidget bar [monitor]
+(defwidget bar0 [monitor]
   (centerbox
-     (left :monitor "${monitor}")
+     (left0 :monitor "${monitor}")
      (center)
      (right :monitor "${monitor}")))
 
-(defwindow bar
-  :monitor 1
-  :geometry (geometry :x "0%"
-                      :y "-20px"
-                      :width "99%"
-                      :height "20px"
-                      :anchor "top center")
-  :stacking "bg"
-  :exclusive false
-  (bar :monitor "1"))
-
-; ---------- ;
-; SECOND BAR ;
-; ---------- ;
-
-
-(defwidget bar2 [monitor]
-  (centerbox
-     (left2 :monitor "${monitor}")
-     (center)
-     (right :monitor "${monitor}")))
-
-(defwindow bar2
+(defwindow bar0
   :monitor 0
   :geometry (geometry :x "0%"
                       :y "-20px"
@@ -86,4 +71,46 @@
                       :anchor "top center")
   :stacking "bg"
   :exclusive false
-  (bar2 :monitor "0"))
+  (bar0 :monitor "1"))
+
+; ---------- ;
+; SECOND BAR ;
+; ---------- ;
+
+(defwidget bar1 [monitor]
+  (centerbox
+     (left1 :monitor "${monitor}")
+     (center)
+     (right :monitor "${monitor}")))
+
+(defwindow bar1
+  :monitor 1
+  :geometry (geometry :x "0%"
+                      :y "-20px"
+                      :width "99%"
+                      :height "20px"
+                      :anchor "top center")
+  :stacking "bg"
+  :exclusive false
+  (bar1 :monitor "0"))
+
+; ---------- ;
+; THIRD  BAR ;
+; ---------- ;
+
+(defwidget bar2 [monitor]
+  (centerbox
+     (left2 :monitor "${monitor}")
+     (center)
+     (right :monitor "${monitor}")))
+
+(defwindow bar2
+  :monitor 2
+  :geometry (geometry :x "0%"
+                      :y "-20px"
+                      :width "99%"
+                      :height "20px"
+                      :anchor "top center")
+  :stacking "bg"
+  :exclusive false
+  (bar2 :monitor "2"))

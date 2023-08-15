@@ -40,8 +40,8 @@ in
       inherit inputs unstable system user location fix hyprland;
       host = {
         hostName = "beelink";
-        mainMonitor = "HDMI-A-2";
-        secondMonitor = "HDMI-A-1";
+        mainMonitor = "HDMI-A-1";
+        secondMonitor = "HDMI-A-2";
       };
     };                                                      # Pass flake variable
     modules = [                                             # Modules that are used.
@@ -56,8 +56,8 @@ in
           inherit unstable user fix doom-emacs;
           host = {
             hostName = "beelink";
-            mainMonitor = "HDMI-A-2";
-            secondMonitor = "HDMI-A-1";
+            mainMonitor = "HDMI-A-1";
+            secondMonitor = "HDMI-A-2";
           };
         };                                                  # Pass flake variable
         home-manager.users.${user} = {

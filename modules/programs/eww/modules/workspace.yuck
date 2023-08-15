@@ -1,9 +1,14 @@
-(deflisten workspace
+(deflisten workspace0
+  "scripts/workspace 0")
+(defwidget workspaces0 []
+  (literal :content workspace0))
+
+(deflisten workspace1
   "scripts/workspace 1")
-(defwidget workspaces []
-  (literal :content workspace))
+(defwidget workspaces1 []
+  (literal :content workspace1))
 
 (deflisten workspace2
-  "scripts/workspace 0")
+  "scripts/workspace 2")
 (defwidget workspaces2 []
   (literal :content workspace2))

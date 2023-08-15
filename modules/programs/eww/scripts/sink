@@ -7,7 +7,7 @@ HEAD=$(eww get headphones)
 SPEAK=$(eww get speaker)
 
 case "$SINK" in
-  "$HEAD" ) printf "󰋋";;
-  "$SPEAK" ) printf "󰓃";;
-  * ) printf "";;
+	"$HEAD" ) printf "󰋋";;
+	"$SPEAK" ) printf "󰓃";;
+	* ) printf "";;
 esac
