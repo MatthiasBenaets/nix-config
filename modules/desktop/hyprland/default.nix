@@ -20,6 +20,7 @@ in
   imports = [
     ../../programs/waybar.nix
     ../../programs/eww.nix
+    #../../programs/ewwaybar.nix            # Waybar when using eww as a bar
   ];
 
   environment = {

@@ -5,7 +5,7 @@
 (include "./modules/peripheral.yuck")
 (include "./modules/system.yuck")
 (include "./modules/volume.yuck")
-(include "./modules/clock.yuck")
+;(include "./modules/clock.yuck")
 (include "./modules/space.yuck")
 (include "./modules/slider.yuck")
 (include "./modules/hover.yuck")
@@ -50,7 +50,8 @@
      (space)
      (volume :monitor "${monitor}")
      (space)
-     (clock :monitor "${monitor}")))
+     ;(clock :monitor "${monitor}")))
+     ))
 
 ; ---------- ;
 ;  MAIN BAR  ;
