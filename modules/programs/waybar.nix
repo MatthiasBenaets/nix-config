@@ -2,7 +2,7 @@
 # Bar
 #
 
-{ config, lib, pkgs, host, user, ...}:
+{ config, lib, pkgs, unstable, host, user, ...}:
 
 let
   sinkBuiltIn="Built-in Audio Analog Stereo";
@@ -12,24 +12,14 @@ let
   speaker=sinkBluetooth;
 in
 {
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with unstable; [
     waybar
   ];
-
-  # nixpkgs.overlays = [                                      # Waybar needs to be compiled with the experimental flag for wlr/workspaces to work (for now done with hyprland.nix)
-  #   (self: super: {
-  #     waybar = super.waybar.overrideAttrs (oldAttrs: {
-  #       mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-  #       patchPhase = ''
-  #         substituteInPlace src/modules/wlr/workspace_manager.cpp --replace "zext_workspace_handle_v1_activate(workspace_handle_);" "const std::string command = \"hyprctl dispatch workspace \" + name_; system(command.c_str());"
-  #       '';
-  #     });
-  #   })
-  # ];
 
   home-manager.users.${user} = {                           # Home-manager waybar config
     programs.waybar = {
       enable = true;
+      package = unstable.waybar;
       systemd ={
         enable = true;
         target = "sway-session.target";                     # Needed for waybar to start automatically
@@ -132,7 +122,7 @@ in
           #modules-center = [ "clock" ];
           modules-left = with config;
             if programs.hyprland.enable == true then
-              [ "custom/menu" "wlr/workspaces" ]
+              [ "custom/menu" "hyprland/workspaces" ]
             else if programs.sway.enable == true then
               [ "sway/workspaces" "sway/window" "sway/mode" ]
             else [];
@@ -192,6 +182,9 @@ in
             #all-outputs = true;
             active-only = false;
             on-click = "activate";
+          };
+          "hyprland/workspaces" = {
+            format = "<span font='11'>{name}</span>";
           };
           clock = {
             format = "{:%b %d %H:%M}  ";

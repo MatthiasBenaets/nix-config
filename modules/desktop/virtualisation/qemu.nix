@@ -21,6 +21,7 @@
         verbatimConfig = ''
          nvram = [ "${pkgs.OVMF}/FV/OVMF.fd:${pkgs.OVMF}/FV/OVMF_VARS.fd" ]
         '';
+        swtpm.enable = true;
       };
     };
     spiceUSBRedirection.enable = true;        # USB passthrough
@@ -33,6 +34,7 @@
       qemu
       OVMF
       gvfs                                    # Used for shared folders between Linux and Windows
+      swtpm
     ];
   };
 

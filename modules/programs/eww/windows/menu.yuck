@@ -19,7 +19,7 @@
         (label :text "󰍃"))
       (button :class "button"
               :vexpand "false"
-              :onclick "exec systemctl suspend"
+              :onclick "${EWW_CMD} open --toggle menu && exec systemctl suspend"
         (label :text "󰒲"))
       (button :class "button"
               :vexpand "false"

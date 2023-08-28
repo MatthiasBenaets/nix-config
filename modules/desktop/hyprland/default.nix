@@ -88,12 +88,6 @@ in
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ]; #xdg-desktop-portal-hyprland pulled in by flake automatically
   };
 
-  nixpkgs.overlays = [    # Waybar with experimental features
-    (final: prev: {
-      waybar = hyprland.packages.${system}.waybar-hyprland;
-    })
-  ];
-
   systemd.sleep.extraConfig = ''
     AllowSuspend=yes
     AllowHibernation=no
