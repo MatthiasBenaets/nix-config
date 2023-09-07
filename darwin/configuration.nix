@@ -49,9 +49,11 @@
       "gpg"
       "pinentry"
       "blueutil"
+      "colima"
       "wifi-password"
     ];
     casks = [
+      "akiflow"
       "launchcontrol"
       "kitty"
       "gpg-suite"
@@ -59,6 +61,7 @@
       "google-chrome"
       "now-tv-player"
       "plex"
+      "steam"
       "alacritty"
       "slack"
       "spotify"

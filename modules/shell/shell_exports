@@ -3,7 +3,7 @@
 # PATH
 export PATH=/run/current-system/sw/bin:/opt/homebrew/bin:$PATH
 export PATH=/etc/profiles/per-user/tom.meadows/bin:$PATH
-
+export DOCKER_HOST=unix:///var/run/docker.sock
 # Defaults
 export SHELL=zsh
 export EDITOR='nvim'
