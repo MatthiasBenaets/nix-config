@@ -80,7 +80,7 @@ sketchybar --default "${default[@]}"
 # https://felixkratz.github.io/SketchyBar/config/components#space----associate-mission-control-spaces-with-an-item
 # to indicate active and available mission control spaces
 
-SPACE_ICONS=("" "" "󰈹" "󰒱" "󰆟" "" "" "8" "9" "10")
+SPACE_ICONS=("" "" "󰈹" "󰒱" "󰆟" "" "" "󰁥" "" "󰆟")
 
 spaces=()
 for i in "${!SPACE_ICONS[@]}"
