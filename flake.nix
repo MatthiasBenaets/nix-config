@@ -4,7 +4,6 @@
   inputs =                                                                  # All flake references used to build my NixOS setup. These are dependencies.
     {
       nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";                  # Nix Packages
-      hyprland.url = "github:hyprwm/Hyprland";
 
 
       home-manager = {                                                      # User Package Management
@@ -19,35 +18,35 @@
 
     };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, darwin, hyprland, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
+  outputs = inputs @ { self, nixpkgs, home-manager, darwin, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                                     # Variables that can be used in the config files.
       mkDarwin = import ./lib/mkdarwin.nix;
-      mkVM = import ./lib/mkvm.nix;
-      mkBM = import ./lib/mkbm.nix;
-      mkHM = import ./lib/mkhm.nix;
+      # mkVM = import ./lib/mkvm.nix;
+      # mkBM = import ./lib/mkbm.nix;
+      # mkHM = import ./lib/mkhm.nix;
       user = "chaosinthecrd";
-      fedoraSystem = "x86_64-linux";
+      # fedoraSystem = "x86_64-linux";
     in                                                                      # Use above variables in ...
     {
 
-      nixpkgs.overlays = [
-      (self: super: {
-        fcitx-engines = nixpkgs.fcitx5;
-      })
-      ];
+      # nixpkgs.overlays = [
+      # (self: super: {
+      #   fcitx-engines = nixpkgs.fcitx5;
+      # })
+      # ];
 
-      nixosConfigurations.vm-aarch64-prl = mkVM "vm-aarch64-prl" rec {
-        inherit nixpkgs home-manager user hyprland;
-        system = "aarch64-linux";
-        pkgs = import nixpkgs { inherit system; };
-        lib = pkgs.lib;
-      };
-
-      homeConfigurations.fedora-desktop = mkHM "fedora-desktop" rec {
-        inherit home-manager user;
-        pkgs = nixpkgs.legacyPackages."x86_64-linux";
-        lib = pkgs.lib;
-      };
+      # nixosConfigurations.vm-aarch64-prl = mkVM "vm-aarch64-prl" rec {
+      #   inherit nixpkgs home-manager user;
+      #   system = "aarch64-linux";
+      #   pkgs = import nixpkgs { inherit system; };
+      #   lib = pkgs.lib;
+      # };
+      #
+      # homeConfigurations.fedora-desktop = mkHM "fedora-desktop" rec {
+      #   inherit home-manager user;
+      #   pkgs = nixpkgs.legacyPackages."x86_64-linux";
+      #   lib = pkgs.lib;
+      # };
 
       # # assuming for now that all bare-metal is going to be x86
       # nixosConfigurations.bm-x86 = mkBM "bm-x86-linux" {

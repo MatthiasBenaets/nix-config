@@ -13,7 +13,7 @@ darwin.lib.darwinSystem {
     home-manager.darwinModules.home-manager {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.users.${user} = import ../users/chaosinthecrd/home-manager.nix {
+      home-manager.users."tom.meadows" = import ../users/chaosinthecrd/home-manager.nix {
           inherit lib pkgs;
       };
     }

@@ -1,4 +1,4 @@
-name: { nixpkgs, pkgs, lib, home-manager, system, user, hyprland }:
+name: { nixpkgs, pkgs, lib, home-manager, system, user, }:
 
 nixpkgs.lib.nixosSystem {
   inherit system;
