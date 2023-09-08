@@ -19,6 +19,8 @@
 
   # Moved all the global package setup to pkgs/default.nix
 
+  nixpkgs.config.allowBroken = true;
+
   services = {
     nix-daemon.enable = true;             # Auto upgrade daemon
   };
@@ -81,7 +83,6 @@
       "zoom"
       "microsoft-teams"
       "yubico-yubikey-manager"
-      "citrix-workspace"
       "sf-symbols"
     ];
   };
