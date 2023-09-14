@@ -7,5 +7,5 @@ in
 
 {
   # Config -------------------------------------------------------------------------
-  xdg.configFile."nvim".source = mkOutOfStoreSymlink "${nixConfigDir}/modules/editors/nvim/AstroNvim";
+  xdg.configFile."nvim".source = mkOutOfStoreSymlink "${nixConfigDir}/modules/editors/nvim/LazyNvim";
 }
