@@ -1,8 +1,6 @@
 #
-# Media Services: Plex, Torrenting and automation
+#  Media Services: Plex, Torrenting and Automation
 #
-
-{ config, pkgs, lib, ... }:
 
 {
   services = {

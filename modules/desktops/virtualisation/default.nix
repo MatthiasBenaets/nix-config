@@ -1,14 +1,15 @@
 #
-#  Specific system configuration settings for desktop
+#  Virtualisation Modules
 #
 #  flake.nix
 #   ├─ ./hosts
-#   │   └─ ./desktop
+#   │   └─ ./<host>
 #   │       └─ default.nix
 #   └─ ./modules
 #       └─ ./desktop
 #           └─ ./virtualisation
-#               └─ default.nix *
+#               ├─ default.nix *
+#               └─ ...
 #
 
 [

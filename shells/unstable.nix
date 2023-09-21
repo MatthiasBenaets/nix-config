@@ -1,3 +1,8 @@
+#
+#  Example nix-shell that makes it possible to use stable and unstable packages
+#  But you could also just add a channel and using nix-env with $ nix-env -f channel:<name> -iA <package>
+#
+
 let
   unstableTarball = fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz;
   stable = import <nixpkgs> {};
@@ -10,5 +15,3 @@ stdenv.mkDerivation {
   #  "<package>"
   #];
 }
-
-# This is an example nix-shell that makes it possible to use stable and unstable packages

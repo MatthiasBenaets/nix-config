@@ -1,5 +1,5 @@
 #
-# Neovim
+#  Neovim
 #
 
 { pkgs, ... }:

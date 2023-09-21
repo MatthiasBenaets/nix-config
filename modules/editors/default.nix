@@ -3,16 +3,18 @@
 #
 #  flake.nix
 #   ├─ ./hosts
-#   │   └─ ./home.nix
+#   │   └─ default.nix
 #   └─ ./modules
-#       └─ ./services
-#           └─ default.nix *
-#               └─ ...
+#       └─ ./editors
+#           ├─ default.nix *
+#           ├─ ./emacs
+#           │   └─ ...
+#           └─ ...
 #
 
 [
-  ./nvim
-  ./emacs/doom-emacs
+  ./nvim.nix
+  ./emacs
+  #./emacs/doom-emacs
 ]
 
-# Comment out emacs if you are not using native doom emacs. (import from host configuration.nix)

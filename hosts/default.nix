@@ -5,78 +5,58 @@
 #   └─ ./hosts  
 #       ├─ default.nix *
 #       ├─ configuration.nix
-#       ├─ home.nix
-#       └─ ./desktop OR ./laptop OR ./work OR ./vm
-#            ├─ ./default.nix
-#            └─ ./home.nix 
+#       └─ ./<host>.nix
+#           └─ default.nix 
 #
 
-{ lib, inputs, nixpkgs, nixpkgs-unstable, home-manager, nur, user, location, dslr, doom-emacs, hyprland, plasma-manager, ... }:
+{ lib, inputs, nixpkgs, nixpkgs-unstable, home-manager, nur, doom-emacs, hyprland, plasma-manager, vars, ... }:
 
 let
-  system = "x86_64-linux";                                  # System architecture
+  system = "x86_64-linux";                                  # System Architecture
 
   pkgs = import nixpkgs {
     inherit system;
-    config.allowUnfree = true;                              # Allow proprietary software
+    config.allowUnfree = true;                              # Allow Proprietary Software
   };
 
   unstable = import nixpkgs-unstable {
     inherit system;
-    config.allowUnfree = true;                              # Allow proprietary software
-  };
-
-  fix = import dslr {
-    inherit system;
-    config.allowUnfree = true;                              # Allow proprietary software
+    config.allowUnfree = true;
   };
 
   lib = nixpkgs.lib;
 in
 {
-  beelink = lib.nixosSystem {                               # Desktop profile
+  beelink = lib.nixosSystem {                               # Desktop Profile
     inherit system;
-    specialArgs = {
-      inherit inputs unstable system user location fix hyprland;
+    specialArgs = {                                         # Pass Flake Variable
+      inherit inputs system unstable hyprland vars;
       host = {
         hostName = "beelink";
         mainMonitor = "HDMI-A-1";
         secondMonitor = "HDMI-A-2";
       };
-    };                                                      # Pass flake variable
-    modules = [                                             # Modules that are used.
+    };
+    modules = [                                             # Modules Used
       nur.nixosModules.nur
       ./beelink
       ./configuration.nix
 
-      home-manager.nixosModules.home-manager {              # Home-Manager module that is used.
+      home-manager.nixosModules.home-manager {              # Home-Manager Module
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = {
-          inherit unstable user fix doom-emacs;
-          host = {
-            hostName = "beelink";
-            mainMonitor = "HDMI-A-1";
-            secondMonitor = "HDMI-A-2";
-          };
-        };                                                  # Pass flake variable
-        home-manager.users.${user} = {
-          imports = [
-            ./home.nix
-            ./beelink/home.nix
-          ];
-        };
       }
     ];
   };
 
-  laptop = lib.nixosSystem {                                # Laptop profile
+  laptop = lib.nixosSystem {                                # Laptop Profile
     inherit system;
     specialArgs = {
-      inherit unstable inputs user location;
+      inherit inputs unstable vars;
       host = {
         hostName = "laptop";
         mainMonitor = "eDP-1";
+        secondMonitor = "";
       };
     };
     modules = [
@@ -86,24 +66,14 @@ in
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = {
-          inherit unstable user;
-          host = {
-            hostName = "laptop";
-            mainMonitor = "eDP-1";
-          };
-        };
-        home-manager.users.${user} = {
-          imports = [(import ./home.nix)] ++ [(import ./laptop/home.nix)];
-        };
       }
     ];
   };
 
-  work = lib.nixosSystem {                                  # Work profile
+  work = lib.nixosSystem {                                  # Work Profile
     inherit system;
     specialArgs = {
-      inherit unstable system inputs user location hyprland;
+      inherit inputs system unstable hyprland vars;
       host = {
         hostName = "work";
         mainMonitor = "eDP-1";
@@ -118,29 +88,18 @@ in
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = {
-          inherit unstable user;
-          host = {
-            hostName = "work";
-            mainMonitor = "eDP-1";
-            secondMonitor = "HDMI-A-2";
-            thirdMonitor = "DP-1";
-          };
-        };
-        home-manager.users.${user} = {
-          imports = [(import ./home.nix)] ++ [(import ./work/home.nix)];
-        };
       }
     ];
   };
 
-  vm = lib.nixosSystem {                                    # VM profile
+  vm = lib.nixosSystem {                                    # VM Profile
     inherit system;
     specialArgs = {
-      inherit unstable inputs user location;
+      inherit inputs unstable vars;
       host = {
         hostName = "vm";
         mainMonitor = "Virtual-1";
+        secondMonitor = "";
       };
     };
     modules = [
@@ -150,52 +109,28 @@ in
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = {
-          inherit unstable user;
-          host = {
-            hostName = "vm";
-            mainMonitor = "Virtual-1";
-          };
-        };
-        home-manager.users.${user} = {
-          imports = [(import ./home.nix)] ++ [(import ./vm/home.nix)];
-        };
       }
     ];
   };
 
-  desktop = lib.nixosSystem {                               # DEPRECATED Desktop profile 
+  desktop = lib.nixosSystem {                               # DEPRECATED Desktop Profile 
     inherit system;
     specialArgs = {
-      inherit inputs unstable system user location fix hyprland;
+      inherit inputs system unstable hyprland vars;
       host = {
         hostName = "desktop";
         mainMonitor = "HDMI-A-1";
         secondMonitor = "HDMI-A-2";
       };
-    };                                                      # Pass flake variable
-    modules = [                                             # Modules that are used.
+    };
+    modules = [
       nur.nixosModules.nur
       ./desktop
       ./configuration.nix
 
-      home-manager.nixosModules.home-manager {              # Home-Manager module that is used.
+      home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = {
-          inherit unstable user fix doom-emacs;
-          host = {
-            hostName = "desktop";       #For Xorg iGPU  | Hyprland iGPU
-            mainMonitor = "HDMI-A-1";   #HDMIA3         | HDMI-A-3
-            secondMonitor = "HDMI-A-2"; #DP1            | DP-1
-          };
-        };                                                  # Pass flake variable
-        home-manager.users.${user} = {
-          imports = [
-            ./home.nix
-            ./desktop/home.nix
-          ];
-        };
       }
     ];
   };

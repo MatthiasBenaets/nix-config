@@ -1,35 +1,41 @@
 #
-#  Specific system configuration settings for desktop
+#  Specific system configuration settings for vm
 #
 #  flake.nix
 #   ├─ ./hosts
+#   │   ├─ default.nix
 #   │   └─ ./vm
 #   │       ├─ default.nix *
 #   │       └─ hardware-configuration.nix
 #   └─ ./modules
-#       └─ ./desktop
-#           └─ ./bspwm
-#               └─ bspwm.nix
+#       └─ ./desktops
+#           └─ bspwm.nix
 #
 
-{ config, pkgs, ... }:
+{ config, pkgs, vars, ... }:
 
 {
-  imports =  [                                  # For now, if applying to other system, swap files
-    ./hardware-configuration.nix                # Current system hardware config @ /etc/nixos/hardware-configuration.nix
-    ../../modules/desktop/bspwm/default.nix     # Window Manager
+  imports =  [
+    ./hardware-configuration.nix
   ];
 
-  boot = {                                      # Boot options
-    kernelPackages = pkgs.linuxPackages_latest;
-
-    loader = {                                  # For legacy boot
+  boot = {                                      # Boot Options
+    loader = {
       grub = {
         enable = true;
-        device = "/dev/sda";                    # Name of hard drive (can also be vda)
+        device = "/dev/sda";
       };
-      timeout = 1;                              # Grub auto select timeout
+      timeout = 1;
     };
+    kernelPackages = pkgs.linuxPackages_latest;
+  };
+
+  bspwm.enable = true;                          # Window Manager
+
+  environment = {
+    systemPackages = with pkgs; [               # System Wide Packages
+      hello             # Test Package
+    ];
   };
 
   services = {

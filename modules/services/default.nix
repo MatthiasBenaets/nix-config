@@ -3,7 +3,7 @@
 #
 #  flake.nix
 #   ├─ ./hosts
-#   │   └─ home.nix
+#   │   └─ configuration.nix
 #   └─ ./modules
 #       └─ ./services
 #           └─ default.nix *
@@ -11,12 +11,13 @@
 #
 
 [
+  ./avahi.nix
   ./dunst.nix
   ./flameshot.nix
   ./picom.nix
   ./polybar.nix
+  ./samba.nix
   ./sxhkd.nix
   ./udiskie.nix
 ]
 
-# redshift and media temporarely disables

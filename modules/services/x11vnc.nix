@@ -1,1 +1,1 @@
-../desktop/virtualisation/x11vnc.nix
+../desktops/virtualisation/x11vnc.nix

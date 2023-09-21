@@ -1,8 +1,8 @@
 #
-# NVIDIA drivers so that the laptop video card can get offloaded to specific applications.
-# Either start the desktop or packages using nvidia-offload.
-# For example $ nvidia-offload kdenlive
-# Currently only used with work laptop using NVIDIA MX330
+#  NVIDIA drivers so that the laptop video card can get offloaded to specific applications.
+#  Either start the desktop or packages using nvidia-offload.
+#  For example: $ nvidia-offload kdenlive
+#  Currently only used with work laptop using NVIDIA MX330
 #
 
 { config, pkgs, ... }:
@@ -33,6 +33,4 @@ in
       powerManagement.enable = true;
     };
   };
-
-  #boot.kernelParams = [ "modules_blacklist=i915" ];
 }

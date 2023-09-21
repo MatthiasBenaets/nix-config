@@ -3,88 +3,68 @@
 #
 #  flake.nix
 #   ├─ ./hosts
+#   │   ├─ default.nix
 #   │   └─ ./beelink
 #   │        ├─ default.nix *
 #   │        └─ hardware-configuration.nix
 #   └─ ./modules
-#       ├─ ./desktop
-#       │   ├─ ./hyprland
-#       │   │   └─ default.nix
-#       │   └─ ./virtualisation
-#       │       └─ default.nix
-#       └─ ./hardware
-#           └─ default.nix
+#       └─ ./desktops
+#           ├─ hyprland.nix
+#           └─ ./virtualisation
+#               └─ default.nix
 #
-# NOTE: Dual booted with windows 11. Disable fast-boot in power plan and bios and turn off hibernate to get wifi and bluetooth working. This only works once but on reboot is borked again. So using the old school BLT dongle.
-#
+#  NOTE: Dual booted with windows 11. Disable fast-boot in power plan and bios and turn off hibernate to get wifi and bluetooth working. This only works once but on reboot is borked again. So using the old school BLT dongle.
 #
 
-{ pkgs, lib, user, ... }:
+{ lib, pkgs, vars, ... }:
 
 {
-  imports =
-    [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
-    [(import ../../modules/programs/flatpak.nix)] ++        # Flatpak
-    [(import ../../modules/desktop/hyprland/default.nix)] ++ # Window Manager
-    [(import ../../modules/hardware/dslr.nix)] ++         # Temp Fix DSLR Webcam
-    (import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC
-    (import ../../modules/hardware);                      # Hardware devices
+  imports = [ ./hardware-configuration.nix ] ++
+            ( import ../../modules/desktops/virtualisation);
 
-  boot = {                                      # Boot options
-    kernelPackages = pkgs.linuxPackages_latest;
-
-    loader = {                                  # For legacy boot:
+  boot = {                                      # Boot Options
+    loader = {
       systemd-boot = {
         enable = true;
-        configurationLimit = 3;                 # Limit the amount of configurations
+        configurationLimit = 3;
       };
       efi = {
 	canTouchEfiVariables = true;
       };
-      timeout = 5;                              # Grub auto select time
+      timeout = 5;
     };
+    kernelPackages = pkgs.linuxPackages_latest;
   };
 
   hardware = {
-    sane = {                                    # Used for scanning with Xsane
+    opengl = {                                  # Hardware Accelerated Video
+      enable = true;
+      extraPackages = with pkgs; [
+        intel-media-driver
+        vaapiIntel
+        vaapiVdpau
+        libvdpau-va-gl
+      ];
+    };
+    sane = {                                    # Scanning
       enable = true;
       extraBackends = [ pkgs.sane-airscan ];
     };
-    opengl = {
-      enable = true;
-      extraPackages = with pkgs; [              # Hardware Accelerated Video
-        intel-media-driver                      # iHD
-        vaapiIntel                              # i965
-      ];                                        # Don't forget to set LIBVA_DRIVER_NAME (will often default to i965)
-    };                                          # Check which which one will work with 'nix-shell -p libva-utils --run vainfo'
   };
 
-  environment = {                               # Packages installed system wide
-    systemPackages = with pkgs; [               # This is because some options need to be configured.
-      discord
-      simple-scan
+  hyprland.enable = true;                       # Window Manager
+
+  environment = {
+    systemPackages = with pkgs; [               # System-Wide Packages
+      discord           # Messaging
+      gmtp              # Mount GoPro
+      hugo              # Static Website Builder
+      plex-media-player # Media Player
+      simple-scan       # Scanning
     ];
-    variables = {
-      LIBVA_DRIVER_NAME = "i965";
-    };
   };
 
-  services = {
-    blueman.enable = true;                      # Bluetooth
-    samba = {                                   # File Sharing over local network
-      enable = true;                            # Don't forget to set a password:  $ smbpasswd -a <user>
-      shares = {
-        share = {
-          "path" = "/home/${user}";
-          "guest ok" = "yes";
-          "read only" = "no";
-        };
-      };
-      openFirewall = true;
-    };
-  };
-
-  nixpkgs.overlays = [                          # This overlay will pull the latest version of Discord
+  nixpkgs.overlays = [                          # Overlay pulls latest version of Discord
     (self: super: {
       discord = super.discord.overrideAttrs (
         _: { src = builtins.fetchTarball {

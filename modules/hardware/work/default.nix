@@ -8,8 +8,8 @@
 #   └─ ./modules
 #       └─ ./hardware
 #           └─ ./work
-#               └─ default.nix *
-#                   └─ ...
+#               ├─ default.nix *
+#               └─ ...
 #
 
 [

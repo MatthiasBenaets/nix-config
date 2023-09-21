@@ -1,19 +1,25 @@
 #
-# Very janky way of declaring all flatpaks used
-# Might cause issues on new system installs
-# Only use when you know what you're doing
+#  Flatpak
+#  Very janky way of declaring all packages used
+#  Might cause issues on new system installs
+#  Only use when you know what you're doing
 #
 
 { pkgs, ...}:
 
 {
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
+
   services.flatpak.enable = true;
+
   system.activationScripts = {
     flatpak.text =
       ''
         flatpaks=(
           "com.github.tchx84.Flatseal"
-          "com.moonlight_stream.Moonlight"
           "com.obsproject.Studio"
           "com.ultimaker.cura"
         )

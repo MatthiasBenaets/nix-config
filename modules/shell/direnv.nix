@@ -1,11 +1,9 @@
 #
-# Direnv
+#  Direnv
 #
-# create a shell.nix
-# create a .envrc and add use nix shell.nix
-# direnv allow
-# add direnv package to emacs
-# add 'eval "$(direnv hook zsh)"' to .zshrc (and same for bash)
+#  Create shell.nix
+#  Create .envrc and add "use nix"
+#  Add 'eval "$(direnv hook zsh)"' to .zshrc
 #
 
 { config, lib, pkgs, ... }:

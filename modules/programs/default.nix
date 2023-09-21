@@ -3,19 +3,19 @@
 #
 #  flake.nix
 #   ├─ ./hosts
-#   │   └─ home.nix
+#   │   └─ configuration.nix
 #   └─ ./modules
 #       └─ ./programs
-#           └─ default.nix *
-#               └─ ...
+#           ├─ default.nix *
+#           └─ ...
 #
 
 [
   ./alacritty.nix
+  ./eww.nix
+  ./flatpak.nix
   ./rofi.nix
+  ./waybar.nix
   ./wofi.nix
-  #./waybar.nix
   #./games.nix
 ]
-# Waybar.nix is pulled from modules/desktop/..
-# Games.nix and flatpak.nix are pulled from desktop/default.nix

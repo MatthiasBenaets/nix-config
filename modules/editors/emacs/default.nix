@@ -1,17 +1,18 @@
 #
-# Personal Emacs config. Can be set up with vanilla nixos or with home-manager (see comments at bottom)
+#  Personal Emacs Config
 #
-# flake.nix
+#  flake.nix
 #   ├─ ./hosts
 #   │   └─ configuration.nix
 #   └─ ./modules
+#       ├─ default.nix
 #       └─ ./editors
 #           └─ ./emacs
 #               └─ default.nix *
 #
 
 
-{ config, pkgs, ... }:
+{ config, pkgs, vars, ... }:
 
 {
   services.emacs = {
@@ -20,24 +21,21 @@
 
   system.activationScripts = {
     emacs.text = ''
-      CONFIG="$HOME/.emacs.d"
+      CONFIG="/home/${vars.user}/.emacs.d"
 
       if [ ! -d "$CONFIG" ]; then
-        git clone https://github.com/matthiasbenaets/emacs.d.git $CONFIG
+        ${pkgs.git}/bin/git clone https://github.com/matthiasbenaets/emacs.d.git $CONFIG
       fi
+
+      chown -R ${vars.user}:users /home/${vars.user}/.emacs.d
     '';
-
   };
-}
 
-#Home-manager
-  #programs.emacs = {
-  #  enable = true;
-  #}; # also keep services.emacs
-  #
-  #home = {
-  #  activation = {
-  #    emacs = ''
-  #    '';
-  #  };
-  #};
+  environment.systemPackages = with pkgs; [
+    emacs
+    emacs-all-the-icons-fonts
+    fd
+    ispell
+    ripgrep
+  ];
+}

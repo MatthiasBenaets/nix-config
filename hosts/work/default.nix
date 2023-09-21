@@ -1,113 +1,81 @@
 #
-#  Specific system configuration settings for desktop
+#  Specific system configuration settings for work
 #
 #  flake.nix
 #   ├─ ./hosts
+#   │   ├─ default.nix
 #   │   └─ ./work
 #   │        ├─ default.nix *
 #   │        └─ hardware-configuration.nix
 #   └─ ./modules
-#       ├─ ./desktop
-#       │   ├─ ./hyprland
-#       │   │   └─ default.nix
+#       ├─ ./desktops
+#       │   ├─ hyprland.nix
 #       │   └─ ./virtualisation
 #       │       └─ default.nix
 #       └─ ./hardware
-#           ├─ default.nix
 #           └─ ./work
 #               └─ default.nix
 #
 
-{ pkgs, lib, user, ... }:
+{ pkgs, vars, ... }:
 
 {
-  imports =                                               # For now, if applying to other system, swap files
-    [(import ./hardware-configuration.nix)] ++            # Current system hardware config @ /etc/nixos/hardware-configuration.nix
-    [(import ../../modules/desktop/hyprland/default.nix)] ++ # Window Manager
-    (import ../../modules/desktop/virtualisation) ++      # Virtual Machines & VNC
-    (import ../../modules/hardware) ++                    # Hardware devices
-    (import ../../modules/hardware/work);                 # Hardware specific quirks
+  imports = [ ./hardware-configuration.nix ] ++
+            ( import ../../modules/desktops/virtualisation ) ++
+            ( import ../../modules/hardware/work );
 
-  boot = {                                      # Boot options
-    kernelPackages = pkgs.linuxPackages_latest;
-    #initrd.kernelModules = [ "amdgpu" ];       # Video drivers
-
-    loader = {                                  # EFI Boot
+  boot = {                                      # Boot Options
+    loader = {
       efi = {
         canTouchEfiVariables = true;
         efiSysMountPoint = "/boot/efi";
       };
-      #systemd-boot = {
-      #  enable = true;
-      #  configurationLimit = 5;                 # Limit the amount of configurations
-      #};
-      grub = {                                  # Most of grub is set up for dual boot
+      grub = {                                  # Grub Dual Boot
         enable = true;
         devices = [ "nodev" ];
         efiSupport = true;
-        useOSProber = true;                     # Find all boot options
+        useOSProber = true;                     # Find All boot Options
         configurationLimit = 2;
         default=2;
       };
-      timeout = null;                           # Grub auto select time
+      timeout = null;
     };
+    kernelPackages = pkgs.linuxPackages_latest;
   };
 
+  laptop.enable = true;                         # Laptop modules
+  hyprland.enable = true;                       # Window manager
+
   hardware = {
-    sane = {                                    # Used for scanning with Xsane
+    opengl = {                                  # Hardware Accelerated Video
+      enable = true;
+      extraPackages = with pkgs; [
+        intel-media-driver
+        vaapiIntel
+        vaapiVdpau
+        libvdpau-va-gl
+      ];
+    };
+    sane = {                                    # Scanning
       enable = true;
       extraBackends = [ pkgs.sane-airscan ];
     };
-    opengl = {
-      enable = true;
-      extraPackages = with pkgs; [              # Hardware Accelerated Video
-        intel-media-driver                      # iHD
-        vaapiIntel                              # i965
-      ];                                        # Don't forget to set LIBVA_DRIVER_NAME (will often default to i965)
-    };                                          # Check which which one will work with 'nix-shell -p libva-utils --run vainfo'
   };
 
-  environment = {                               # Packages installed system wide
-    systemPackages = with pkgs; [               # This is because some options need to be configured.
-      nil
-      simple-scan
-      x11vnc
-      wacomtablet
+  environment = {
+    systemPackages = with pkgs; [               # System Wide Packages
+      ansible           # Automation
+      nil               # LSP
+      onlyoffice-bin    # Office
+      rclone            # Gdrive ($ rclone config | rclone mount --daemon gdrive: <mount> | fusermount -u <mount>)
+      simple-scan       # Scanning
+      sshpass           # Ansible dependency
+      wacomtablet       # Tablet
+      wdisplays         # Display Configurator
     ];
-    variables = {
-      LIBVA_DRIVER_NAME = "iHD";
-    };
   };
 
-  programs = {                                  # No xbacklight, this is the alterantive
-    dconf.enable = true;
-    light.enable = true;
-  };
+  programs.light.enable = true;                 # Monitor Brightness
 
-  services = {
-    #tlp.enable = true;                          # TLP and auto-cpufreq for power management
-    auto-cpufreq.enable = true;
-    blueman.enable = true;                      # Bluetooth
-    avahi = {                                   # Needed to find wireless printer
-      enable = true;
-      nssmdns = true;
-      publish = {                               # Needed for detecting the scanner
-        enable = true;
-        addresses = true;
-        userServices = true;
-      };
-    };
-    # samba = {                                   # File Sharing over local network
-    #   enable = true;                            # Don't forget to set a password:  $ smbpasswd -a <user>
-    #   shares = {
-    #     share = {
-    #       "path" = "/home/${user}";
-    #       "guest ok" = "yes";
-    #       "read only" = "no";
-    #     };
-    #   };
-    #   openFirewall = true;
-    # };
-  };
   systemd.services.NetworkManager-wait-online.enable = false;
 }

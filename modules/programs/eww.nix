@@ -1,18 +1,22 @@
 #
-# Bar
+#  Bar
 #
 
-{ config, lib, pkgs, unstable, host, user, ...}:
+{ config, lib, pkgs, unstable, vars, ...}:
 
 {
-  environment.systemPackages = with unstable; [
-    eww-wayland
-  ];
+  config = lib.mkIf (config.wlwm.enable) {
+    environment.systemPackages = with unstable; [
+      eww-wayland         # Widgets
+      jq                  # JSON Processor
+      socat               # Data Transfer
+    ];
 
-  home-manager.users.${user} = {                           # Home-manager eww config link
-    home.file.".config/eww" = {
-      source = ./eww;
-      recursive = true;
+    home-manager.users.${vars.user} = {
+      home.file.".config/eww" = {
+        source = ./eww;
+        recursive = true;
+      };
     };
   };
 }

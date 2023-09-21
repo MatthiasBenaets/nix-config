@@ -3,14 +3,15 @@
 #
 #  flake.nix
 #   ├─ ./hosts
-#   │   └─ ./<host>
-#   │       └─ default.nix
+#   │   └─ default.nix
 #   └─ ./modules
 #       └─ ./hardware
-#           └─ default.nix *
-#               └─ ...
+#           ├─ default.nix *
+#           └─ ...
 #
+
 [
-  #./dslr.nix
   ./bluetooth.nix
+  ./dslr.nix
+  ./power.nix
 ]

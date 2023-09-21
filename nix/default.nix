@@ -1,27 +1,29 @@
 #
-# These are the diffent profiles that can be used when building Nix.
+#  These are the diffent profiles that can be used when using Nix on other distros.
+#  Home-Manager is used to list and customize packages.
 #
-# flake.nix
+#  flake.nix
 #   └─ ./nix
-#       └─ default.nix *
+#       ├─ default.nix *
+#       └─ <host>.nix
 #
 
-{ lib, inputs, nixpkgs, home-manager, nixgl, user, ... }:
+{ lib, inputs, nixpkgs, home-manager, nixgl, vars, ... }:
 
 let
-  system = "x86_64-linux";
+  system = "x86_64-linux";                                  # System Architecture
   pkgs = nixpkgs.legacyPackages.${system};
 in
 {
-  pacman = home-manager.lib.homeManagerConfiguration {    # Currently only host that can be built
+  pacman = home-manager.lib.homeManagerConfiguration {
     inherit pkgs;
-    extraSpecialArgs = { inherit inputs nixgl user; };
-    modules = [
+    extraSpecialArgs = { inherit inputs nixgl vars; };
+    modules = [                                             # Modules Used
       ./pacman.nix
       {
         home = {
-          username = "${user}";
-          homeDirectory = "/home/${user}";
+          username = "${vars.user}";
+          homeDirectory = "/home/${vars.user}";
           packages = [ pkgs.home-manager ];
           stateVersion = "22.05";
         };

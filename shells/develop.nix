@@ -1,7 +1,7 @@
 #
-# Example of a development shell flake
-# Rename to flake.nix
-# Can be run with "$ nix develop" or "$ nix develop </path/to/flake.nix>#<host>"
+#  Example of a development shell flake
+#  Rename to flake.nix
+#  Can be run with "$ nix develop" or "$ nix develop </path/to/flake.nix>#<host>"
 #
 
 {

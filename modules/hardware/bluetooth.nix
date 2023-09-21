@@ -1,5 +1,5 @@
 #
-# Bluetooth
+#  Bluetooth
 #
 
 { pkgs, ... }:

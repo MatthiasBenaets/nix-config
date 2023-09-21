@@ -1,22 +1,21 @@
 #
-# Qemu/KVM with virt-manager 
+#  Qemu/KVM With Virt-Manager
 #
 
-{ config, pkgs, user, ... }:
+{ config, pkgs, vars, ... }:
 
-{                                             # Add libvirtd and kvm to userGroups
+{
   boot.extraModprobeConfig = ''
     options kvm_intel nested=1
     options kvm_intel emulate_invalid_guest_state=0
     options kvm ignore_nsrs=1
-  '';                                         # Needed to run OSX-KVM 
+  '';                                         # For OSX-KVM
 
-  users.groups.libvirtd.members = [ "root" "${user}" ];
+  users.groups.libvirtd.members = [ "root" "${vars.user}" ];
 
   virtualisation = {
     libvirtd = {
-      enable = true;                          # Virtual drivers
-      #qemuPackage = pkgs.qemu_kvm;           # Default
+      enable = true;
       qemu = {
         verbatimConfig = ''
          nvram = [ "${pkgs.OVMF}/FV/OVMF.fd:${pkgs.OVMF}/FV/OVMF_VARS.fd" ]
@@ -24,21 +23,22 @@
         swtpm.enable = true;
       };
     };
-    spiceUSBRedirection.enable = true;        # USB passthrough
+    spiceUSBRedirection.enable = true;
   };
 
   environment = {
     systemPackages = with pkgs; [
-      virt-manager
-      virt-viewer
-      qemu
-      OVMF
-      gvfs                                    # Used for shared folders between Linux and Windows
-      swtpm
+      virt-manager    # VM Interface
+      virt-viewer     # Remote VM
+      qemu            # Virtualizer
+      OVMF            # UEFI Firmware
+      gvfs            # Shared Directory
+      swtpm           # TPM
+      virglrenderer   # Virtual OpenGL
     ];
   };
 
-  services = {                                # Enable file sharing between OS
+  services = {                                # File Sharing
     gvfs.enable = true;
   };
 
@@ -117,7 +117,7 @@
 # Add this as CD storage in virt manager
 # It can than be accest in the windows and the guest driver exe's can be run.
 # Also, change video in virt-manager to virtio. This will fix the resolution
-
+#
 #FOR LINUX
 # 2 options
 #
@@ -141,7 +141,7 @@
 #SINGLE GPU PASSTHROUGH
 # General Guide: gitlab.com/risingprismtv/single-gpu-passthrough/-/wikis/home
 # 1. Download ISO
-# 2. Download latest Video BIOS from techpowerup.com/vgabios (Sapphire RX580 8Gb)
+# 2. Download latest Video BIOS from techpowerup.com/vgabios
 # 2.1. $ Sudo mkdir /var/lib/libvirt/vbios/
 # 2.2. $ Sudo mv ~/Downloads/*.rom /var/lib/libvirt/vbios/GPU.rom
 # 2.3. $ Cd /var/lib/libvirt/vbios/

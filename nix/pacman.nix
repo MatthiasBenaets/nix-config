@@ -1,46 +1,45 @@
 #
-# Nix setup using Home-manager
+#  Nix Setup using Home-manager
 #
-# flake.nix
+#  flake.nix
 #   └─ ./nix
 #       ├─ default.nix
 #       └─ pacman.nix *
 #
 
-{ config, pkgs, inputs, nixgl, user, ... }:
+{ config, inputs, pkgs, nixgl, vars, ... }:
 
 {
   home = {
     packages = [
-      (import nixgl { inherit pkgs; }).nixGLIntel       # OpenGL for GUI apps. Add to aliases is recommended.
+      (import nixgl { inherit pkgs; }).nixGLIntel       # OpenGL for GUI apps
                                      #.nixVulkanIntel
       pkgs.hello
-      pkgs.emacs
     ];
 
     #file.".bash_aliases".text = ''
     #  alias alacritty="nixGLIntel ${pkgs.alacritty}/bin/alacritty"
-    #'';                                                 # Aliases for packages that need openGL using nixGL. Change to your shell alias file. Note that home.shellAliases does not work...
+    #'';                                                # Aliases for package using openGL (nixGL). home.shellAliases does not work
 
-    activation = {                                      # Run script during rebuild/switch.
-      linkDesktopApplications = {                       # Script that will add all packages to the system menu. (Mainly tested on Gnome)
+    activation = {                                      # Rebuild Script
+      linkDesktopApplications = {                       # Add Packages To System Menu
         after = [ "writeBoundary" "createXdgUserDirectories" ];
         before = [ ];
-        data = "sudo /usr/bin/update-desktop-database"; # This will update the database, requires sudo. Not recommended to install via home-manager so do it manually for your distro.
+        data = "sudo /usr/bin/update-desktop-database"; # Updates Database
       };
     };
   };
 
-  xdg = {
+  xdg = {                                               # Add Nix Packages to XDG_DATA_DIRS
     enable = true;
-    systemDirs.data = [ "/home/${user}/.nix-profile/share" ]; # Will add nix packages to XDG_DATA_DIRS and thus accessible from the menus.
+    systemDirs.data = [ "/home/${vars.user}/.nix-profile/share" ];
   };
 
-  nix = {                                               # Nix Package Manager settings
+  nix = {                                               # Nix Package Manager Settings
     settings ={
-      auto-optimise-store = true;                       # Optimise syslinks
+      auto-optimise-store = true;
     };
-    package = pkgs.nixFlakes;                           # Enable nixFlakes on system
+    package = pkgs.nixFlakes;                           # Enable Flakes
     registry.nixpkgs.flake = inputs.nixpkgs;
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -48,5 +47,5 @@
       keep-derivations      = true
     '';
   };
-  nixpkgs.config.allowUnfree = true;                    # Allow proprietary software.
+  nixpkgs.config.allowUnfree = true;                    # Allow Proprietary Software.
 }

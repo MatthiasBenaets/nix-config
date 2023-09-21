@@ -1,21 +1,21 @@
 #
-# Screenshots
+#  Screenshots
 #
 
-{ config, lib, pkgs, user, ... }:
+{ config, lib, pkgs, user, vars, ... }:
 
 {
-  config = lib.mkIf (config.xsession.enable) {    # Only evaluate code if using X11
-    services = {                                    # sxhkd shortcut = Printscreen button (Print)
-      flameshot = {
+  config = lib.mkIf (config.services.xserver.enable) {
+    home-manager.users.${vars.user} = {
+      services.flameshot = {
         enable = true;
         settings = {
-          General = {                               # Settings
-            savePath = "/home/${user}/";
+          General = {
+            savePath = "/home/${vars.user}/";
             saveAsFileExtension = ".png";
             uiColor = "#2d0096";
             showHelp = "false";
-            disabledTrayIcon = "true";              # Hide from systray
+            disabledTrayIcon = "true";
           };
         };
       };
