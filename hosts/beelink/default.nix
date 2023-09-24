@@ -59,6 +59,7 @@
       discord           # Messaging
       gmtp              # Mount GoPro
       hugo              # Static Website Builder
+      obs-studio        # Live Streaming
       plex-media-player # Media Player
       simple-scan       # Scanning
     ];

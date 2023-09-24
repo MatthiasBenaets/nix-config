@@ -20,7 +20,6 @@
       ''
         flatpaks=(
           "com.github.tchx84.Flatseal"
-          "com.obsproject.Studio"
           "com.ultimaker.cura"
         )
 

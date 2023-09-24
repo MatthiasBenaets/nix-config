@@ -61,16 +61,28 @@
   networking = with host; {
     useDHCP = true;
     hostName = hostName;
+    bridges = {
+      "br0" = {
+        interfaces = [ "enp1s0" ];
+      };
+    };
     interfaces = {
-      enp1s0 = {
+      #enp1s0 = {
+      #  useDHCP = false;
+      #  ipv4.addresses = [{
+      #    address = "192.168.0.50";
+      #    prefixLength = 24;
+      #  }];
+      #};
+      #enp2s0.useDHCP = true;
+      #wlo1.useDHCP = true;
+      br0 = {
         useDHCP = false;
         ipv4.addresses = [{
           address = "192.168.0.50";
           prefixLength = 24;
         }];
       };
-      #enp2s0.useDHCP = true;
-      #wlo1.useDHCP = true;
     };
     enableIPv6 = false;
     defaultGateway = "192.168.0.1";
