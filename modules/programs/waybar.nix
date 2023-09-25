@@ -268,7 +268,7 @@ in
           text = ''
             #!/bin/sh
 
-            HEAD=$(awk '/ ${headset}/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*"))
+            HEAD=$(awk '/ ${headset}/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | head -n 1)
             SPEAK=$(awk '/ ${speaker}/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | head -n 1)
 
             if [[ $HEAD = "*" ]]; then
@@ -287,13 +287,13 @@ in
             ID1=$(awk '/ ${headset}/ {sub(/.$/,"",$2); print $2 }' <(${pkgs.wireplumber}/bin/wpctl status) | head -n 1)
             ID2=$(awk '/ ${speaker}/ {sub(/.$/,"",$2); print $2 }' <(${pkgs.wireplumber}/bin/wpctl status) | sed -n 2p)
 
-            HEAD=$(awk '/ ${headset}/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*"))
+            HEAD=$(awk '/ ${headset}/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | head -n 1)
             SPEAK=$(awk '/ ${speaker}/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | head -n 1)
 
-            if [[ $HEAD = "*" ]]; then
-              ${pkgs.wireplumber}/bin/wpctl set-default $ID2
-            elif [[ $SPEAK = "*" ]]; then
+            if [[ $SPEAK = "*" ]]; then
               ${pkgs.wireplumber}/bin/wpctl set-default $ID1
+            elif [[ $HEAD = "*" ]]; then
+              ${pkgs.wireplumber}/bin/wpctl set-default $ID2
             fi
             exit 0
           '';

@@ -56,12 +56,13 @@
 
   environment = {
     systemPackages = with pkgs; [               # System-Wide Packages
-      discord           # Messaging
-      gmtp              # Mount GoPro
-      hugo              # Static Website Builder
-      obs-studio        # Live Streaming
-      plex-media-player # Media Player
-      simple-scan       # Scanning
+      discord               # Messaging
+      gmtp                  # Mount GoPro
+      hugo                  # Static Website Builder
+      jellyfin-media-player # Media Player
+      obs-studio            # Live Streaming
+      plex-media-player     # Media Player
+      simple-scan           # Scanning
     ];
   };
 
