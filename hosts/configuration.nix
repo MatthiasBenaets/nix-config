@@ -22,7 +22,7 @@
 #           └─ default.nix
 #
 
-{ config, lib, pkgs, inputs, vars, ... }:
+{ config, lib, pkgs, unstable, inputs, vars, ... }:
 
 {
   imports = ( import ../modules/desktops ++
@@ -85,6 +85,7 @@
       git               # Version Control
       killall           # Process Killer
       nano              # Text Editor
+      nix-tree          # Browse Nix Store
       pciutils          # Manage PCI
       ranger            # File Manager
       tldr              # Helper
@@ -103,7 +104,6 @@
 
       # Apps
       appimage-run      # Runs AppImages on NixOS
-      firefox           # Browser
       google-chrome     # Browser
       remmina           # XRDP & VNC Client
 
@@ -120,7 +120,11 @@
       # Other Packages Found @
       # - ./<host>/default.nix
       # - ../modules
-    ];
+    ] ++
+    (with unstable; [
+      # Apps
+      firefox           # Browser
+    ]);
   };
 
   programs = {
