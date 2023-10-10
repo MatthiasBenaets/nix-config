@@ -3,6 +3,7 @@
 # PATH
 export PATH=/run/current-system/sw/bin:/opt/homebrew/bin:$PATH
 export PATH=/etc/profiles/per-user/tom.meadows/bin:$PATH
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export DOCKER_HOST=unix:///var/run/docker.sock
 # Defaults
 export SHELL=zsh
@@ -12,7 +13,6 @@ export WLR_DRM_NO_MODIFIERS=1
 # Directory Env Vars
 export GOPATH=$HOME/go
 export GOBIN=$HOME/go/bin
-export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock"
 
 # Google Cloud GKE
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True

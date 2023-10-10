@@ -51,12 +51,12 @@
       "gpg"
       "pinentry"
       "blueutil"
-      "colima"
       "wifi-password"
     ];
     casks = [
       "akiflow"
       "launchcontrol"
+      "orbstack"
       "kitty"
       "gpg-suite"
       "firefox"

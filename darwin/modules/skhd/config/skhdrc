@@ -85,6 +85,8 @@ shift + ctrl + alt - down : osascript -e 'tell application "Spotify" to set soun
 shift + alt - down : osascript -e "set volume output volume ((output volume of (get volume settings)) - 3)"
 shift + alt - up : osascript -e "set volume output volume ((output volume of (get volume settings)) + 3)"
 
+shift + ctrl + alt - c : echo "https://calendly.com/tpmeadows1/30min" | pbcopy
+
 # Play Pause
 shift + alt - space : osascript -e 'tell application "Spotify" to playpause'
 
@@ -93,11 +95,11 @@ shift + alt - p : osascript ~/.config/scripts/flow.applescript
 
 # ddcctl - dell monitor source switching
 # move to Linux 
-shift + ctrl - 1 : ddcctl -d 1 -i 17
+shift + ctrl - 1 : m1ddc display 1 set input 17
 # move to windows vm
-shift + ctrl - 2 : ddcctl -d 1 -i 15
+shift + ctrl - 2 : m1ddc display 1 set input 15
 # move back to macOS
-shift + ctrl - 3 : ddcctl -d 1 -i 27
+shift + ctrl - 3 : m1ddc display 1 set input 27
 
 # switching display
 ctrl + alt - 1  : yabai -m display --focus 1
