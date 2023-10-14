@@ -153,6 +153,8 @@
     };
   };
 
+  flatpak.enable = true;                    # Enable Flatpak (see module options)
+
   nix = {                                   # Nix Package Manager Settings
     settings ={
       auto-optimise-store = true;

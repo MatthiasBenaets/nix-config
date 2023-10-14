@@ -66,6 +66,13 @@
     ];
   };
 
+  flatpak = {                                   # Flatpak Packages (see module options)
+    extraPackages = [
+      "com.github.tchx84.Flatseal"
+      "com.ultimaker.cura"
+    ];
+  };
+
   nixpkgs.overlays = [                          # Overlay pulls latest version of Discord
     (self: super: {
       discord = super.discord.overrideAttrs (

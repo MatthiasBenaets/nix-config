@@ -77,5 +77,11 @@
 
   programs.light.enable = true;                 # Monitor Brightness
 
+  flatpak = {                                   # Flatpak Packages (see module options)
+    extraPackages = [
+      "com.github.tchx84.Flatseal"
+    ];
+  };
+
   systemd.services.NetworkManager-wait-online.enable = false;
 }
