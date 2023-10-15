@@ -14,6 +14,7 @@
   ./alacritty.nix
   ./eww.nix
   ./flatpak.nix
+  ./obs.nix
   ./rofi.nix
   ./waybar.nix
   ./wofi.nix
