@@ -59,8 +59,6 @@ with lib;
               ${pkgs.flatpak}/bin/flatpak uninstall -y --unused
             fi
           done
-
-          exit
         '';
       };
   };
