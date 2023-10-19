@@ -88,7 +88,7 @@ in
         modules = [ pkgs.xf86_input_wacom ];
         wacom.enable = true;
 
-        displayManager = {                          # Display Manage
+        displayManager = {                          # Display Manager
           lightdm = {
             enable = true;
             background = pkgs.nixos-artwork.wallpapers.nineish-dark-gray.gnomeFilePath;

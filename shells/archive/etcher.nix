@@ -1,3 +1,7 @@
+#
+# This no longer works. Better to just use $ NIXPKGS_ALLOW_INSECURE=1 nix run nixpkgs#etcher --impure
+#
+
 let
   unstableTarball =
     fetchTarball
@@ -12,5 +16,3 @@ let
     ];
   };
 in shell
-
-# This no longer works. Better to just use $ NIXPKGS_ALLOW_INSECURE=1 nix run nixpkgs#etcher --impure

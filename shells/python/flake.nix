@@ -1,11 +1,10 @@
 #
-#  Example of a development shell flake
-#  Rename to flake.nix
+#  Example of a python development shell flake that allows for multiple versions and hosts
 #  Can be run with "$ nix develop" or "$ nix develop </path/to/flake.nix>#<host>"
 #
 
 {
-  description = "A development environment";
+  description = "A python development environment";
 
   inputs = {
     nixpkgs = { url = "github:nixos/nixpkgs/nixpkgs-unstable"; };

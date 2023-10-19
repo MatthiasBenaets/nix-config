@@ -1,3 +1,10 @@
+#
+# ELECTRON
+#$ npx create-electron-app <appname>
+#$ npm start    #inside directory
+#$ rs           #restart/reload
+#
+
 with import <nixpkgs> {};
 mkShell {
   name = "React-Electron-Shell";
@@ -20,8 +27,3 @@ mkShell {
     echo "done"
   '';
 }
-
-# ELECTRON
-#$ npx create-electron-app <appname>
-#$ npm start    #inside directory
-#$ rs           #restart/reload

@@ -60,6 +60,7 @@
       gmtp                  # Mount GoPro
       hugo                  # Static Website Builder
       jellyfin-media-player # Media Player
+      moonlight-qt          # Remote Streaming
       obs-studio            # Live Streaming
       plex-media-player     # Media Player
       simple-scan           # Scanning

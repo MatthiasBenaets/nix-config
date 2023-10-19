@@ -1,6 +1,6 @@
 #
-#  Example nix-shell that makes it possible to use stable and unstable packages
-#  But you could also just add a channel and using nix-env with $ nix-env -f channel:<name> -iA <package>
+#  Example shell that makes it possible to use stable and unstable packages
+#  But you could also just add a new channel and using "$ nix-env -f channel:<name> -iA <package>", or via the flake.nix
 #
 
 let
