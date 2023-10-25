@@ -25,11 +25,11 @@ with host;
       exec = "exec dbus-launch Hyprland";
     in
     {
-      loginShellInit = ''
-        if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
-          ${exec}
-        fi
-      '';                                     # Start from TTY1
+      #loginShellInit = ''
+      #  if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
+      #    ${exec}
+      #  fi
+      #'';                                     # Start from TTY1
 
       variables = {
         #WLR_NO_HARDWARE_CURSORS="1";         # Needed for VM
@@ -64,6 +64,7 @@ with host;
         grim            # Grab Images
         slurp           # Region Selector
         swappy          # Snapshot Editor
+        swayidle        # Idle Daemon
         swaylock        # Lock Screen
         wl-clipboard    # Clipboard
         wlr-randr       # Monitor Settings
@@ -74,6 +75,16 @@ with host;
       text = ''
        auth include login
       '';
+    };
+
+    services.greetd = {
+      enable = true;
+      settings = {
+        default_session = {
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %a • %h | %F' --cmd Hyprland";
+        };
+      };
+      vt = 7;
     };
 
     programs = {
@@ -149,10 +160,12 @@ with host;
         '' else "";
       execute =
         if hostName == "desktop" || hostName == "beelink" then ''
+          exec-once=${pkgs.swayidle}/bin/swayidle -w timeout 600 '${pkgs.swaylock}/bin/swaylock -f' timeout 1200 '${pkgs.systemd}/bin/systemctl suspend' after-resume '${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock}/bin/swaylock -f && ${config.programs.hyprland.package}/bin/hyprctl dispatch dpms off'
         '' else if hostName == "work" then ''
           exec-once=${pkgs.networkmanagerapplet}/bin/nm-applet --indicator
           #exec-once=${pkgs.google-drive-ocamlfuse}/bin/google-drive-ocamlfuse /GDrive
           exec-once=${pkgs.rclone}/bin/rclone mount --daemon gdrive: /GDrive
+          exec-once=${pkgs.swayidle}/bin/swayidle -w timeout 60 '${pkgs.swaylock}/bin/swaylock -f' timeout 600 '${pkgs.systemd}/bin/systemctl suspend' after-resume '${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock}/bin/swaylock -f && ${config.programs.hyprland.package}/bin/hyprctl dispatch dpms off'
         '' else "";
     in
     let
@@ -183,12 +196,20 @@ with host;
         }
 
         animations {
-          enabled=true
-          bezier = myBezier,0.1,0.7,0.1,1.05
-          animation=fade,1,7,default
-          animation=windows,1,7,myBezier
-          animation=windowsOut,1,3,default,popin 60%
-          animation=windowsMove,1,7,myBezier
+          enabled = true
+          bezier = overshot, 0.05, 0.9, 0.1, 1.05
+          bezier = smoothOut, 0.5, 0, 0.99, 0.99
+          bezier = smoothIn, 0.5, -0.5, 0.68, 1.5
+          bezier = rotate,0,0,1,1
+          animation = windows, 1, 4, overshot, slide
+          animation = windowsIn, 1, 2, smoothOut
+          animation = windowsOut, 1, 0.5, smoothOut
+          animation = windowsMove, 1, 3, smoothIn, slide
+          animation = border, 1, 5, default
+          animation = fade, 1, 4, smoothIn
+          animation = fadeDim, 1, 4, smoothIn
+          animation = workspaces, 1, 4, default
+          animation = borderangle, 1, 20, rotate, loop
         }
 
         input {
@@ -212,6 +233,8 @@ with host;
         misc {
           disable_hyprland_logo=true
           disable_splash_rendering=true
+          mouse_move_enables_dpms=true
+          key_press_enables_dpms=true
         }
 
         debug {
@@ -224,7 +247,7 @@ with host;
         bind=SUPER,Return,exec,${pkgs.${vars.terminal}}/bin/${vars.terminal}
         bind=SUPER,Q,killactive,
         bind=SUPER,Escape,exit,
-        bind=SUPER,S,exec,systemctl suspend
+        bind=SUPER,S,exec,${pkgs.systemd}/bin/systemctl suspend
         bind=SUPER,L,exec,${pkgs.swaylock}/bin/swaylock
         bind=SUPER,E,exec,${pkgs.pcmanfm}/bin/pcmanfm
         bind=SUPER,H,togglefloating,
@@ -331,33 +354,19 @@ with host;
         show-failed-attempts = true;
       };
 
-      services.swayidle = if hostName == "laptop" || hostName == "work" then {
-        enable = true;
-        events = [
-          { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock -f"; }
-          { event = "lock"; command = "lock"; }
-        ];
-        timeouts = [
-          { timeout = 300; command = "${pkgs.swaylock}/bin/swaylock -f"; }
-        ];
-        systemdTarget = "hyprland-session.target";
-      } else {
-        enable = false;
-      };
-
       home.file = {
         ".config/hypr/script/clamshell.sh" = {
           text = ''
             #!/bin/sh
 
             if grep open /proc/acpi/button/lid/LID/state; then
-              hyprctl keyword monitor "eDP-1, 1920x1080, 0x0, 1"
+              ${config.programs.hyprland.package}/bin/hyprctl keyword monitor "eDP-1, 1920x1080, 0x0, 1"
             else
               if [[ `hyprctl monitors | grep "Monitor" | wc -l` != 1 ]]; then
-                hyprctl keyword monitor "eDP-1, disable"
+                ${config.programs.hyprland.package}/bin/hyprctl keyword monitor "eDP-1, disable"
               else
                 ${pkgs.swaylock}/bin/swaylock -f
-                systemctl sleep
+                ${pkgs.systemd}/bin/systemctl sleep
               fi
             fi
           '';
