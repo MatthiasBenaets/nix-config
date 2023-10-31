@@ -151,8 +151,8 @@ let
     binde = $mainMod Control,k,resizeactive,0 -50
     binde = $mainMod Control,j,resizeactive,0 50
 
-    binde = $mainMod SHIFT, up, exec, pactl -- set-sink-volume 0 +10% 
-    binde = $mainMod SHIFT, down, exec, pactl -- set-sink-volume 0 -10% 
+    binde = $mainMod SHIFT, up, exec, pamixer --increase 10
+    binde = $mainMod SHIFT, down, exec, pamixer --decrease 10
     binde = $mainMod Control, space, exec, pamixer --toggle-mute
 
     exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP

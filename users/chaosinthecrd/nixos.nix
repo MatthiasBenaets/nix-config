@@ -1,5 +1,15 @@
 { pkgs, lib, user, system, ... }:
 let
+  slack = pkgs.slack.overrideAttrs (old: {
+    installPhase = old.installPhase + ''
+      rm $out/bin/slack
+
+      makeWrapper $out/lib/slack/slack $out/bin/slack \
+        --prefix XDG_DATA_DIRS : $GSETTINGS_SCHEMAS_PATH \
+        --prefix PATH : ${lib.makeBinPath [pkgs.xdg-utils]} \
+        --add-flags "--ozone-platform=wayland --enable-features=UseOzonePlatform,WebRTCPipeWireCapturer"
+    '';
+  });
 in
 {
   imports = [
@@ -79,6 +89,12 @@ in
      swww
      # nixpkgs-wayland.packages.${system}.waybar
   ];
+
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+  };
 
   # Configure keymap in X11
   services.xserver = {
