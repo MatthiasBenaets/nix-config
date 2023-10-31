@@ -43,6 +43,8 @@
           _1password-gui = inputs.nixpkgs-unstable.legacyPackages.${system}._1password-gui;
           dunst = inputs.nixpkgs-unstable.legacyPackages.${system}.dunst;
           slack = inputs.nixpkgs-unstable.legacyPackages.${system}.slack;
+          nwg-look = inputs.nixpkgs-unstable.legacyPackages.${system}.nwg-look;
+          cartridges = inputs.nixpkgs-unstable.legacyPackages.${system}.cartridges;
         })
       ];
       };

@@ -4,26 +4,37 @@
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
-    extraPackages = [ pkgs.libvdpau-va-gl ]; #NVIDIA doesn't support libvdpau, so this package will redirect VDPAU calls to LIBVA.
+    extraPackages = with pkgs; [nvidia-vaapi-driver]; #NVIDIA doesn't support libvdpau, so this package will redirect VDPAU calls to LIBVA.
   };
 
-  environment.variables.VDPAU_DRIVER = "va_gl";
-  environment.variables.LIBVA_DRIVER_NAME = "nvidia";
-  environment.variables.NIXOS_OZONE_WL = "1";
+  environment = {
+    variables = {
+      GBM_BACKEND = "nvidia-drm";
+      LIBVA_DRIVER_NAME = "nvidia";
+      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      __GL_GSYNC_ALLOWED = "1";
+      __GL_VRR_ALLOWED = "0"; # Controls if Adaptive Sync should be used. Recommended to set as “0” to avoid having problems on some games.
+      XCURSOR_THEME = "Bibita-Modern-Ice";
+      XCURSOR_SIZE = "24";
+      QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+    };
+  };
 
 # Configure keymap in X11
   services.xserver = {
   enable = true;
   layout = "us";
   xkbVariant = "";
-  }; 
+  };
+
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false;
     powerManagement.finegrained = false;
     open = true;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
   networking.hostName = "nixos"; # Define your hostname.

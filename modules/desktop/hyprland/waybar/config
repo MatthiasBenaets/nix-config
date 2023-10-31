@@ -10,7 +10,7 @@
       "active-only": false,
       "on-click": "activate",
       "persistent_workspaces": {
-        "*": 10,
+        "*": 10
       },
       "format-icons": {
         "1": "",

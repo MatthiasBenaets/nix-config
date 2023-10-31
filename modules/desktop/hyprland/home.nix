@@ -19,7 +19,7 @@ let
       monitor=Virtual-1,2560x1600@60,2560x0,1
     '';
   monitors = ''
-      workspace=Virtual-1,10
+      workspace=10, persistent:true
     '';
 in
 let
@@ -28,8 +28,10 @@ let
     #env = MESA_GLSL_VERSION_OVERRIDE,330
     #env = MESA_GLES_VERSION_OVERRIDE,3.1
 
+
     general {
       border_size=5
+      no_focus_fallback = true
       gaps_in=5
       gaps_out=7
       col.active_border=0xffAFDCA4
@@ -58,7 +60,7 @@ let
     input {
       kb_layout=us
       follow_mouse=1
-      repeat_delay=250
+      repeat_delay=150
       numlock_by_default=1
       accel_profile=flat
       sensitivity=0.8
@@ -86,12 +88,11 @@ let
     bind=SUPER,L,exec,${pkgs.swaylock}/bin/swaylock
     bind=SUPER,E,exec,${pkgs.pcmanfm}/bin/pcmanfm
     bind=$mainMod,S,togglefloating,
-    #bind=SUPER,Space,exec,${pkgs.rofi}/bin/rofi -show drun
-    bind=SUPER,Space,exec,${pkgs.wofi}/bin/wofi --show drun
+    bind=SUPER,Space,exec,/home/chaosinthecrd/.config/rofi/launchers/type-6/launcher.sh
     bind=SUPER,P,pseudo,
     bind=SUPER,R,forcerendererreload
     bind=SUPER SHIFT,R,exec,${pkgs.hyprland}/bin/hyprctl reload
-    bind = SUPER, F, exec, firefox
+    bind = $mainMod SHIFT, F, exec, firefox
 
     #windowrule=float,^(Rofi)$
     windowrule=float,title:^(Volume Control)$
@@ -103,6 +104,7 @@ let
 # Core binds
     bind = $mainMod, S, togglefloating,
     bind = $mainMod, J, togglesplit, # dwindle
+    bind=  $mainMod,F,fullscreen,0
 
 # Screenshot binds
     bind = $mainMod SHIFT, S, exec, grimblast copy area
@@ -156,6 +158,7 @@ let
     binde = $mainMod Control, space, exec, pamixer --toggle-mute
 
     exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+    exec-once=hyprctl setcursor Bibata-Modern-Classic 24
     exec-once=swww init
     exec-once=~/.config/swww/randomize.sh ~/Git/nixos-config/wallpapers
     exec-once=${pkgs.waybar}/bin/waybar

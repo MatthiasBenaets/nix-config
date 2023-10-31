@@ -29,6 +29,8 @@ in
       MOZ_ENABLE_WAYLAND = "1";
     };
     systemPackages = with pkgs; [
+      networkmanagerapplet
+      blueman
       grim
       mpvpaper
       slurp
@@ -38,6 +40,10 @@ in
       swaybg
       wpaperd
       dunst
+      rofi
+      cinnamon.nemo
+      colloid-gtk-theme
+      colloid-icon-theme
     ];
   };
 

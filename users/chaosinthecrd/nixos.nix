@@ -87,8 +87,14 @@ in
      usbutils
      waybar
      swww
+     gtk3
+     gtk4
+     nwg-look
+     bibata-cursors
      # nixpkgs-wayland.packages.${system}.waybar
   ];
+
+  hardware.xone.enable = true;
 
   programs.steam = {
     enable = true;
@@ -122,12 +128,17 @@ in
   services.xremap = {
     userName = "chaosinthecrd";  # run as a systemd service in alice
     serviceMode = "user";  # run xremap as user
+    withWlroots = true;
     config = {
       keymap = [
         {
             name = "Global";
-            application = { "not" = "kitty"; };
-            remap = { "Super-v" = "C-v"; "Super-z" = "C-z"; "Super-c" = "C-c"; "Super-a" = "C-a"; "Super-x" = "C-x"; "Super-f" = "C-f"; "Super-t" = "C-t"; };  # globally remap CapsLock to Esc
+            application = {
+            not = [ "kitty" ];
+            };
+            remap = { "Super-v" = "C-v"; "Super-z" = "C-z"; "Super-c" = "C-c"; "Super-a" = "C-a"; "Super-x" = "C-x"; "Super-f" = "C-f"; "Super-t" = "C-t"; "Super-w" = "C-w";
+                      "Alt-left" = "Ctrl-left"; "Alt-right" = "Ctrl-right"; "Alt-backspace" = "Ctrl-backspace";
+                    };  # globally remap CapsLock to Esc
         }
       ];
     };
