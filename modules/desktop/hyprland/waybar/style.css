@@ -8,14 +8,14 @@
 }
 
 window#waybar {
-  background-color: rgba(26, 27, 38, 0.5);
+  background-color: transparent;
   color: #ffffff;
   transition-property: background-color;
   transition-duration: 0.5s;
 }
 
 window#waybar.hidden {
-  opacity: 0.1;
+  opacity: 0.0;
 }
 
 #clock,
