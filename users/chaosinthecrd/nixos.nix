@@ -23,7 +23,7 @@ in
   programs.zsh.enable = true;
 
   # Enable networking
-  networking.networkmanager.enable = false;
+  networking.networkmanager.enable = true;
 
   # Set your time zone.
   time.timeZone = "Europe/London";
