@@ -1,0 +1,176 @@
+{
+    "height": 20, // Waybar height (to be removed for auto height)
+    "layer": "top", // Waybar at top layer
+    "modules-left": ["custom/launcher", "hyprland/workspaces", "hyprland/window"],
+    "modules-center": ["cpu", "memory", "custom/weather", "custom/spotify"],
+    "modules-right": ["clock", "network", "pulseaudio", "tray", "custom/power-menu"],
+    "hyprland/workspaces": {
+      "format": "{icon}",
+      "all-outputs": true,
+      "active-only": false,
+      "on-click": "activate",
+      "persistent_workspaces": {
+        "*": 10,
+      },
+      "format-icons": {
+        "1": "",
+        "2": "",
+        "3": "󰈹",
+        "4": "󰒱",
+        "5": "󰆟",
+        "6": "",
+        "7": "",
+        "8": "󰁥",
+        "9": "",
+        "10": "󰆟",
+      }
+    },
+    "hyprland/window": {
+        "format": "{}"
+        
+    },
+    "tray": {
+        "spacing": 10
+    },
+    "clock": {
+        "format": "{:%H:%M}",
+        "format-alt": "{:%b %d %Y}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    },
+
+    "cpu": {
+      "interval": 10,
+      "format": "  {}%",
+      "max-length": 10,
+      "on-click": "",
+    },
+    "memory": {
+        "interval": 30,
+        "format": " {}%",
+        "format-alt":" {used:0.1f}GB",
+        "max-length": 10,
+    },
+    "temperature": {
+        "interval": 10,
+        "format": " {temperatureC}°C",
+        "format-alt":"temprature",
+        "max-length": 10,
+    },
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "{icon}",
+        "tooltip": true,
+        "format-alt": "<small>{percent}%</small>",
+        "format-icons": ["󱩎 ", "󱩏 ", "󱩐 ", "󱩑 ", "󱩒 ", "󱩓 ", "󱩔 ", "󱩕 ", "󱩖 ", "󰛨 "],
+        "on-scroll-up": "brightnessctl set 1%+",
+        "on-scroll-down": "brightnessctl set 1%-",
+        "smooth-scrolling-threshold": "2400",
+	"tooltip-format" : "Brightness {percent}%",
+    },
+    "network": {
+        /* "format-wifi": "直", */
+        "format-wifi": "<small>{bandwidthUpBytes}↑ {bandwidthDownBytes}↓</small> {icon}",
+        "format-ethernet": "󰈀",
+        "format-disconnected": "󰤭",
+        "tooltip-format": "{essid}",
+        "interval": 1,
+        "on-click": "~/.config/waybar/scripts/network/rofi-network-manager.sh",
+        "format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"],
+        
+    },
+           "bluetooth": {
+                "format": "{icon}",
+                "format-alt": "bluetooth: {status}",
+                "interval": 30,
+                "format-icons": {
+                     "enabled": "",
+                     "disabled": "󰂲"
+                  
+                },
+                "tooltip-format": "{status}"
+           },
+
+    "pulseaudio": {
+        "format": "{icon}",
+        "format-muted": "󰖁",
+        "format-icons": {
+            "default": ["", "", "󰕾"]
+        },
+        "on-click": "pamixer -t",
+        "on-scroll-up": "pamixer -i 1",
+        "on-scroll-down": "pamixer -d 1",
+	"on-click-right": "exec pavucontrol",
+        "tooltip-format" : "Volume {volume}%",
+    },
+
+    "battery": {
+      "bat": "BAT0",
+      "adapter": "ADP0",
+      "interval": 60,
+      "states": {
+          "warning": 30,
+          "critical": 15
+      },
+      "max-length": 20,
+      "format": "{icon} ",
+      "format-warning": "{icon}",
+      "format-critical": "{icon}",
+      "format-charging": "<span font-family='Font Awesome 6 Free'></span>",
+      "format-plugged": "󰚥", 
+      "format-notcharging": "󰚥",
+      "format-alt": "{icon}<small> {time}</small>",
+      "format-full": "󰂄", 
+ 
+
+      "format-alt": "<small>{capacity}%</small> ",
+      "format-full": "󰚥", 
+      "format-icons": ["󱊡", "󱊢", "󱊣"]
+    },
+    "custom/weather": {
+      "exec": "nix-shell ~/.config/waybar/scripts/weather.py",
+      "restart-interval": 300,
+      "return-type": "json",
+    },   
+   "custom/lock": {
+       "tooltip" : false,
+       "on-click": "swaylock",
+       "format" : "",
+    },
+    
+      "mpris": {
+  	"format": "{player_icon} {title}",
+  	"format-paused": " {status_icon} <i>{title}</i>",
+  	"player-icons": {
+  		"default": "▶",
+  		"mpv": "🎵"
+  	},
+  	"status-icons": {
+  		"paused": "⏸"
+  	},
+  	// "ignored-players": ["firefox"]
+  },
+        
+
+    
+   "custom/spotify": {
+        "exec": "bash ~/.config/waybar/scripts/spotify.sh",
+        "format": " {}",
+        "return-type": "string",
+        "on-click": "playerctl play-pause",
+        "on-double-click-right": "playerctl next",
+        "on-scroll-down": "playerctl previous",
+    },
+
+    "custom/power-menu": {
+        "format": " ⏻ ",
+        "on-click": "bash ~/.config/waybar/scripts/power-menu/powermenu.sh &",
+    }, 
+    "custom/launcher": {
+        "format": "󱄅",
+        "on-click": "rofi -show drun &",
+    },
+    "custom/wallpaper": {
+       "format": " 󰔉 ",
+       "on-click": "bash ~/.config/waybar/scripts/changewallpaper.sh",
+    } 
+}

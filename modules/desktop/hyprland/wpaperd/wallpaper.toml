@@ -1,0 +1,4 @@
+[default]
+path = "/home/chaosinthecrd/Git/nixos-config/wallpapers/"
+duration = "1m"
+sorting = "random"

@@ -25,6 +25,7 @@ in
 
       GDK_BACKEND = "wayland";
       WLR_NO_HARDWARE_CURSORS = "1";
+      NIXOS_OZONE_WL = "1";
       MOZ_ENABLE_WAYLAND = "1";
     };
     systemPackages = with pkgs; [
@@ -32,19 +33,21 @@ in
       mpvpaper
       slurp
       swappy
-      swaylock
       wl-clipboard
       wlr-randr
+      swaybg
+      wpaperd
+      dunst
     ];
   };
 
   programs = {
     hyprland = {
-      enable = false;
+      enable = true;
       xwayland = {
         enable = true;
-        hidpi = false;
       };
+      enableNvidiaPatches = true;
     };
   };
 

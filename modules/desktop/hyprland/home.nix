@@ -24,12 +24,11 @@ let
 in
 let
   hyprlandConf = ''
-    env = MESA_GL_VERSION_OVERRIDE,3.3
-    env = MESA_GLSL_VERSION_OVERRIDE,330
-    env = MESA_GLES_VERSION_OVERRIDE,3.1
+    #env = MESA_GL_VERSION_OVERRIDE,3.3
+    #env = MESA_GLSL_VERSION_OVERRIDE,330
+    #env = MESA_GLES_VERSION_OVERRIDE,3.1
 
     general {
-      #main_mod=SUPER
       border_size=3
       gaps_in=5
       gaps_out=7
@@ -40,11 +39,9 @@ let
 
     decoration {
       rounding=5
-      multisample_edges=true
       active_opacity=0.93
       inactive_opacity=0.93
       fullscreen_opacity=1
-      blur=true
       drop_shadow=false
     }
 
@@ -55,12 +52,12 @@ let
       animation=windows,1,7,myBezier
       animation=windowsOut,1,3,default,popin 60%
       animation=windowsMove,1,7,myBezier
+      animation=workspaces,1,8,default,fade
     }
 
     input {
       kb_layout=us
-      kb_options=caps:ctrl_modifier
-      follow_mouse=2
+      follow_mouse=1
       repeat_delay=250
       numlock_by_default=1
       accel_profile=flat
@@ -79,72 +76,22 @@ let
       damage_tracking=2
     }
 
+    $mainMod = ALT
     bindm=SUPER,mouse:272,movewindow
     bindm=SUPER,mouse:273,resizewindow
 
-    bind=SUPER,Return,exec,${pkgs.alacritty}/bin/alacritty
-    bind=SUPER,Q,killactive,
+    bind=$mainMod SHIFT,T,exec,${pkgs.kitty}/bin/kitty
+    bind=SUPER,W,killactive,
     bind=SUPER,Escape,exit,
     bind=SUPER,L,exec,${pkgs.swaylock}/bin/swaylock
     bind=SUPER,E,exec,${pkgs.pcmanfm}/bin/pcmanfm
-    bind=SUPER,H,togglefloating,
+    bind=$mainMod,S,togglefloating,
     #bind=SUPER,Space,exec,${pkgs.rofi}/bin/rofi -show drun
     bind=SUPER,Space,exec,${pkgs.wofi}/bin/wofi --show drun
     bind=SUPER,P,pseudo,
-    bind=SUPER,F,fullscreen,
     bind=SUPER,R,forcerendererreload
-    bind=SUPERSHIFT,R,exec,${pkgs.hyprland}/bin/hyprctl reload
-    bind=SUPER,T,exec,${pkgs.emacs}/bin/emacsclient -c
-
-    bind=SUPER,left,movefocus,l
-    bind=SUPER,right,movefocus,r
-    bind=SUPER,up,movefocus,u
-    bind=SUPER,down,movefocus,d
-
-    bind=SUPERSHIFT,left,movewindow,l
-    bind=SUPERSHIFT,right,movewindow,r
-    bind=SUPERSHIFT,up,movewindow,u
-    bind=SUPERSHIFT,down,movewindow,d
-
-    bind=ALT,1,workspace,1
-    bind=ALT,2,workspace,2
-    bind=ALT,3,workspace,3
-    bind=ALT,4,workspace,4
-    bind=ALT,5,workspace,5
-    bind=ALT,6,workspace,6
-    bind=ALT,7,workspace,7
-    bind=ALT,8,workspace,8
-    bind=ALT,9,workspace,9
-    bind=ALT,0,workspace,10
-    bind=ALT,right,workspace,+1
-    bind=ALT,left,workspace,-1
-
-    bind=ALTSHIFT,1,movetoworkspace,1
-    bind=ALTSHIFT,2,movetoworkspace,2
-    bind=ALTSHIFT,3,movetoworkspace,3
-    bind=ALTSHIFT,4,movetoworkspace,4
-    bind=ALTSHIFT,5,movetoworkspace,5
-    bind=ALTSHIFT,6,movetoworkspace,6
-    bind=ALTSHIFT,7,movetoworkspace,7
-    bind=ALTSHIFT,8,movetoworkspace,8
-    bind=ALTSHIFT,9,movetoworkspace,9
-    bind=ALTSHIFT,0,movetoworkspace,10
-    bind=ALTSHIFT,right,movetoworkspace,+1
-    bind=ALTSHIFT,left,movetoworkspace,-1
-
-    bind=CTRL,right,resizeactive,20 0
-    bind=CTRL,left,resizeactive,-20 0
-    bind=CTRL,up,resizeactive,0 -20
-    bind=CTRL,down,resizeactive,0 20
-
-    bind=,print,exec,${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.swappy}/bin/swappy -f - -o ~/Pictures/$(date +%Hh_%Mm_%Ss_%d_%B_%Y).png && notify-send "Saved to ~/Pictures/$(date +%Hh_%Mm_%Ss_%d_%B_%Y).png"
-
-    bind=,XF86AudioLowerVolume,exec,${pkgs.pamixer}/bin/pamixer -d 10
-    bind=,XF86AudioRaiseVolume,exec,${pkgs.pamixer}/bin/pamixer -i 10
-    bind=,XF86AudioMute,exec,${pkgs.pamixer}/bin/pamixer -t
-    bind=,XF86AudioMicMute,exec,${pkgs.pamixer}/bin/pamixer --default-source -t
-    bind=,XF86MonBrightnessDown,exec,${pkgs.light}/bin/light -U 10
-    bind=,XF86MonBrightnessUP,exec,${pkgs.light}/bin/light -A 10
+    bind=SUPER SHIFT,R,exec,${pkgs.hyprland}/bin/hyprctl reload
+    bind = SUPER, F, exec, firefox
 
     #windowrule=float,^(Rofi)$
     windowrule=float,title:^(Volume Control)$
@@ -153,48 +100,77 @@ let
     windowrule=move 75% 75% ,title:^(Picture-in-Picture)$
     windowrule=size 24% 24% ,title:^(Picture-in-Picture)$
 
+# Core binds
+    bind = $mainMod, S, togglefloating,
+    bind = $mainMod, J, togglesplit, # dwindle
+
+# Screenshot binds
+    bind = $mainMod SHIFT, S, exec, grimblast copy area
+    bind = $mainMod, S, exec, grimblast copy window
+    bind = $mainMod SHIFT, D, exec, grimblast save area
+    bind = $mainMod, D, exec, grimblast save window
+
+# Move focus with mainMod + arrow keys
+    bind = $mainMod, h, movefocus, l
+    bind = $mainMod, l, movefocus, r
+    bind = $mainMod, k, movefocus, u
+    bind = $mainMod, j, movefocus, d
+
+# Switch workspaces with mainMod + [0-9]
+    bind = Control, 1, workspace, 1
+    bind = Control, 2, workspace, 2
+    bind = Control, 3, workspace, 3
+    bind = Control, 4, workspace, 4
+    bind = Control, 5, workspace, 5
+    bind = Control, 6, workspace, 6
+    bind = Control, 7, workspace, 7
+    bind = Control, 8, workspace, 8
+    bind = Control, 9, workspace, 9
+    bind = Control, 0, workspace, 10
+
+# Move active window to a workspace with mainMod + SHIFT + [0-9]
+    bind = $mainMod SHIFT, 1, movetoworkspacesilent, 1
+    bind = $mainMod SHIFT, 2, movetoworkspacesilent, 2
+    bind = $mainMod SHIFT, 3, movetoworkspacesilent, 3
+    bind = $mainMod SHIFT, 4, movetoworkspacesilent, 4
+    bind = $mainMod SHIFT, 5, movetoworkspacesilent, 5
+    bind = $mainMod SHIFT, 6, movetoworkspacesilent, 6
+    bind = $mainMod SHIFT, 7, movetoworkspacesilent, 7
+    bind = $mainMod SHIFT, 8, movetoworkspacesilent, 8
+    bind = $mainMod SHIFT, 9, movetoworkspacesilent, 9
+    bind = $mainMod SHIFT, 0, movetoworkspacesilent, 10
+
+# Scroll through existing workspaces with mainMod + scroll
+    bind = $mainMod SHIFT, n, exec, playerctl next
+    bind = $mainMod SHIFT, p, exec, playerctl previous
+
+# Move/resize windows with mainMod + LMB/RMB and dragging
+    binde = $mainMod Control,l,resizeactive,50 0
+    binde = $mainMod Control,h,resizeactive,-50 0
+    binde = $mainMod Control,k,resizeactive,0 -50
+    binde = $mainMod Control,j,resizeactive,0 50
+
+    binde = $mainMod SHIFT, up, exec, pactl -- set-sink-volume 0 +10% 
+    binde = $mainMod SHIFT, down, exec, pactl -- set-sink-volume 0 -10% 
+    binde = $mainMod Control, space, exec, pamixer --toggle-mute
+
     exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+    exec-once=swww init
+    exec-once=~/.config/swww/randomize.sh ~/Git/nixos-config/wallpapers
     exec-once=${pkgs.waybar}/bin/waybar
-    exec-once=${pkgs.blueman}/bin/blueman-applet
+    exec-once=systemctl --user start pulseaudio.service
+
+    exec-once=hyprctl dispatch exec "[workspace 1 silent]" kitty
+    exec-once=hyprctl dispatch exec "[workspace 2 silent]" kitty
+    exec-once=hyprctl dispatch exec "[workspace 3 silent]" firefox
+    exec-once=hyprctl dispatch exec "[workspace 6 silent]" spotify
+    exec-once=hyprctl dispatch exec "[workspace 7 silent]" firefox
+    exec-once=hyprctl dispatch exec "[workspace 8 silent]" spark
+    exec-once=hyprctl dispatch exec "[workspace 9 silent]" 1password
+
   '';
 in
 {
   xdg.configFile."hypr/hyprland.conf".text = hyprlandConf;
 
-  programs.swaylock.settings = {
-    color = "000000f0";
-    font-size = "24";
-    indicator-idle-visible = false;
-    indicator-radius = 100;
-    indicator-thickness = 20;
-    inside-color = "00000000";
-    inside-clear-color = "00000000";
-    inside-ver-color = "00000000";
-    inside-wrong-color = "00000000";
-    key-hl-color = "79b360";
-    line-color = "000000f0";
-    line-clear-color = "000000f0";
-    line-ver-color = "000000f0";
-    line-wrong-color = "000000f0";
-    ring-color = "ffffff50";
-    ring-clear-color = "bbbbbb50";
-    ring-ver-color = "bbbbbb50";
-    ring-wrong-color = "b3606050";
-    text-color = "ffffff";
-    text-ver-color = "ffffff";
-    text-wrong-color = "ffffff";
-    show-failed-attempts = true;
-  };
-
-  services.swayidle = {
-    enable = true;
-    events = [
-      { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock -f"; }
-      { event = "lock"; command = "lock"; }
-    ];
-    timeouts = [
-      { timeout= 300; command = "${pkgs.swaylock}/bin/swaylock -f";}
-    ];
-    systemdTarget = "xdg-desktop-portal-hyprland.service";
-  };
 }

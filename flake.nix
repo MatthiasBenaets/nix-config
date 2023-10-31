@@ -3,8 +3,9 @@
 
   inputs =                                                                  # All flake references used to build my NixOS setup. These are dependencies.
     {
-        nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";                  # Nix Packages
-
+      nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";                  # Nix Packages
+      nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";                  # Nix Packages
+      nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
       home-manager = {                                                      # User Package Management
         url = "github:nix-community/home-manager";
         inputs.nixpkgs.follows = "nixpkgs";
@@ -15,44 +16,43 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
+      hyprland = {
+        url = "github:hyprwm/Hyprland";
+        inputs.nixpkgs.follows = "nixpkgs-unstable";
+      };
+
+      xremap-flake.url = "github:xremap/nix-flake";
+
+      nixpkgs-wayland.inputs.nixpkgs.follows = "nixpkgs";
     };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, darwin, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
+  outputs = inputs @ { self, xremap-flake, hyprland, nixpkgs, nixpkgs-unstable, home-manager, darwin, ... }:   # Function that tells my flake which to use and what do what to do with the dependencies.
     let                                                                     # Variables that can be used in the config files.
       mkDarwin = import ./lib/mkdarwin.nix;
-      # mkVM = import ./lib/mkvm.nix;
-      # mkBM = import ./lib/mkbm.nix;
-      # mkHM = import ./lib/mkhm.nix;
+      mkSys = import ./lib/mksys.nix;
       user = "chaosinthecrd";
-      # fedoraSystem = "x86_64-linux";
+      system = "x86_64-linux";
+      pkgs  = import nixpkgs {
+      inherit system; 
+      config = { allowUnfree = true; allowInsecure = true; };
+      overlays = [
+        (final: prev: {
+          nordpass = final.callPackage ./pkgs/nordpass { };
+          waybar = inputs.nixpkgs-unstable.legacyPackages.${system}.waybar;
+          swww = inputs.nixpkgs-unstable.legacyPackages.${system}.swww;
+          _1password-gui = inputs.nixpkgs-unstable.legacyPackages.${system}._1password-gui;
+          dunst = inputs.nixpkgs-unstable.legacyPackages.${system}.dunst;
+          slack = inputs.nixpkgs-unstable.legacyPackages.${system}.slack;
+        })
+      ];
+      };
     in                                                                      # Use above variables in ...
     {
 
-      # nixpkgs.overlays = [
-      # (self: super: {
-      #   fcitx-engines = nixpkgs.fcitx5;
-      # })
-      # ];
-
-      # nixosConfigurations.vm-aarch64-prl = mkVM "vm-aarch64-prl" rec {
-      #   inherit nixpkgs home-manager user;
-      #   system = "aarch64-linux";
-      #   pkgs = import nixpkgs { inherit system; };
-      #   lib = pkgs.lib;
-      # };
-      #
-      # homeConfigurations.fedora-desktop = mkHM "fedora-desktop" rec {
-      #   inherit home-manager user;
-      #   pkgs = nixpkgs.legacyPackages."x86_64-linux";
-      #   lib = pkgs.lib;
-      # };
-
-      # # assuming for now that all bare-metal is going to be x86
-      # nixosConfigurations.bm-x86 = mkBM "bm-x86-linux" {
-      #   inherit nixpkgs home-manager user;
-      #   system = "x86_64-linux";
-      #   lib = nixpkgs.lib;
-      # };
+      nixosConfigurations.desktop = mkSys "desktop" rec {
+         inherit home-manager user nixpkgs xremap-flake hyprland system pkgs;
+         lib = pkgs.lib;
+      };
 
       darwinConfigurations.macbook-m1 = mkDarwin "macbook-m1" rec {
         inherit darwin home-manager;

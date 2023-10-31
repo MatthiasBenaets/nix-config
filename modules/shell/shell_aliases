@@ -28,9 +28,6 @@ alias kubectl="kubectl-lock kubectl --"
 alias k="kubectl"
 alias kc="kubectl"
 
-# Enable aliases to be sudo’ed
-alias sudo="sudo "
-
 # Yubikey stuff
 alias rgpg="rm -r ~/.gnupg/private-keys-v1.d && killall gpg-agent && gpg-agent --daemon --pinentry-program /opt/homebrew/bin/pinentry"
 
@@ -63,10 +60,6 @@ alias cleanup_dsstore="find . -name '*.DS_Store' -type f -ls -delete"
 
 # Disc utils
 alias diskspace_report="df -P -kHl"
-
-# Empty the Trash on all mounted volumes and the main HDD.
-# Also, clear Apple’s System Logs & the useless sleepimage to improve shell startup speed
-alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo grm -rf $HOME/.Trash; sudo rm -rtv /private/var/log/asl/*.asl; sudo rm /private/var/vm/sleepimage"
 
 # Show/hide hidden files in Finder
 alias showdotfiles="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
