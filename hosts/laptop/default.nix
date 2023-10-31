@@ -14,7 +14,7 @@
 #               └─ docker.nix
 #
 
-{ pkgs, vars, ... }:
+{ pkgs, ... }:
 
 {
   imports = [

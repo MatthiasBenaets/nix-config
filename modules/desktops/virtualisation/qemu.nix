@@ -2,7 +2,7 @@
 #  Qemu/KVM With Virt-Manager
 #
 
-{ config, pkgs, vars, ... }:
+{ pkgs, vars, ... }:
 
 {
   boot.extraModprobeConfig = ''
@@ -11,7 +11,10 @@
     options kvm ignore_nsrs=1
   '';                                         # For OSX-KVM
 
-  users.groups.libvirtd.members = [ "root" "${vars.user}" ];
+  users.groups = {
+    libvirtd.members = [ "root" "${vars.user}" ];
+    kvm.members = [ "root" "${vars.user}" ];
+  };
 
   virtualisation = {
     libvirtd = {

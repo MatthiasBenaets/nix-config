@@ -35,7 +35,7 @@
 
   users.users.${vars.user} = {              # System User
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" "kvm" "libvirtd" "plex" ];
+    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" ];
   };
 
   time.timeZone = "Europe/Brussels";        # Time zone and Internationalisation

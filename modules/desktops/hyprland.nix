@@ -25,11 +25,11 @@ with host;
       exec = "exec dbus-launch Hyprland";
     in
     {
-      #loginShellInit = ''
-      #  if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
-      #    ${exec}
-      #  fi
-      #'';                                     # Start from TTY1
+      loginShellInit = ''
+        if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
+          ${exec}
+        fi
+      '';                                     # Start from TTY1
 
       variables = {
         #WLR_NO_HARDWARE_CURSORS="1";         # Needed for VM

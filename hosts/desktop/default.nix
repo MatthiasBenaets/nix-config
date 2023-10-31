@@ -14,7 +14,7 @@
 #               └─ default.nix
 #
 
-{ pkgs, vars, ... }:
+{ pkgs, ... }:
 
 {
   imports = [ ./hardware-configuration.nix ] ++
@@ -60,7 +60,6 @@
   environment = {
     systemPackages = with pkgs; [               # System-Wide Packages
       ansible           # Automation
-      discord           # Messaging
       gmtp              # Used for mounting gopro
       hugo              # Static Website Builder
       plex-media-player # Media Player
@@ -75,15 +74,4 @@
       "com.github.tchx84.Flatseal"
     ];
   };
-
-  nixpkgs.overlays = [                          # Overlay pulls latest version of Discord
-    (self: super: {
-      discord = super.discord.overrideAttrs (
-        _: { src = builtins.fetchTarball {
-          url = "https://discord.com/api/download?platform=linux&format=tar.gz";
-          sha256 = "0pml1x6pzmdp6h19257by1x5b25smi2y60l1z40mi58aimdp59ss";
-        };}
-      );
-    })
-  ];
 }

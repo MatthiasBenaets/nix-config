@@ -29,7 +29,7 @@
 | *Launcher*      | Wofi             | Gnome                  | Rofi             | /         |
 | *GTK Theme*     | Catppuccin       | Catppuccin / Adwaita   | Catppuccin       | /         |
 | *Notifications* | Dunst            | Gnome                  | Dunst            | /         |
-| *Terminal*      | Alacritty        | Alacritty              | Alacritty        | Alacritty |
+| *Terminal*      | Kitty            | Kitty                  | Kitty            | Alacritty |
 | *Used by host*  | Desktop          | Work                   | Laptop & VM      | Macbook   |
 
 There are some other desktop environments/window manager (See NixOS - Other). Just link to correct ~default/home.nix~ in ~./hosts/<host>/default and home.nix~.
@@ -37,7 +37,7 @@ There is also a general Nix config with hostname ~pacman~ that can be used on pr
 
 Compontents relevant to all hosts:
 | *Shell*    | Zsh               |
-| *Terminal* | Alacritty         |
+| *Terminal* | Kitty             |
 | *Editors*  | Nvim + Doom Emacs |
 
 * NixOS Installation Guide

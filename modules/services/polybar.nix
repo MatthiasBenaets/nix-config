@@ -278,7 +278,7 @@ in
               menu-1-4-exec = "sleep 0.5; systemctl reboot";
 
               menu-2-0 = "";
-              menu-2-0-exec = "alacritty &";
+              menu-2-0-exec = "${vars.terminal} &";
               menu-2-1 = "";
               menu-2-1-exec = "firefox &";
               menu-2-2 = "";

@@ -16,10 +16,13 @@
 #  NOTE: Dual booted with windows 11. Disable fast-boot in power plan and bios and turn off hibernate to get wifi and bluetooth working. This only works once but on reboot is borked again. So using the old school BLT dongle.
 #
 
-{ lib, pkgs, vars, ... }:
+{ pkgs, unstable, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ] ++
+  imports = [
+              ./hardware-configuration.nix
+              ../../modules/programs/games.nix
+            ] ++
             ( import ../../modules/desktops/virtualisation);
 
   boot = {                                      # Boot Options
@@ -29,7 +32,7 @@
         configurationLimit = 3;
       };
       efi = {
-	canTouchEfiVariables = true;
+  canTouchEfiVariables = true;
       };
       timeout = 5;
     };
@@ -60,11 +63,14 @@
       gmtp                  # Mount GoPro
       hugo                  # Static Website Builder
       jellyfin-media-player # Media Player
-      moonlight-qt          # Remote Streaming
       obs-studio            # Live Streaming
       plex-media-player     # Media Player
       simple-scan           # Scanning
-    ];
+      kitty
+    ] ++
+    (with unstable; [
+      moonlight-qt          # Remote Streaming
+    ]);
   };
 
   flatpak = {                                   # Flatpak Packages (see module options)
@@ -76,8 +82,8 @@
   };
 
   nixpkgs.overlays = [                          # Overlay pulls latest version of Discord
-    (self: super: {
-      discord = super.discord.overrideAttrs (
+    (final: prev: {
+      discord = prev.discord.overrideAttrs (
         _: { src = builtins.fetchTarball {
           url = "https://discord.com/api/download?platform=linux&format=tar.gz";
           sha256 = "0pml1x6pzmdp6h19257by1x5b25smi2y60l1z40mi58aimdp59ss";
