@@ -18,10 +18,6 @@ window#waybar.hidden {
   opacity: 0.1;
 }
 
-#window {
-  color: #64727d;
-}
-
 #clock,
 #temperature,
 #mpris, 
@@ -32,6 +28,7 @@ window#waybar.hidden {
 #mode,
 #custom-lock,
 #workspaces,
+#window,
 #idle_inhibitor,
 #custom-wallpaper, 
 #custom-power-menu,
@@ -83,6 +80,19 @@ window#waybar.hidden {
   margin-right: 0em;
   transition: all 0.5s cubic-bezier(0.55, -0.68, 0.48, 1.68);
 }
+
+#window button {
+  color: #7a95c9;
+  box-shadow: inset 0 -3px transparent;
+
+  padding-right: 3px;
+  padding-left: 4px;
+
+  margin-left: 0.1em;
+  margin-right: 0em;
+  transition: all 0.5s cubic-bezier(0.55, -0.68, 0.48, 1.68);
+}
+
 
 #workspaces button.active {
   color: #ecd3a0;

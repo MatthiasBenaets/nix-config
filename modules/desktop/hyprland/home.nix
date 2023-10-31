@@ -29,18 +29,18 @@ let
     #env = MESA_GLES_VERSION_OVERRIDE,3.1
 
     general {
-      border_size=3
+      border_size=5
       gaps_in=5
       gaps_out=7
-      col.active_border=0x80ffffff
-      col.inactive_border=0x66333333
+      col.active_border=0xffAFDCA4
+      col.inactive_border=0xffaaaaaa
       layout=dwindle
     }
 
     decoration {
-      rounding=5
-      active_opacity=0.93
-      inactive_opacity=0.93
+      rounding=8
+      active_opacity=1
+      inactive_opacity=1
       fullscreen_opacity=1
       drop_shadow=false
     }
@@ -143,6 +143,7 @@ let
 # Scroll through existing workspaces with mainMod + scroll
     bind = $mainMod SHIFT, n, exec, playerctl next
     bind = $mainMod SHIFT, p, exec, playerctl previous
+    bind = $mainMod SHIFT, space, exec, playerctl play-pause
 
 # Move/resize windows with mainMod + LMB/RMB and dragging
     binde = $mainMod Control,l,resizeactive,50 0
