@@ -11,8 +11,8 @@ in {
   gtk = {
     enable = true;
     cursorTheme = {
-      name = "macOS-BigSur";
-      package = pkgs.apple-cursor;
+      name = "Bibata-Modern-Ice";
+      package = pkgs.bibata-cursors;
     };
 
     theme = {
