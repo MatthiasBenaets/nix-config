@@ -41,6 +41,7 @@ in {
         ../../pkgs/nixos.nix
         ../../modules/desktop/hyprland/extras.nix
         ../../modules/desktop/dunst/dunst.nix
+        ../../modules/vm/vfio/default.nix
         ]);
 
   home = {

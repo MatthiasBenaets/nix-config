@@ -46,8 +46,10 @@ in
   users.users.chaosinthecrd = {
     isNormalUser = true;
     home = "/home/chaosinthecrd";
-    extraGroups = [ "audio" "networkmanger" "docker" "wheel" ];
+    extraGroups = [ "libvirt" "qemu-libvirtd" "kvm" "libvirtd" "audio" "disk" "video" "networkmanger" "docker" "wheel" ];
     shell = pkgs.zsh;
+    group = "users";
+    uid = 1027;
   };
 
   nixpkgs.overlays = [
@@ -91,16 +93,39 @@ in
      gtk4
      nwg-look
      bibata-cursors
-     # nixpkgs-wayland.packages.${system}.waybar
+     steam
+     lutris
+     wine
+     wineWowPackages.waylandFull
+     winetricks
+     virtmanager
+     looking-glass-client
   ];
 
-  hardware.xone.enable = true;
-
-  programs.steam = {
+  virtualisation.libvirtd = {
     enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    qemu = {
+        package = pkgs.qemu_kvm;
+        swtpm.enable = true;
+        ovmf = {
+            enable = true;
+            packages = [ pkgs.OVMFFull.fd ];
+        };
+        verbatimConfig = ''
+          namespaces = []
+          user = "+1027"
+        '';
+      };
+    onBoot = "ignore";
+    onShutdown = "shutdown";
+    extraConfig = ''
+      user="chaosinthecrd"
+    '';
   };
+
+  programs.dconf.enable = true;
+
+  hardware.xone.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -119,7 +144,7 @@ in
     settings = rec {
       initial_session = {
         command = "${pkgs.hyprland}/bin/Hyprland";
-	user = "chaosinthecrd";
+	      user = "chaosinthecrd";
     };
     default_session = initial_session;
   };

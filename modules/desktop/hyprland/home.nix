@@ -158,10 +158,10 @@ let
     binde = $mainMod Control, space, exec, pamixer --toggle-mute
 
     exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-    exec-once=hyprctl setcursor Bibata-Modern-Classic 24
-    exec-once=swww init
+    exec=hyprctl setcursor Bibata-Modern-Classic 24
+    exec=swww init
     exec-once=~/.config/swww/randomize.sh ~/Git/nixos-config/wallpapers
-    exec-once=${pkgs.waybar}/bin/waybar
+    exec=${pkgs.waybar}/bin/waybar
     exec-once=systemctl --user start pulseaudio.service
 
     exec-once=hyprctl dispatch exec "[workspace 1 silent]" kitty

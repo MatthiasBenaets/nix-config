@@ -45,6 +45,9 @@
           slack = inputs.nixpkgs-unstable.legacyPackages.${system}.slack;
           nwg-look = inputs.nixpkgs-unstable.legacyPackages.${system}.nwg-look;
           cartridges = inputs.nixpkgs-unstable.legacyPackages.${system}.cartridges;
+          steam = inputs.nixpkgs-unstable.legacyPackages.${system}.steam;
+          lutris = inputs.nixpkgs-unstable.legacyPackages.${system}.lutris;
+          looking-glass = inputs.nixpkgs-unstable.legacyPackages.${system}.looking-glass;
         })
       ];
       };
