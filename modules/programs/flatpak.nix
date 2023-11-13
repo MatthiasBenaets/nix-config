@@ -31,7 +31,7 @@ with lib;
 
     services.flatpak.enable = true;
 
-    system.activationScripts =
+    system.userActivationScripts =
       let
         extraPackages = concatStringsSep " " config.flatpak.extraPackages;
       in mkIf (config.flatpak.extraPackages != [])
