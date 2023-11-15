@@ -247,9 +247,9 @@ window#waybar.hidden {
 }
 
 #clock {
-  color: #8a909e;
   font-family: Iosevka Nerd Font;
-  font-weight: bold;
+  font-size: 19px;
+  color: #8a909e;
   margin-top: 7px;
   margin-bottom: 7px;
 }

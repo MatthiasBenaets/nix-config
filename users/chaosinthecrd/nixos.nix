@@ -86,6 +86,7 @@ in
      kitty
      firefox
      gnupg1
+     pinentry-curses
      usbutils
      waybar
      swww
@@ -150,6 +151,14 @@ in
   };
  };
 
+  services.gnome.gnome-keyring.enable = true;
+  services.pcscd.enable = true;
+  programs.gnupg.agent = {
+    enable = true;
+    pinentryFlavor = "curses";
+    enableSSHSupport = true;
+  };
+
   services.xremap = {
     userName = "chaosinthecrd";  # run as a systemd service in alice
     serviceMode = "user";  # run xremap as user
@@ -163,6 +172,8 @@ in
             };
             remap = { "Super-v" = "C-v"; "Super-z" = "C-z"; "Super-c" = "C-c"; "Super-a" = "C-a"; "Super-x" = "C-x"; "Super-f" = "C-f"; "Super-t" = "C-t"; "Super-w" = "C-w";
                       "Alt-left" = "Ctrl-left"; "Alt-right" = "Ctrl-right"; "Alt-backspace" = "Ctrl-backspace";
+                      "Super-g" = "C-g"; 
+                        # not sure how this is gonna work yet "Super-=" = "C-="; "Super--" = "C--";
                     };  # globally remap CapsLock to Esc
         }
       ];

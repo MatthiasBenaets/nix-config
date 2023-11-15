@@ -60,7 +60,7 @@ let
     input {
       kb_layout=us
       follow_mouse=1
-      repeat_delay=150
+      repeat_delay=200
       numlock_by_default=1
       accel_profile=flat
       sensitivity=0.8
@@ -167,10 +167,11 @@ let
     exec-once=hyprctl dispatch exec "[workspace 1 silent]" kitty
     exec-once=hyprctl dispatch exec "[workspace 2 silent]" kitty
     exec-once=hyprctl dispatch exec "[workspace 3 silent]" firefox
+    exec-once=hyprctl dispatch exec "[workspace 4 silent]" slack
     exec-once=hyprctl dispatch exec "[workspace 6 silent]" spotify
     exec-once=hyprctl dispatch exec "[workspace 7 silent]" firefox
-    exec-once=hyprctl dispatch exec "[workspace 8 silent]" spark
-    exec-once=hyprctl dispatch exec "[workspace 9 silent]" 1password
+    exec-once=hyprctl dispatch exec "[workspace 8 silent]" mailspring
+    exec-once=hyprctl dispatch exec "[workspace 9 silent]" nordpass
 
   '';
 in
