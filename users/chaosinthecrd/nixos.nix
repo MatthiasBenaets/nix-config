@@ -93,6 +93,7 @@ in
      gtk4
      nwg-look
      bibata-cursors
+     pinentry-curses
      steam
      lutris
      wine
@@ -151,6 +152,10 @@ in
  };
 
   services.gnome.gnome-keyring.enable = true;
+  programs.gnupg.agent = {
+    enable = true;
+    pinentryFlavor = "curses";
+  };
 
   services.xremap = {
     userName = "chaosinthecrd";  # run as a systemd service in alice
