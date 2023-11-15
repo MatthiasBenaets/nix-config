@@ -86,7 +86,6 @@ in
      kitty
      firefox
      gnupg1
-     pinentry-curses
      usbutils
      waybar
      swww
@@ -152,12 +151,6 @@ in
  };
 
   services.gnome.gnome-keyring.enable = true;
-  services.pcscd.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    pinentryFlavor = "curses";
-    enableSSHSupport = true;
-  };
 
   services.xremap = {
     userName = "chaosinthecrd";  # run as a systemd service in alice
