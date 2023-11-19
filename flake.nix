@@ -35,6 +35,11 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
+      nixvim = {
+        url = "github:nix-community/nixvim/nixos-23.05";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+
       emacs-overlay = {                                                     # Emacs Overlays
         url = "github:nix-community/emacs-overlay";
         flake = false;
@@ -58,7 +63,7 @@
       };
     };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, darwin, nur, nixgl, doom-emacs, hyprland, plasma-manager, ... }:   # Function telling flake which inputs to use
+  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, darwin, nur, nixgl, nixvim, doom-emacs, hyprland, plasma-manager, ... }:   # Function telling flake which inputs to use
     let
       vars = {                                                              # Variables Used In Flake
         user = "matthias";
@@ -71,7 +76,7 @@
       nixosConfigurations = (                                               # NixOS Configurations
         import ./hosts {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-unstable home-manager nur doom-emacs hyprland plasma-manager vars;   # Inherit inputs
+          inherit inputs nixpkgs nixpkgs-unstable home-manager nur nixvim doom-emacs hyprland plasma-manager vars;   # Inherit inputs
         }
       );
 

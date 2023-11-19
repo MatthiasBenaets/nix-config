@@ -1,121 +1,112 @@
-#
-#  Neovim
-#
-
-{ pkgs, vars, ... }:
+{ vars, ... }:
 
 {
   home-manager.users.${vars.user} = {
-    programs = {
-      neovim = {
-        enable = true;
-        viAlias = true;
-        vimAlias = true;
-        withNodeJs = true;
- 
-        plugins = with pkgs.vimPlugins; [
-          editorconfig-vim
-          auto-pairs
-          indent-blankline-nvim
-          lightline-vim
-          nerdtree
-          #nvim-fzf
-          #nvim-lspconfig
-          nvim-treesitter.withAllGrammars
-          telescope-nvim
-          vim-gitgutter
-          vim-lastplace
+    programs.nixvim = {
+      enable = true;
+      viAlias = true;
+      vimAlias = true;
 
-          # themes
-          wombat256-vim
-          srcery-vim
+      clipboard = {
+        register = "unnamedplus";
+        providers.wl-copy.enable = true;
+      };
+      
+      globals = {
+        mapleader = " ";
+        maplocalleader = " ";
+      };
 
-          # markdown
-          vim-markdown
+      colorschemes.onedark.enable = true;
 
-          # nix
-          vim-nix
+      options = {
+        relativenumber = true;
+        number = true;
+        hidden = true;
+        shiftwidth = 2;
+        tabstop = 2;
+        softtabstop = 2;
+        expandtab = true;
+        autoindent = true;
+        fileencoding = "utf-8";
+        swapfile = false;
+        completeopt = ["menu" "menuone" "noselect"];
+      };
 
-          # svelte
-          vim-svelte
+      plugins = {
+        airline = {
+          enable = true;
+          powerline = true;
+        };
+        telescope = {
+          enable = true;
+          keymaps = {
+            "<leader>ff" = "find_files";
+            "<leader>fg" = "live_grep";
+            "<leader>fb" = "buffers";
+            "<leader>fh" = "help_tags";
+          };
+        };
+        treesitter = {
+          enable = true;
+          nixvimInjections = true;
+          folding = false;
+          indent = true;
+        };
+        treesitter-refactor = {
+          enable = true;
+          highlightDefinitions.enable = true;
+        };
+        lsp = {
+          enable = true;
+          servers = {
+            nil_ls.enable = true;
+            #svelte.enable = true;
+            html.enable = true;
+            tsserver.enable = true;
+            tailwindcss = {
+              enable = true;
+              filetypes = [
+                "html"
+                "js"
+                "ts"
+                "jsx"
+                "tsx"
+                "mdx"
+                "svelte"
+              ];
+            };
+          };
+        };
+        nvim-cmp = {
+          enable = true;
 
-          coc-nvim
-        ];
+          mapping = {
+            "<C-d>" = "cmp.mapping.scroll_docs(-4)";
+            "<C-f>" = "cmp.mapping.scroll_docs(4)";
+            "<C-Space>" = "cmp.mapping.complete()";
+            "<C-e>" = "cmp.mapping.close()";
+            "<Tab>" = {
+              modes = ["i" "s"];
+              action = "cmp.mapping.select_next_item()";
+            };
+            "<S-Tab>" = {
+              modes = ["i" "s"];
+              action = "cmp.mapping.select_prev_item()";
+            };
+            "<CR>" = "cmp.mapping.confirm({ select = true })";
+          };
 
-        extraPackages = with pkgs; [
-          nodejs
-          rnix-lsp
-          nodePackages.typescript-language-server
-          nodePackages.svelte-language-server
-        ];
-
-        extraConfig = ''
-          colorscheme srcery
-          " colorscheme wombat256mod
-          syntax on
-          filetype plugin indent on
-
-          set shiftwidth=2
-          set tabstop=2
-          set softtabstop=2
-          set number
-          set expandtab
-
-          set list
-          set listchars=tab:>-
-
-          " Enable clipboard support
-          set clipboard=unnamedplus
-
-          " Enable auto-indentation
-          filetype plugin indent on
-
-          " Highlighting
-          highlight Comment cterm=italic gui=italic
-          hi Normal guibg=NONE ctermbg=NONE
-
-          " Set leader
-          let mapleader = " "
-
-          " Keybind UndoTree
-          nnoremap <F5> :UndotreeToggle<CR>
-
-          " Keybind Nerdtree
-          nmap <F6> :NERDTreeToggle<CR>
-
-          " Load Fugitive
-          " packadd fugitive
-
-          " Enable LSP
-          "lua << EOF
-          "require'lspconfig'.rnix.setup{}
-          "require'lspconfig'.tsserver.setup{}
-          "require'lspconfig'.svelte.setup{}
-          "EOF
-
-          "Configure Telescope
-          nnoremap <leader>ff :Telescope find_files<CR>
-          nnoremap <leader>fg :Telescope live_grep<CR>
-          nnoremap <leader>fb :Telescope buffers<CR>
-          nnoremap <leader>fh :Telescope help_tags<CR>
-
-          " Lightline
-          let g:lightline = {
-            \ 'colorscheme': 'wombat',
-            \ }
-
-          let g:coc_config = {
-          \ 'languageserver': {
-            \ 'svelte': {
-              \ 'command': 'svelte-language-server',
-              \ 'args': ['--stdio'],
-              \ 'filetypes': ['svelte'],
-              \ 'initializationOptions': {},
-            \ },
-          \ },
-          \ }
-          autocmd FileType * silent! call CocEnable()
-        '';
+          sources = [
+            {name = "path";}
+            {name = "nvim_lsp";}
+            {name = "cmp_tabnine";}
+            {
+              name = "buffer";
+              option.get_bufnrs.__raw = "vim.api.nvim_list_bufs";
+            }
+          ];
+        };
       };
     };
   };
