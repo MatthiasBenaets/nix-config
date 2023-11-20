@@ -9,7 +9,7 @@
 #           └─ default.nix 
 #
 
-{ lib, inputs, nixpkgs, nixpkgs-unstable, home-manager, nur, nixvim, doom-emacs, hyprland, plasma-manager, vars, ... }:
+{ lib, inputs, nixpkgs, nixpkgs-stable, home-manager, nur, nixvim, doom-emacs, hyprland, plasma-manager, vars, ... }:
 
 let
   system = "x86_64-linux";                                  # System Architecture
@@ -19,7 +19,7 @@ let
     config.allowUnfree = true;                              # Allow Proprietary Software
   };
 
-  unstable = import nixpkgs-unstable {
+  stable = import nixpkgs-stable {
     inherit system;
     config.allowUnfree = true;
   };
@@ -30,7 +30,7 @@ in
   beelink = lib.nixosSystem {                               # Desktop Profile
     inherit system;
     specialArgs = {                                         # Pass Flake Variable
-      inherit inputs system unstable hyprland vars;
+      inherit inputs system stable hyprland vars;
       host = {
         hostName = "beelink";
         mainMonitor = "HDMI-A-2";
@@ -39,15 +39,13 @@ in
     };
     modules = [                                             # Modules Used
       nur.nixosModules.nur
+      nixvim.nixosModules.nixvim
       ./beelink
       ./configuration.nix
 
       home-manager.nixosModules.home-manager {              # Home-Manager Module
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.users.${vars.user}.imports = [
-          nixvim.homeManagerModules.nixvim
-        ];
       }
     ];
   };
@@ -55,7 +53,7 @@ in
   laptop = lib.nixosSystem {                                # Laptop Profile
     inherit system;
     specialArgs = {
-      inherit inputs unstable vars;
+      inherit inputs stable vars;
       host = {
         hostName = "laptop";
         mainMonitor = "eDP-1";
@@ -63,15 +61,13 @@ in
       };
     };
     modules = [
+      nixvim.nixosModules.nixvim
       ./laptop
       ./configuration.nix
 
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.users.${vars.user}.imports = [
-          nixvim.homeManagerModules.nixvim
-        ];
       }
     ];
   };
@@ -79,7 +75,7 @@ in
   work = lib.nixosSystem {                                  # Work Profile
     inherit system;
     specialArgs = {
-      inherit inputs system unstable hyprland vars;
+      inherit inputs system stable hyprland vars;
       host = {
         hostName = "work";
         mainMonitor = "eDP-1";
@@ -88,15 +84,13 @@ in
       };
     };
     modules = [
+      nixvim.nixosModules.nixvim
       ./work
       ./configuration.nix
 
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.users.${vars.user}.imports = [
-          nixvim.homeManagerModules.nixvim
-        ];
       }
     ];
   };
@@ -104,7 +98,7 @@ in
   vm = lib.nixosSystem {                                    # VM Profile
     inherit system;
     specialArgs = {
-      inherit inputs unstable vars;
+      inherit inputs stable vars;
       host = {
         hostName = "vm";
         mainMonitor = "Virtual-1";
@@ -112,15 +106,13 @@ in
       };
     };
     modules = [
+      nixvim.nixosModules.nixvim
       ./vm
       ./configuration.nix
 
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.users.${vars.user}.imports = [
-          nixvim.homeManagerModules.nixvim
-        ];
       }
     ];
   };
@@ -128,7 +120,7 @@ in
   desktop = lib.nixosSystem {                               # DEPRECATED Desktop Profile 
     inherit system;
     specialArgs = {
-      inherit inputs system unstable hyprland vars;
+      inherit inputs system stable hyprland vars;
       host = {
         hostName = "desktop";
         mainMonitor = "HDMI-A-1";
@@ -137,6 +129,7 @@ in
     };
     modules = [
       nur.nixosModules.nur
+      nixvim.nixosModules.nixvim
       ./desktop
       ./configuration.nix
 

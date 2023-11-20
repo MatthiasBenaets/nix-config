@@ -16,7 +16,7 @@
 #  NOTE: Dual booted with windows 11. Disable fast-boot in power plan and bios and turn off hibernate to get wifi and bluetooth working. This only works once but on reboot is borked again. So using the old school BLT dongle.
 #
 
-{ pkgs, unstable, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -61,16 +61,13 @@
     systemPackages = with pkgs; [               # System-Wide Packages
       discord               # Messaging
       gmtp                  # Mount GoPro
-      hugo                  # Static Website Builder
       jellyfin-media-player # Media Player
       obs-studio            # Live Streaming
       plex-media-player     # Media Player
       simple-scan           # Scanning
       kitty
-    ] ++
-    (with unstable; [
       moonlight-qt          # Remote Streaming
-    ]);
+    ];
   };
 
   flatpak = {                                   # Flatpak Packages (see module options)

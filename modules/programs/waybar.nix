@@ -2,7 +2,7 @@
 #  Bar
 #
 
-{ config, lib, pkgs, unstable, vars, host, ...}:
+{ config, lib, pkgs, vars, host, ...}:
 
 with host;
 let
@@ -39,14 +39,14 @@ let
 in
 {
   config = lib.mkIf (config.wlwm.enable) {
-    environment.systemPackages = with unstable; [
+    environment.systemPackages = with pkgs; [
       waybar
     ];
 
     home-manager.users.${vars.user} = {
       programs.waybar = {
         enable = true;
-        package = unstable.waybar;
+        package = pkgs.waybar;
         systemd ={
           enable = true;
           target = "sway-session.target";
@@ -147,7 +147,7 @@ in
             };
             "custom/menu" = {
               format = "<span font='16'></span>";
-              on-click = ''${unstable.eww-wayland}/bin/eww open --toggle menu --screen 0'';
+              on-click = ''${pkgs.eww-wayland}/bin/eww open --toggle menu --screen 0'';
               on-click-right = "${pkgs.wofi}/bin/wofi --show drun";
               tooltip = false;
             };
@@ -179,7 +179,7 @@ in
             };
             clock = {
               format = "{:%b %d %H:%M}  ";
-              on-click = "${unstable.eww-wayland}/bin/eww open --toggle calendar --screen 0";
+              on-click = "${pkgs.eww-wayland}/bin/eww open --toggle calendar --screen 0";
             };
             cpu = {
               format = " {usage}% <span font='11'></span> ";

@@ -3,7 +3,7 @@
 #  Do not forget to enable Steam play for all title in the settings menu
 #
 
-{ config, pkgs, nur, lib, unstable, vars, ... }:
+{ config, pkgs, nur, lib, vars, ... }:
 
 let
   pcsx2 = pkgs.pcsx2.overrideAttrs (old: {      # PCSX2 Wrapper to run under X11
@@ -24,11 +24,11 @@ in
 
   environment.systemPackages = [
     #config.nur.repos.c0deaddict.oversteer      # Steering Wheel Configuration
-    #unstable.heroic        # Game Launcher
-    #unstable.lutris        # Game Launcher
-    #unstable.prismlauncher # MC Launcher
+    #pkgs.heroic        # Game Launcher
+    #pkgs.lutris        # Game Launcher
+    #pkgs.prismlauncher # MC Launcher
     #pkgs.retroarchFull     # Emulator
-    unstable.steam          # Game Launcher
+    pkgs.steam          # Game Launcher
     #pcsx2                   # Emulator
   ];
 

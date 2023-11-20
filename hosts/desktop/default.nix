@@ -61,7 +61,6 @@
     systemPackages = with pkgs; [               # System-Wide Packages
       ansible           # Automation
       gmtp              # Used for mounting gopro
-      hugo              # Static Website Builder
       plex-media-player # Media Player
       simple-scan       # Scanning
       sshpass           # Ansible Dependency

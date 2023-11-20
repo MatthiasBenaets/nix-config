@@ -22,7 +22,7 @@
 #           └─ default.nix
 #
 
-{ config, lib, pkgs, unstable, inputs, vars, ... }:
+{ config, lib, pkgs, stable, inputs, vars, ... }:
 
 {
   imports = ( import ../modules/desktops ++
@@ -58,7 +58,7 @@
     sudo.wheelNeedsPassword = false;
   };
 
-  fonts.fonts = with pkgs; [                # Fonts
+  fonts.packages = with pkgs; [                # Fonts
     carlito                                 # NixOS
     vegur                                   # NixOS
     source-code-pro
@@ -78,7 +78,7 @@
       EDITOR = "${vars.editor}";
       VISUAL = "${vars.editor}";
     };
-    systemPackages = with pkgs; [           # System-Wide Packages
+    systemPackages = with stable; [           # System-Wide Packages
       # Terminal
       btop              # Resource Manager
       coreutils         # GNU Utilities
@@ -122,7 +122,7 @@
       # - ./<host>/default.nix
       # - ../modules
     ] ++
-    (with unstable; [
+    (with pkgs; [
       # Apps
       firefox           # Browser
     ]);

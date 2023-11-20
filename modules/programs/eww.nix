@@ -2,11 +2,11 @@
 #  Bar
 #
 
-{ config, lib, pkgs, unstable, vars, ...}:
+{ config, lib, pkgs, vars, ...}:
 
 {
   config = lib.mkIf (config.wlwm.enable) {
-    environment.systemPackages = with unstable; [
+    environment.systemPackages = with pkgs; [
       eww-wayland         # Widgets
       jq                  # JSON Processor
       socat               # Data Transfer

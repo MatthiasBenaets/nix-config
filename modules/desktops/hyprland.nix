@@ -3,7 +3,7 @@
 #  Enable with "hyprland.enable = true;"
 #
 
-{ config, lib, system, pkgs, unstable, hyprland, vars, host, ... }:
+{ config, lib, system, pkgs, hyprland, vars, host, ... }:
 
 with lib;
 with host;
@@ -327,8 +327,8 @@ with host;
         windowrule=size 24% 24% ,title:^(Picture-in-Picture)$
 
         exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-        exec-once=${unstable.waybar}/bin/waybar
-        exec-once=${unstable.eww-wayland}/bin/eww daemon
+        exec-once=${pkgs.waybar}/bin/waybar
+        exec-once=${pkgs.eww-wayland}/bin/eww daemon
         #exec-once=$HOME/.config/eww/scripts/eww        # When running eww as a bar
         exec-once=${pkgs.blueman}/bin/blueman-applet
         ${execute}
