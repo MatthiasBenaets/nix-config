@@ -91,6 +91,7 @@
       tldr              # Helper
       usbutils          # Manage USB
       wget              # Retriever
+      xdg-utils         # Environment integration
 
       # Video/Audio
       alsa-utils        # Audio Control

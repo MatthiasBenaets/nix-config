@@ -17,6 +17,18 @@
         maplocalleader = " ";
       };
 
+      maps = {
+        normal = {
+          "<F2>" = ":NeoTreeShowToggle<CR>";
+          "<F3>" = ":UndotreeToggle<CR>";
+          "<C-s>" = ":w<CR>";
+          "<leader><Left>" = "<C-w>h";
+          "<leader>h" = "<C-w>h";
+          "<leader><Right>" = "<C-w>l";
+          "<leader>l" = "<C-w>l";
+        };
+      };
+
       colorschemes.onedark.enable = true;
 
       options = {
@@ -31,6 +43,7 @@
         fileencoding = "utf-8";
         swapfile = false;
         completeopt = ["menu" "menuone" "noselect"];
+        wrap = false;
       };
 
       plugins = {
@@ -38,6 +51,17 @@
           enable = true;
           powerline = true;
         };
+        bufferline.enable = true;
+        indent-blankline = {
+          enable = true;
+          useTreesitter = true;
+          useTreesitterScope = true;
+          #contextPatternHighlight = true;
+        };
+        gitgutter.enable = true;
+        lastplace.enable = true;
+        markdown-preview.enable = true;
+        which-key.enable = true;
         telescope = {
           enable = true;
           keymaps = {
@@ -47,15 +71,27 @@
             "<leader>fh" = "help_tags";
           };
         };
+        neo-tree = {
+          enable = true;
+          window.width = 30;
+        };
+        fugitive.enable = true;
+        undotree = {
+          enable = true;
+          focusOnToggle = true;
+          highlightChangedText = true;
+        };
         treesitter = {
           enable = true;
           nixvimInjections = true;
           folding = false;
           indent = true;
+          incrementalSelection.enable = true;
         };
         treesitter-refactor = {
           enable = true;
           highlightDefinitions.enable = true;
+          highlightCurrentScope.enable = true;
         };
         lsp = {
           enable = true;
@@ -100,7 +136,6 @@
           sources = [
             {name = "path";}
             {name = "nvim_lsp";}
-            {name = "cmp_tabnine";}
             {
               name = "buffer";
               option.get_bufnrs.__raw = "vim.api.nvim_list_bufs";

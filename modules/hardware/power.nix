@@ -7,8 +7,8 @@
 {
   config = lib.mkIf ( config.laptop.enable ) {
     services = {
-      tlp.enable = true;                          # Power Efficiency
-      auto-cpufreq.enable = true;
+      #tlp.enable = true;                          # Power Efficiency
+      #auto-cpufreq.enable = true;
     };
 
     home-manager.users.${vars.user} = {

@@ -295,10 +295,19 @@ with host;
         bind=ALTSHIFT,right,movetoworkspace,+1
         bind=ALTSHIFT,left,movetoworkspace,-1
 
-        bind=CTRL,right,resizeactive,20 0
-        bind=CTRL,left,resizeactive,-20 0
-        bind=CTRL,up,resizeactive,0 -20
-        bind=CTRL,down,resizeactive,0 20
+        #bind=CTRL,right,resizeactive,20 0
+        #bind=CTRL,left,resizeactive,-20 0
+        #bind=CTRL,up,resizeactive,0 -20
+        #bind=CTRL,down,resizeactive,0 20
+
+        bind=SUPER,M,submap,resize 
+        submap=resize
+        binde=,right,resizeactive,20 0
+        binde=,left,resizeactive,-20 0
+        binde=,up,resizeactive,0 -20
+        binde=,down,resizeactive,0 20
+        bind=,escape,submap,reset
+        submap=reset
 
         bind=,print,exec,${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.swappy}/bin/swappy -f - -o ~/Pictures/$(date +%Hh_%Mm_%Ss_%d_%B_%Y).png && notify-send "Saved to ~/Pictures/$(date +%Hh_%Mm_%Ss_%d_%B_%Y).png"
 
