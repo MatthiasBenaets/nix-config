@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   programs.nixvim = {
     enable = true;
@@ -15,6 +17,7 @@
       autoindent = true;
       wrap = false;
       completeopt = ["menu" "menuone" "noselect"];
+      pumheight = 15;
       fileencoding = "utf-8";
       swapfile = false;
     };
@@ -34,17 +37,17 @@
     keymaps = [
       {
         key = "<C-s>";
-        action = ":w<CR>";
+        action = "<CMD>w<CR>";
         options.desc = "Save";
       }
       {
         key = "<F2>";
-        action = ":Neotree toggle<CR>";
+        action = "<CMD>Neotree toggle<CR>";
         options.desc = "Toggle NeoTree";
       }
       {
         key = "<F3>";
-        action = ":UndotreeToggle<CR>";
+        action = "<CMD>UndotreeToggle<CR>";
         options.desc = "Toggle Undotree";
       }
       {
@@ -69,8 +72,20 @@
       }
       {
         key = "<leader>b";
-        action = ":BufferLinePick<CR>";
+        action = "<CMD>BufferLinePick<CR>";
         options.desc = "View Open Buffer";
+      }
+      {
+        mode = "v";
+        key = "<";
+        action = "<gv";
+        options.desc = "Tab Text Right";
+      }
+      {
+        mode = "v";
+        key = ">";
+        action = ">gv";
+        options.desc = "Tab Text Left";
       }
     ];
 
@@ -78,12 +93,12 @@
       lualine.enable = true;
       bufferline.enable = true;
       gitgutter.enable = true;
-      #which-key.enable = true;
       indent-blankline = {
         enable = true;
         scope.enabled = true;
       };
       lastplace.enable = true;
+      comment-nvim.enable = true;
       fugitive.enable = true;
       markdown-preview.enable = true;
       nvim-autopairs.enable = true;
@@ -126,9 +141,6 @@
           "core.norg.journal" = { };
         };
       };
-      #emmet.enable = true;
-      luasnip.enable = true;
-      cmp_luasnip.enable = true;
       lsp = {
         enable = true;
         servers = {
@@ -165,6 +177,9 @@
           };
         };
       };
+      luasnip.enable = true;
+      cmp_luasnip.enable = true;
+      cmp-nvim-lsp.enable = true;
       nvim-cmp = {
         enable = true;
         snippet.expand = "luasnip";
@@ -184,16 +199,29 @@
           "<CR>" = "cmp.mapping.confirm({ select = true })";
         };
         sources = [
-          {name = "path";}
           {name = "nvim_lsp";}
           {name = "luasnip";}
-          {
-            name = "buffer";
-            option.get_bufnrs.__raw = "vim.api.nvim_list_bufs";
-          }
-          {name = "neorg";}
+          {name = "path";}
+          {name = "buffer";}
+          {name = "nvim_lua";}
+          {name = "orgmode";}
         ];
       };
     };
+    extraPlugins = with pkgs.vimPlugins; [
+      luasnip
+      friendly-snippets
+      orgmode
+    ];
+    extraConfigLua = ''
+      require("luasnip.loaders.from_vscode").lazy_load()
+      require('orgmode').setup({
+        org_agenda_files = { '~/org/**/*' },
+        org_default_notes_file = '~/org/refile.org',
+      })
+    '';
+    extraConfigLuaPre = ''
+      require('orgmode').setup_ts_grammar()
+    '';
   };
 }
