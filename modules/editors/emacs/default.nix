@@ -1,5 +1,7 @@
 #
 #  Personal Emacs Config
+#  Recommended to comment out this import first install because script will cause issues.
+#  Unfortunately an activation script like with the default nix options is not possible since home.activation and home.file.*.onChange will time out systemd.
 #
 #  flake.nix
 #   ├─ ./hosts
@@ -12,7 +14,7 @@
 #
 
 
-{ config, pkgs, vars, ... }:
+{ pkgs, vars, ... }:
 
 {
   services.emacs = {

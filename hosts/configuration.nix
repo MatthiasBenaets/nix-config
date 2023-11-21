@@ -132,6 +132,7 @@
     dconf.enable = true;
   };
 
+  hardware.pulseaudio.enable = false;
   services = {
     printing = {                            # CUPS
       enable = true;

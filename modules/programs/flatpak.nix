@@ -24,10 +24,10 @@ with lib;
 
   config = mkIf (config.flatpak.enable)
   {
-    xdg.portal = {
-      enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    };
+    xdg.portal.enable = true;
+    xdg.portal.extraPortals = mkIf (config.wlwm.enable || config.x11wm.enable) [
+      pkgs.xdg-desktop-portal-gtk
+    ];
 
     services.flatpak.enable = true;
 

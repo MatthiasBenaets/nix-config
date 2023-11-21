@@ -274,23 +274,23 @@ with lib;
         # };
       };
 
-      home.packages = with pkgs; [
-        gnomeextensions.tray-icons-reloaded
-        gnomeextensions.blur-my-shell
-        gnomeextensions.removable-drive-menu
-        gnomeextensions.dash-to-panel
-        gnomeextensions.battery-indicator-upower
-        gnomeextensions.just-perfection
-        gnomeextensions.caffeine
-        gnomeextensions.clipboard-indicator
-        gnomeextensions.workspace-indicator-2
-        gnomeextensions.bluetooth-quick-connect
-        gnomeextensions.gsconnect
-        gnomeextensions.pip-on-top
-        gnomeextensions.pop-shell
-        gnomeextensions.forge
-        # gnomeextensions.fullscreen-avoider
-        # gnomeextensions.dash-to-dock
+      home.packages = with pkgs.gnomeExtensions; [
+        tray-icons-reloaded
+        blur-my-shell
+        removable-drive-menu
+        dash-to-panel
+        battery-indicator-upower
+        just-perfection
+        caffeine
+        clipboard-indicator
+        workspace-indicator-2
+        bluetooth-quick-connect
+        gsconnect
+        pip-on-top
+        pop-shell
+        forge
+        # fullscreen-avoider
+        # dash-to-dock
       ];
     };
   };

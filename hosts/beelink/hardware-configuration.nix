@@ -59,7 +59,7 @@
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   networking = with host; {
-    useDHCP = true;
+    #useDHCP = true;
     hostName = hostName;
     bridges = {
       "br0" = {
