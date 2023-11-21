@@ -117,6 +117,28 @@ in
     ];
   };
 
+  stevevm = lib.nixosSystem {                                    # VM Profile
+    inherit system;
+    specialArgs = {
+      inherit inputs stable vars;
+      host = {
+        hostName = "stevevm";
+        mainMonitor = "Virtual-1";
+        secondMonitor = "";
+      };
+    };
+    modules = [
+      nixvim.nixosModules.nixvim
+      ./stevevm
+      ./configuration.nix
+
+      home-manager.nixosModules.home-manager {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+      }
+    ];
+  };
+
   desktop = lib.nixosSystem {                               # DEPRECATED Desktop Profile 
     inherit system;
     specialArgs = {
