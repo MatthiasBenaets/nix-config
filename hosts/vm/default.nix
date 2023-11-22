@@ -31,11 +31,6 @@
   };
 
   bspwm.enable = true;
-  gnome.enable = true;
-  hyprland.enable = true;
-  kde.enable = true;
-  river.enable = true;
-  sway.enable = true;
 
   environment = {
     systemPackages = with pkgs; [               # System Wide Packages
