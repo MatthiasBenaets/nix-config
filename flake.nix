@@ -66,10 +66,10 @@
   outputs = inputs @ { self, nixpkgs, nixpkgs-stable, home-manager, darwin, nur, nixgl, nixvim, doom-emacs, hyprland, plasma-manager, ... }:   # Function telling flake which inputs to use
     let
       vars = {                                                              # Variables Used In Flake
-        user = "steve";
+        user = "matthias";
         location = "$HOME/.setup";
-        terminal = "kgx";
-        editor = "gnome-text-editor";
+        terminal = "kitty";
+        editor = "nvim";
       };
     in
     {
