@@ -65,7 +65,7 @@
 
   outputs = inputs @ { self, nixpkgs, nixpkgs-stable, home-manager, darwin, nur, nixgl, nixvim, doom-emacs, hyprland, plasma-manager, ... }:   # Function telling flake which inputs to use
     let
-      vars = import ./hosts/vars.nix                                        # Variables Used In Flake
+      vars = import ./hosts/vars.nix;                                       # Variables Used In Flake
     in
     {
       nixosConfigurations = (                                               # NixOS Configurations
