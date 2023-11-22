@@ -192,7 +192,7 @@
       home-manager.enable = true;
     };
     imports = [
-      #inputs.plasma-manager.homeManagerModules.plasma-manager # for KDE Plasma User Settings Generator
+      inputs.plasma-manager.homeManagerModules.plasma-manager
     ];
   };
 }
