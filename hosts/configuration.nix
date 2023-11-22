@@ -188,9 +188,11 @@
     home = {
       stateVersion = "22.05";
     };
-
     programs = {
       home-manager.enable = true;
     };
+    imports = [
+      #plasma-manager.homeManagerModules.plasma-manager # for KDE Plasma User Settings Generator
+    ];
   };
 }
