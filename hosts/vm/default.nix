@@ -30,7 +30,7 @@
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
-  bspwm.enable = true;
+  bspwm.enable = true;                          # Window Manager
 
   environment = {
     systemPackages = with pkgs; [               # System Wide Packages
