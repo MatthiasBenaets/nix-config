@@ -62,6 +62,10 @@ with lib;
     home-manager.users.${vars.user} = {
       programs.plasma = {
         enable = true;
+        workspace = {
+          clickItemTo = "select";
+          theme = "breeze-dark";
+        };
         shortcuts = {
           "ActivityManager"."switch-to-activity-21b7f9f5-1878-45ad-b389-58ffa12039d0" = [ ];
           "KDE Keyboard Layout Switcher"."Switch to Next Keyboard Layout" = "Meta+Alt+K";
