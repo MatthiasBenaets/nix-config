@@ -42,12 +42,6 @@ with lib;
         };
         desktopManager.plasma5 = {
           enable = true;                            # Desktop Environment
-          excludePackages = with pkgs.libsForQt5; [
-            elisa
-            khelpcenter
-            konsole
-            oxygen
-          ];
         };
       };
     };
@@ -57,11 +51,21 @@ with lib;
         bismuth         # Dynamic Tiling
         packagekit-qt   # Package Updater
       ];
+      plasma5.excludePackages = with pkgs.libsForQt5; [
+        elisa
+        khelpcenter
+        konsole
+        oxygen
+      ];
     };
 
     home-manager.users.${vars.user} = {
       programs.plasma = {
         enable = true;
+        workspace = {
+          clickItemTo = "select";
+          theme = "breeze-dark";
+        };
         shortcuts = {
           "ActivityManager"."switch-to-activity-21b7f9f5-1878-45ad-b389-58ffa12039d0" = [ ];
           "KDE Keyboard Layout Switcher"."Switch to Next Keyboard Layout" = "Meta+Alt+K";
@@ -309,7 +313,7 @@ with lib;
           "wacomtablet"."Toggle stylus mode" = "Meta+Ctrl+S";
           "wacomtablet"."Toggle touch tool" = "Meta+Ctrl+T";
         };
-        files = {
+        configFile = {
           "baloofilerc"."General"."dbVersion" = 2;
           "baloofilerc"."General"."exclude filters" = "*~,*.part,*.o,*.la,*.lo,*.loT,*.moc,moc_*.cpp,qrc_*.cpp,ui_*.h,cmake_install.cmake,CMakeCache.txt,CTestTestfile.cmake,libtool,config.status,confdefs.h,autom4te,conftest,confstat,Makefile.am,*.gcode,.ninja_deps,.ninja_log,build.ninja,*.csproj,*.m4,*.rej,*.gmo,*.pc,*.omf,*.aux,*.tmp,*.po,*.vm*,*.nvram,*.rcore,*.swp,*.swap,lzo,litmain.sh,*.orig,.histfile.*,.xsession-errors*,*.map,*.so,*.a,*.db,*.qrc,*.ini,*.init,*.img,*.vdi,*.vbox*,vbox.log,*.qcow2,*.vmdk,*.vhd,*.vhdx,*.sql,*.sql.gz,*.ytdl,*.class,*.pyc,*.pyo,*.elc,*.qmlc,*.jsc,*.fastq,*.fq,*.gb,*.fasta,*.fna,*.gbff,*.faa,po,CVS,.svn,.git,_darcs,.bzr,.hg,CMakeFiles,CMakeTmp,CMakeTmpQmake,.moc,.obj,.pch,.uic,.npm,.yarn,.yarn-cache,__pycache__,node_modules,node_packages,nbproject,core-dumps,lost+found";
           "baloofilerc"."General"."exclude filters version" = 8;

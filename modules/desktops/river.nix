@@ -63,7 +63,6 @@ with host;
 
             riverctl spawn systemctl --user import-environment                          # Fix GTK Load
 
-            ${monitor}                                                                  # Monitor
             riverctl spawn ${pkgs.waybar}/bin/waybar
 
             riverctl map normal Super+Shift E exit                                      # Exit
