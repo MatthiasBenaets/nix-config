@@ -30,12 +30,7 @@
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
-  bspwm.enable = true;
-  gnome.enable = true;
-  hyprland.enable = true;
-  kde.enable = true;
-  river.enable = true;
-  sway.enable = true;
+  bspwm.enable = true;                          # Window Manager
 
   environment = {
     systemPackages = with pkgs; [               # System Wide Packages
