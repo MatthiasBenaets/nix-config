@@ -57,7 +57,7 @@
       };
 
       plasma-manager = {                                                    # KDE Plasma User Settings Generator
-        url = "github:pjones/plasma-manager";                               # Requires "inputs.plasma-manager.homeManagerModules.plasma-manager" to be added to the home-manager.users.${user}.imports
+        url = "github:pjones/plasma-manager";
         inputs.nixpkgs.follows = "nixpkgs";
         inputs.home-manager.follows = "nixpkgs";
       };
