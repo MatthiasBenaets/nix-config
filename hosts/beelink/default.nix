@@ -32,7 +32,7 @@
         configurationLimit = 3;
       };
       efi = {
-  canTouchEfiVariables = true;
+        canTouchEfiVariables = true;
       };
       timeout = 5;
     };
@@ -74,7 +74,7 @@
     extraPackages = [
       "com.github.tchx84.Flatseal"
       "com.ultimaker.cura"
-      "org.upscayl.Upscayl"
+      "com.stremio.Stremio"
     ];
   };
 

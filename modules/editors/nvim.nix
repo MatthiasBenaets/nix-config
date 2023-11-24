@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   programs.nixvim = {
@@ -6,10 +6,42 @@
     viAlias = true;
     vimAlias = true;
 
+    autoCmd = [
+      {
+        event = "VimEnter";
+        command = "set nofoldenable";
+        desc = "Unfold All";
+      }
+      {
+        event = "BufWrite";
+        command = "%s/\\s\\+$//e";
+        desc = "Remove Whitespaces";
+      }
+      {
+        event = "FileType";
+        pattern = [ "markdown" "org" "norg" ];
+        command = "setlocal conceallevel=2";
+        desc = "Conceal Syntax Attribute";
+      }
+      {
+        event = "FileType";
+        pattern = [ "markdown" "org" "norg" ];
+        command = "setlocal spell spelllang=en,nl";
+        desc = "Spell Checking";
+      }
+      {
+        event = "FileType";
+        pattern = [ "markdown" "org" "norg" ];
+        command = ":TableModeEnable";
+        desc = "Table Mode";
+      }
+    ];
+
     options = {
       number = true;
       relativenumber = true;
       hidden = true;
+      foldlevel = 99;
       shiftwidth = 2;
       tabstop = 2;
       softtabstop = 2;
@@ -20,9 +52,15 @@
       pumheight = 15;
       fileencoding = "utf-8";
       swapfile = false;
+      timeoutlen = 2500;
+      conceallevel = 3;
     };
 
-    colorschemes.onedark.enable = true;
+    colorschemes.base16 = {
+      enable = true;
+      colorscheme = "onedark";
+      useTruecolor = true;
+    };
 
     clipboard = {
       register = "unnamedplus";
@@ -41,6 +79,16 @@
         options.desc = "Save";
       }
       {
+        key = "<leader>s";
+        action = "<CMD>w<CR>";
+        options.desc = "Save";
+      }
+      {
+        key = "<leader>q";
+        action = "<CMD>q<CR>";
+        options.desc = "quit";
+      }
+      {
         key = "<F2>";
         action = "<CMD>Neotree toggle<CR>";
         options.desc = "Toggle NeoTree";
@@ -49,6 +97,16 @@
         key = "<F3>";
         action = "<CMD>UndotreeToggle<CR>";
         options.desc = "Toggle Undotree";
+      }
+      {
+        key = "<leader>sh";
+        action = "<C-w>s";
+        options.desc = "Split Horizontal";
+      }
+      {
+        key = "<leader>sv";
+        action = "<C-w>v";
+        options.desc = "Split Vertical";
       }
       {
         key = "<leader><Left>";
@@ -71,9 +129,44 @@
         options.desc = "Select Window Right";
       }
       {
-        key = "<leader>b";
+        key = "<leader><Down>";
+        action = "<C-w>j";
+        options.desc = "Select Window Below";
+      }
+      {
+        key = "<leader>j";
+        action = "<C-w>j";
+        options.desc = "Select Window Below";
+      }
+      {
+        key = "<leader><Up>";
+        action = "<C-w>k";
+        options.desc = "Select Window Above";
+      }
+      {
+        key = "<leader>k";
+        action = "<C-w>k";
+        options.desc = "Select Window Above";
+      }
+      {
+        key = "<leader>t";
+        action = "<C-w>w";
+        options.desc = "Cycle Between Windows";
+      }
+      {
+        key = "<leader>bb";
         action = "<CMD>BufferLinePick<CR>";
         options.desc = "View Open Buffer";
+      }
+      {
+        key = "<leader>bn";
+        action = "<CMD>:bnext<CR>";
+        options.desc = "Next Buffer";
+      }
+      {
+        key = "<leader>bp";
+        action = "<CMD>:bprev<CR>";
+        options.desc = "Previous Buffer";
       }
       {
         mode = "v";
@@ -86,6 +179,18 @@
         key = ">";
         action = ">gv";
         options.desc = "Tab Text Left";
+      }
+      {
+        mode = "n";
+        key = "<C-/>";
+        action = "<Plug>(comment_toggle_linewise_current)";
+        options.desc = "(Un)comment in Normal Mode";
+      }
+      {
+        mode = "v";
+        key = "<C-/>";
+        action = "<Plug>(comment_toggle_linewise_visual)";
+        options.desc = "(Un)comment in Visual Mode";
       }
     ];
 
@@ -125,6 +230,8 @@
         nixvimInjections = true;
         folding = false;
         indent = true;
+        nixGrammars = true;
+        ensureInstalled = "all";
         incrementalSelection.enable = true;
       };
       treesitter-refactor = {
@@ -133,12 +240,17 @@
       nvim-colorizer.enable = true;
       neorg = {
         enable = true;
+        lazyLoading = true;
         modules = {
-          "core.defaults" = { };
-          "core.dirman".config.workspaces.home = "~";
+          "core.defaults".__empty = null;
+          "core.dirman".config = {
+            workspaces = {
+              notes = "~/notes";
+            };
+            default_workspace = "notes";
+          };
+          "core.concealer".__empty = null;
           "core.completion".config.engine = "nvim-cmp";
-          "core.norg.concealer" = { };
-          "core.norg.journal" = { };
         };
       };
       lsp = {
@@ -174,6 +286,7 @@
             path = "[path]";
             luasnip = "[snip]";
             buffer = "[buffer]";
+            neorg = "[neorg]";
           };
         };
       };
@@ -205,6 +318,7 @@
           {name = "buffer";}
           {name = "nvim_lua";}
           {name = "orgmode";}
+          {name = "neorg";}
         ];
       };
     };
@@ -212,6 +326,27 @@
       luasnip
       friendly-snippets
       orgmode
+      vim-table-mode
+      (pkgs.vimUtils.buildVimPlugin rec {
+        pname = "scope-nvim";
+        version = "cd27af77ad61a7199af5c28d27013fb956eb0e3e";
+        src = pkgs.fetchFromGitHub {
+          owner = "tiagovla";
+          repo = "scope.nvim";
+          rev = version;
+          sha256 = "sha256-z1ytdhxKrLnZG8qMPEe2h+wC9tF4K/x6zplwnIojZuE=";
+        };
+      })
+      (pkgs.vimUtils.buildVimPlugin rec {
+        pname = "org-bullets.nvim";
+        version = "6e0d60e901bb939eb526139cb1f8d59065132fd9";
+        src = pkgs.fetchFromGitHub {
+          owner = "akinsho";
+          repo = "org-bullets.nvim";
+          rev = version;
+          sha256 = "sha256-x6S4WdgfUr7HGEHToSDy3pSHEwOPQalzWhBUipqMtnw=";
+        };
+      })
     ];
     extraConfigLua = ''
       require("luasnip.loaders.from_vscode").lazy_load()
@@ -219,6 +354,16 @@
         org_agenda_files = { '~/org/**/*' },
         org_default_notes_file = '~/org/refile.org',
       })
+      vim.cmd[[
+        augroup orgmode_settings
+          autocmd!
+          autocmd FileType org
+          \ setlocal conceallevel=2 |
+          \ setlocal concealcursor=nc
+        augroup END
+      ]]
+
+      require('org-bullets').setup()
     '';
     extraConfigLuaPre = ''
       require('orgmode').setup_ts_grammar()

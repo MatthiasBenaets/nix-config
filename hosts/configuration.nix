@@ -101,7 +101,6 @@
       pipewire          # Audio Server/Control
       pulseaudio        # Audio Server/Control
       vlc               # Media Player
-      stremio           # Media Streamer
 
       # Apps
       appimage-run      # Runs AppImages on NixOS

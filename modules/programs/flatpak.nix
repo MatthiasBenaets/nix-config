@@ -1,6 +1,6 @@
 #
 #  Flatpak
-#  Very janky way of declaring all packages used
+#  Janky way of declaring all packages
 #  Might cause issues on new system installs
 #  Only use when you know what you're doing
 #
@@ -31,7 +31,7 @@ with lib;
 
     services.flatpak.enable = true;
 
-    system.userActivationScripts =
+    system.activationScripts =
       let
         extraPackages = concatStringsSep " " config.flatpak.extraPackages;
       in mkIf (config.flatpak.extraPackages != [])
@@ -44,18 +44,27 @@ with lib;
 
           ${pkgs.flatpak}/bin/flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-          for package in ''${flatpaks[*]}; do
-            check=$(${pkgs.flatpak}/bin/flatpak list --app | ${pkgs.gnugrep}/bin/grep $package)
-            if [[ -z "$check" ]] then
+          # for package in ''${flatpaks[*]}; do
+
+          for package in ''${flatpaks[@]}; do
+            if ! ${pkgs.flatpak}/bin/flatpak list --app | grep -q "$package"; then
               ${pkgs.flatpak}/bin/flatpak install -y flathub $package
             fi
           done
 
-          installed=($(${pkgs.flatpak}/bin/flatpak list --app | ${pkgs.gawk}/bin/awk -F$'\t*' '{$1=$3=$4=$5=""; print $0}'))
+          installed=($(${pkgs.flatpak}/bin/flatpak list --app --columns=application | tail -n +1))
 
-          for remove in ''${installed[*]}; do
-            if [[ ! " ''${flatpaks[*]} " =~ " ''${remove} " ]]; then
-              ${pkgs.flatpak}/bin/flatpak uninstall -y $remove
+          for remove in ''${installed[@]}; do
+            found=false
+            for package in ''${flatpaks[@]}; do
+              if [[ "$remove" == "$package"* ]]; then
+                found=true
+                break
+              fi
+            done
+
+            if [[ "$found" == false ]]; then
+              ${pkgs.flatpak}/bin/flatpak uninstall -y "$remove"
               ${pkgs.flatpak}/bin/flatpak uninstall -y --unused
             fi
           done
