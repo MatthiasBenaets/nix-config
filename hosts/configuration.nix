@@ -42,7 +42,6 @@
   i18n = {
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {
-      LC_TIME = "nl_BE.UTF-8";
       LC_MONETARY = "nl_BE.UTF-8";
     };
   };

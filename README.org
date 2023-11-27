@@ -35,7 +35,7 @@
 There are some other desktop environments/window manager (See NixOS - Other). Just link to correct ~default/home.nix~ in ~./hosts/<host>/default and home.nix~.
 There is also a general Nix config with hostname ~pacman~ that can be used on pretty much any disto.
 
-Compontents relevant to all hosts:
+Components relevant to all hosts:
 | *Shell*    | Zsh               |
 | *Terminal* | Kitty             |
 | *Editors*  | Nvim + Doom Emacs |

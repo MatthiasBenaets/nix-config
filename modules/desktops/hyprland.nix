@@ -213,8 +213,9 @@ with host;
         }
 
         input {
-          kb_layout=us
+          kb_layout=us,us
           #kb_options=caps:ctrl_modifier
+          kb_variant=,dvorak
           follow_mouse=2
           repeat_delay=250
           numlock_by_default=1
@@ -249,7 +250,7 @@ with host;
         bind=SUPER,Escape,exit,
         bind=SUPER,S,exec,${pkgs.systemd}/bin/systemctl suspend
         bind=SUPER,L,exec,${pkgs.swaylock}/bin/swaylock
-        bind=SUPER,E,exec,${pkgs.pcmanfm}/bin/pcmanfm
+        bind=SUPER,E,exec,GDK_BACKEND=x11 ${pkgs.pcmanfm}/bin/pcmanfm
         bind=SUPER,H,togglefloating,
         #bind=SUPER,Space,exec,${pkgs.rofi}/bin/rofi -show drun
         bind=SUPER,Space,exec, pkill wofi || ${pkgs.wofi}/bin/wofi --show drun
@@ -258,6 +259,7 @@ with host;
         bind=SUPER,R,forcerendererreload
         bind=SUPERSHIFT,R,exec,${pkgs.hyprland}/bin/hyprctl reload
         bind=SUPER,T,exec,${pkgs.emacs}/bin/emacsclient -c
+        bind=SUPER,K,exec,${pkgs.hyprland}/bin/hyprctl switchxkblayout keychron-k8-keychron-k8 next
 
         bind=SUPER,left,movefocus,l
         bind=SUPER,right,movefocus,r
@@ -300,7 +302,7 @@ with host;
         #bind=CTRL,up,resizeactive,0 -20
         #bind=CTRL,down,resizeactive,0 20
 
-        bind=SUPER,M,submap,resize 
+        bind=SUPER,M,submap,resize
         submap=resize
         binde=,right,resizeactive,20 0
         binde=,left,resizeactive,-20 0

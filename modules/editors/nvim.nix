@@ -1,6 +1,11 @@
 { lib, pkgs, ... }:
 
 {
+  # steam-run for codeium-vim
+  programs.zsh.shellAliases = {
+    vim = "${pkgs.steam-run}/bin/steam-run nvim";
+    nvim = "${pkgs.steam-run}/bin/steam-run nvim";
+  };
   programs.nixvim = {
     enable = true;
     viAlias = true;
@@ -56,10 +61,9 @@
       conceallevel = 3;
     };
 
-    colorschemes.base16 = {
+    colorschemes.onedark = {
       enable = true;
-      colorscheme = "onedark";
-      useTruecolor = true;
+      package = pkgs.vimPlugins.onedarkpro-nvim;
     };
 
     clipboard = {
@@ -286,6 +290,7 @@
             path = "[path]";
             luasnip = "[snip]";
             buffer = "[buffer]";
+            orgmode = "[orgmode]";
             neorg = "[neorg]";
           };
         };
@@ -301,11 +306,19 @@
           "<C-f>" = "cmp.mapping.scroll_docs(4)";
           "<C-Space>" = "cmp.mapping.complete()";
           "<C-e>" = "cmp.mapping.close()";
-          "<Tab>" = {
+          # "<Tab>" = {
+          #   modes = ["i" "s"];
+          #   action = "cmp.mapping.select_next_item()";
+          # };
+          # "<S-Tab>" = {
+          #   modes = ["i" "s"];
+          #   action = "cmp.mapping.select_prev_item()";
+          # };
+          "<C-j>" = {
             modes = ["i" "s"];
             action = "cmp.mapping.select_next_item()";
           };
-          "<S-Tab>" = {
+          "<C-k>" = {
             modes = ["i" "s"];
             action = "cmp.mapping.select_prev_item()";
           };
@@ -327,6 +340,7 @@
       friendly-snippets
       orgmode
       vim-table-mode
+      codeium-vim
       (pkgs.vimUtils.buildVimPlugin rec {
         pname = "scope-nvim";
         version = "cd27af77ad61a7199af5c28d27013fb956eb0e3e";
