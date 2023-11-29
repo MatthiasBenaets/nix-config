@@ -93,12 +93,9 @@
       xdg-utils         # Environment integration
 
       # Video/Audio
-      alsa-utils        # Audio Control
       feh               # Image Viewer
       mpv               # Media Player
       pavucontrol       # Audio Control
-      pipewire          # Audio Server/Control
-      pulseaudio        # Audio Server/Control
       vlc               # Media Player
 
       # Apps
@@ -123,6 +120,11 @@
     (with pkgs; [
       # Apps
       firefox           # Browser
+
+      # Video/Audio
+      alsa-utils        # Audio Control
+      pipewire          # Audio Server/Control
+      pulseaudio        # Audio Server/Control
     ]);
   };
 

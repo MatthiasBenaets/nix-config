@@ -2,6 +2,7 @@
 
 {
   # steam-run for codeium-vim
+  # start nvim in bash first time, so the spell files can be downloaded
   programs.zsh.shellAliases = {
     vim = "${pkgs.steam-run}/bin/steam-run nvim";
     nvim = "${pkgs.steam-run}/bin/steam-run nvim";
