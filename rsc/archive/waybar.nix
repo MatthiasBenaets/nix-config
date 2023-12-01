@@ -55,8 +55,8 @@ in
         style = ''
           * {
             border: none;
-            border-radius: 0;
             font-family: FiraCode Nerd Font Mono;
+            /*font-weight: bold;*/
             font-size: 12px;
             text-shadow: 0px 0px 5px #000000;
           }
@@ -68,8 +68,7 @@ in
             background: transparent;
             transition-property: background-color;
             transition-duration: .5s;
-            /*border-bottom: none;*/
-            border-bottom: 1px solid rgba(0, 85, 119, 0.99);
+            border-bottom: none;
           }
           window#waybar.hidden {
             opacity: 0.2;
@@ -100,21 +99,20 @@ in
             padding: 0px 5px 0px 5px;
           }
           #workspaces button {
-            padding: 0px 7px;
+            padding: 0px 5px;
             min-width: 5px;
             color: rgba(255,255,255,0.8);
           }
           #workspaces button:hover {
             background-color: rgba(0,0,0,0.2);
           }
-          #workspaces button.visible {
-            background-color: rgba(0, 85, 119, 0.3);
-          }
           /*#workspaces button.focused {*/
           #workspaces button.active {
             color: rgba(255,255,255,0.8);
-            /*background-color: rgba(80,100,100,0.4);*/
-            background-color: rgba(0, 85, 119, 0.99);
+            background-color: rgba(80,100,100,0.4);
+          }
+          #workspaces button.visible {
+            color: #ccffff;
           }
           #workspaces button.hidden {
             color: #999999;
@@ -136,7 +134,7 @@ in
           Main = {
             layer = "top";
             position = "top";
-            height = 27;
+            height = 16;
             output = output;
 
             tray = { spacing = 5; };
@@ -149,8 +147,7 @@ in
             };
             "custom/menu" = {
               format = "<span font='16'></span>";
-              # on-click = ''${pkgs.eww-wayland}/bin/eww open --toggle menu --screen 0'';
-              on-click = ''.config/wofi/power.sh'';
+              on-click = ''${pkgs.eww-wayland}/bin/eww open --toggle menu --screen 0'';
               on-click-right = "${pkgs.wofi}/bin/wofi --show drun";
               tooltip = false;
             };

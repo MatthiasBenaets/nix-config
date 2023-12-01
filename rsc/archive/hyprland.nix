@@ -175,16 +175,17 @@ with host;
         monitor=,highres,auto,auto
 
         general {
+          #main_mod=SUPER
           border_size=3
-          gaps_in=0
-          gaps_out=0
-          col.active_border=0x99005577
+          gaps_in=5
+          gaps_out=7
+          col.active_border=0x80ffffff
           col.inactive_border=0x66333333
           layout=dwindle
         }
 
         decoration {
-          rounding=0
+          rounding=5
           active_opacity=0.93
           inactive_opacity=0.93
           fullscreen_opacity=1
@@ -195,7 +196,7 @@ with host;
         }
 
         animations {
-          enabled = false
+          enabled = true
           bezier = overshot, 0.05, 0.9, 0.1, 1.05
           bezier = smoothOut, 0.5, 0, 0.99, 0.99
           bezier = smoothIn, 0.5, -0.5, 0.68, 1.5
@@ -235,7 +236,6 @@ with host;
           disable_splash_rendering=true
           mouse_move_enables_dpms=true
           key_press_enables_dpms=true
-          background_color=0x111111
         }
 
         debug {

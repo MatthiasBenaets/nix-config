@@ -1,0 +1,17 @@
+
+width=100%
+lines=1
+xoffset=0
+yoffset=-28
+location=1
+prompt=Search...
+filter_rate=100
+allow_markup=false
+no_actions=true
+halign=fill
+orientation=horizontal
+content_halign=fill
+insensitive=true
+allow_images=true
+image_size=15
+hide_scroll=true

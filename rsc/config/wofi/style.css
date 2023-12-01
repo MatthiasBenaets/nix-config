@@ -1,0 +1,41 @@
+
+window {
+  margin: 0px;
+  background-color: #111111;
+  min-height: 27px;
+}
+
+#input {
+  all: unset;
+  border: none;
+  color: #999999;
+  background-color: #111111;
+  padding-left: 5px;
+}
+
+#outer-box {
+  margin: 0px;
+  border: none;
+  border-bottom: 1px solid #005577;
+}
+
+#text:selected {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+#entry {
+  color: #999999;
+  padding-right: 10px;
+}
+
+#entry:selected {
+  all: unset;
+  border-radius: 0px;
+  background-color: #005577;
+  padding-right: 10px;
+}
+
+#img {
+  padding-right: 5px;
+  padding-left: 10px;
+}
