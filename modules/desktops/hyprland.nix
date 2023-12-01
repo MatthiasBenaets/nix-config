@@ -185,12 +185,9 @@ with host;
 
         decoration {
           rounding=0
-          active_opacity=0.93
-          inactive_opacity=0.93
+          active_opacity=1
+          inactive_opacity=1
           fullscreen_opacity=1
-          blur {
-            enabled=true
-          }
           drop_shadow=false
         }
 
@@ -228,6 +225,7 @@ with host;
         dwindle {
           pseudotile=false
           force_split=2
+          preserve_split=true
         }
 
         misc {

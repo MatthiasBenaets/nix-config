@@ -23,13 +23,15 @@
       enable = true;
       theme = {
         #name = "Dracula";
-        name = "Catppuccin-Mocha-Compact-Blue-Dark";
+        #name = "Catppuccin-Mocha-Compact-Blue-Dark";
+        name = "Orchis-Dark-Compact";
         #package = pkgs.dracula-theme;
-        package = pkgs.catppuccin-gtk.override {
-          accents = ["blue"];
-          size = "compact";
-          variant = "mocha";
-        };
+        # package = pkgs.catppuccin-gtk.override {
+        #   accents = ["blue"];
+        #   size = "compact";
+        #   variant = "mocha";
+        # };
+        package = pkgs.orchis-theme;
       };
       iconTheme = {
         name = "Papirus-Dark";

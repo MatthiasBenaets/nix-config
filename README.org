@@ -27,7 +27,7 @@
 | *Bar*           | Eww + Waybar     | Dock-to-Panel          | Polybar          | /         |
 | *Hotkeys*       | Hyprland         | /                      | Sxhkd            | Skhd      |
 | *Launcher*      | Wofi             | Gnome                  | Rofi             | /         |
-| *GTK Theme*     | Catppuccin       | Catppuccin / Adwaita   | Catppuccin       | /         |
+| *GTK Theme*     | Orchis-Dark      | Orchis-Dark / Adwaita  | Orchis-Dark      | /         |
 | *Notifications* | Dunst            | Gnome                  | Dunst            | /         |
 | *Terminal*      | Kitty            | Kitty                  | Kitty            | Alacritty |
 | *Used by host*  | Desktop          | Work                   | Laptop & VM      | Macbook   |

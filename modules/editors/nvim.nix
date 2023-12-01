@@ -214,6 +214,11 @@
       nvim-autopairs.enable = true;
       telescope = {
         enable = true;
+        extraOptions = {
+          pickers.find_files = {
+            hidden = true;
+          };
+        };
         keymaps = {
           "<leader>ff" = "find_files";
           "<leader>fg" = "live_grep";
@@ -382,6 +387,11 @@
     '';
     extraConfigLuaPre = ''
       require('orgmode').setup_ts_grammar()
+      require('onedarkpro').setup({
+        colors = {
+          bg = "#111111",
+        }
+      })
     '';
   };
 }
