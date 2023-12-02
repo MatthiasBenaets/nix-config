@@ -4,6 +4,9 @@
 
 { config, lib, pkgs, vars, ... }:
 
+let
+  colors = import ../theming/colors.nix;
+in
 {
   config = lib.mkIf (config.wlwm.enable) {
     home-manager.users.${vars.user} = {
@@ -13,13 +16,13 @@
         ];
       };
 
-      home.file = {
+      home.file = with colors.scheme.default.hex; {
         ".config/wofi/config" = {
           text = ''
             width=100%
-            lines=1
+            height=27
             xoffset=0
-            yoffset=-28
+            yoffset=-27
             location=1
             prompt=Search...
             filter_rate=100
@@ -30,30 +33,27 @@
             content_halign=fill
             insensitive=true
             allow_images=true
-            image_size=15
+            image_size=10
             hide_scroll=true
           '';
         };
         ".config/wofi/style.css" = {
           text = ''
             window {
-              margin: 0px;
-              background-color: #111111;
-              min-height: 27px;
+              background-color: #${bg};
             }
 
             #input {
               all: unset;
               border: none;
-              color: #999999;
-              background-color: #111111;
+              color: #${text};
+              background-color: #${bg};
               padding-left: 5px;
             }
 
             #outer-box {
-              margin: 0px;
               border: none;
-              border-bottom: 1px solid #005577;
+              border-bottom: 1px solid #${active};
             }
 
             #text:selected {
@@ -61,14 +61,14 @@
             }
 
             #entry {
-              color: #999999;
+              color: #${text};
               padding-right: 10px;
             }
 
             #entry:selected {
               all: unset;
               border-radius: 0px;
-              background-color: #005577;
+              background-color: #${active};
               padding-right: 10px;
             }
 

@@ -4,6 +4,9 @@
 
 { pkgs, vars, ... }:
 
+let
+  colors = import ../theming/colors.nix;
+in
 {
   home-manager.users.${vars.user} = {
     programs = {
@@ -14,7 +17,7 @@
           confirm_os_window_close=0;
           enable_audio_bell="no";
           resize_debounce_time="0";
-          background="#111111";
+          background="#${colors.scheme.default.hex.bg}";
         };
       };
     };

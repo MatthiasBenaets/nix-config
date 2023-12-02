@@ -1,5 +1,5 @@
 #
-#  flake.nix *             
+#  flake.nix *
 #   ├─ ./hosts
 #   │   └─ default.nix
 #   ├─ ./darwin

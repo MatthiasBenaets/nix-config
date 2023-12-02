@@ -65,7 +65,6 @@
       obs-studio            # Live Streaming
       plex-media-player     # Media Player
       simple-scan           # Scanning
-      kitty
       moonlight-qt          # Remote Streaming
     ];
   };

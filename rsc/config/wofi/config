@@ -1,8 +1,7 @@
-
 width=100%
-lines=1
+height=27
 xoffset=0
-yoffset=-28
+yoffset=-27
 location=1
 prompt=Search...
 filter_rate=100
@@ -13,5 +12,5 @@ orientation=horizontal
 content_halign=fill
 insensitive=true
 allow_images=true
-image_size=15
+image_size=10
 hide_scroll=true

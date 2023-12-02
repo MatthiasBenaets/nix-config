@@ -5,6 +5,9 @@
 
 { config, lib, system, pkgs, hyprland, vars, host, ... }:
 
+let
+  colors = import ../theming/colors.nix;
+in
 with lib;
 with host;
 {
@@ -169,17 +172,17 @@ with host;
         '' else "";
     in
     let
-      hyprlandConf = ''
+      hyprlandConf = with colors.scheme.default.hex; ''
         ${workspaces}
         ${monitors}
-        monitor=,highres,auto,auto
+        monitor=,preferred,auto,1,mirror,${toString mainMonitor}
 
         general {
           border_size=3
           gaps_in=0
           gaps_out=0
-          col.active_border=0x99005577
-          col.inactive_border=0x66333333
+          col.active_border=0x99${active}
+          col.inactive_border=0x66${inactive}
           layout=dwindle
         }
 
@@ -250,7 +253,6 @@ with host;
         bind=SUPER,L,exec,${pkgs.swaylock}/bin/swaylock
         bind=SUPER,E,exec,GDK_BACKEND=x11 ${pkgs.pcmanfm}/bin/pcmanfm
         bind=SUPER,H,togglefloating,
-        #bind=SUPER,Space,exec,${pkgs.rofi}/bin/rofi -show drun
         bind=SUPER,Space,exec, pkill wofi || ${pkgs.wofi}/bin/wofi --show drun
         bind=SUPER,P,pseudo,
         bind=SUPER,F,fullscreen,

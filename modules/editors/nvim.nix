@@ -1,16 +1,20 @@
 { lib, pkgs, ... }:
 
+let
+  colors = import ../theming/colors.nix;
+in
 {
-  # steam-run for codeium-vim
-  # start nvim in bash first time, so the spell files can be downloaded
-  programs.zsh.shellAliases = {
-    vim = "${pkgs.steam-run}/bin/steam-run nvim";
-    nvim = "${pkgs.steam-run}/bin/steam-run nvim";
-  };
+  # # steam-run for codeium-vim
+  # # start nvim in bash first time, so the spell files can be downloaded
+  # programs.zsh.shellAliases = {
+  #   vim = "${pkgs.steam-run}/bin/steam-run nvim";
+  #   nvim = "${pkgs.steam-run}/bin/steam-run nvim";
+  # };
   programs.nixvim = {
     enable = true;
     viAlias = true;
     vimAlias = true;
+    defaultEditor = true;
 
     autoCmd = [
       {
@@ -229,6 +233,14 @@
       neo-tree = {
         enable = true;
         window.width = 30;
+        closeIfLastWindow = true;
+        extraOptions = {
+          filesystem = {
+            filtered_items = {
+              visible = true;
+            };
+          };
+        };
       };
       undotree = {
         enable = true;
@@ -312,22 +324,23 @@
           "<C-f>" = "cmp.mapping.scroll_docs(4)";
           "<C-Space>" = "cmp.mapping.complete()";
           "<C-e>" = "cmp.mapping.close()";
-          # "<Tab>" = {
-          #   modes = ["i" "s"];
-          #   action = "cmp.mapping.select_next_item()";
-          # };
-          # "<S-Tab>" = {
-          #   modes = ["i" "s"];
-          #   action = "cmp.mapping.select_prev_item()";
-          # };
-          "<C-j>" = {
+          "<Tab>" = {
             modes = ["i" "s"];
             action = "cmp.mapping.select_next_item()";
           };
-          "<C-k>" = {
+          "<S-Tab>" = {
             modes = ["i" "s"];
             action = "cmp.mapping.select_prev_item()";
           };
+          # # When codeium-vim is active:
+          # "<C-j>" = {
+          #   modes = ["i" "s"];
+          #   action = "cmp.mapping.select_next_item()";
+          # };
+          # "<C-k>" = {
+          #   modes = ["i" "s"];
+          #   action = "cmp.mapping.select_prev_item()";
+          # };
           "<CR>" = "cmp.mapping.confirm({ select = true })";
         };
         sources = [
@@ -346,7 +359,7 @@
       friendly-snippets
       orgmode
       vim-table-mode
-      codeium-vim
+      # codeium-vim
       (pkgs.vimUtils.buildVimPlugin rec {
         pname = "scope-nvim";
         version = "cd27af77ad61a7199af5c28d27013fb956eb0e3e";
@@ -385,11 +398,11 @@
 
       require('org-bullets').setup()
     '';
-    extraConfigLuaPre = ''
+    extraConfigLuaPre = with colors.scheme.default.hex; ''
       require('orgmode').setup_ts_grammar()
       require('onedarkpro').setup({
         colors = {
-          bg = "#111111",
+          bg = "#${bg}",
         }
       })
     '';

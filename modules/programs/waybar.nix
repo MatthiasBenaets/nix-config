@@ -3,7 +3,9 @@
 #
 
 { config, lib, pkgs, vars, host, ...}:
-
+let
+  colors = import ../theming/colors.nix;
+in
 with host;
 let
   output =
@@ -43,7 +45,7 @@ in
       waybar
     ];
 
-    home-manager.users.${vars.user} = {
+    home-manager.users.${vars.user} = with colors.scheme.default; {
       programs.waybar = {
         enable = true;
         package = pkgs.waybar;
@@ -61,15 +63,13 @@ in
             text-shadow: 0px 0px 5px #000000;
           }
           button:hover {
-            background-color: rgba(80,100,100,0.4);
+            background-color: rgba(${rgb.active},0.4);
           }
           window#waybar {
-            background-color: rgba(0,0,0,0.5);
-            background: transparent;
+            background-color: #${hex.bg};
             transition-property: background-color;
             transition-duration: .5s;
-            /*border-bottom: none;*/
-            border-bottom: 1px solid rgba(0, 85, 119, 0.99);
+            border-bottom: 1px solid rgba(${rgb.active}, 0.99);
           }
           window#waybar.hidden {
             opacity: 0.2;
@@ -92,32 +92,31 @@ in
           #custom-kb,
           #custom-ds4,
           #tray {
-            color: #999999;
+            color: #${hex.text};
             background-clip: padding-box;
           }
           #custom-menu {
-            color: #A7C7E7;
+            color: rgba(${rgb.cyan}, 0.9);
             padding: 0px 5px 0px 5px;
           }
           #workspaces button {
             padding: 0px 7px;
             min-width: 5px;
-            color: rgba(255,255,255,0.8);
+            color: rgba(${rgb.text},1);
           }
           #workspaces button:hover {
             background-color: rgba(0,0,0,0.2);
           }
           #workspaces button.visible {
-            background-color: rgba(0, 85, 119, 0.3);
+            background-color: rgba(${rgb.active}, 0.3);
           }
           /*#workspaces button.focused {*/
           #workspaces button.active {
-            color: rgba(255,255,255,0.8);
-            /*background-color: rgba(80,100,100,0.4);*/
-            background-color: rgba(0, 85, 119, 0.99);
+            color: rgba(${rgb.fg},1);
+            background-color: rgba(${rgb.active}, 0.99);
           }
           #workspaces button.hidden {
-            color: #999999;
+            color: #${hex.text};
           }
           #battery.warning {
             color: #ff5d17;

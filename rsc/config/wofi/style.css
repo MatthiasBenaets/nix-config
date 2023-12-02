@@ -1,8 +1,5 @@
-
 window {
-  margin: 0px;
   background-color: #111111;
-  min-height: 27px;
 }
 
 #input {
@@ -14,7 +11,6 @@ window {
 }
 
 #outer-box {
-  margin: 0px;
   border: none;
   border-bottom: 1px solid #005577;
 }

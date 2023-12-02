@@ -24,6 +24,9 @@
 
 { config, lib, pkgs, stable, inputs, vars, ... }:
 
+let
+  terminal = stable.${vars.terminal};
+in
 {
   imports = ( import ../modules/desktops ++
               import ../modules/editors ++
@@ -79,6 +82,7 @@
     };
     systemPackages = with stable; [           # System-Wide Packages
       # Terminal
+      terminal          # Terminal Emulator
       btop              # Resource Manager
       coreutils         # GNU Utilities
       git               # Version Control
