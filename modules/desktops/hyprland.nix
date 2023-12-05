@@ -64,9 +64,7 @@ with host;
         MOZ_ENABLE_WAYLAND = "1";
       };
       systemPackages = with pkgs; [
-        grim            # Grab Images
-        slurp           # Region Selector
-        swappy          # Snapshot Editor
+        grimblast       # Screenshot
         swayidle        # Idle Daemon
         swaylock        # Lock Screen
         wl-clipboard    # Clipboard
@@ -178,7 +176,7 @@ with host;
         monitor=,preferred,auto,1,mirror,${toString mainMonitor}
 
         general {
-          border_size=3
+          border_size=2
           gaps_in=0
           gaps_out=0
           col.active_border=0x99${active}
@@ -311,7 +309,7 @@ with host;
         bind=,escape,submap,reset
         submap=reset
 
-        bind=,print,exec,${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.swappy}/bin/swappy -f - -o ~/Pictures/$(date +%Hh_%Mm_%Ss_%d_%B_%Y).png && notify-send "Saved to ~/Pictures/$(date +%Hh_%Mm_%Ss_%d_%B_%Y).png"
+        bind=,print,exec,${pkgs.grimblast}/bin/grimblast --notify --freeze --wait 1 copysave area ~/Pictures/$(date +%Y-%m-%dT%H%M%S).png
 
         bind=,XF86AudioLowerVolume,exec,${pkgs.pamixer}/bin/pamixer -d 10
         bind=,XF86AudioRaiseVolume,exec,${pkgs.pamixer}/bin/pamixer -i 10

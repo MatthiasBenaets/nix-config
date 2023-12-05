@@ -87,6 +87,7 @@ in
       coreutils         # GNU Utilities
       git               # Version Control
       killall           # Process Killer
+      lshw              # Hardware Config
       nano              # Text Editor
       nix-tree          # Browse Nix Store
       pciutils          # Manage PCI

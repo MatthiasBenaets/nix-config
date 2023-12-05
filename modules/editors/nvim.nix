@@ -201,6 +201,16 @@ in
         action = "<Plug>(comment_toggle_linewise_visual)";
         options.desc = "(Un)comment in Visual Mode";
       }
+      {
+        mode = "n";
+        key = "gd";
+        action = "<cmd>lua vim.lsp.buf.hover()<CR>";
+      }
+      {
+        mode = "n";
+        key = "gD";
+        action = "<cmd>lua vim.lsp.buf.definition()<CR>";
+      }
     ];
 
     plugins = {

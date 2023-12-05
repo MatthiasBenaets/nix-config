@@ -313,11 +313,11 @@ in
             done
 
             if [[ "$STAT" = "Charging" ]] then
-              printf "<span font='13'> 󰍽</span><span font='10'></span> $BATT%%\n"
+              printf "<span font='11'> 󰍽</span><span font='9'></span> $BATT%%\n"
             elif [[ "$STAT" = "Full" ]] then
-              printf "<span font='13'> 󰍽</span><span font='10'></span> Full\n"
+              printf "<span font='11'> 󰍽</span><span font='9'></span> Full\n"
             elif [[ "$STAT" = "Discharging" ]] then
-              printf "<span font='13'> 󰍽</span> $BATT%%\n"
+              printf "<span font='11'> 󰍽</span> $BATT%%\n"
             else
               printf "\n"
             fi
@@ -338,11 +338,11 @@ in
             done
 
             if [[ "$STAT" == "Charging" ]] then
-              printf "<span font='13'> 󰌌</span><span font='10'></span> $BATT%%\n"
+              printf "<span font='14'> 󰌌</span><span font='9'></span> $BATT%%\n"
             elif [[ "$STAT" == "Full" ]] then
-              printf "<span font='13'> 󰌌</span><span font='10'></span> Full\n"
+              printf "<span font='14'> 󰌌</span><span font='9'></span> Full\n"
             elif [[ "$STAT" = "Discharging" ]] then
-              printf "<span font='13'> 󰌌</span> $BATT%%\n"
+              printf "<span font='14'> 󰌌</span> $BATT%%\n"
             else
               printf "\n"
             fi
@@ -363,11 +363,11 @@ in
             done
 
             if [[ "$STAT" == "Charging" ]] then
-              printf "<span font='13'> 󰊴</span><span font='10'></span> $BATT%%\n"
+              printf "<span font='14'> 󰊴</span><span font='9'></span> $BATT%%\n"
             elif [[ "$STAT" == "Full" ]] then
-              printf "<span font='13'> 󰊴</span><span font='10'></span> Full\n"
+              printf "<span font='14'> 󰊴</span><span font='9'></span> Full\n"
             elif [[ "$STAT" = "Discharging" ]] then
-              printf "<span font='13'> 󰊴</span> $BATT%%\n"
+              printf "<span font='14'> 󰊴</span> $BATT%%\n"
             else
               printf "\n"
             fi
