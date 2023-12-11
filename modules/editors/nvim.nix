@@ -10,6 +10,10 @@ in
   #   vim = "${pkgs.steam-run}/bin/steam-run nvim";
   #   nvim = "${pkgs.steam-run}/bin/steam-run nvim";
   # };
+  environment.systemPackages = with pkgs; [
+    nodejs
+    go
+  ];
   programs.nixvim = {
     enable = true;
     viAlias = true;
@@ -103,6 +107,11 @@ in
         options.desc = "Toggle NeoTree";
       }
       {
+        key = "<leader>fs";
+        action = "<CMD>Neotree toggle<CR>";
+        options.desc = "Toggle NeoTree";
+      }
+      {
         key = "<F3>";
         action = "<CMD>UndotreeToggle<CR>";
         options.desc = "Toggle Undotree";
@@ -164,7 +173,12 @@ in
       }
       {
         key = "<leader>bb";
-        action = "<CMD>BufferLinePick<CR>";
+        action = "<CMD>BufferPick<CR>";
+        options.desc = "View Open Buffer";
+      }
+      {
+        key = "<leader>bc";
+        action = "<CMD>BufferClose<CR>";
         options.desc = "View Open Buffer";
       }
       {
@@ -203,19 +217,36 @@ in
       }
       {
         mode = "n";
+        key = "<C-S-/>";
+        action = "<Plug>(comment_toggle_blockwise_current)";
+        options.desc = "(Un)comment in Normal Mode";
+      }
+      {
+        mode = "v";
+        key = "<C-S-/>";
+        action = "<Plug>(comment_toggle_blockwise_visual)";
+        options.desc = "(Un)comment in Visual Mode";
+      }
+      {
+        mode = "n";
         key = "gd";
-        action = "<cmd>lua vim.lsp.buf.hover()<CR>";
+        action = "<CMD>lua vim.lsp.buf.hover()<CR>";
       }
       {
         mode = "n";
         key = "gD";
-        action = "<cmd>lua vim.lsp.buf.definition()<CR>";
+        action = "<CMD>lua vim.lsp.buf.definition()<CR>";
+      }
+      {
+        mode = "n";
+        key = "<leader>r";
+        action = ":! ";
       }
     ];
 
     plugins = {
       lualine.enable = true;
-      bufferline.enable = true;
+      barbar.enable = true;
       gitgutter.enable = true;
       indent-blankline = {
         enable = true;
@@ -269,7 +300,13 @@ in
       treesitter-refactor = {
         enable = true;
       };
-      nvim-colorizer.enable = true;
+      nvim-colorizer = {
+        enable = true;
+        userDefaultOptions = {
+          css = true;
+          tailwind = "both";
+        };
+      };
       neorg = {
         enable = true;
         lazyLoading = true;
@@ -306,6 +343,7 @@ in
               "svelte"
             ];
           };
+          gopls.enable = true;
         };
       };
       lspkind = {
@@ -334,24 +372,32 @@ in
           "<C-f>" = "cmp.mapping.scroll_docs(4)";
           "<C-Space>" = "cmp.mapping.complete()";
           "<C-e>" = "cmp.mapping.close()";
-          "<Tab>" = {
-            modes = ["i" "s"];
-            action = "cmp.mapping.select_next_item()";
-          };
-          "<S-Tab>" = {
-            modes = ["i" "s"];
-            action = "cmp.mapping.select_prev_item()";
-          };
-          # # When codeium-vim is active:
-          # "<C-j>" = {
+          # "<Tab>" = {
           #   modes = ["i" "s"];
           #   action = "cmp.mapping.select_next_item()";
           # };
-          # "<C-k>" = {
+          # "<S-Tab>" = {
           #   modes = ["i" "s"];
           #   action = "cmp.mapping.select_prev_item()";
           # };
-          "<CR>" = "cmp.mapping.confirm({ select = true })";
+          "<Down>" = {
+            modes = ["i" "s"];
+            action = "cmp.mapping.select_next_item()";
+          };
+          "<Up>" = {
+            modes = ["i" "s"];
+            action = "cmp.mapping.select_prev_item()";
+          };
+          "<C-j>" = {
+            modes = ["i" "s"];
+            action = "cmp.mapping.select_next_item()";
+          };
+          "<C-k>" = {
+            modes = ["i" "s"];
+            action = "cmp.mapping.select_prev_item()";
+          };
+          # "<CR>" = "cmp.mapping.confirm({ select = true })";
+          "<Tab>" = "cmp.mapping.confirm({ select = true })";
         };
         sources = [
           {name = "nvim_lsp";}

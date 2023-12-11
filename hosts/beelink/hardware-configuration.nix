@@ -34,6 +34,12 @@
       fsType = "vfat";
     };
 
+  fileSystems."/data" =
+    { device = "/dev/disk/by-uuid/cb9fb859-74ce-4010-a9b3-0d16c6df9831";
+      fsType = "ext4";
+      options = [ "noatime" ];
+    };
+
   swapDevices = [ ];
 
   fileSystems."/storage" =
@@ -87,14 +93,5 @@
     enableIPv6 = false;
     defaultGateway = "192.168.0.1";
     nameservers = [ "192.168.0.4" "1.1.1.1"];   # Pi-Hole DNS
-  };
-  services.create_ap = {
-    enable = true;
-    settings = {
-      INTERNET_IFACE = "enp1s0";
-      WIFI_IFACE = "wlo1";
-      SSID = "Spikky";
-      PASSPHRASE = builtins.readFile /home/matthias/hotspot;
-    };
   };
 }

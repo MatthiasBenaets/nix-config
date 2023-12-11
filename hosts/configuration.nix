@@ -22,10 +22,10 @@
 #           └─ default.nix
 #
 
-{ config, lib, pkgs, stable, inputs, vars, ... }:
+{ config, lib, pkgs, unstable, inputs, vars, ... }:
 
 let
-  terminal = stable.${vars.terminal};
+  terminal = pkgs.${vars.terminal};
 in
 {
   imports = ( import ../modules/desktops ++
@@ -80,7 +80,7 @@ in
       EDITOR = "${vars.editor}";
       VISUAL = "${vars.editor}";
     };
-    systemPackages = with stable; [           # System-Wide Packages
+    systemPackages = with pkgs; [           # System-Wide Packages
       # Terminal
       terminal          # Terminal Emulator
       btop              # Resource Manager
@@ -98,9 +98,12 @@ in
       xdg-utils         # Environment integration
 
       # Video/Audio
+      alsa-utils        # Audio Control
       feh               # Image Viewer
       mpv               # Media Player
       pavucontrol       # Audio Control
+      pipewire          # Audio Server/Control
+      pulseaudio        # Audio Server/Control
       vlc               # Media Player
 
       # Apps
@@ -122,14 +125,9 @@ in
       # - ./<host>/default.nix
       # - ../modules
     ] ++
-    (with pkgs; [
+    (with unstable; [
       # Apps
       firefox           # Browser
-
-      # Video/Audio
-      alsa-utils        # Audio Control
-      pipewire          # Audio Server/Control
-      pulseaudio        # Audio Server/Control
     ]);
   };
 

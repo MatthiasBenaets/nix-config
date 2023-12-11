@@ -1,15 +1,15 @@
 #
 #  These are the different profiles that can be used when building NixOS.
 #
-#  flake.nix 
-#   └─ ./hosts  
+#  flake.nix
+#   └─ ./hosts
 #       ├─ default.nix *
 #       ├─ configuration.nix
 #       └─ ./<host>.nix
-#           └─ default.nix 
+#           └─ default.nix
 #
 
-{ lib, inputs, nixpkgs, nixpkgs-stable, home-manager, nur, nixvim, doom-emacs, hyprland, plasma-manager, vars, ... }:
+{ lib, inputs, nixpkgs, nixpkgs-unstable, home-manager, nur, nixvim, doom-emacs, hyprland, plasma-manager, vars, ... }:
 
 let
   system = "x86_64-linux";                                  # System Architecture
@@ -19,7 +19,7 @@ let
     config.allowUnfree = true;                              # Allow Proprietary Software
   };
 
-  stable = import nixpkgs-stable {
+  unstable = import nixpkgs-unstable {
     inherit system;
     config.allowUnfree = true;
   };
@@ -30,7 +30,7 @@ in
   beelink = lib.nixosSystem {                               # Desktop Profile
     inherit system;
     specialArgs = {                                         # Pass Flake Variable
-      inherit inputs system stable hyprland vars;
+      inherit inputs system unstable hyprland vars;
       host = {
         hostName = "beelink";
         mainMonitor = "HDMI-A-2";
@@ -53,7 +53,7 @@ in
   laptop = lib.nixosSystem {                                # Laptop Profile
     inherit system;
     specialArgs = {
-      inherit inputs stable vars;
+      inherit inputs unstable vars;
       host = {
         hostName = "laptop";
         mainMonitor = "eDP-1";
@@ -75,7 +75,7 @@ in
   work = lib.nixosSystem {                                  # Work Profile
     inherit system;
     specialArgs = {
-      inherit inputs system stable hyprland vars;
+      inherit inputs system unstable hyprland vars;
       host = {
         hostName = "work";
         mainMonitor = "eDP-1";
@@ -98,7 +98,7 @@ in
   vm = lib.nixosSystem {                                    # VM Profile
     inherit system;
     specialArgs = {
-      inherit inputs stable vars;
+      inherit inputs unstable vars;
       host = {
         hostName = "vm";
         mainMonitor = "Virtual-1";
@@ -117,10 +117,10 @@ in
     ];
   };
 
-  desktop = lib.nixosSystem {                               # DEPRECATED Desktop Profile 
+  desktop = lib.nixosSystem {                               # DEPRECATED Desktop Profile
     inherit system;
     specialArgs = {
-      inherit inputs system stable hyprland vars;
+      inherit inputs system unstable hyprland vars;
       host = {
         hostName = "desktop";
         mainMonitor = "HDMI-A-1";
