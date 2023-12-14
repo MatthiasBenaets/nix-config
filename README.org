@@ -36,9 +36,9 @@ There are some other desktop environments/window manager (See NixOS - Other). Ju
 There is also a general Nix config with hostname ~pacman~ that can be used on pretty much any disto.
 
 Components relevant to all hosts:
-| *Shell*    | Zsh               |
-| *Terminal* | Kitty             |
-| *Editors*  | Nvim + Doom Emacs |
+| *Shell*    | Zsh    |
+| *Terminal* | Kitty  |
+| *Editors*  | Neovim |
 
 * NixOS Installation Guide
 This flake currently has *4* hosts

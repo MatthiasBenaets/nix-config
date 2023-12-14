@@ -92,6 +92,7 @@ in
       nix-tree          # Browse Nix Store
       pciutils          # Manage PCI
       ranger            # File Manager
+      smartmontools     # Disk Health
       tldr              # Helper
       usbutils          # Manage USB
       wget              # Retriever

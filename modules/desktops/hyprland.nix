@@ -256,7 +256,7 @@ with host;
         bind=SUPER,F,fullscreen,
         bind=SUPER,R,forcerendererreload
         bind=SUPERSHIFT,R,exec,${pkgs.hyprland}/bin/hyprctl reload
-        bind=SUPER,T,exec,${pkgs.emacs}/bin/emacsclient -c
+        bind=SUPER,T,exec,${pkgs.${vars.terminal}}/bin/${vars.terminal} -e nvim
         bind=SUPER,K,exec,${pkgs.hyprland}/bin/hyprctl switchxkblayout keychron-k8-keychron-k8 next
 
         bind=SUPER,left,movefocus,l
@@ -331,6 +331,7 @@ with host;
         exec-once=${pkgs.eww-wayland}/bin/eww daemon
         #exec-once=$HOME/.config/eww/scripts/eww        # When running eww as a bar
         exec-once=${pkgs.blueman}/bin/blueman-applet
+        exec-once=${pkgs.swaynotificationcenter}/bin/swaync
         ${execute}
       '';
     in

@@ -415,6 +415,7 @@ in
       friendly-snippets
       orgmode
       vim-table-mode
+      vim-cool
       # codeium-vim
       (pkgs.vimUtils.buildVimPlugin rec {
         pname = "scope-nvim";

@@ -28,9 +28,9 @@ let
 
   modules-right =
     if hostName == "beelink" || hostName == "desktop" then [
-      "custom/ds4" "custom/mouse" "custom/kb" "custom/pad" "network" "cpu" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray"
+      "custom/ds4" "custom/mouse" "custom/kb" "custom/pad" "network" "cpu" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" "custom/notification"
     ] else [
-      "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/pad" "clock" "tray"
+      "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/pad" "clock" "tray" "custom/notification"
     ];
 
   sinkBuiltIn="Built-in Audio Analog Stereo";
@@ -95,8 +95,8 @@ in
             color: #${hex.text};
             background-clip: padding-box;
           }
-          #custom-menu {
-            color: rgba(${rgb.cyan}, 0.9);
+          #custom-menu, #custom-notification {
+            color: rgba(255, 255, 255, 0.9);
             padding: 0px 5px 0px 5px;
           }
           #workspaces button {
@@ -152,6 +152,26 @@ in
               on-click = ''.config/wofi/power.sh'';
               on-click-right = "${pkgs.wofi}/bin/wofi --show drun";
               tooltip = false;
+            };
+            "custom/notification" = {
+              tooltip= false;
+              format = "{icon}";
+              format-icons = {
+                notification = "<span font='16'></span><span foreground='red'><sup></sup></span>";
+                none = "<span font='16'></span>";
+                dnd-notification = "<span font='16'></span><span foreground='red'><sup></sup></span>";
+                dnd-none = "<span font='16'></span>";
+                inhibited-notification = "<span font='16'></span><span foreground='red'><sup></sup></span>";
+                inhibited-none = "<span font='16'></span>";
+                dnd-inhibited-notification = "<span font='16'></span><span foreground='red'><sup></sup></span>";
+                dnd-inhibited-none = "<span font='16'></span>";
+              };
+              return-type = "json";
+              exec-if = "which swaync-client";
+              exec = "swaync-client -swb";
+              on-click = "sleep 0.1; swaync-client -t -sw";
+              on-click-right = "sleep 0.1; swaync-client -d -sw";
+              escape = true;
             };
             "sway/workspaces" = {
               format = "<span font='12'>{icon}</span>";

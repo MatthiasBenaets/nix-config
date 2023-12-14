@@ -64,6 +64,7 @@
       jellyfin-media-player # Media Player
       obs-studio            # Live Streaming
       plex-media-player     # Media Player
+      rclone                # Gdrive ($ rclone config | rclone mount --daemon gdrive:<path> <host/path>)
       simple-scan           # Scanning
       moonlight-qt          # Remote Streaming
     ];

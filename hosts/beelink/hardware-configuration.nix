@@ -34,10 +34,9 @@
       fsType = "vfat";
     };
 
-  fileSystems."/data" =
+  fileSystems."/home" =
     { device = "/dev/disk/by-uuid/cb9fb859-74ce-4010-a9b3-0d16c6df9831";
       fsType = "ext4";
-      options = [ "noatime" ];
     };
 
   swapDevices = [ ];
