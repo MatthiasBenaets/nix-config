@@ -250,10 +250,10 @@ with host;
         bind=SUPER,S,exec,${pkgs.systemd}/bin/systemctl suspend
         bind=SUPER,L,exec,${pkgs.swaylock}/bin/swaylock
         bind=SUPER,E,exec,GDK_BACKEND=x11 ${pkgs.pcmanfm}/bin/pcmanfm
-        bind=SUPER,H,togglefloating,
+        bind=SUPER,F,togglefloating,
         bind=SUPER,Space,exec, pkill wofi || ${pkgs.wofi}/bin/wofi --show drun
         bind=SUPER,P,pseudo,
-        bind=SUPER,F,fullscreen,
+        bind=,F11,fullscreen,
         bind=SUPER,R,forcerendererreload
         bind=SUPERSHIFT,R,exec,${pkgs.hyprland}/bin/hyprctl reload
         bind=SUPER,T,exec,${pkgs.${vars.terminal}}/bin/${vars.terminal} -e nvim
@@ -295,22 +295,23 @@ with host;
         bind=ALTSHIFT,right,movetoworkspace,+1
         bind=ALTSHIFT,left,movetoworkspace,-1
 
-        #bind=CTRL,right,resizeactive,20 0
-        #bind=CTRL,left,resizeactive,-20 0
-        #bind=CTRL,up,resizeactive,0 -20
-        #bind=CTRL,down,resizeactive,0 20
+        binde=SUPERCTRL,right,resizeactive,60 0
+        binde=SUPERCTRL,left,resizeactive,-60 0
+        binde=SUPERCTRL,up,resizeactive,0 -60
+        binde=SUPERCTRL,down,resizeactive,0 60
 
-        bind=SUPER,M,submap,resize
-        submap=resize
-        binde=,right,resizeactive,20 0
-        binde=,left,resizeactive,-20 0
-        binde=,up,resizeactive,0 -20
-        binde=,down,resizeactive,0 20
-        bind=,escape,submap,reset
-        submap=reset
+        # bind=SUPER,M,submap,resize
+        # submap=resize
+        # binde=,right,resizeactive,20 0
+        # binde=,left,resizeactive,-20 0
+        # binde=,up,resizeactive,0 -20
+        # binde=,down,resizeactive,0 20
+        # bind=,escape,submap,reset
+        # submap=reset
+
+        bind=SUPER,Z,layoutmsg,togglesplit
 
         bind=,print,exec,${pkgs.grimblast}/bin/grimblast --notify --freeze --wait 1 copysave area ~/Pictures/$(date +%Y-%m-%dT%H%M%S).png
-
         bind=,XF86AudioLowerVolume,exec,${pkgs.pamixer}/bin/pamixer -d 10
         bind=,XF86AudioRaiseVolume,exec,${pkgs.pamixer}/bin/pamixer -i 10
         bind=,XF86AudioMute,exec,${pkgs.pamixer}/bin/pamixer -t
