@@ -13,7 +13,7 @@
 
   inputs =                                                                  # References Used by Flake
     {
-      nixpkgs.url = "github:nixos/nixpkgs/release-23.11";                   # Unstable Nix Packages (Default)
+      nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";                     # Unstable Nix Packages (Default)
       nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";         # Stable Nix Packages
 
       home-manager = {                                                      # User Environment Manager

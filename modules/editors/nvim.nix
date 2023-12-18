@@ -107,6 +107,11 @@ in
         options.desc = "Toggle NeoTree";
       }
       {
+        key = "<leader>e";
+        action = "<CMD>Neotree toggle<CR>";
+        options.desc = "Toggle NeoTree";
+      }
+      {
         key = "<leader>fs";
         action = "<CMD>Neotree toggle<CR>";
         options.desc = "Toggle NeoTree";
@@ -239,6 +244,11 @@ in
       }
       {
         mode = "n";
+        key = "ge";
+        action = "<CMD>lua vim.diagnostic.open_float()<CR>";
+      }
+      {
+        mode = "n";
         key = "<leader>r";
         action = ":! ";
       }
@@ -361,6 +371,7 @@ in
           };
         };
       };
+      lsp-lines.enable = true;
       luasnip.enable = true;
       cmp_luasnip.enable = true;
       cmp-nvim-lsp.enable = true;
