@@ -41,5 +41,14 @@
         name = "FiraCode Nerd Font Mono Medium";
       };
     };
+
+    qt.enable = true;
+    qt.platformTheme = "gtk";
+    qt.style.name = "adwaita-dark";
+    qt.style.package = pkgs.adwaita-qt;
+  };
+
+  environment.variables = {
+    QT_QPA_PLATFORMTHEME="gtk2";
   };
 }
