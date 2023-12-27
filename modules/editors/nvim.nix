@@ -49,6 +49,12 @@ in
         command = ":TableModeEnable";
         desc = "Table Mode";
       }
+      {
+        event = "FileType";
+        pattern = [ "markdown" ];
+        command = "setlocal scrolloff=30";
+        desc = "Fixed cursor location on markdown (for preview)";
+      }
     ];
 
     options = {
@@ -62,6 +68,8 @@ in
       expandtab = true;
       autoindent = true;
       wrap = false;
+      scrolloff = 5;
+      sidescroll = 40;
       completeopt = ["menu" "menuone" "noselect"];
       pumheight = 15;
       fileencoding = "utf-8";

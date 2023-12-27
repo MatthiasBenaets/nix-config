@@ -23,6 +23,7 @@
               ./hardware-configuration.nix
               ../../modules/programs/games.nix
             ] ++
+            ( import ../../modules/hardware/beelink) ++
             ( import ../../modules/desktops/virtualisation);
 
   boot = {                                      # Boot Options
@@ -60,6 +61,7 @@
   environment = {
     systemPackages = with pkgs; [               # System-Wide Packages
       discord               # Messaging
+      gimp                  # Image Editor
       gmtp                  # Mount GoPro
       jellyfin-media-player # Media Player
       obs-studio            # Live Streaming

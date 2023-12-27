@@ -149,8 +149,8 @@ in
             "custom/menu" = {
               format = "<span font='16'></span>";
               # on-click = ''${pkgs.eww-wayland}/bin/eww open --toggle menu --screen 0'';
-              on-click = ''.config/wofi/power.sh'';
-              on-click-right = "${pkgs.wofi}/bin/wofi --show drun";
+              on-click = ''sleep 0.1; .config/wofi/power.sh'';
+              on-click-right = "sleep 0.1; ${pkgs.wofi}/bin/wofi --show drun";
               tooltip = false;
             };
             "custom/notification" = {
@@ -201,7 +201,7 @@ in
             };
             clock = {
               format = "{:%b %d %H:%M}  ";
-              on-click = "${pkgs.eww-wayland}/bin/eww open --toggle calendar --screen 0";
+              on-click = "sleep 0.1; ${pkgs.eww-wayland}/bin/eww open --toggle calendar --screen 0";
             };
             cpu = {
               format = " {usage}% <span font='11'></span> ";
@@ -253,6 +253,7 @@ in
                 headphone = "";
               };
               tooltip-format = "{desc}, {volume}%";
+              scroll-step = 5;
               on-click = "${pkgs.pamixer}/bin/pamixer -t";
               on-click-right = "${pkgs.pamixer}/bin/pamixer --default-source -t";
               on-click-middle = "${pkgs.pavucontrol}/bin/pavucontrol";
@@ -268,16 +269,19 @@ in
               format = "{}";
               exec = "$HOME/.config/waybar/script/mouse.sh";
               interval = 60;
+              tooltip = false;
             };
             "custom/kb" = {
               format = "{}";
               exec = "$HOME/.config/waybar/script/kb.sh";
               interval = 60;
+              tooltip = false;
             };
             "custom/ds4" = {
               format = "{}";
               exec = "$HOME/.config/waybar/script/ds4.sh";
               interval = 60;
+              tooltip = false;
             };
             tray = {
               icon-size = 13;

@@ -36,7 +36,7 @@
     };
 
   swapDevices = [ ];
-  
+
   networking = with host; {
     useDHCP = false;                        # Deprecated
     hostName = hostName;
@@ -54,7 +54,7 @@
         #ipv4.addresses = [ {
         #  address = "192.168.0.51";
         #  prefixLength = 24;
-        #} ];  
+        #} ];
       };
     };
     defaultGateway = "192.168.0.1";
