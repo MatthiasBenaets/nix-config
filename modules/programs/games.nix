@@ -21,6 +21,15 @@ in
   '';                                           # Group and udev rule needed to have access to the controller's gyro
 
   #hardware.new-lg4ff.enable = true;            # Force Feedback
+  hardware.bluetooth = {                        # Wireless controller
+    enable = true;
+    settings = {
+      General = {
+        AutoEnable = true;
+        ControllerMode = "bredr";
+      };
+    };
+  };
 
   environment.systemPackages = [
     #config.nur.repos.c0deaddict.oversteer      # Steering Wheel Configuration

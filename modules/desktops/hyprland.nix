@@ -161,7 +161,7 @@ with host;
         '' else "";
       execute =
         if hostName == "desktop" || hostName == "beelink" then ''
-          exec-once=${pkgs.swayidle}/bin/swayidle -w timeout 600 '${pkgs.swaylock}/bin/swaylock -f' timeout 1200 '${pkgs.systemd}/bin/systemctl suspend' after-resume '${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock}/bin/swaylock -f && ${config.programs.hyprland.package}/bin/hyprctl dispatch dpms off'
+          exec-once=${pkgs.swayidle}/bin/swayidle -w timeout 1800 '${pkgs.swaylock}/bin/swaylock -f' timeout 3600 '${pkgs.systemd}/bin/systemctl suspend' after-resume '${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock}/bin/swaylock -f && ${config.programs.hyprland.package}/bin/hyprctl dispatch dpms off'
         '' else if hostName == "work" then ''
           exec-once=${pkgs.networkmanagerapplet}/bin/nm-applet --indicator
           #exec-once=${pkgs.google-drive-ocamlfuse}/bin/google-drive-ocamlfuse /GDrive
@@ -213,7 +213,7 @@ with host;
           kb_layout=us,us
           #kb_options=caps:ctrl_modifier
           kb_variant=,dvorak
-          follow_mouse=2
+          follow_mouse=1
           repeat_delay=250
           numlock_by_default=1
           accel_profile=flat
@@ -316,11 +316,14 @@ with host;
         bind=,XF86AudioRaiseVolume,exec,${pkgs.pamixer}/bin/pamixer -i 10
         bind=,XF86AudioMute,exec,${pkgs.pamixer}/bin/pamixer -t
         bind=SUPER_L,c,exec,${pkgs.pamixer}/bin/pamixer --default-source -t
+        bind=CTRL,F10,exec,${pkgs.pamixer}/bin/pamixer -t
         bind=,XF86AudioMicMute,exec,${pkgs.pamixer}/bin/pamixer --default-source -t
         bind=,XF86MonBrightnessDown,exec,${pkgs.light}/bin/light -U 10
         bind=,XF86MonBrightnessUP,exec,${pkgs.light}/bin/light -A 10
 
         windowrulev2=float,title:^(Volume Control)$
+        windowrulev2 = keepaspectratio,class:^(firefox)$,title:^(Picture-in-Picture)$
+        windowrulev2 = noborder,class:^(firefox)$,title:^(Picture-in-Picture)$
         windowrulev2 = float, title:^(Picture-in-Picture)$
         windowrulev2 = size 24% 24%, title:(Picture-in-Picture)
         windowrulev2 = move 75% 75%, title:(Picture-in-Picture)
