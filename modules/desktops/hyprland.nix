@@ -25,7 +25,7 @@ with host;
 
     environment =
     let
-      exec = "exec dbus-launch Hyprland";
+      exec = if hostName != "work" then "exec dbus-launch Hyprland" else "exec dbus-launch nvidia-offload Hyprland";
     in
     {
       loginShellInit = ''
@@ -78,7 +78,7 @@ with host;
       '';
     };
 
-    services.greetd = {
+    services.greetd = if hostName != "work" then {
       enable = true;
       settings = {
         default_session = {
@@ -86,6 +86,8 @@ with host;
         };
       };
       vt = 7;
+    } else {
+      enable = false;
     };
 
     programs = {
@@ -210,9 +212,11 @@ with host;
         }
 
         input {
-          kb_layout=us,us
+          kb_layout=us
+          #kb_layout=us,us
+          #kb_variant=,dvorak
           #kb_options=caps:ctrl_modifier
-          kb_variant=,dvorak
+          kb_options=caps:escape
           follow_mouse=1
           repeat_delay=250
           numlock_by_default=1
@@ -249,7 +253,7 @@ with host;
         bind=SUPER,Escape,exit,
         bind=SUPER,S,exec,${pkgs.systemd}/bin/systemctl suspend
         bind=SUPER,L,exec,${pkgs.swaylock}/bin/swaylock
-        bind=SUPER,E,exec,GDK_BACKEND=x11 ${pkgs.pcmanfm}/bin/pcmanfm
+        bind=SUPER,E,exec,XDG_BACKEND=x11 ${pkgs.pcmanfm}/bin/pcmanfm
         bind=SUPER,F,togglefloating,
         bind=SUPER,Space,exec, pkill wofi || ${pkgs.wofi}/bin/wofi --show drun
         bind=SUPER,P,pseudo,
