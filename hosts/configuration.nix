@@ -101,14 +101,17 @@ in
       # Video/Audio
       alsa-utils        # Audio Control
       feh               # Image Viewer
+      linux-firmware    # Proprietary Hardware Blob
       mpv               # Media Player
       pavucontrol       # Audio Control
       pipewire          # Audio Server/Control
       pulseaudio        # Audio Server/Control
+      qpwgraph          # Pipewire Graph Manager
       vlc               # Media Player
 
       # Apps
       appimage-run      # Runs AppImages on NixOS
+      firefox           # Browser
       google-chrome     # Browser
       remmina           # XRDP & VNC Client
 
@@ -128,7 +131,7 @@ in
     ] ++
     (with unstable; [
       # Apps
-      firefox           # Browser
+      # firefox           # Browser
     ]);
   };
 

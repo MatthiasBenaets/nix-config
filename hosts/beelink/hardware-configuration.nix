@@ -93,5 +93,6 @@
     enableIPv6 = false;
     defaultGateway = "192.168.0.1";
     nameservers = [ "192.168.0.4" "1.1.1.1"];   # Pi-Hole DNS
+    firewall.enable = false;
   };
 }
