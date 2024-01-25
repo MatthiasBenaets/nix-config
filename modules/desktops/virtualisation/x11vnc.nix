@@ -39,4 +39,4 @@
   # auth: X authority file location so vnc also works from display manager (lightdm)
   # display: Which display to show. Even with multiple monitors it's 0
   # clip: Only show specific monitor using xinerama<displaynumber> or pixel coordinates you can find using $ xrandr -q. Can be removed to show all.
-} 
+}

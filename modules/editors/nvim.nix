@@ -260,6 +260,11 @@ in
         key = "<leader>r";
         action = ":! ";
       }
+      {
+        mode = "n";
+        key = "<TAB>";
+        action = "z=";
+      }
     ];
 
     plugins = {

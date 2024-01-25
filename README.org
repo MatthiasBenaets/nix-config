@@ -19,18 +19,20 @@
 :END:
 
 * System Components
-|                 | *NixOS -Wayland* | *NixOS - Wayland/Xorg* | *NixOS - Xorg*   | *Darwin*  |
-|-----------------+------------------+------------------------+------------------+-----------|
-| *DM*            | TTY1 Login       | GDM                    | LightDM          | /         |
-| *WM/DE*         | Hyprland         | Gnome                  | Bspwm            | Yabai     |
-| *Compositor*    | Hyprland         | Mutter                 | Picom (jonaburg) | /         |
-| *Bar*           | Eww + Waybar     | Dock-to-Panel          | Polybar          | /         |
-| *Hotkeys*       | Hyprland         | /                      | Sxhkd            | Skhd      |
-| *Launcher*      | Wofi             | Gnome                  | Rofi             | /         |
-| *GTK Theme*     | Orchis-Dark      | Orchis-Dark / Adwaita  | Orchis-Dark      | /         |
-| *Notifications* | Dunst            | Gnome                  | Dunst            | /         |
-| *Terminal*      | Kitty            | Kitty                  | Kitty            | Alacritty |
-| *Used by host*  | Desktop          | Work                   | Laptop & VM      | Macbook   |
+|                 | *NixOS - Wayland* | *NixOS - Wayland/Xorg* | *NixOS - Xorg*   | *Darwin*  |
+|-----------------+-------------------+------------------------+------------------+-----------|
+| *DM*            | TTY1 / Greetd     | GDM                    | LightDM          | /         |
+| *WM/DE*         | Hyprland          | Gnome                  | Bspwm            | Yabai     |
+| *Compositor*    | Hyprland          | Mutter                 | Picom (jonaburg) | /         |
+| *Bar*           | Eww + Waybar      | Dock-to-Panel          | Polybar          | /         |
+| *Hotkeys*       | Hyprland          | /                      | Sxhkd            | Skhd      |
+| *Launcher*      | Wofi              | Gnome                  | Rofi             | /         |
+| *GTK Theme*     | Orchis-Dark       | Orchis-Dark / Adwaita  | Orchis-Dark      | /         |
+| *Notifications* | Dunst             | Gnome                  | Dunst            | /         |
+| *Terminal*      | Kitty             | Kitty                  | Kitty            | Alacritty |
+| *Used by host*  | *                 |                        | VM & Probook     | Macbook   |
+
+*: Beelink, Work, XPS
 
 There are some other desktop environments/window manager (See NixOS - Other). Just link to correct ~default/home.nix~ in ~./hosts/<host>/default and home.nix~.
 There is also a general Nix config with hostname ~pacman~ that can be used on pretty much any disto.
@@ -41,13 +43,11 @@ Components relevant to all hosts:
 | *Editors*  | Neovim |
 
 * NixOS Installation Guide
-This flake currently has *4* hosts
- 1. desktop
+This flake currently has *3* host setups
+ 1. Beelink & XPS
     - UEFI boot w/ systemd-boot
- 2. laptop
-    - UEFI boot w/ grub (Dual Boot)
- 3. work
-    - UEFI boot w/ grub (Dual Boot)
+ 2. Work & Probook
+    - UEFI boot w/ grub
  4. vm
     - Legacy boot w/ grub
 

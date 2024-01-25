@@ -9,7 +9,7 @@
 #           └─ default.nix
 #
 
-{ lib, inputs, nixpkgs, nixpkgs-unstable, home-manager, nur, nixvim, doom-emacs, hyprland, plasma-manager, vars, ... }:
+{ lib, inputs, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager, nur, nixvim, doom-emacs, hyprland, plasma-manager, vars, ... }:
 
 let
   system = "x86_64-linux";                                  # System Architecture
@@ -50,28 +50,6 @@ in
     ];
   };
 
-  laptop = lib.nixosSystem {                                # Laptop Profile
-    inherit system;
-    specialArgs = {
-      inherit inputs unstable vars;
-      host = {
-        hostName = "laptop";
-        mainMonitor = "eDP-1";
-        secondMonitor = "";
-      };
-    };
-    modules = [
-      nixvim.nixosModules.nixvim
-      ./laptop
-      ./configuration.nix
-
-      home-manager.nixosModules.home-manager {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-      }
-    ];
-  };
-
   work = lib.nixosSystem {                                  # Work Profile
     inherit system;
     specialArgs = {
@@ -86,6 +64,28 @@ in
     modules = [
       nixvim.nixosModules.nixvim
       ./work
+      ./configuration.nix
+
+      home-manager.nixosModules.home-manager {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+      }
+    ];
+  };
+
+  xps = lib.nixosSystem {                                  # Work Profile
+    inherit system;
+    specialArgs = {
+      inherit inputs system unstable hyprland vars;
+      host = {
+        hostName = "xps";
+        mainMonitor = "eDP-1";
+      };
+    };
+    modules = [
+      nixos-hardware.nixosModules.dell-xps-15-9500-nvidia
+      nixvim.nixosModules.nixvim
+      ./xps
       ./configuration.nix
 
       home-manager.nixosModules.home-manager {
@@ -117,12 +117,12 @@ in
     ];
   };
 
-  desktop = lib.nixosSystem {                               # DEPRECATED Desktop Profile
+  h310m = lib.nixosSystem {                               # DEPRECATED Desktop Profile
     inherit system;
     specialArgs = {
       inherit inputs system unstable hyprland vars;
       host = {
-        hostName = "desktop";
+        hostName = "h310m";
         mainMonitor = "HDMI-A-1";
         secondMonitor = "HDMI-A-2";
       };
@@ -130,7 +130,7 @@ in
     modules = [
       nur.nixosModules.nur
       nixvim.nixosModules.nixvim
-      ./desktop
+      ./h310m
       ./configuration.nix
 
       home-manager.nixosModules.home-manager {
@@ -139,6 +139,28 @@ in
         home-manager.users.${vars.user}.imports = [
           nixvim.homeManagerModules.nixvim
         ];
+      }
+    ];
+  };
+
+  probook = lib.nixosSystem {                               # DEPRECATED HP Probook Laptop Profile
+    inherit system;
+    specialArgs = {
+      inherit inputs unstable vars;
+      host = {
+        hostName = "probook";
+        mainMonitor = "eDP-1";
+        secondMonitor = "";
+      };
+    };
+    modules = [
+      nixvim.nixosModules.nixvim
+      ./probook
+      ./configuration.nix
+
+      home-manager.nixosModules.home-manager {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
       }
     ];
   };

@@ -9,7 +9,7 @@ in
 with host;
 let
   output =
-    if hostName == "beelink" || hostName == "desktop" then [
+    if hostName == "beelink" || hostName == "h310m" then [
       mainMonitor
       secondMonitor
     ] else if hostName == "work" then [
@@ -27,7 +27,7 @@ let
     ] else [];
 
   modules-right =
-    if hostName == "beelink" || hostName == "desktop" then [
+    if hostName == "beelink" || hostName == "h310m" then [
       "custom/ds4" "custom/mouse" "custom/kb" "custom/pad" "network" "cpu" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" "custom/notification"
     ] else [
       "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/pad" "clock" "tray" "custom/notification"

@@ -6,7 +6,7 @@
 #   │   └─ ./<host>
 #   │       └─ default.nix
 #   └─ ./modules
-#       └─ ./desktop
+#       └─ ./desktops
 #           └─ ./virtualisation
 #               ├─ default.nix *
 #               └─ ...

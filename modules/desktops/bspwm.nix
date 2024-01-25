@@ -11,7 +11,7 @@ let
   monitor =
     if hostName == "beelink" then
       "${pkgs.xorg.xrandr}/bin/xrandr --output ${secondMonitor} --mode 1920x1080 --pos 0x0 --rotate normal --output ${mainMonitor} --primary --mode 1920x1080 --pos 1920x0 --rotate normal"
-    else if hostName == "laptop" || hostName == "vm" then
+    else if hostName == "vm" || hostName == "probook" then
       "${pkgs.xorg.xrandr}/bin/xrandr --mode 1920x1080 --pos 0x0 --rotate normal"
     else false;
 
@@ -48,7 +48,7 @@ let
       bspc wm -O ${mainMonitor} ${secondMonitor}
       polybar sec &
     ''
-    else if hostName == "laptop" || hostName == "vm" then ''
+    else if hostName == "vm" || hostName == "probook" then ''
       bspc monitor -d 1 2 3 4 5
     ''
     else false)

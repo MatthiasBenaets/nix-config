@@ -4,7 +4,7 @@
 #
 # flake.nix
 #  └─ ./hosts
-#      └─ ./laptop
+#      └─ ./probook
 #          ├─ default.nix
 #          └─ hardware-configuration.nix *
 #

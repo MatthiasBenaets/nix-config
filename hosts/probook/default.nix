@@ -1,10 +1,10 @@
 #
-#  Specific system configuration settings for laptop
+#  Specific system configuration settings for probook
 #
 #  flake.nix
 #   ├─ ./hosts
 #   │   ├─ default.nix
-#   │   └─ ./laptop
+#   │   └─ ./probook
 #   │        ├─ default.nix *
 #   │        └─ hardware-configuration.nix
 #   └─ ./modules

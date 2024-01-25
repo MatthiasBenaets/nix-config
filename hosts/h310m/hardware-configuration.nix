@@ -3,7 +3,7 @@
 #
 # flake.nix
 #  └─ ./hosts
-#      └─ ./desktop
+#      └─ ./h310m
 #          ├─ default.nix
 #          └─ hardware-configuration.nix *
 #
@@ -65,7 +65,7 @@
     };
 
   fileSystems."/mnt/toshiba3" =
-    { #device = "/dev/disk/by-uuid/7f5e9ea1-2bc3-44c5-9b6a-d8fe2a311b73"; 
+    { #device = "/dev/disk/by-uuid/7f5e9ea1-2bc3-44c5-9b6a-d8fe2a311b73";
       device = "/dev/disk/by-label/toshiba3";
       fsType = "ext4";
       options = [ "nofail" ];
@@ -134,10 +134,10 @@
     #nameservers = [ "1.1.1.1" "1.0.0.1" ];     # Cloudflare (when Pi-Hole is down)
   };
 
-  #services.hostapd = {                          # Wifi hotspot 
+  #services.hostapd = {                          # Wifi hotspot
   #  enable = true;
   #  interface = "wlp1s0";
-  #  ssid = "desktop";
+  #  ssid = "h310m";
   #  wpaPassphrase = "<password>";
   #  extraConfig = ''
   #    bridge=br0

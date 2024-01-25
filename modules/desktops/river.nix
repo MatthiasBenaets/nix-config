@@ -48,9 +48,9 @@ with host;
     home-manager.users.${vars.user} =
     let
       monitor =
-        if hostName == "desktop" then
+        if hostName == "h310m" then
           "riverctl spawn ${pkgs.wlr-randr}/bin/wlr-randr --output ${secondMonitor} --mode 1920x1080@60 --pos 0,0 --output ${mainMonitor} --mode 1920x1080@60 --pos 1920,0"
-        else if hostName == "laptop" || hostName == "vm" then
+        else if hostName == "vm" || hostName == "probook" then
           "riverctl spawn ${pkgs.wlr-randr}/bin/wlr-randr --output ${mainMonitor} --mode 1920x1080@60 --pos 0,0"
         else false;
     in

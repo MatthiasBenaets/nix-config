@@ -94,7 +94,6 @@ with host;
       hyprland = {                            # Window Manager
         enable = true;
         package = hyprland.packages.${pkgs.system}.hyprland;
-        #nvidiaPatches = if hostName == "work" then true else false;
       };
     };
 
@@ -113,35 +112,40 @@ with host;
     home-manager.users.${vars.user} =
     let
       touchpad =
-        if hostName == "laptop" || hostName == "work" then ''
+        if hostName == "work" || hostName == "xps" || hostName == "probook" then ''
             touchpad {
               natural_scroll=true
+              scroll_factor=0.2
               middle_button_emulation=true
               tap-to-click=true
             }
           }
           '' else "";
       gestures =
-        if hostName == "laptop" || hostName == "work" then ''
+        if hostName == "work"|| hostName == "xps" || hostName == "probook" then ''
           gestures {
             workspace_swipe=true
             workspace_swipe_fingers=3
             workspace_swipe_distance=100
+            workspace_swipe_create_new=true
+            workspace_swipe_numbered=true
           }
         '' else "";
       workspaces =
-        if hostName == "desktop" || hostName == "beelink" then ''
+        if hostName == "beelink" || hostName == "h310m" then ''
           monitor=${toString mainMonitor},1920x1080@60,1920x0,1
           monitor=${toString secondMonitor},1920x1080@60,0x0,1
         '' else if hostName == "work" then ''
           monitor=${toString mainMonitor},1920x1080@60,0x0,1
           monitor=${toString secondMonitor},1920x1200@60,1920x0,1
           monitor=${toString thirdMonitor},1920x1200@60,3840x0,1
+        '' else if hostName == "xps" then ''
+          monitor=${toString mainMonitor},3840x2400@60,0x0,2
         '' else ''
           monitor=${toString mainMonitor},1920x1080@60,0x0,1
         '';
       monitors =
-        if hostName == "desktop" || hostName == "beelink" then ''
+        if hostName == "beelink" || hostName == "h310m" then ''
           workspace=${toString mainMonitor},1
           workspace=${toString mainMonitor},2
           workspace=${toString mainMonitor},3
@@ -162,13 +166,16 @@ with host;
           bindl=,switch:Lid Switch,exec,$HOME/.config/hypr/script/clamshell.sh
         '' else "";
       execute =
-        if hostName == "desktop" || hostName == "beelink" then ''
+        if hostName == "beelink" || hostName == "h310m" then ''
           exec-once=${pkgs.swayidle}/bin/swayidle -w timeout 1800 '${pkgs.swaylock}/bin/swaylock -f' timeout 3600 '${pkgs.systemd}/bin/systemctl suspend' after-resume '${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock}/bin/swaylock -f && ${config.programs.hyprland.package}/bin/hyprctl dispatch dpms off'
         '' else if hostName == "work" then ''
           exec-once=${pkgs.networkmanagerapplet}/bin/nm-applet --indicator
           #exec-once=${pkgs.google-drive-ocamlfuse}/bin/google-drive-ocamlfuse /GDrive
           exec-once=${pkgs.rclone}/bin/rclone mount --daemon gdrive: /GDrive
           exec-once=${pkgs.swayidle}/bin/swayidle -w timeout 300 '${pkgs.swaylock}/bin/swaylock -f' timeout 600 '${pkgs.systemd}/bin/systemctl suspend' after-resume '${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock}/bin/swaylock -f && ${config.programs.hyprland.package}/bin/hyprctl dispatch dpms off'
+        '' else if hostName == "xps" then ''
+          exec-once=${pkgs.networkmanagerapplet}/bin/nm-applet --indicator
+          exec-once=${pkgs.swayidle}/bin/swayidle -w timeout 1800 '${pkgs.swaylock}/bin/swaylock -f' timeout 3600 '${pkgs.systemd}/bin/systemctl suspend' after-resume '${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock}/bin/swaylock -f && ${config.programs.hyprland.package}/bin/hyprctl dispatch dpms off'
         '' else "";
     in
     let

@@ -1,10 +1,10 @@
 #
-#  Specific system configuration settings for desktop
+#  Specific system configuration settings for h310m
 #
 #  flake.nix
 #   ├─ ./hosts
 #   │   ├─ default.nix
-#   │   └─ ./desktop
+#   │   └─ ./h310m
 #   │        ├─ default.nix *
 #   │        └─ hardware-configuration.nix
 #   └─ ./modules
