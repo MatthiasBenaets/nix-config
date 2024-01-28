@@ -1,5 +1,5 @@
 #
-#  Specific system configuration settings for MacBook
+#  Specific system configuration settings for MacBook 8,1
 #
 #  flake.nix
 #   └─ ./darwin
@@ -52,11 +52,7 @@
       git
       pfetch
       ranger
-
-      # Doom Emacs
-      emacs
-      fd
-      ripgrep
+      neovim
     ];
   };
 

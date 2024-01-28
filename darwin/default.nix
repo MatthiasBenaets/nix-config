@@ -7,7 +7,7 @@
 #       └─ <host>.nix
 #
 
-{ lib, inputs, nixpkgs, darwin, home-manager, vars, ...}:
+{ lib, inputs, nixpkgs, darwin, home-manager, nixvim, vars, ...}:
 
 let
   system = "x86_64-darwin";                                 # System Architecture
@@ -17,8 +17,10 @@ in
     inherit system;
     specialArgs = { inherit inputs vars; };
     modules = [                                             # Modules Used
+      nixvim.nixDarwinModules.nixvim
       ./macbook.nix
-      
+      ../modules/editors/nvim.nix
+
       home-manager.darwinModules.home-manager {             # Home-Manager Module
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;

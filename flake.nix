@@ -84,7 +84,7 @@
       darwinConfigurations = (                                              # Darwin Configurations
         import ./darwin {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-unstable home-manager darwin vars;
+          inherit inputs nixpkgs nixpkgs-unstable home-manager darwin nixvim vars;
         }
       );
 
