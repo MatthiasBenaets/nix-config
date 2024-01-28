@@ -224,7 +224,7 @@ in
               on-scroll-up = "${pkgs.light}/bin/light -A 5";
             };
             battery = {
-              interval = 60;
+              interval = 1;
               states = {
                 warning = 30;
                 critical = 15;
@@ -284,7 +284,7 @@ in
               tooltip = false;
             };
             tray = {
-              icon-size = 13;
+              icon-size = if hostName == "xps" then 16 else 13;
             };
           };
         };

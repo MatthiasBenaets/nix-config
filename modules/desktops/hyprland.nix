@@ -73,8 +73,12 @@ with host;
     };
 
     security.pam.services.swaylock = {
-      text = ''
-       auth include login
+      text = if hostName != "xps" then ''
+        auth include login
+      '' else ''
+        auth sufficient pam_unix.so try_first_pass likeauth nullok
+        auth sufficient pam_fprintd.so
+        auth include login
       '';
     };
 

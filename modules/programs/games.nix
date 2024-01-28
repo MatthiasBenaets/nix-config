@@ -1,6 +1,7 @@
 #
 #  Gaming: Steam + MC + Emulation
 #  Do not forget to enable Steam play for all title in the settings menu
+#  When connecting a controller via bluetooth, it might error out. To fix this, remove device, pair - connect - trust, wait for auto disconnect, sudo rmmod btusb, sudo modprobe btusb, pair again.
 #
 
 { config, pkgs, nur, lib, vars, ... }:

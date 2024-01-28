@@ -44,6 +44,7 @@
     enableIPv6 = false;
     networkmanager.enable = true;
     nameservers = [ "192.168.0.4" "1.1.1.1"];
+    firewall.enable = false
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

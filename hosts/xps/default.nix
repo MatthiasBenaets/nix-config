@@ -46,9 +46,27 @@
 
   environment = {
     systemPackages = with pkgs; [           # System-Wide Packages
-      simple-scan       # Scanning
+      fprintd               # Fingerprint
+      jellyfin-media-player # Media Player
+      plex-media-player     # Media Player
+      simple-scan           # Scanning
+      moonlight-qt          # Remote Streaming
     ];
   };
+
+  services = {
+    fprintd = {                             # Fingerprint Unlock
+      enable = true;                        # $ sudo fprintd-enroll --finger right-index-finger <user>
+      tod = {
+        enable = true;
+        driver = pkgs.libfprint-2-tod1-goodix;
+      };
+    };
+    logind.extraConfig = ''
+      HandlePowerKey=ignore
+    '';                                     # Disable short click powerbutton
+  };
+  # security.pam.services.swaylock.fprintAuth = true; # See hyprland.nix
 
   programs.light.enable = true;             # Monitor Brightness
 

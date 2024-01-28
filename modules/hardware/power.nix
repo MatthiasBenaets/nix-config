@@ -2,13 +2,13 @@
 #  Power Management
 #
 
-{ config, lib, pkgs, vars, ... }:
+{ config, lib, pkgs, host, vars, ... }:
 
 {
   config = lib.mkIf ( config.laptop.enable ) {
     services = {
-      #tlp.enable = true;                          # Power Efficiency
-      #auto-cpufreq.enable = true;
+      tlp.enable = if host.hostName != "work" then true else false;                          # Power Efficiency
+      auto-cpufreq.enable = true;
     };
 
     home-manager.users.${vars.user} = {
