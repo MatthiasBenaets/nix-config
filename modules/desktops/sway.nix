@@ -52,10 +52,11 @@ with host;
         config = rec {
           modifier = "Mod4";
           terminal = "${pkgs.${vars.terminal}}/bin/${vars.terminal}";
-          menu = "${pkgs.wofi}/bin/wofi -show drun";
+          menu = "${pkgs.wofi}/bin/wofi --show drun";
 
           startup = [
             {command = "${pkgs.autotiling}/bin/autotiling"; always = true;}
+            {command = "exec ${pkgs.blueman}/bin/blueman-applet"; always = true;}
           ];
 
           bars = [];                        # Using Waybar
@@ -65,10 +66,10 @@ with host;
             size = 10.0;
           };
 
-          gaps = {
-            inner = 5;
-            outer = 5;
-          };
+          # gaps = {
+          #   inner = 5;
+          #   outer = 5;
+          # };
 
           input = {                         # Input modules: $ man sway-input
             "type:touchpad" = {
@@ -104,13 +105,15 @@ with host;
             };
           } else {};
 
-          workspaceOutputAssign = if hostName == "h310m" then [
+          workspaceOutputAssign = if hostName == "beelink" || hostName == "h310m" then [
             {output = mainMonitor; workspace = "1";}
             {output = mainMonitor; workspace = "2";}
             {output = mainMonitor; workspace = "3";}
-            {output = secondMonitor; workspace = "4";}
+            {output = mainMonitor; workspace = "4";}
             {output = secondMonitor; workspace = "5";}
             {output = secondMonitor; workspace = "6";}
+            {output = secondMonitor; workspace = "7";}
+            {output = secondMonitor; workspace = "8";}
           ] else if hostName == "probook" then [
             {output = mainMonitor; workspace = "1";}
             {output = mainMonitor; workspace = "2";}

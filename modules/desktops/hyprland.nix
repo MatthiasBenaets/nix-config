@@ -25,7 +25,7 @@ with host;
 
     environment =
     let
-      exec = if hostName != "work" then "exec dbus-launch Hyprland" else "exec dbus-launch nvidia-offload Hyprland";
+      exec = "exec dbus-launch Hyprland";
     in
     {
       loginShellInit = ''

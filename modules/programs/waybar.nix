@@ -133,7 +133,7 @@ in
         '';
         settings = {
           Main = {
-            layer = "top";
+            layer = if config.hyprland.enable then "top" else "bottom";
             position = "top";
             height = 27;
             output = output;
@@ -174,21 +174,37 @@ in
               escape = true;
             };
             "sway/workspaces" = {
-              format = "<span font='12'>{icon}</span>";
+              format = "<span font='11'>{icon}</span>";
               format-icons = {
-                "1"="";
-                "2"="";
-                "3"="";
-                "4"="";
-                "5"="";
+                # "1"="";
+                # "2"="";
+                # "3"="";
+                # "4"="";
+                # "5"="";
+                "1"="1";
+                "2"="2";
+                "3"="3";
+                "4"="4";
+                "5"="5";
+                "6"="6";
+                "7"="7";
+                "8"="8";
               };
               all-outputs = true;
               persistent_workspaces = {
-                 "1" = [];
-                 "2" = [];
-                 "3" = [];
-                 "4" = [];
-                 "5" = [];
+                # "1" = [];
+                # "2" = [];
+                # "3" = [];
+                # "4" = [];
+                # "5" = [];
+                "1" = [];
+                "2" = [];
+                "3" = [];
+                "4" = [];
+                "5" = [];
+                "6" = [];
+                "7" = [];
+                "8" = [];
               };
             };
             "wlr/workspaces" = {
