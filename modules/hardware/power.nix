@@ -7,8 +7,8 @@
 {
   config = lib.mkIf ( config.laptop.enable ) {
     services = {
-      tlp.enable = if host.hostName != "work" then true else false;                          # Power Efficiency
-      auto-cpufreq.enable = true;
+      tlp.enable = false;                         # Disable due to suspend not working when docked and connected to AC
+      auto-cpufreq.enable = true;                 # Power Efficiency
     };
 
     home-manager.users.${vars.user} = {

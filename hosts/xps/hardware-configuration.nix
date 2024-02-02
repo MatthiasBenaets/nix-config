@@ -20,7 +20,7 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
@@ -31,7 +31,7 @@
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/3A73-CF67";
+    { device = "/dev/disk/by-uuid/44AF-9E34";
       fsType = "vfat";
     };
 
@@ -42,7 +42,13 @@
   # interfaces.wlp0s20f3.useDHCP = lib.mkDefault true;
     hostName = hostName;
     enableIPv6 = false;
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      extraConfig = ''
+        [main]
+        rc-manager=resolvconf
+      '';
+    };
     nameservers = [ "192.168.0.4" "1.1.1.1"];
     firewall.enable = false;
   };

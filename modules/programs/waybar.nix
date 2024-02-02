@@ -9,7 +9,7 @@ in
 with host;
 let
   output =
-    if hostName == "beelink" || hostName == "h310m" then [
+    if hostName == "beelink" || hostName == "xps" || hostName == "h310m" then [
       mainMonitor
       secondMonitor
     ] else if hostName == "work" then [
@@ -30,7 +30,7 @@ let
     if hostName == "beelink" || hostName == "h310m" then [
       "custom/ds4" "custom/mouse" "custom/kb" "custom/pad" "network" "cpu" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" "custom/notification"
     ] else [
-      "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/pad" "clock" "tray" "custom/notification"
+      "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" "custom/notification"
     ];
 
   sinkBuiltIn="Built-in Audio Analog Stereo";
@@ -307,7 +307,7 @@ in
       };
       home.file = {
         ".config/waybar/script/sink.sh" = {
-          text = ''
+          text = if hostName == "beelink" || hostName == "h310m" then ''
             #!/bin/sh
 
             HEAD=$(awk '/ ${headset}/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | head -n 1)
@@ -319,11 +319,22 @@ in
               printf "<span font='13'></span>\n"
             fi
             exit 0
+          '' else ''
+            #!/bin/sh
+
+            SINK=$(${pkgs.pulseaudio}/bin/pactl list sinks | grep "Active Port" | awk '{ print $3 }')
+
+            if [[ $SINK == "analog-output-headphones" ]]; then
+              printf "<span font='13'></span>\n"
+            elif [[ $SINK == "analog-output-speaker" ]]; then
+              printf "<span font='10'>󰓃</span>\n"
+            fi
+            exit 0
           '';
           executable = true;
         };
         ".config/waybar/script/switch.sh" = {
-          text = ''
+          text = if hostName == "beelink" || hostName == "h310m" then ''
             #!/bin/sh
 
             ID1=$(awk '/ ${headset}/ {sub(/.$/,"",$2); print $2 }' <(${pkgs.wireplumber}/bin/wpctl status) | head -n 1)
@@ -338,6 +349,16 @@ in
               ${pkgs.wireplumber}/bin/wpctl set-default $ID2
             fi
             exit 0
+          '' else ''
+            #!/bin/sh
+
+            SINK=$(${pkgs.pulseaudio}/bin/pactl list sinks | grep "Active Port" | awk '{ print $3 }')
+
+            if [[ $SINK == "analog-output-headphones" ]]; then
+              ${pkgs.pulseaudio}/bin/pactl set-sink-port 0 analog-output-speaker
+            elif [[ $SINK == "analog-output-speaker" ]]; then
+              ${pkgs.pulseaudio}/bin/pactl set-sink-port 0 analog-output-headphones
+            fi
           '';
           executable = true;
         };

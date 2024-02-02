@@ -69,6 +69,7 @@ with host;
         swaylock        # Lock Screen
         wl-clipboard    # Clipboard
         wlr-randr       # Monitor Settings
+        xwayland        # X session
       ];
     };
 
@@ -145,6 +146,7 @@ with host;
           monitor=${toString thirdMonitor},1920x1200@60,3840x0,1
         '' else if hostName == "xps" then ''
           monitor=${toString mainMonitor},3840x2400@60,0x0,2
+          monitor=${toString secondMonitor},1920x1080@60,1920x0,1
         '' else ''
           monitor=${toString mainMonitor},1920x1080@60,0x0,1
         '';
@@ -158,14 +160,13 @@ with host;
           workspace=${toString secondMonitor},6
           workspace=${toString secondMonitor},7
           workspace=${toString secondMonitor},8
-        '' else if hostName == "work" then ''
+        '' else if hostName == "xps" || hostName == "work" then ''
           workspace=${toString mainMonitor},1
           workspace=${toString mainMonitor},2
           workspace=${toString mainMonitor},3
           workspace=${toString secondMonitor},4
           workspace=${toString secondMonitor},5
           workspace=${toString secondMonitor},6
-          workspace=${toString thirdMonitor},7
 
           bindl=,switch:Lid Switch,exec,$HOME/.config/hypr/script/clamshell.sh
         '' else "";
@@ -179,10 +180,11 @@ with host;
           exec-once=${pkgs.swayidle}/bin/swayidle -w timeout 300 '${pkgs.swaylock}/bin/swaylock -f' timeout 600 '${pkgs.systemd}/bin/systemctl suspend' after-resume '${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock}/bin/swaylock -f && ${config.programs.hyprland.package}/bin/hyprctl dispatch dpms off'
         '' else if hostName == "xps" then ''
           exec-once=${pkgs.networkmanagerapplet}/bin/nm-applet --indicator
-          exec-once=${pkgs.swayidle}/bin/swayidle -w timeout 1800 '${pkgs.swaylock}/bin/swaylock -f' timeout 3600 '${pkgs.systemd}/bin/systemctl suspend' after-resume '${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock}/bin/swaylock -f && ${config.programs.hyprland.package}/bin/hyprctl dispatch dpms off'
         '' else "";
     in
     let
+      lid = if hostName == "xps" then "LID0" else "LID";
+
       hyprlandConf = with colors.scheme.default.hex; ''
         ${workspaces}
         ${monitors}
@@ -391,14 +393,14 @@ with host;
           text = ''
             #!/bin/sh
 
-            if grep open /proc/acpi/button/lid/LID/state; then
-              ${config.programs.hyprland.package}/bin/hyprctl keyword monitor "eDP-1, 1920x1080, 0x0, 1"
+            if grep open /proc/acpi/button/lid/${lid}/state; then
+              ${config.programs.hyprland.package}/bin/hyprctl keyword monitor "${toString mainMonitor}, 1920x1080, 0x0, 1"
             else
               if [[ `hyprctl monitors | grep "Monitor" | wc -l` != 1 ]]; then
-                ${config.programs.hyprland.package}/bin/hyprctl keyword monitor "eDP-1, disable"
+                ${config.programs.hyprland.package}/bin/hyprctl keyword monitor "${toString mainMonitor}, disable"
               else
                 ${pkgs.swaylock}/bin/swaylock -f
-                ${pkgs.systemd}/bin/systemctl sleep
+                ${pkgs.systemd}/bin/systemctl suspend
               fi
             fi
           '';

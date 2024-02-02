@@ -80,6 +80,7 @@ in
       host = {
         hostName = "xps";
         mainMonitor = "eDP-1";
+        secondMonitor = "DP-4";
       };
     };
     modules = [

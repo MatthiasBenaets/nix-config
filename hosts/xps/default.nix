@@ -20,13 +20,14 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/desktops/virtualisation/docker.nix
-  ];
+  ] ++ (import ../../modules/hardware/xps);
 
   boot = {                                  # Boot Options
+    consoleLogLevel = 3;
     loader = {
       systemd-boot = {
         enable = true;
-        configurationLimit = 3;
+        configurationLimit = 2;
       };
       efi = {
 	canTouchEfiVariables = true;
@@ -73,6 +74,7 @@
   flatpak = {                               # Flatpak Packages (see module options)
     extraPackages = [
       "com.github.tchx84.Flatseal"
+      "com.stremio.Stremio"
     ];
   };
 }
