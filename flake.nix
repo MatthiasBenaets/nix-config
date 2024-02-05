@@ -13,8 +13,8 @@
 
   inputs =                                                                  # References Used by Flake
     {
-      nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";                     # Unstable Nix Packages (Default)
-      nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";         # Stable Nix Packages
+      nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";                     # Nix Packages (Default)
+      nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";         # Unstable Nix Packages
       nixos-hardware.url = "github:nixos/nixos-hardware/master";            # Hardware Specific Configurations
 
       home-manager = {                                                      # User Environment Manager
@@ -22,9 +22,14 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
+      home-manager-unstable = {                                             # Unstable User Environment Manager
+        url = "github:nix-community/home-manager";
+        inputs.nixpkgs.follows = "nixpkgs-unstable";
+      };
+
       darwin = {                                                            # MacOS Package Management
         url = "github:lnl7/nix-darwin/master";
-        inputs.nixpkgs.follows = "nixpkgs";
+        inputs.nixpkgs.follows = "nixpkgs-unstable";
       };
 
       nur = {                                                               # NUR Community Packages
@@ -39,6 +44,11 @@
       nixvim = {                                                            # Neovim
         url = "github:nix-community/nixvim/nixos-23.11";
         inputs.nixpkgs.follows = "nixpkgs";
+      };
+
+      nixvim-unstable = {                                                            # Neovim
+        url = "github:nix-community/nixvim";
+        inputs.nixpkgs.follows = "nixpkgs-unstable";
       };
 
       emacs-overlay = {                                                     # Emacs Overlays
@@ -64,7 +74,7 @@
       };
     };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager, darwin, nur, nixgl, nixvim, doom-emacs, hyprland, plasma-manager, ... }:   # Function telling flake which inputs to use
+  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager, home-manager-unstable, darwin, nur, nixgl, nixvim, nixvim-unstable, doom-emacs, hyprland, plasma-manager, ... }:   # Function telling flake which inputs to use
     let
       vars = {                                                              # Variables Used In Flake
         user = "matthias";
@@ -84,7 +94,7 @@
       darwinConfigurations = (                                              # Darwin Configurations
         import ./darwin {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-unstable home-manager darwin nixvim vars;
+          inherit inputs nixpkgs-unstable home-manager-unstable darwin nixvim-unstable vars;
         }
       );
 

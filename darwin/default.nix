@@ -7,21 +7,25 @@
 #       └─ <host>.nix
 #
 
-{ lib, inputs, nixpkgs, darwin, home-manager, nixvim, vars, ...}:
+{ lib, inputs, nixpkgs-unstable, darwin, home-manager-unstable, nixvim-unstable, vars, ...}:
 
 let
   system = "x86_64-darwin";                                 # System Architecture
+  pkgs = import nixpkgs-unstable {
+    inherit system;
+    config.allowUnfree = true;
+  };
 in
 {
   macbook = darwin.lib.darwinSystem {                       # MacBook8,1 "Core M" 1.2 12" (2015) A1534 ECM2746 profile
     inherit system;
-    specialArgs = { inherit inputs vars; };
+    specialArgs = { inherit inputs pkgs vars; };
     modules = [                                             # Modules Used
-      nixvim.nixDarwinModules.nixvim
+      nixvim-unstable.nixDarwinModules.nixvim
       ./macbook.nix
       ../modules/editors/nvim.nix
 
-      home-manager.darwinModules.home-manager {             # Home-Manager Module
+      home-manager-unstable.darwinModules.home-manager {    # Home-Manager Module
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
       }
