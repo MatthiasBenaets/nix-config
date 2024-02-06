@@ -50,6 +50,9 @@
       # Terminal
       git
       ranger
+
+      # Remote
+      moonlight-qt
     ];
   };
 
@@ -72,7 +75,6 @@
       # "wireguard-tools"
     ];
     casks = [
-      "moonlight"
       "jellyfin-media-player"
       "plex-media-player"
     ];
