@@ -214,13 +214,17 @@ in
           "application/x-tar" = "org.gnome.FileRoller.desktop";
           "application/x-bzip2" = "org.gnome.FileRoller.desktop";
           "application/x-gzip" = "org.gnome.FileRoller.desktop";
+          # "application/x-bittorrent" = "";
           "x-scheme-handler/http" = ["firefox.desktop" "google-chrome.desktop"];
           "x-scheme-handler/https" = ["firefox.desktop" "google-chrome.desktop"];
           "x-scheme-handler/about" = ["firefox.desktop" "google-chrome.desktop"];
           "x-scheme-handler/unknown" = ["firefox.desktop" "google-chrome.desktop"];
-          "audio/mp3" = "vlc.desktop";
-          "video/mp4" = "vlc.desktop";
-          "video/x-matroska" = "vlc.desktop";
+          "x-scheme-handler/mailto" = ["gmail.desktop"];
+          "audio/mp3" = "mpv.desktop";
+          "audio/x-matroska" = "mpv.desktop";
+          "video/webm" = "mpv.desktop";
+          "video/mp4" = "mpv.desktop";
+          "video/x-matroska" = "mpv.desktop";
           "inode/directory" = "pcmanfm.desktop";
         };
       };
@@ -228,6 +232,11 @@ in
         name = "image-roll";
         exec = "${pkgs.image-roll}/bin/image-roll %F";
         mimeType = ["image/*"];
+      };
+      desktopEntries.gmail = {
+        name = "Gmail";
+        exec = ''xdg-open "https://mail.google.com/mail/?view=cm&fs=1&to=%u"'';
+        mimeType = ["x-scheme-handler/mailto"];
       };
     };
   };
