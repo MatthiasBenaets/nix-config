@@ -24,6 +24,7 @@ in
       nixvim-unstable.nixDarwinModules.nixvim
       ./macbook.nix
       ../modules/editors/nvim.nix
+      ../modules/programs/kitty.nix
 
       home-manager-unstable.darwinModules.home-manager {    # Home-Manager Module
         home-manager.useGlobalPkgs = true;
