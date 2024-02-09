@@ -37,7 +37,6 @@
       };
       timeout = 1;
     };
-    kernelPackages = pkgs.linuxPackages_latest;
   };
 
   hardware.sane = {                         # Scanning

@@ -29,7 +29,6 @@
       efi.canTouchEfiVariables = true;
       timeout = 1;
     };
-    kernelPackages = pkgs.linuxPackages_latest;
     initrd.kernelModules = [ "amdgpu" ];        # Video Drivers
   };
 

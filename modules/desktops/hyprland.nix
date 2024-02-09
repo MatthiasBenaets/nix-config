@@ -266,7 +266,7 @@ with host;
         bind=SUPER,Escape,exit,
         bind=SUPER,S,exec,${pkgs.systemd}/bin/systemctl suspend
         bind=SUPER,L,exec,${pkgs.swaylock}/bin/swaylock
-        bind=SUPER,E,exec,XDG_BACKEND=x11 ${pkgs.pcmanfm}/bin/pcmanfm
+        bind=SUPER,E,exec,GDK_BACKEND=x11 ${pkgs.pcmanfm}/bin/pcmanfm
         bind=SUPER,F,togglefloating,
         bind=SUPER,Space,exec, pkill wofi || ${pkgs.wofi}/bin/wofi --show drun
         bind=SUPER,P,pseudo,

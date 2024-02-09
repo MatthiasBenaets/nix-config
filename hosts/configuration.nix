@@ -36,6 +36,14 @@ in
               import ../modules/shell ++
               import ../modules/theming );
 
+  boot = {
+    tmp = {
+      cleanOnBoot =  true;
+      tmpfsSize = "5GB";
+    };
+    kernelPackages = pkgs.linuxPackages_latest;
+  };
+
   users.users.${vars.user} = {              # System User
     isNormalUser = true;
     extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" ];

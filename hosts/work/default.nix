@@ -40,7 +40,6 @@
       };
       timeout = null;
     };
-    kernelPackages = pkgs.linuxPackages_latest;
   };
 
   laptop.enable = true;                         # Laptop modules

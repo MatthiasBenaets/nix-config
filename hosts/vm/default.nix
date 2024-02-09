@@ -27,7 +27,6 @@
       };
       timeout = 1;
     };
-    kernelPackages = pkgs.linuxPackages_latest;
   };
 
   bspwm.enable = true;                          # Window Manager
@@ -39,7 +38,7 @@
   };
 
   services = {
-    xserver = {                                 
+    xserver = {
       resolutions = [
         { x = 1920; y = 1080; }
         { x = 1600; y = 900; }
