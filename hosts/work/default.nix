@@ -65,7 +65,6 @@
     systemPackages = with pkgs; [               # System Wide Packages
       ansible           # Automation
       nil               # LSP
-      onlyoffice-bin    # Office
       rclone            # Gdrive ($ rclone config | rclone mount --daemon gdrive: <mount> | fusermount -u <mount>)
       simple-scan       # Scanning
       sshpass           # Ansible dependency

@@ -126,12 +126,12 @@ in
 
       # File Management
       gnome.file-roller # Archive Manager
-      okular            # PDF Viewer
       pcmanfm           # File Browser
       p7zip             # Zip Encryption
       rsync             # Syncer - $ rsync -r dir1/ dir2/
       unzip             # Zip Files
       unrar             # Rar Files
+      wpsoffice         # Office
       zip               # Zip
 
       # Other Packages Found @
@@ -217,7 +217,7 @@ in
           "text/plain" = "nvim.desktop";
           "text/html" = "nvim.desktop";
           "text/csv" = "nvim.desktop";
-          "application/pdf" = ["firefox.desktop" "google-chrome.desktop" "okularApplication_pdf.desktop"];
+          "application/pdf" = [ "wps-office-pdf.desktop" "firefox.desktop" "google-chrome.desktop"];
           "application/zip" = "org.gnome.FileRoller.desktop";
           "application/x-tar" = "org.gnome.FileRoller.desktop";
           "application/x-bzip2" = "org.gnome.FileRoller.desktop";

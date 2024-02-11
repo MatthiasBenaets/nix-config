@@ -230,7 +230,7 @@ with host;
           #kb_variant=,dvorak
           #kb_options=caps:ctrl_modifier
           kb_options=caps:escape
-          follow_mouse=1
+          follow_mouse=2
           repeat_delay=250
           numlock_by_default=1
           accel_profile=flat

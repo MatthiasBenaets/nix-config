@@ -50,7 +50,6 @@
   environment = {
     systemPackages = with pkgs; [           # System-Wide Packages
       simple-scan       # Scanning
-      onlyoffice-bin    # Office
     ];
   };
 

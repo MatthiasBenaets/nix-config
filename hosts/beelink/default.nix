@@ -63,11 +63,11 @@
       gimp                  # Image Editor
       gmtp                  # Mount GoPro
       jellyfin-media-player # Media Player
+      moonlight-qt          # Remote Streaming
       obs-studio            # Live Streaming
       plex-media-player     # Media Player
       rclone                # Gdrive ($ rclone config | rclone mount --daemon gdrive:<path> <host/path>)
       simple-scan           # Scanning
-      moonlight-qt          # Remote Streaming
     ];
   };
 
