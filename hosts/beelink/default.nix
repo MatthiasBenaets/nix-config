@@ -62,6 +62,7 @@
       discord               # Messaging
       gimp                  # Image Editor
       gmtp                  # Mount GoPro
+      go2tv                 # Casting
       jellyfin-media-player # Media Player
       moonlight-qt          # Remote Streaming
       obs-studio            # Live Streaming

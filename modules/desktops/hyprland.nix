@@ -124,7 +124,6 @@ with host;
               middle_button_emulation=true
               tap-to-click=true
             }
-          }
           '' else "";
       gestures =
         if hostName == "work"|| hostName == "xps" || hostName == "probook" then ''
