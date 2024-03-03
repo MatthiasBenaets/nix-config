@@ -12,6 +12,7 @@
 
 [
   ./alacritty.nix
+  ./accounts.nix
   ./eww.nix
   ./flatpak.nix
   ./kitty.nix

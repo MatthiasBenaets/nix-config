@@ -64,6 +64,7 @@
       gmtp                  # Mount GoPro
       go2tv                 # Casting
       jellyfin-media-player # Media Player
+      kodi                  # Media Player
       moonlight-qt          # Remote Streaming
       obs-studio            # Live Streaming
       plex-media-player     # Media Player
