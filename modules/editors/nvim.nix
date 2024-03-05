@@ -2,6 +2,10 @@
 
 let
   colors = import ../theming/colors.nix;
+  dutch = builtins.readFile(builtins.fetchurl {
+    url = "https://raw.githubusercontent.com/OpenTaal/opentaal-wordlist/master/wordlist.txt";
+    sha256 = "1gnpkb2afasbcfka6lhnpzlpafpns4k6j09h7dc0p13k7iggpr8j";
+  });
 in
 {
   # # steam-run for codeium-vim
@@ -10,10 +14,20 @@ in
   #   vim = "${pkgs.steam-run}/bin/steam-run nvim";
   #   nvim = "${pkgs.steam-run}/bin/steam-run nvim";
   # };
-  environment.systemPackages = with pkgs; [
-    nodejs
-    go
-  ];
+  environment = {
+    systemPackages = with pkgs; [
+      nodejs
+      go
+    ];
+    wordlist = {
+      enable = true;
+      lists = {
+        WORDLIST = [
+          "${pkgs.scowl}/share/dict/words.txt"
+          (builtins.toFile "dutch" dutch)];
+      };
+    };
+  };
   programs.nixvim = {
     enable = true;
     viAlias = true;
@@ -377,6 +391,7 @@ in
             nvim_lua = "[api]";
             path = "[path]";
             luasnip = "[snip]";
+            look = "[look]";
             buffer = "[buffer]";
             orgmode = "[orgmode]";
             neorg = "[neorg]";
@@ -387,6 +402,7 @@ in
       luasnip.enable = true;
       cmp_luasnip.enable = true;
       cmp-nvim-lsp.enable = true;
+      cmp-look.enable = true;
       nvim-cmp = {
         enable = true;
         snippet.expand = "luasnip";
@@ -425,6 +441,7 @@ in
         sources = [
           {name = "nvim_lsp";}
           {name = "luasnip";}
+          {name = "look"; keywordLength = 2; option = {convert_case = true; loud = true;};}
           {name = "path";}
           {name = "buffer";}
           {name = "nvim_lua";}
