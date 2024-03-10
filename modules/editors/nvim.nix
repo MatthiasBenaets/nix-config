@@ -2,6 +2,7 @@
 
 let
   colors = import ../theming/colors.nix;
+
   dutch = builtins.readFile(builtins.fetchurl {
     url = "https://raw.githubusercontent.com/OpenTaal/opentaal-wordlist/master/wordlist.txt";
     sha256 = "1gnpkb2afasbcfka6lhnpzlpafpns4k6j09h7dc0p13k7iggpr8j";
@@ -16,8 +17,9 @@ in
   # };
   environment = {
     systemPackages = with pkgs; [
-      nodejs
       go
+      nodejs
+      ripgrep
     ];
     wordlist = {
       enable = true;
@@ -32,7 +34,6 @@ in
     enable = true;
     viAlias = true;
     vimAlias = true;
-
     autoCmd = [
       {
         event = "VimEnter";
@@ -65,8 +66,8 @@ in
       {
         event = "FileType";
         pattern = [ "markdown" ];
-        command = "setlocal scrolloff=30";
-        desc = "Fixed cursor location on markdown (for preview)";
+        command = "setlocal scrolloff=30 | set wrap1";
+        desc = "Fixed cursor location on markdown (for preview) and enable wrapping";
       }
     ];
 
@@ -113,14 +114,9 @@ in
         options.desc = "Save";
       }
       {
-        key = "<leader>s";
-        action = "<CMD>w<CR>";
-        options.desc = "Save";
-      }
-      {
         key = "<leader>q";
         action = "<CMD>q<CR>";
-        options.desc = "quit";
+        options.desc = "Quit";
       }
       {
         key = "<F2>";
@@ -140,7 +136,7 @@ in
       {
         key = "<F3>";
         action = "<CMD>UndotreeToggle<CR>";
-        options.desc = "Toggle Undotree";
+        options.desc = "Toggle UndoTree";
       }
       {
         key = "<leader>sh";
@@ -200,12 +196,12 @@ in
       {
         key = "<leader>bb";
         action = "<CMD>BufferPick<CR>";
-        options.desc = "View Open Buffer";
+        options.desc = "Select Buffer";
       }
       {
         key = "<leader>bc";
         action = "<CMD>BufferClose<CR>";
-        options.desc = "View Open Buffer";
+        options.desc = "Close Current Buffer";
       }
       {
         key = "<leader>bn";
@@ -283,11 +279,27 @@ in
     plugins = {
       lualine.enable = true;
       barbar.enable = true;
-      gitgutter.enable = true;
-      indent-blankline = {
+      gitgutter = {
         enable = true;
-        scope.enabled = true;
+        defaultMaps = false;
       };
+      # mini = {
+      #   enable = true;
+      #   modules = {
+      #     indentscope = {
+      #       draw = {
+      #         delay = 0;
+      #         priority = 2;
+      #       };
+      #       options = {
+      #         border = "both";
+      #         indent_at_cursor = true;
+      #       };
+      #       symbol = "|";
+      #     };
+      #   };
+      # };
+      indent-blankline.enable = true;
       lastplace.enable = true;
       comment-nvim.enable = true;
       fugitive.enable = true;
@@ -301,10 +313,22 @@ in
           };
         };
         keymaps = {
-          "<leader>ff" = "find_files";
-          "<leader>fg" = "live_grep";
-          "<leader>fb" = "buffers";
-          "<leader>fh" = "help_tags";
+          "<leader>ff" = {
+            action = "find_files";
+            desc = "Find File";
+          };
+          "<leader>fg" = {
+            action = "live_grep";
+            desc = "Find Via Grep";
+          };
+          "<leader>fb" = {
+            action = "buffers";
+            desc = "Find Buffers";
+          };
+          "<leader>fh" = {
+            action = "help_tags";
+            desc = "Find Help";
+          };
         };
       };
       neo-tree = {
@@ -341,6 +365,14 @@ in
         userDefaultOptions = {
           css = true;
           tailwind = "both";
+        };
+      };
+      cursorline = {
+        enable = true;
+        cursorword = {
+          enable = true;
+          hl = {underline = true;};
+          minLength = 3;
         };
       };
       neorg = {
@@ -449,11 +481,21 @@ in
           {name = "neorg";}
         ];
       };
+      which-key = {
+        enable = true;
+       registrations = {
+          "<leader>b" = "+Buffer";
+          "<leader>f" = "+Find";
+          "<leader>o" = "+Org Mode";
+          "<leader>s" = "+Split Window";
+        };
+      };
     };
     extraPlugins = with pkgs.vimPlugins; [
-      luasnip
       friendly-snippets
+      luasnip
       orgmode
+      nvim-scrollbar
       vim-table-mode
       vim-cool
       # codeium-vim
@@ -477,9 +519,19 @@ in
           sha256 = "sha256-x6S4WdgfUr7HGEHToSDy3pSHEwOPQalzWhBUipqMtnw=";
         };
       })
+      (pkgs.vimUtils.buildVimPlugin rec {
+        pname = "follow-md-links.nvim";
+        version = "cf081a0a8e93dd188241a570b9a700b6a546ad1c";
+        src = pkgs.fetchFromGitHub {
+          owner = "jghauser";
+          repo = "follow-md-links.nvim";
+          rev = version;
+          sha256 = "sha256-ElgYrD+5FItPftpjDTdKAQR37XBkU8mZXs7EmAwEKJ4=";
+        };
+      })
     ];
     extraConfigLua = ''
-      require("luasnip.loaders.from_vscode").lazy_load()
+      require('luasnip.loaders.from_vscode').lazy_load()
       require('orgmode').setup({
         org_agenda_files = { '~/org/**/*' },
         org_default_notes_file = '~/org/refile.org',
@@ -494,6 +546,8 @@ in
       ]]
 
       require('org-bullets').setup()
+
+      require('scrollbar').setup()
     '';
     extraConfigLuaPre = with colors.scheme.default.hex; ''
       require('orgmode').setup_ts_grammar()
