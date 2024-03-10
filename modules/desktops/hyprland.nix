@@ -3,7 +3,7 @@
 #  Enable with "hyprland.enable = true;"
 #
 
-{ config, lib, system, pkgs, hyprland, vars, host, ... }:
+{ config, lib, system, pkgs, hyprland, hyprlock, hypridle, vars, host, ... }:
 
 let
   colors = import ../theming/colors.nix;
@@ -49,14 +49,14 @@ with host;
         #__GLX_VENDOR_LIBRARY_NAME = "nvidia";
         #_JAVA_AWT_WM_NONREPARENTING = "1";
 
-        QT_QPA_PLATFORM = "wayland";
+        #QT_QPA_PLATFORM = "wayland";
         QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
 
         GDK_BACKEND = "wayland";
         WLR_NO_HARDWARE_CURSORS = "1";
         MOZ_ENABLE_WAYLAND = "1";
       } else {
-        QT_QPA_PLATFORM = "wayland";
+        #QT_QPA_PLATFORM = "wayland";
         QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
 
         GDK_BACKEND = "wayland";
@@ -65,25 +65,16 @@ with host;
       };
       systemPackages = with pkgs; [
         grimblast       # Screenshot
-        swayidle        # Idle Daemon
-        swaylock        # Lock Screen
+        hyprpaper       # Wallpaper
         wl-clipboard    # Clipboard
         wlr-randr       # Monitor Settings
         xwayland        # X session
       ];
     };
 
-    security.pam.services.swaylock = {
-      text = if hostName != "xps" then ''
-        auth include login
-      '' else ''
-        auth sufficient pam_unix.so try_first_pass likeauth nullok
-        auth sufficient pam_fprintd.so
-        auth include login
-      '';
-    };
+    security.pam.services.hyprlock.text = "auth include login";
 
-    services.greetd = if hostName != "work" then {
+    services.greetd = {
       enable = true;
       settings = {
         default_session = {
@@ -91,15 +82,6 @@ with host;
         };
       };
       vt = 7;
-    } else {
-      enable = false;
-    };
-
-    programs = {
-      hyprland = {                            # Window Manager
-        enable = true;
-        package = hyprland.packages.${pkgs.system}.hyprland;
-      };
     };
 
     systemd.sleep.extraConfig = ''
@@ -116,275 +98,313 @@ with host;
 
     home-manager.users.${vars.user} =
     let
-      touchpad =
-        if hostName == "work" || hostName == "xps" || hostName == "probook" then ''
-            touchpad {
-              natural_scroll=true
-              scroll_factor=0.2
-              middle_button_emulation=true
-              tap-to-click=true
-            }
-          '' else "";
-      gestures =
-        if hostName == "work"|| hostName == "xps" || hostName == "probook" then ''
-          gestures {
-            workspace_swipe=true
-            workspace_swipe_fingers=3
-            workspace_swipe_distance=100
-            workspace_swipe_create_new=true
-            workspace_swipe_numbered=true
-          }
-        '' else "";
-      workspaces =
-        if hostName == "beelink" || hostName == "h310m" then ''
-          monitor=${toString mainMonitor},1920x1080@60,1920x0,1
-          monitor=${toString secondMonitor},1920x1080@60,0x0,1
-        '' else if hostName == "work" then ''
-          monitor=${toString mainMonitor},1920x1080@60,0x0,1
-          monitor=${toString secondMonitor},1920x1200@60,1920x0,1
-          monitor=${toString thirdMonitor},1920x1200@60,3840x0,1
-        '' else if hostName == "xps" then ''
-          monitor=${toString mainMonitor},3840x2400@60,0x0,2
-          monitor=${toString secondMonitor},1920x1080@60,1920x0,1
-        '' else ''
-          monitor=${toString mainMonitor},1920x1080@60,0x0,1
-        '';
-      monitors =
-        if hostName == "beelink" || hostName == "h310m" then ''
-          workspace=${toString mainMonitor},1
-          workspace=${toString mainMonitor},2
-          workspace=${toString mainMonitor},3
-          workspace=${toString mainMonitor},4
-          workspace=${toString secondMonitor},5
-          workspace=${toString secondMonitor},6
-          workspace=${toString secondMonitor},7
-          workspace=${toString secondMonitor},8
-        '' else if hostName == "xps" || hostName == "work" then ''
-          workspace=${toString mainMonitor},1
-          workspace=${toString mainMonitor},2
-          workspace=${toString mainMonitor},3
-          workspace=${toString secondMonitor},4
-          workspace=${toString secondMonitor},5
-          workspace=${toString secondMonitor},6
-
-          bindl=,switch:Lid Switch,exec,$HOME/.config/hypr/script/clamshell.sh
-        '' else "";
-      execute =
-        if hostName == "beelink" || hostName == "h310m" then ''
-          exec-once=${pkgs.swayidle}/bin/swayidle -w timeout 1800 '${pkgs.swaylock}/bin/swaylock -f' timeout 3600 '${pkgs.systemd}/bin/systemctl suspend' after-resume '${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock}/bin/swaylock -f && ${config.programs.hyprland.package}/bin/hyprctl dispatch dpms off'
-        '' else if hostName == "work" then ''
-          exec-once=${pkgs.networkmanagerapplet}/bin/nm-applet --indicator
-          #exec-once=${pkgs.google-drive-ocamlfuse}/bin/google-drive-ocamlfuse /GDrive
-          exec-once=${pkgs.rclone}/bin/rclone mount --daemon gdrive: /GDrive
-          exec-once=${pkgs.swayidle}/bin/swayidle -w timeout 300 '${pkgs.swaylock}/bin/swaylock -f' timeout 600 '${pkgs.systemd}/bin/systemctl suspend' after-resume '${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock}/bin/swaylock -f && ${config.programs.hyprland.package}/bin/hyprctl dispatch dpms off'
-        '' else if hostName == "xps" then ''
-          exec-once=${pkgs.networkmanagerapplet}/bin/nm-applet --indicator
-        '' else "";
-    in
-    let
       lid = if hostName == "xps" then "LID0" else "LID";
-
-      hyprlandConf = with colors.scheme.default.hex; ''
-        ${workspaces}
-        ${monitors}
-        monitor=,preferred,auto,1,mirror,${toString mainMonitor}
-
-        general {
-          border_size=2
-          gaps_in=0
-          gaps_out=0
-          col.active_border=0x99${active}
-          col.inactive_border=0x66${inactive}
-          layout=dwindle
-        }
-
-        decoration {
-          rounding=0
-          active_opacity=1
-          inactive_opacity=1
-          fullscreen_opacity=1
-          drop_shadow=false
-        }
-
-        animations {
-          enabled = false
-          bezier = overshot, 0.05, 0.9, 0.1, 1.05
-          bezier = smoothOut, 0.5, 0, 0.99, 0.99
-          bezier = smoothIn, 0.5, -0.5, 0.68, 1.5
-          bezier = rotate,0,0,1,1
-          animation = windows, 1, 4, overshot, slide
-          animation = windowsIn, 1, 2, smoothOut
-          animation = windowsOut, 1, 0.5, smoothOut
-          animation = windowsMove, 1, 3, smoothIn, slide
-          animation = border, 1, 5, default
-          animation = fade, 1, 4, smoothIn
-          animation = fadeDim, 1, 4, smoothIn
-          animation = workspaces, 1, 4, default
-          animation = borderangle, 1, 20, rotate, loop
-        }
-
-        input {
-          kb_layout=us
-          #kb_layout=us,us
-          #kb_variant=,dvorak
-          #kb_options=caps:ctrl_modifier
-          kb_options=caps:escape
-          follow_mouse=2
-          repeat_delay=250
-          numlock_by_default=1
-          accel_profile=flat
-          sensitivity=0.8
-          ${touchpad}
-        }
-
-        ${gestures}
-
-        dwindle {
-          pseudotile=false
-          force_split=2
-          preserve_split=true
-        }
-
-        misc {
-          disable_hyprland_logo=true
-          disable_splash_rendering=true
-          mouse_move_enables_dpms=true
-          key_press_enables_dpms=true
-          background_color=0x111111
-        }
-
-        debug {
-          damage_tracking=2
-        }
-
-        bindm=SUPER,mouse:272,movewindow
-        bindm=SUPER,mouse:273,resizewindow
-
-        bind=SUPER,Return,exec,${pkgs.${vars.terminal}}/bin/${vars.terminal}
-        bind=SUPER,Q,killactive,
-        bind=SUPER,Escape,exit,
-        bind=SUPER,S,exec,${pkgs.systemd}/bin/systemctl suspend
-        bind=SUPER,L,exec,${pkgs.swaylock}/bin/swaylock
-        bind=SUPER,E,exec,GDK_BACKEND=x11 ${pkgs.pcmanfm}/bin/pcmanfm
-        bind=SUPER,F,togglefloating,
-        bind=SUPER,Space,exec, pkill wofi || ${pkgs.wofi}/bin/wofi --show drun
-        bind=SUPER,P,pseudo,
-        bind=,F11,fullscreen,
-        bind=SUPER,R,forcerendererreload
-        bind=SUPERSHIFT,R,exec,${pkgs.hyprland}/bin/hyprctl reload
-        bind=SUPER,T,exec,${pkgs.${vars.terminal}}/bin/${vars.terminal} -e nvim
-        bind=SUPER,K,exec,${pkgs.hyprland}/bin/hyprctl switchxkblayout keychron-k8-keychron-k8 next
-
-        bind=SUPER,left,movefocus,l
-        bind=SUPER,right,movefocus,r
-        bind=SUPER,up,movefocus,u
-        bind=SUPER,down,movefocus,d
-
-        bind=SUPERSHIFT,left,movewindow,l
-        bind=SUPERSHIFT,right,movewindow,r
-        bind=SUPERSHIFT,up,movewindow,u
-        bind=SUPERSHIFT,down,movewindow,d
-
-        bind=ALT,1,workspace,1
-        bind=ALT,2,workspace,2
-        bind=ALT,3,workspace,3
-        bind=ALT,4,workspace,4
-        bind=ALT,5,workspace,5
-        bind=ALT,6,workspace,6
-        bind=ALT,7,workspace,7
-        bind=ALT,8,workspace,8
-        bind=ALT,9,workspace,9
-        bind=ALT,0,workspace,10
-        bind=ALT,right,workspace,+1
-        bind=ALT,left,workspace,-1
-
-        bind=ALTSHIFT,1,movetoworkspace,1
-        bind=ALTSHIFT,2,movetoworkspace,2
-        bind=ALTSHIFT,3,movetoworkspace,3
-        bind=ALTSHIFT,4,movetoworkspace,4
-        bind=ALTSHIFT,5,movetoworkspace,5
-        bind=ALTSHIFT,6,movetoworkspace,6
-        bind=ALTSHIFT,7,movetoworkspace,7
-        bind=ALTSHIFT,8,movetoworkspace,8
-        bind=ALTSHIFT,9,movetoworkspace,9
-        bind=ALTSHIFT,0,movetoworkspace,10
-        bind=ALTSHIFT,right,movetoworkspace,+1
-        bind=ALTSHIFT,left,movetoworkspace,-1
-
-        binde=SUPERCTRL,right,resizeactive,60 0
-        binde=SUPERCTRL,left,resizeactive,-60 0
-        binde=SUPERCTRL,up,resizeactive,0 -60
-        binde=SUPERCTRL,down,resizeactive,0 60
-
-        # bind=SUPER,M,submap,resize
-        # submap=resize
-        # binde=,right,resizeactive,20 0
-        # binde=,left,resizeactive,-20 0
-        # binde=,up,resizeactive,0 -20
-        # binde=,down,resizeactive,0 20
-        # bind=,escape,submap,reset
-        # submap=reset
-
-        bind=SUPER,Z,layoutmsg,togglesplit
-
-        bind=,print,exec,${pkgs.grimblast}/bin/grimblast --notify --freeze --wait 1 copysave area ~/Pictures/$(date +%Y-%m-%dT%H%M%S).png
-        bind=,XF86AudioLowerVolume,exec,${pkgs.pamixer}/bin/pamixer -d 10
-        bind=,XF86AudioRaiseVolume,exec,${pkgs.pamixer}/bin/pamixer -i 10
-        bind=,XF86AudioMute,exec,${pkgs.pamixer}/bin/pamixer -t
-        bind=SUPER_L,c,exec,${pkgs.pamixer}/bin/pamixer --default-source -t
-        bind=CTRL,F10,exec,${pkgs.pamixer}/bin/pamixer -t
-        bind=,XF86AudioMicMute,exec,${pkgs.pamixer}/bin/pamixer --default-source -t
-        bind=,XF86MonBrightnessDown,exec,${pkgs.light}/bin/light -U 10
-        bind=,XF86MonBrightnessUP,exec,${pkgs.light}/bin/light -A 10
-
-        windowrulev2=float,title:^(Volume Control)$
-        windowrulev2 = keepaspectratio,class:^(firefox)$,title:^(Picture-in-Picture)$
-        windowrulev2 = noborder,class:^(firefox)$,title:^(Picture-in-Picture)$
-        windowrulev2 = float, title:^(Picture-in-Picture)$
-        windowrulev2 = size 24% 24%, title:(Picture-in-Picture)
-        windowrulev2 = move 75% 75%, title:(Picture-in-Picture)
-        windowrulev2 = pin, title:^(Picture-in-Picture)$
-        windowrulev2 = float, title:^(Firefox)$
-        windowrulev2 = size 24% 24%, title:(Firefox)
-        windowrulev2 = move 74% 74%, title:(Firefox)
-        windowrulev2 = pin, title:^(Firefox)$
-
-        exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-        exec-once=${pkgs.waybar}/bin/waybar
-        exec-once=${pkgs.eww-wayland}/bin/eww daemon
-        #exec-once=$HOME/.config/eww/scripts/eww        # When running eww as a bar
-        exec-once=${pkgs.blueman}/bin/blueman-applet
-        exec-once=${pkgs.swaynotificationcenter}/bin/swaync
-        ${execute}
+      lockScript = pkgs.writeShellScript "lock-script" ''
+        ${pkgs.pipewire}/bin/pw-cli i all | ${pkgs.ripgrep}/bin/rg running
+        if [ $? == 1 ]; then
+          ${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock
+        fi
       '';
     in
     {
-      xdg.configFile."hypr/hyprland.conf".text = hyprlandConf;
+      imports = [
+        hyprland.homeManagerModules.default
+        hyprlock.homeManagerModules.hyprlock
+        hypridle.homeManagerModules.hypridle
+      ];
 
-      programs.swaylock.settings = {
-        #image = "$HOME/.config/wall";
-        color = "000000f0";
-        font-size = "24";
-        indicator-idle-visible = false;
-        indicator-radius = 100;
-        indicator-thickness = 20;
-        inside-color = "00000000";
-        inside-clear-color = "00000000";
-        inside-ver-color = "00000000";
-        inside-wrong-color = "00000000";
-        key-hl-color = "79b360";
-        line-color = "000000f0";
-        line-clear-color = "000000f0";
-        line-ver-color = "000000f0";
-        line-wrong-color = "000000f0";
-        ring-color = "ffffff50";
-        ring-clear-color = "bbbbbb50";
-        ring-ver-color = "bbbbbb50";
-        ring-wrong-color = "b3606050";
-        text-color = "ffffff";
-        text-ver-color = "ffffff";
-        text-wrong-color = "ffffff";
-        show-failed-attempts = true;
+      programs.hyprlock = {
+        enable = true;
+        general = {
+          hide_cursor = true;
+          no_fade_in = false;
+          disable_loading_bar = true;
+          grace = 5;
+        };
+        backgrounds = [{
+          monitor = "";
+          path = ".config/wall.png";
+          color = "rgba(25, 20, 20, 1.0)";
+          blur_passes = 1;
+          blur_size = 0;
+          brightness = 0.2;
+        }];
+        input-fields = [
+          {
+            monitor = "";
+            size = {
+              width = 250;
+              height = 60;
+            };
+            outline_thickness = 2;
+            dots_size = 0.2;
+            dots_spacing = 0.2;
+            dots_center = true;
+            outer_color = "rgba(0, 0, 0, 0)";
+            inner_color = "rgba(0, 0, 0, 0.5)";
+            font_color = "rgb(200, 200, 200)";
+            fade_on_empty = false;
+            placeholder_text = ''<i><span foreground="##cdd6f4">Input Password...</span></i>'';
+            hide_input = false;
+            position = {
+              x = 0;
+              y = -120;
+            };
+            halign = "center";
+            valign = "center";
+          }
+        ];
+        labels = [
+          {
+            monitor = "";
+            text = "$TIME";
+            font_size = 120;
+            position = {
+              x = 0;
+              y = 80;
+            };
+            valign = "center";
+            halign = "center";
+          }
+        ];
+      };
+
+      services.hypridle = {
+        enable = true;
+        beforeSleepCmd = "${pkgs.systemd}/bin/loginctl lock-session";
+        lockCmd = "${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock";
+        listeners = [
+          {
+            timeout = 300;
+            onTimeout = lockScript.outPath;
+          }
+          {
+            timeout = 1800;
+            onTimeout = "${pkgs.systemd}/bin/systemctl suspend";
+          }
+        ];
+      };
+
+      wayland.windowManager.hyprland = with colors.scheme.default.hex; {
+        enable = true;
+        xwayland.enable = true;
+        settings = {
+          general = {
+            border_size = 2;
+            gaps_in = 0;
+            gaps_out = 0;
+            "col.active_border" = "0x99${active}";
+            "col.inactive_border" = "0x66${inactive}";
+            layout = "dwindle";
+          };
+          decoration = {
+            rounding = 0;
+            active_opacity = 1;
+            inactive_opacity = 1;
+            fullscreen_opacity = 1;
+            drop_shadow = false;
+          };
+          monitor = [
+            ",preferred,auto,1,mirror,${toString mainMonitor}"
+          ] ++ (if hostName == "beelink" || hostName == "h310m" then [
+            "${toString mainMonitor},1920x1080@60,1920x0,1"
+            "${toString secondMonitor},1920x1080@60,0x0,1"
+          ] else if hostName == "work" then [
+            "${toString mainMonitor},1920x1080@60,0x0,1"
+            "${toString secondMonitor},1920x1200@60,1920x0,1"
+            "${toString thirdMonitor},1920x1200@60,3840x0,1"
+          ] else if hostName == "xps" then [
+            "${toString mainMonitor},3840x2400@60,0x0,2"
+            "${toString secondMonitor},1920x1080@60,1920x0,1"
+          ] else [
+            "${toString mainMonitor},1920x1080@60,0x0,1"
+          ]);
+          workspace = if hostName == "beelink" || hostName == "h310m" then [
+            "${toString mainMonitor},1"
+            "${toString mainMonitor},2"
+            "${toString mainMonitor},3"
+            "${toString mainMonitor},4"
+            "${toString secondMonitor},5"
+            "${toString secondMonitor},6"
+            "${toString secondMonitor},7"
+            "${toString secondMonitor},8"
+          ] else if hostName == "xps" || hostName == "work" then [
+            "${toString mainMonitor},1"
+            "${toString mainMonitor},2"
+            "${toString mainMonitor},3"
+            "${toString secondMonitor},4"
+            "${toString secondMonitor},5"
+            "${toString secondMonitor},6"
+          ] else [];
+          animations = {
+            enabled = false;
+            bezier = [
+              "overshot, 0.05, 0.9, 0.1, 1.05"
+              "smoothOut, 0.5, 0, 0.99, 0.99"
+              "smoothIn, 0.5, -0.5, 0.68, 1.5"
+              "rotate,0,0,1,1"
+            ];
+            animation = [
+              "windows, 1, 4, overshot, slide"
+              "windowsIn, 1, 2, smoothOut"
+              "windowsOut, 1, 0.5, smoothOut"
+              "windowsMove, 1, 3, smoothIn, slide"
+              "border, 1, 5, default"
+              "fade, 1, 4, smoothIn"
+              "fadeDim, 1, 4, smoothIn"
+              "workspaces, 1, 4, default"
+              "borderangle, 1, 20, rotate, loop"
+            ];
+          };
+          input = {
+            kb_layout = "us";
+            #kb_layout=us,us
+            #kb_variant=,dvorak
+            #kb_options=caps:ctrl_modifier
+            kb_options = "caps:escape";
+            follow_mouse = 2;
+            repeat_delay = 250;
+            numlock_by_default = 1;
+            accel_profile = "flat";
+            sensitivity = 0.8;
+            touchpad = if hostName == "work" || hostName == "xps" || hostName == "probook" then {
+              natural_scroll = true;
+              scroll_factor = 0.2;
+              middle_button_emulation = true;
+              tap-to-click = true;
+            } else {};
+          };
+          guestures = if hostName == "work"|| hostName == "xps" || hostName == "probook" then {
+            workspace_swipe = true;
+            workspace_swipe_fingers = 3;
+            workspace_swipe_distance = 100;
+            workspace_swipe_create_new = true;
+            workspace_swipe_numbered = true;
+          } else {};
+
+          dwindle = {
+            pseudotile = false;
+            force_split = 2;
+            preserve_split = true;
+          };
+          misc =  {
+            disable_hyprland_logo = true;
+            disable_splash_rendering = true;
+            mouse_move_enables_dpms = true;
+            key_press_enables_dpms = true;
+            background_color = "0x111111";
+          };
+          debug = {
+            damage_tracking = 2;
+          };
+          bindm = [
+            "SUPER,mouse:272,movewindow"
+            "SUPER,mouse:273,resizewindow"
+          ];
+          bind = [
+            "SUPER,Return,exec,${pkgs.${vars.terminal}}/bin/${vars.terminal}"
+            "SUPER,Q,killactive,"
+            "SUPER,Escape,exit,"
+            "SUPER,S,exec,${pkgs.systemd}/bin/systemctl suspend"
+            "SUPER,L,exec,${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock"
+            "SUPER,E,exec,GDK_BACKEND=x11 ${pkgs.pcmanfm}/bin/pcmanfm"
+            "SUPER,F,togglefloating,"
+            "SUPER,Space,exec, pkill wofi || ${pkgs.wofi}/bin/wofi --show drun"
+            "SUPER,P,pseudo,"
+            ",F11,fullscreen,"
+            "SUPER,R,forcerendererreload"
+            "SUPERSHIFT,R,exec,${config.programs.hyprland.package}/bin/hyprctl reload"
+            "SUPER,T,exec,${pkgs.${vars.terminal}}/bin/${vars.terminal} -e nvim"
+            "SUPER,K,exec,${config.programs.hyprland.package}/bin/hyprctl switchxkblayout keychron-k8-keychron-k8 next"
+            "SUPER,left,movefocus,l"
+            "SUPER,right,movefocus,r"
+            "SUPER,up,movefocus,u"
+            "SUPER,down,movefocus,d"
+            "SUPERSHIFT,left,movewindow,l"
+            "SUPERSHIFT,right,movewindow,r"
+            "SUPERSHIFT,up,movewindow,u"
+            "SUPERSHIFT,down,movewindow,d"
+            "ALT,1,workspace,1"
+            "ALT,2,workspace,2"
+            "ALT,3,workspace,3"
+            "ALT,4,workspace,4"
+            "ALT,5,workspace,5"
+            "ALT,6,workspace,6"
+            "ALT,7,workspace,7"
+            "ALT,8,workspace,8"
+            "ALT,9,workspace,9"
+            "ALT,0,workspace,10"
+            "ALT,right,workspace,+1"
+            "ALT,left,workspace,-1"
+            "ALTSHIFT,1,movetoworkspace,1"
+            "ALTSHIFT,2,movetoworkspace,2"
+            "ALTSHIFT,3,movetoworkspace,3"
+            "ALTSHIFT,4,movetoworkspace,4"
+            "ALTSHIFT,5,movetoworkspace,5"
+            "ALTSHIFT,6,movetoworkspace,6"
+            "ALTSHIFT,7,movetoworkspace,7"
+            "ALTSHIFT,8,movetoworkspace,8"
+            "ALTSHIFT,9,movetoworkspace,9"
+            "ALTSHIFT,0,movetoworkspace,10"
+            "ALTSHIFT,right,movetoworkspace,+1"
+            "ALTSHIFT,left,movetoworkspace,-1"
+
+            "SUPER,Z,layoutmsg,togglesplit"
+            ",print,exec,${pkgs.grimblast}/bin/grimblast --notify --freeze --wait 1 copysave area ~/Pictures/$(date +%Y-%m-%dT%H%M%S).png"
+            ",XF86AudioLowerVolume,exec,${pkgs.pamixer}/bin/pamixer -d 10"
+            ",XF86AudioRaiseVolume,exec,${pkgs.pamixer}/bin/pamixer -i 10"
+            ",XF86AudioMute,exec,${pkgs.pamixer}/bin/pamixer -t"
+            "SUPER_L,c,exec,${pkgs.pamixer}/bin/pamixer --default-source -t"
+            "CTRL,F10,exec,${pkgs.pamixer}/bin/pamixer -t"
+            ",XF86AudioMicMute,exec,${pkgs.pamixer}/bin/pamixer --default-source -t"
+            ",XF86MonBrightnessDown,exec,${pkgs.light}/bin/light -U 10"
+            ",XF86MonBrightnessUP,exec,${pkgs.light}/bin/light -A 10"
+          ];
+          binde = [
+            "SUPERCTRL,right,resizeactive,60 0"
+            "SUPERCTRL,left,resizeactive,-60 0"
+            "SUPERCTRL,up,resizeactive,0 -60"
+            "SUPERCTRL,down,resizeactive,0 60"
+          ];
+          bindl = if hostName == "xps" || hostName == "work" then [
+            ",switch:Lid Switch,exec,$HOME/.config/hypr/script/clamshell.sh"
+          ] else [];
+          windowrulev2 = [
+            "float,title:^(Volume Control)$"
+            "keepaspectratio,class:^(firefox)$,title:^(Picture-in-Picture)$"
+            "noborder,class:^(firefox)$,title:^(Picture-in-Picture)$"
+            "float, title:^(Picture-in-Picture)$"
+            "size 24% 24%, title:(Picture-in-Picture)"
+            "move 75% 75%, title:(Picture-in-Picture)"
+            "pin, title:^(Picture-in-Picture)$"
+            "float, title:^(Firefox)$"
+            "size 24% 24%, title:(Firefox)"
+            "move 74% 74%, title:(Firefox)"
+            "pin, title:^(Firefox)$"
+          ];
+          exec-once = [
+            "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+            "${pkgs.waybar}/bin/waybar"
+            "${pkgs.eww-wayland}/bin/eww daemon"
+            # "$HOME/.config/eww/scripts/eww"        # When running eww as a bar
+            "${pkgs.blueman}/bin/blueman-applet"
+            "${pkgs.swaynotificationcenter}/bin/swaync"
+            "${pkgs.hyprpaper}/bin/hyprpaper"
+          ] ++ (if hostName == "work" then [
+            "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"
+            "${pkgs.rclone}/bin/rclone mount --daemon gdrive: /GDrive"
+            # "${pkgs.google-drive-ocamlfuse}/bin/google-drive-ocamlfuse /GDrive"
+          ] else []) ++ (if hostName == "xps" then [
+            "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"
+          ] else []);
+        };
+      };
+
+      home.file = {
+        ".config/hypr/hyprpaper.conf".text = ''
+          preload = ~/.config/wall.png
+          wallpaper = ,~/.config/wall.png
+        '';
       };
 
       home.file = {

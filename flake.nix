@@ -67,6 +67,16 @@
         inputs.nixpkgs.follows = "nixpkgs-unstable";
       };
 
+      hyprlock = {
+        url = "github:hyprwm/hyprlock";
+        inputs.nixpkgs.follows = "nixpkgs-unstable";
+      };
+
+      hypridle = {
+        url = "github:hyprwm/hypridle";
+        inputs.nixpkgs.follows = "nixpkgs-unstable";
+      };
+
       plasma-manager = {                                                    # KDE Plasma User Settings Generator
         url = "github:pjones/plasma-manager";
         inputs.nixpkgs.follows = "nixpkgs";
@@ -74,7 +84,7 @@
       };
     };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager, home-manager-unstable, darwin, nur, nixgl, nixvim, nixvim-unstable, doom-emacs, hyprland, plasma-manager, ... }:   # Function telling flake which inputs to use
+  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager, home-manager-unstable, darwin, nur, nixgl, nixvim, nixvim-unstable, doom-emacs, hyprland, hyprlock, hypridle, plasma-manager, ... }:   # Function telling flake which inputs to use
     let
       vars = {                                                              # Variables Used In Flake
         user = "matthias";
@@ -87,7 +97,7 @@
       nixosConfigurations = (                                               # NixOS Configurations
         import ./hosts {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-unstable nixos-hardware home-manager nur nixvim doom-emacs hyprland plasma-manager vars;   # Inherit inputs
+          inherit inputs nixpkgs nixpkgs-unstable nixos-hardware home-manager nur nixvim doom-emacs hyprland hyprlock hypridle plasma-manager vars;   # Inherit inputs
         }
       );
 

@@ -35,7 +35,7 @@ let
 
     #pgrep -x sxhkd > /dev/null || sxhkd &
 
-    feh --bg-tile $HOME/.config/wall                # Wallpaper
+    feh --bg-tile $HOME/.config/wall.png            # Wallpaper
 
     polybar main & #2>~/log &
   '';

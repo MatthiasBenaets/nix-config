@@ -9,7 +9,7 @@
 #           └─ default.nix
 #
 
-{ lib, inputs, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager, nur, nixvim, doom-emacs, hyprland, plasma-manager, vars, ... }:
+{ lib, inputs, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager, nur, nixvim, doom-emacs, hyprland, hyprlock, hypridle, plasma-manager, vars, ... }:
 
 let
   system = "x86_64-linux";                                  # System Architecture
@@ -30,7 +30,7 @@ in
   beelink = lib.nixosSystem {                               # Desktop Profile
     inherit system;
     specialArgs = {                                         # Pass Flake Variable
-      inherit inputs system unstable hyprland vars;
+      inherit inputs system unstable hyprland hyprlock hypridle vars;
       host = {
         hostName = "beelink";
         mainMonitor = "HDMI-A-2";
