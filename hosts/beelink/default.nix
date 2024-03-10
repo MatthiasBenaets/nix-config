@@ -63,6 +63,7 @@
       gimp                  # Image Editor
       gmtp                  # Mount GoPro
       go2tv                 # Casting
+      google-cloud-sdk-gce  # Google Cloud
       jellyfin-media-player # Media Player
       kodi                  # Media Player
       moonlight-qt          # Remote Streaming

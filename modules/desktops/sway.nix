@@ -86,7 +86,7 @@ with host;
           };
 
           output = if hostName == "h310m" then {
-            "*".bg = "~/.config/wall fill";#
+            "*".bg = "~/.config/wall.png fill";#
             "*".scale = "1";#
             "${secondMonitor}" = {
               mode = "1920x1080";
