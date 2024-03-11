@@ -166,7 +166,7 @@ in
           }
 
           .close-button {
-            background: #${hex.red};
+            background: #${hex.active};
             color: @cc-bg;
             text-shadow: none;
             padding: 0;
@@ -316,7 +316,7 @@ in
           }
 
           .widget-title>button:hover {
-            background: #${hex.red};
+            background: #${hex.active};
             color: @cc-bg;
           }
 
@@ -335,8 +335,8 @@ in
           }
 
           .widget-dnd>switch:checked {
-            background: #${hex.red};
-            border: 1px solid #${hex.red};
+            background: #${hex.active};
+            border: 1px solid #${hex.active};
           }
 
           .widget-dnd>switch slider {
@@ -444,12 +444,19 @@ in
             color: @text-color;
           }
 
-          trough {
-            background: #${hex.fg};
+          scale trough highlight{
+            background: #${hex.active};
           }
 
-          highlight{
-            background: #${hex.active};
+          scale trough slider {
+            background: @text-color;
+            min-width: 2px;
+            min-height: 2px;
+            margin: -5px;
+          }
+
+          scale trough {
+            min-height: 2px;
           }
         '';
       };
