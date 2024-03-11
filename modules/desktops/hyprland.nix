@@ -175,7 +175,7 @@ with host;
         lockCmd = "${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock";
         listeners = [
           {
-            timeout = 300;
+            timeout = 10;
             onTimeout = lockScript.outPath;
           }
           {
@@ -382,6 +382,7 @@ with host;
             "size 24% 24%, title:(Firefox)"
             "move 74% 74%, title:(Firefox)"
             "pin, title:^(Firefox)$"
+            "opacity 0.9, class:^(kitty)"
           ];
           exec-once = [
             "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
