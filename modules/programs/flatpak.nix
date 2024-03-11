@@ -30,6 +30,8 @@ with lib;
       pkgs.xdg-desktop-portal-gtk
     ];
 
+    fonts.fontDir.enable = true;
+
     services.flatpak.enable = true;
 
     system.activationScripts =

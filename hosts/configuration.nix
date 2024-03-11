@@ -68,14 +68,16 @@ in
     sudo.wheelNeedsPassword = false;
   };
 
-  fonts.packages = with pkgs; [                # Fonts
+  fonts.packages = with pkgs; [             # Fonts
     carlito                                 # NixOS
     vegur                                   # NixOS
     source-code-pro
     jetbrains-mono
     font-awesome                            # Icons
     corefonts                               # MS
-    noto-fonts-color-emoji
+    noto-fonts                              # Google + Unicode
+    noto-fonts-cjk
+    noto-fonts-emoji
     (nerdfonts.override {                   # Nerdfont Icons override
       fonts = [
         "FiraCode"

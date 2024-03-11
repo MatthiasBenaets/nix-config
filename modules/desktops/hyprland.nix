@@ -78,7 +78,9 @@ with host;
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %a • %h | %F' --cmd Hyprland";
+          # command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %a • %h | %F' --cmd Hyprland";
+          command = "${config.programs.hyprland.package}/bin/Hyprland"; # tuigreet not needed with exec-once hyprlock
+          user = vars.user;
         };
       };
       vt = 7;
@@ -119,7 +121,7 @@ with host;
           hide_cursor = true;
           no_fade_in = false;
           disable_loading_bar = true;
-          grace = 5;
+          grace = 0;
         };
         backgrounds = [{
           monitor = "";
@@ -172,10 +174,10 @@ with host;
       services.hypridle = {
         enable = true;
         beforeSleepCmd = "${pkgs.systemd}/bin/loginctl lock-session";
-        lockCmd = "${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock";
+        lockCmd = "/bin/hyprlock";
         listeners = [
           {
-            timeout = 10;
+            timeout = 180;
             onTimeout = lockScript.outPath;
           }
           {
@@ -386,6 +388,7 @@ with host;
           ];
           exec-once = [
             "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+            "${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock"
             "${pkgs.waybar}/bin/waybar"
             "${pkgs.eww-wayland}/bin/eww daemon"
             # "$HOME/.config/eww/scripts/eww"        # When running eww as a bar
@@ -403,13 +406,6 @@ with host;
       };
 
       home.file = {
-        ".config/hypr/hyprpaper.conf".text = ''
-          preload = ~/.config/wall.png
-          wallpaper = ,~/.config/wall.png
-        '';
-      };
-
-      home.file = {
         ".config/hypr/script/clamshell.sh" = {
           text = ''
             #!/bin/sh
@@ -420,13 +416,17 @@ with host;
               if [[ `hyprctl monitors | grep "Monitor" | wc -l` != 1 ]]; then
                 ${config.programs.hyprland.package}/bin/hyprctl keyword monitor "${toString mainMonitor}, disable"
               else
-                ${pkgs.swaylock}/bin/swaylock -f
+                ${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock
                 ${pkgs.systemd}/bin/systemctl suspend
               fi
             fi
           '';
           executable = true;
         };
+        ".config/hypr/hyprpaper.conf".text = ''
+          preload = ~/.config/wall.png
+          wallpaper = ,~/.config/wall.png
+        '';
       };
     };
   };

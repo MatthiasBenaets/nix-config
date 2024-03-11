@@ -40,7 +40,8 @@ in
         ".config/wofi/style.css" = {
           text = ''
             window {
-              background-color: #${bg};
+              /*background-color: #${bg};*/
+              background-color: rgba(0, 0, 0, 0.8);
             }
 
             #input {
@@ -57,7 +58,8 @@ in
             }
 
             #text:selected {
-              color: rgba(255, 255, 255, 0.8);
+              /*color: rgba(255, 255, 255, 0.8);*/
+              color: rgba(0, 0, 0, 0.8);
             }
 
             #entry {
