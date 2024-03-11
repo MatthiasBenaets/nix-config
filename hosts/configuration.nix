@@ -75,6 +75,7 @@ in
     jetbrains-mono
     font-awesome                            # Icons
     corefonts                               # MS
+    noto-fonts-color-emoji
     (nerdfonts.override {                   # Nerdfont Icons override
       fonts = [
         "FiraCode"

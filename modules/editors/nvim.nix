@@ -283,22 +283,22 @@ in
         enable = true;
         defaultMaps = false;
       };
-      # mini = {
-      #   enable = true;
-      #   modules = {
-      #     indentscope = {
-      #       draw = {
-      #         delay = 0;
-      #         priority = 2;
-      #       };
-      #       options = {
-      #         border = "both";
-      #         indent_at_cursor = true;
-      #       };
-      #       symbol = "|";
-      #     };
-      #   };
-      # };
+      mini = {
+        enable = true;
+        modules = {
+          indentscope = {
+            draw = {
+              delay = 0;
+              priority = 2;
+            };
+            options = {
+              border = "both";
+              indent_at_cursor = true;
+            };
+            symbol = "|";
+          };
+        };
+      };
       indent-blankline.enable = true;
       lastplace.enable = true;
       comment-nvim.enable = true;
