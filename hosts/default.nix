@@ -53,7 +53,7 @@ in
   work = lib.nixosSystem {                                  # Work Profile
     inherit system;
     specialArgs = {
-      inherit inputs system unstable hyprland vars;
+      inherit inputs system unstable hyprland hyprlock hypridle vars;
       host = {
         hostName = "work";
         mainMonitor = "eDP-1";
@@ -76,7 +76,7 @@ in
   xps = lib.nixosSystem {                                  # Work Profile
     inherit system;
     specialArgs = {
-      inherit inputs system unstable hyprland vars;
+      inherit inputs system unstable hyprland hyprlock hypridle vars;
       host = {
         hostName = "xps";
         mainMonitor = "eDP-1";
@@ -121,7 +121,7 @@ in
   h310m = lib.nixosSystem {                               # DEPRECATED Desktop Profile
     inherit system;
     specialArgs = {
-      inherit inputs system unstable hyprland vars;
+      inherit inputs system unstable hyprland hyprlock hypridle vars;
       host = {
         hostName = "h310m";
         mainMonitor = "HDMI-A-1";

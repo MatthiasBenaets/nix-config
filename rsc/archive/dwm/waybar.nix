@@ -66,7 +66,7 @@ in
             background-color: rgba(${rgb.active},0.4);
           }
           window#waybar {
-            background-color: rgba(0, 0, 0 , 0.5);
+            background-color: #${hex.bg};
             transition-property: background-color;
             transition-duration: .5s;
             border-bottom: 1px solid rgba(${rgb.active}, 0.99);
@@ -113,7 +113,7 @@ in
           /*#workspaces button.focused {*/
           #workspaces button.active {
             color: rgba(${rgb.fg},1);
-            background-color: rgba(${rgb.active}, 0.8);
+            background-color: rgba(${rgb.active}, 0.99);
           }
           #workspaces button.hidden {
             color: #${hex.text};
@@ -235,7 +235,7 @@ in
             backlight = {
               device = "intel_backlight";
               format= "{percent}% <span font='11'>{icon}</span>";
-              format-icons = ["" "󰖙"];
+              format-icons = ["" ""];
               on-scroll-down = "${pkgs.light}/bin/light -U 5";
               on-scroll-up = "${pkgs.light}/bin/light -A 5";
             };

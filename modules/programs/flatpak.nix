@@ -25,6 +25,7 @@ with lib;
   config = mkIf (config.flatpak.enable)
   {
     xdg.portal.enable = true;
+    xdg.portal.config.common.default = "*";
     xdg.portal.extraPortals = mkIf (config.wlwm.enable || config.x11wm.enable) [
       pkgs.xdg-desktop-portal-gtk
     ];

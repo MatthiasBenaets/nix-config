@@ -191,14 +191,15 @@ with host;
         settings = {
           general = {
             border_size = 2;
-            gaps_in = 0;
-            gaps_out = 0;
+            gaps_in = 3;
+            gaps_out = 6;
             "col.active_border" = "0x99${active}";
             "col.inactive_border" = "0x66${inactive}";
+            resize_on_border = true;
             layout = "dwindle";
           };
           decoration = {
-            rounding = 0;
+            rounding = 6;
             active_opacity = 1;
             inactive_opacity = 1;
             fullscreen_opacity = 1;
@@ -274,7 +275,7 @@ with host;
               tap-to-click = true;
             } else {};
           };
-          guestures = if hostName == "work"|| hostName == "xps" || hostName == "probook" then {
+          gestures = if hostName == "work"|| hostName == "xps" || hostName == "probook" then {
             workspace_swipe = true;
             workspace_swipe_fingers = 3;
             workspace_swipe_distance = 100;
