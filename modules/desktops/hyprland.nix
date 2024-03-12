@@ -102,9 +102,14 @@ with host;
     let
       lid = if hostName == "xps" then "LID0" else "LID";
       lockScript = pkgs.writeShellScript "lock-script" ''
+        action=$1
         ${pkgs.pipewire}/bin/pw-cli i all | ${pkgs.ripgrep}/bin/rg running
         if [ $? == 1 ]; then
-          ${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock
+          if [ "$action" == "lock" ]; then
+            ${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock
+          elif [ "$action" == "suspend" ]; then
+            ${pkgs.systemd}/bin/systemctl suspend
+          fi
         fi
       '';
     in
@@ -174,15 +179,17 @@ with host;
       services.hypridle = {
         enable = true;
         beforeSleepCmd = "${pkgs.systemd}/bin/loginctl lock-session";
-        lockCmd = "/bin/hyprlock";
+        lockCmd = "${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock";
         listeners = [
           {
             timeout = 180;
-            onTimeout = lockScript.outPath;
+            # timeout = 10;
+            onTimeout = "${lockScript.outPath} lock";
           }
           {
             timeout = 1800;
-            onTimeout = "${pkgs.systemd}/bin/systemctl suspend";
+            # timeout = 20;
+            onTimeout = "${lockScript.outPath} suspend";
           }
         ];
       };
