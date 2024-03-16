@@ -41,7 +41,7 @@ in
       cleanOnBoot =  true;
       tmpfsSize = "5GB";
     };
-    kernelPackages = pkgs.linuxPackages_latest;
+    # kernelPackages = pkgs.linuxPackages_latest;
   };
 
   users.users.${vars.user} = {              # System User

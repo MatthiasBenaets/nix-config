@@ -179,7 +179,9 @@ with host;
       services.hypridle = {
         enable = true;
         beforeSleepCmd = "${pkgs.systemd}/bin/loginctl lock-session";
-        lockCmd = "${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock";
+        afterSleepCmd = "${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on";
+        ignoreDbusInhibit = true;
+        lockCmd = "pidof ${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock || ${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock";
         listeners = [
           {
             timeout = 180;

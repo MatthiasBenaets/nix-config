@@ -66,7 +66,7 @@ in
       {
         event = "FileType";
         pattern = [ "markdown" ];
-        command = "setlocal scrolloff=30 | set wrap1";
+        command = "setlocal scrolloff=30 | set wrap";
         desc = "Fixed cursor location on markdown (for preview) and enable wrapping";
       }
     ];
