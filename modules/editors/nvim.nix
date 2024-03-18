@@ -204,6 +204,11 @@ in
         options.desc = "Close Current Buffer";
       }
       {
+        key = "<leader>bk";
+        action = "<CMD>BufferClose<CR>";
+        options.desc = "Close Current Buffer";
+      }
+      {
         key = "<leader>bn";
         action = "<CMD>:bnext<CR>";
         options.desc = "Next Buffer";

@@ -25,7 +25,7 @@
     in
     {
       devShells.${system}.default = pkgs.mkShell {
-        packages = [ pkgs.ltris ];
+        packages = [ unstable.sssnake pkgs.vitetris ];
       };
     };
 }

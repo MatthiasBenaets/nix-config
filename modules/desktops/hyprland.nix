@@ -188,13 +188,11 @@ with host;
         lockCmd = "pidof ${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock || ${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock";
         listeners = [
           {
-            timeout = 180;
-            # timeout = 10;
+            timeout = 300;
             onTimeout = "${lockScript.outPath} lock";
           }
           {
             timeout = 1800;
-            # timeout = 20;
             onTimeout = "${lockScript.outPath} suspend";
           }
         ];
