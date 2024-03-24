@@ -20,13 +20,14 @@
 
 {
   imports = [
-              ./hardware-configuration.nix
-              ../../modules/programs/games.nix
-            ] ++
-            ( import ../../modules/hardware/beelink) ++
-            ( import ../../modules/desktops/virtualisation);
+    ./hardware-configuration.nix
+    ../../modules/programs/games.nix
+  ] ++
+  (import ../../modules/hardware/beelink) ++
+  (import ../../modules/desktops/virtualisation);
 
-  boot = {                                      # Boot Options
+  # Boot Options
+  boot = {
     loader = {
       systemd-boot = {
         enable = true;
@@ -40,7 +41,7 @@
   };
 
   hardware = {
-    opengl = {                                  # Hardware Accelerated Video
+    opengl = {
       enable = true;
       extraPackages = with pkgs; [
         intel-media-driver
@@ -49,32 +50,32 @@
         libvdpau-va-gl
       ];
     };
-    sane = {                                    # Scanning
+    sane = {
       enable = true;
       extraBackends = [ pkgs.sane-airscan ];
     };
   };
 
-  hyprland.enable = true;                       # Window Manager
+  hyprland.enable = true;
 
   environment = {
-    systemPackages = with pkgs; [               # System-Wide Packages
-      discord               # Messaging
-      gimp                  # Image Editor
-      gmtp                  # Mount GoPro
-      go2tv                 # Casting
-      google-cloud-sdk-gce  # Google Cloud
+    systemPackages = with pkgs; [
+      discord # Messaging
+      gimp # Image Editor
+      gmtp # Mount GoPro
+      go2tv # Casting
+      google-cloud-sdk-gce # Google Cloud
       jellyfin-media-player # Media Player
-      kodi                  # Media Player
-      moonlight-qt          # Remote Streaming
-      obs-studio            # Live Streaming
-      plex-media-player     # Media Player
-      rclone                # Gdrive ($ rclone config | rclone mount --daemon gdrive:<path> <host/path>)
-      simple-scan           # Scanning
+      kodi # Media Player
+      moonlight-qt # Remote Streaming
+      obs-studio # Live Streaming
+      plex-media-player # Media Player
+      rclone # Gdrive ($ rclone config | rclone mount --daemon gdrive:<path> <host/path>)
+      simple-scan # Scanning
     ];
   };
 
-  flatpak = {                                   # Flatpak Packages (see module options)
+  flatpak = {
     extraPackages = [
       "com.github.tchx84.Flatseal"
       "com.ultimaker.cura"
@@ -82,13 +83,15 @@
     ];
   };
 
-  nixpkgs.overlays = [                          # Overlay pulls latest version of Discord
+  nixpkgs.overlays = [
     (final: prev: {
       discord = prev.discord.overrideAttrs (
-        _: { src = builtins.fetchTarball {
-          url = "https://discord.com/api/download?platform=linux&format=tar.gz";
-          sha256 = "0pml1x6pzmdp6h19257by1x5b25smi2y60l1z40mi58aimdp59ss";
-        };}
+        _: {
+          src = builtins.fetchTarball {
+            url = "https://discord.com/api/download?platform=linux&format=tar.gz";
+            sha256 = "0pml1x6pzmdp6h19257by1x5b25smi2y60l1z40mi58aimdp59ss";
+          };
+        }
       );
     })
   ];

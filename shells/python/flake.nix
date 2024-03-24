@@ -16,7 +16,8 @@
       pypi = with pkgs; (ps: with ps; [
         pip
       ]);
-    in {
+    in
+    {
       # default host
       devShells.x86_64-linux.default = inputs.nixpkgs.legacyPackages.x86_64-linux.mkShell {
         buildInputs = [ (pkgs.python310.withPackages pypi) ];

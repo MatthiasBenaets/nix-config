@@ -20,7 +20,8 @@
 {
   services.emacs.enable = true;
 
-  system.userActivationScripts = {               # Installation Script on Rebuild
+  system.userActivationScripts = {
+    # Installation Script on Rebuild
     doomEmacs = {
       text = ''
         source ${config.system.build.setEnvironment}
@@ -35,7 +36,7 @@
         else
           $EMACS/bin/doom sync
         fi
-      '';                                        # Will Sync on Changes
+      ''; # Will Sync on Changes
     };
   };
 

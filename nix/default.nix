@@ -8,17 +8,17 @@
 #       └─ <host>.nix
 #
 
-{ lib, inputs, nixpkgs, home-manager, nixgl, vars, ... }:
+{ inputs, nixpkgs, home-manager, nixgl, vars, ... }:
 
 let
-  system = "x86_64-linux";                                  # System Architecture
+  system = "x86_64-linux";
   pkgs = nixpkgs.legacyPackages.${system};
 in
 {
   pacman = home-manager.lib.homeManagerConfiguration {
     inherit pkgs;
     extraSpecialArgs = { inherit inputs nixgl vars; };
-    modules = [                                             # Modules Used
+    modules = [
       ./pacman.nix
       {
         home = {

@@ -2,7 +2,7 @@
 #  Screenshots
 #
 
-{ config, lib, pkgs, user, vars, ... }:
+{ config, lib, vars, ... }:
 
 {
   config = lib.mkIf (config.services.xserver.enable) {

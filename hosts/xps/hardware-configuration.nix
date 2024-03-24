@@ -13,11 +13,12 @@
 # to /etc/nixos/configuration.nix instead.
 #
 
-{ config, lib, pkgs, modulesPath, host, ... }:
+{ config, lib, modulesPath, host, ... }:
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" ];
@@ -26,12 +27,14 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/5701437d-9ca9-4f6b-bae3-d5a51a9b5dc9";
+    {
+      device = "/dev/disk/by-uuid/5701437d-9ca9-4f6b-bae3-d5a51a9b5dc9";
       fsType = "btrfs";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/44AF-9E34";
+    {
+      device = "/dev/disk/by-uuid/44AF-9E34";
       fsType = "vfat";
     };
 
@@ -39,7 +42,7 @@
 
   networking = with host; {
     useDHCP = lib.mkDefault true;
-  # interfaces.wlp0s20f3.useDHCP = lib.mkDefault true;
+    # interfaces.wlp0s20f3.useDHCP = lib.mkDefault true;
     hostName = hostName;
     enableIPv6 = false;
     networkmanager = {
@@ -49,7 +52,7 @@
         rc-manager=resolvconf
       '';
     };
-    nameservers = [ "192.168.0.4" "1.1.1.1"];
+    nameservers = [ "192.168.0.4" "1.1.1.1" ];
     firewall.enable = false;
   };
 

@@ -2,7 +2,7 @@
 #  Bar
 #
 
-{ config, lib, pkgs, vars, host, ...}:
+{ config, lib, pkgs, vars, host, ... }:
 let
   colors = import ../theming/colors.nix;
 in
@@ -21,23 +21,51 @@ let
     ];
   modules-left = with config;
     if hyprland.enable == true then [
-      "custom/menu" "hyprland/workspaces"
+      "custom/menu"
+      "hyprland/workspaces"
     ] else if sway.enable == true then [
-      "sway/workspaces" "sway/window" "sway/mode"
-    ] else [];
+      "sway/workspaces"
+      "sway/window"
+      "sway/mode"
+    ] else [ ];
 
   modules-right =
     if hostName == "beelink" || hostName == "h310m" then [
-      "custom/ds4" "custom/mouse" "custom/kb" "custom/pad" "network" "cpu" "memory" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" "custom/notification"
+      "custom/ds4"
+      "custom/mouse"
+      "custom/kb"
+      "custom/pad"
+      "network"
+      "cpu"
+      "memory"
+      "custom/pad"
+      "pulseaudio"
+      "custom/sink"
+      "custom/pad"
+      "clock"
+      "tray"
+      "custom/notification"
     ] else [
-      "cpu" "memory" "custom/pad" "battery" "custom/pad" "backlight" "custom/pad" "pulseaudio" "custom/sink" "custom/pad" "clock" "tray" "custom/notification"
+      "cpu"
+      "memory"
+      "custom/pad"
+      "battery"
+      "custom/pad"
+      "backlight"
+      "custom/pad"
+      "pulseaudio"
+      "custom/sink"
+      "custom/pad"
+      "clock"
+      "tray"
+      "custom/notification"
     ];
 
-  sinkBuiltIn="Built-in Audio Analog Stereo";
-  sinkVideocard=''Ellesmere HDMI Audio \[Radeon RX 470\/480 \/ 570\/580\/590\] Digital Stereo \(HDMI 3\)'';
-  sinkBluetooth="S10 Bluetooth Speaker";
-  headset=sinkBuiltIn;
-  speaker=sinkBluetooth;
+  sinkBuiltIn = "Built-in Audio Analog Stereo";
+  sinkVideocard = ''Ellesmere HDMI Audio \[Radeon RX 470\/480 \/ 570\/580\/590\] Digital Stereo \(HDMI 3\)'';
+  sinkBluetooth = "S10 Bluetooth Speaker";
+  headset = sinkBuiltIn;
+  speaker = sinkBluetooth;
 in
 {
   config = lib.mkIf (config.wlwm.enable) {
@@ -49,7 +77,7 @@ in
       programs.waybar = {
         enable = true;
         package = pkgs.waybar;
-        systemd ={
+        systemd = {
           enable = true;
           target = "sway-session.target";
         };
@@ -154,7 +182,7 @@ in
               tooltip = false;
             };
             "custom/notification" = {
-              tooltip= false;
+              tooltip = false;
               format = "{icon}";
               format-icons = {
                 notification = "<span font='16'></span><span foreground='red'><sup></sup></span>";
@@ -181,14 +209,14 @@ in
                 # "3"="";
                 # "4"="";
                 # "5"="";
-                "1"="1";
-                "2"="2";
-                "3"="3";
-                "4"="4";
-                "5"="5";
-                "6"="6";
-                "7"="7";
-                "8"="8";
+                "1" = "1";
+                "2" = "2";
+                "3" = "3";
+                "4" = "4";
+                "5" = "5";
+                "6" = "6";
+                "7" = "7";
+                "8" = "8";
               };
               all-outputs = true;
               persistent_workspaces = {
@@ -197,14 +225,14 @@ in
                 # "3" = [];
                 # "4" = [];
                 # "5" = [];
-                "1" = [];
-                "2" = [];
-                "3" = [];
-                "4" = [];
-                "5" = [];
-                "6" = [];
-                "7" = [];
-                "8" = [];
+                "1" = [ ];
+                "2" = [ ];
+                "3" = [ ];
+                "4" = [ ];
+                "5" = [ ];
+                "6" = [ ];
+                "7" = [ ];
+                "8" = [ ];
               };
             };
             "wlr/workspaces" = {
@@ -234,8 +262,8 @@ in
             };
             backlight = {
               device = "intel_backlight";
-              format= "{percent}% <span font='11'>{icon}</span>";
-              format-icons = ["" "󰖙"];
+              format = "{percent}% <span font='11'>{icon}</span>";
+              format-icons = [ "" "󰖙" ];
               on-scroll-down = "${pkgs.light}/bin/light -U 5";
               on-scroll-up = "${pkgs.light}/bin/light -A 5";
             };
@@ -247,7 +275,7 @@ in
               };
               format = "{capacity}% <span font='11'>{icon}</span>";
               format-charging = "{capacity}% <span font='11'></span>";
-              format-icons = ["" "" "" "" ""];
+              format-icons = [ "" "" "" "" "" ];
               max-length = 25;
             };
             network = {
@@ -307,59 +335,61 @@ in
       };
       home.file = {
         ".config/waybar/script/sink.sh" = {
-          text = if hostName == "beelink" || hostName == "h310m" then ''
-            #!/bin/sh
+          text =
+            if hostName == "beelink" || hostName == "h310m" then ''
+              #!/bin/sh
 
-            HEAD=$(awk '/ ${headset}/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | head -n 1)
-            SPEAK=$(awk '/ ${speaker}/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | head -n 1)
+              HEAD=$(awk '/ ${headset}/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | head -n 1)
+              SPEAK=$(awk '/ ${speaker}/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | head -n 1)
 
-            if [[ $SPEAK = "*" ]]; then
-              printf "<span font='10'>󰓃</span>\n"
-            elif [[ $HEAD = "*" ]]; then
-              printf "<span font='13'></span>\n"
-            fi
-            exit 0
-          '' else ''
-            #!/bin/sh
+              if [[ $SPEAK = "*" ]]; then
+                printf "<span font='10'>󰓃</span>\n"
+              elif [[ $HEAD = "*" ]]; then
+                printf "<span font='13'></span>\n"
+              fi
+              exit 0
+            '' else ''
+              #!/bin/sh
 
-            SINK=$(${pkgs.pulseaudio}/bin/pactl list sinks | grep "Active Port" | awk '{ print $3 }')
+              SINK=$(${pkgs.pulseaudio}/bin/pactl list sinks | grep "Active Port" | awk '{ print $3 }')
 
-            if [[ $SINK == "analog-output-headphones" ]]; then
-              printf "<span font='13'></span>\n"
-            elif [[ $SINK == "analog-output-speaker" ]]; then
-              printf "<span font='10'>󰓃</span>\n"
-            fi
-            exit 0
-          '';
+              if [[ $SINK == "analog-output-headphones" ]]; then
+                printf "<span font='13'></span>\n"
+              elif [[ $SINK == "analog-output-speaker" ]]; then
+                printf "<span font='10'>󰓃</span>\n"
+              fi
+              exit 0
+            '';
           executable = true;
         };
         ".config/waybar/script/switch.sh" = {
-          text = if hostName == "beelink" || hostName == "h310m" then ''
-            #!/bin/sh
+          text =
+            if hostName == "beelink" || hostName == "h310m" then ''
+              #!/bin/sh
 
-            ID1=$(awk '/ ${headset}/ {sub(/.$/,"",$2); print $2 }' <(${pkgs.wireplumber}/bin/wpctl status) | head -n 1)
-            ID2=$(awk '/ ${speaker}/ {sub(/.$/,"",$2); print $2 }' <(${pkgs.wireplumber}/bin/wpctl status) | sed -n 2p)
+              ID1=$(awk '/ ${headset}/ {sub(/.$/,"",$2); print $2 }' <(${pkgs.wireplumber}/bin/wpctl status) | head -n 1)
+              ID2=$(awk '/ ${speaker}/ {sub(/.$/,"",$2); print $2 }' <(${pkgs.wireplumber}/bin/wpctl status) | sed -n 2p)
 
-            HEAD=$(awk '/ ${headset}/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | head -n 1)
-            SPEAK=$(awk '/ ${speaker}/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | head -n 1)
+              HEAD=$(awk '/ ${headset}/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | head -n 1)
+              SPEAK=$(awk '/ ${speaker}/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | head -n 1)
 
-            if [[ $SPEAK = "*" ]]; then
-              ${pkgs.wireplumber}/bin/wpctl set-default $ID1
-            elif [[ $HEAD = "*" ]]; then
-              ${pkgs.wireplumber}/bin/wpctl set-default $ID2
-            fi
-            exit 0
-          '' else ''
-            #!/bin/sh
+              if [[ $SPEAK = "*" ]]; then
+                ${pkgs.wireplumber}/bin/wpctl set-default $ID1
+              elif [[ $HEAD = "*" ]]; then
+                ${pkgs.wireplumber}/bin/wpctl set-default $ID2
+              fi
+              exit 0
+            '' else ''
+              #!/bin/sh
 
-            SINK=$(${pkgs.pulseaudio}/bin/pactl list sinks | grep "Active Port" | awk '{ print $3 }')
+              SINK=$(${pkgs.pulseaudio}/bin/pactl list sinks | grep "Active Port" | awk '{ print $3 }')
 
-            if [[ $SINK == "analog-output-headphones" ]]; then
-              ${pkgs.pulseaudio}/bin/pactl set-sink-port 0 analog-output-speaker
-            elif [[ $SINK == "analog-output-speaker" ]]; then
-              ${pkgs.pulseaudio}/bin/pactl set-sink-port 0 analog-output-headphones
-            fi
-          '';
+              if [[ $SINK == "analog-output-headphones" ]]; then
+                ${pkgs.pulseaudio}/bin/pactl set-sink-port 0 analog-output-speaker
+              elif [[ $SINK == "analog-output-speaker" ]]; then
+                ${pkgs.pulseaudio}/bin/pactl set-sink-port 0 analog-output-headphones
+              fi
+            '';
           executable = true;
         };
         ".config/waybar/script/mouse.sh" = {

@@ -6,7 +6,7 @@
 
 with host;
 let
-  polybar = pkgs.polybar.override {                 # Extra Packages
+  polybar = pkgs.polybar.override {
     alsaSupport = true;
     pulseSupport = true;
   };
@@ -18,14 +18,14 @@ in
         polybar = {
           enable = true;
           script = ''
-            #killall -q polybar &
-            #while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
-            #polybar main &
-            #polybar sec &
-          '';                                       # Run Polybar on Startup
+            # killall -q polybar &
+            # while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
+            # polybar main &
+            # polybar sec &
+          ''; # Run Polybar on Startup
           package = polybar;
           config = {
-            "bar/main" = {                          # Bar "main"
+            "bar/main" = {
               monitor = mainMonitor;
               width = "100%";
               height = 15;
@@ -49,7 +49,7 @@ in
 
               wm-restack = "bspwm";
             };
-            "bar/sec" = {                         # Bar "sec"
+            "bar/sec" = {
               monitor = "${secondMonitor}";
               width = "100%";
               height = 15;
@@ -71,20 +71,20 @@ in
 
               wm-restack = "bspwm";
             };
-            "module/memory" = {                     # RAM
+            "module/memory" = {
               type = "internal/memory";
               format = "<label>";
               format-foreground = "#999";
               label = "  %percentage_used%%";
             };
-            "module/cpu" = {                        # CPU
+            "module/cpu" = {
               type = "internal/cpu";
               interval = 1;
               format = "<label>";
               format-foreground = "#999";
               label = "  %percentage%%";
             };
-            "module/volume" = {                     # Volume
+            "module/volume" = {
               type = "internal/pulseaudio";
               interval = 2;
               use-ui-max = "false";
@@ -98,7 +98,7 @@ in
 
               click-right = "${pkgs.pavucontrol}/bin/pavucontrol";
             };
-            "module/backlight" = {                  # Brightness (xbacklight)
+            "module/backlight" = {
               type = "internal/backlight";
               card = "intel_backlight";
               format = "<ramp> <bar>";
@@ -118,7 +118,7 @@ in
               bar-empty-font = 3;
               bar-empty-foreground = "#44";
             };
-            "module/battery" = {                    # Battery
+            "module/battery" = {
               type = "internal/battery";
               full-at = 98;
 
@@ -154,11 +154,11 @@ in
               animation-charging-4 = "";
               animation-charging-framerate = 750;
             };
-            "module/date" = {                       # Time/Date  Day-Month-Year Hour:Minute
-            type = "internal/date";
+            "module/date" = {
+              type = "internal/date";
               date = "  %%{F#999}%d-%m-%Y%%{F-} %%{F#fff}%H:%M%%{F-}";
             };
-            "module/bspwm" = {                      # Workspaces
+            "module/bspwm" = {
               type = "internal/bspwm";
               pin-workspace = true;
 
@@ -222,7 +222,7 @@ in
               label-private-underline = "#c9665e";
               label-private-padding = 2;
             };
-            "module/title" = {                      # Window Title
+            "module/title" = {
               type = "internal/xwindow";
               format = "<label>";
               format-background = "#00000000";
@@ -233,26 +233,25 @@ in
               label-empty-foreground = "#ccffffff";
             };
 
-            # CUSTOM
-            "module/pad" = {                        # Padding
+            "module/pad" = {
               type = "custom/text";
               content = "    ";
             };
-            "module/mic" = {                        # Microphone
+            "module/mic" = {
               type = "custom/script";
               interval = 1;
               tail = "true";
               exec = "~/.config/polybar/script/mic.sh status";
               click-left = "~/.config/polybar/script/mic.sh toggle";
             };
-            "module/sink" = {                       # Sink
+            "module/sink" = {
               type = "custom/script";
               interval = 1;
               tail = "true";
               exec = "~/.config/polybar/script/sink.sh status";
               click-left = "~/.config/polybar/script/sink.sh toggle";
             };
-            "module/logo" = {                       # Menu
+            "module/logo" = {
               type = "custom/menu";
               expand-right = true;
 
@@ -292,7 +291,7 @@ in
               menu-2-6 = "";
               menu-2-6-exec = "steam &";
             };
-            "module/bluetooth" = {                  # Bluetooth
+            "module/bluetooth" = {
               type = "custom/text";
               content = "";
               click-left = "${pkgs.blueman}/bin/blueman-manager";
@@ -302,54 +301,54 @@ in
       };
       home.file.".config/polybar/script/mic.sh" = {
         text = ''
-        #!/bin/sh
+          #!/bin/sh
 
-        case $1 in
-            "status")
-            #MUTED=$(pacmd list-sources | awk '/\*/,EOF {print}' | awk '/muted/ {print $2; exit}')
-            #if [[ $MUTED = "no" ]]; then
-            MUTED=$(awk -F"[][]" '/Left:/ { print $4 }' <(amixer sget Capture))
-            if [[ $MUTED = "on" ]]; then
-                echo ''
-            else
-                echo ''
-            fi
-            ;;
-            "toggle")
-            #ID=$(pacmd list-sources | grep "*\ index:" | cut -d' ' -f5)
-            #pactl set-source-mute $ID toggle
-            ${pkgs.alsa-utils}/bin/amixer set Capture toggle
-            ;;
-        esac
+          case $1 in
+              "status")
+              #MUTED=$(pacmd list-sources | awk '/\*/,EOF {print}' | awk '/muted/ {print $2; exit}')
+              #if [[ $MUTED = "no" ]]; then
+              MUTED=$(awk -F"[][]" '/Left:/ { print $4 }' <(amixer sget Capture))
+              if [[ $MUTED = "on" ]]; then
+                  echo ''
+              else
+                  echo ''
+              fi
+              ;;
+              "toggle")
+              #ID=$(pacmd list-sources | grep "*\ index:" | cut -d' ' -f5)
+              #pactl set-source-mute $ID toggle
+              ${pkgs.alsa-utils}/bin/amixer set Capture toggle
+              ;;
+          esac
         '';
         executable = true;
       };
       home.file.".config/polybar/script/sink.sh" = {
         text = ''
-        #!/bin/sh
+          #!/bin/sh
 
-        ID1=$(awk '/ Built-in Audio Analog Stereo/ {sub(/.$/,"",$2); print $2 }' <(${pkgs.wireplumber}/bin/wpctl status) | head -n 1)
-        ID2=$(awk '/ S10 Bluetooth Speaker/ {sub(/.$/,"",$2); print $2 }' <(${pkgs.wireplumber}/bin/wpctl status) | sed -n 2p)
+          ID1=$(awk '/ Built-in Audio Analog Stereo/ {sub(/.$/,"",$2); print $2 }' <(${pkgs.wireplumber}/bin/wpctl status) | head -n 1)
+          ID2=$(awk '/ S10 Bluetooth Speaker/ {sub(/.$/,"",$2); print $2 }' <(${pkgs.wireplumber}/bin/wpctl status) | sed -n 2p)
 
-        HEAD=$(awk '/ Built-in Audio Analog Stereo/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | sed -n 2p)
-        SPEAK=$(awk '/ S10 Bluetooth Speaker/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | head -n 1)
+          HEAD=$(awk '/ Built-in Audio Analog Stereo/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | sed -n 2p)
+          SPEAK=$(awk '/ S10 Bluetooth Speaker/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | head -n 1)
 
-        case $1 in
-            "status")
-            if [[ $HEAD = "*" ]]; then
-                echo ''
-            elif [[ $SPEAK = "*" ]]; then
-                echo '蓼'
-            fi
-            ;;
-            "toggle")
-            if [[ $HEAD = "*" ]]; then
-                ${pkgs.wireplumber}/bin/wpctl set-default $ID2
-            elif [[ $SPEAK = "*" ]]; then
-                ${pkgs.wireplumber}/bin/wpctl set-default $ID1
-            fi
-            ;;
-        esac
+          case $1 in
+              "status")
+              if [[ $HEAD = "*" ]]; then
+                  echo ''
+              elif [[ $SPEAK = "*" ]]; then
+                  echo '蓼'
+              fi
+              ;;
+              "toggle")
+              if [[ $HEAD = "*" ]]; then
+                  ${pkgs.wireplumber}/bin/wpctl set-default $ID2
+              elif [[ $SPEAK = "*" ]]; then
+                  ${pkgs.wireplumber}/bin/wpctl set-default $ID1
+              fi
+              ;;
+          esac
         '';
         executable = true;
       };

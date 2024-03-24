@@ -12,14 +12,14 @@
 #           └─ bspwm.nix
 #
 
-{ config, pkgs, vars, ... }:
+{ pkgs, ... }:
 
 {
-  imports =  [
+  imports = [
     ./hardware-configuration.nix
   ];
 
-  boot = {                                      # Boot Options
+  boot = {
     loader = {
       grub = {
         enable = true;
@@ -29,11 +29,11 @@
     };
   };
 
-  bspwm.enable = true;                          # Window Manager
+  bspwm.enable = true;
 
   environment = {
-    systemPackages = with pkgs; [               # System Wide Packages
-      hello             # Test Package
+    systemPackages = with pkgs; [
+      hello # Hello World
     ];
   };
 

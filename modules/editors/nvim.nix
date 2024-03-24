@@ -1,9 +1,9 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   colors = import ../theming/colors.nix;
 
-  dutch = builtins.readFile(builtins.fetchurl {
+  dutch = builtins.readFile (builtins.fetchurl {
     url = "https://raw.githubusercontent.com/OpenTaal/opentaal-wordlist/master/wordlist.txt";
     sha256 = "1gnpkb2afasbcfka6lhnpzlpafpns4k6j09h7dc0p13k7iggpr8j";
   });
@@ -26,7 +26,8 @@ in
       lists = {
         WORDLIST = [
           "${pkgs.scowl}/share/dict/words.txt"
-          (builtins.toFile "dutch" dutch)];
+          (builtins.toFile "dutch" dutch)
+        ];
       };
     };
   };
@@ -66,7 +67,7 @@ in
       {
         event = "FileType";
         pattern = [ "markdown" ];
-        command = "setlocal scrolloff=30 | set wrap";
+        command = "setlocal scrolloff=30 | setlocal wrap";
         desc = "Fixed cursor location on markdown (for preview) and enable wrapping";
       }
     ];
@@ -84,7 +85,7 @@ in
       wrap = false;
       scrolloff = 5;
       sidescroll = 40;
-      completeopt = ["menu" "menuone" "noselect"];
+      completeopt = [ "menu" "menuone" "noselect" ];
       pumheight = 15;
       fileencoding = "utf-8";
       swapfile = false;
@@ -291,17 +292,8 @@ in
       mini = {
         enable = true;
         modules = {
-          indentscope = {
-            draw = {
-              delay = 0;
-              priority = 2;
-            };
-            options = {
-              border = "both";
-              indent_at_cursor = true;
-            };
-            symbol = "|";
-          };
+          indentscope = { };
+          move = { };
         };
       };
       indent-blankline.enable = true;
@@ -376,7 +368,7 @@ in
         enable = true;
         cursorword = {
           enable = true;
-          hl = {underline = true;};
+          hl = { underline = true; };
           minLength = 3;
         };
       };
@@ -419,6 +411,17 @@ in
           gopls.enable = true;
         };
       };
+      lsp-format.enable = true;
+      none-ls = {
+        enable = true;
+        enableLspFormat = true;
+        sources = {
+          formatting = {
+            nixpkgs_fmt.enable = true;
+            markdownlint.enable = true;
+          };
+        };
+      };
       lspkind = {
         enable = true;
         cmp = {
@@ -457,38 +460,38 @@ in
           #   action = "cmp.mapping.select_prev_item()";
           # };
           "<Down>" = {
-            modes = ["i" "s"];
+            modes = [ "i" "s" ];
             action = "cmp.mapping.select_next_item()";
           };
           "<Up>" = {
-            modes = ["i" "s"];
+            modes = [ "i" "s" ];
             action = "cmp.mapping.select_prev_item()";
           };
           "<C-j>" = {
-            modes = ["i" "s"];
+            modes = [ "i" "s" ];
             action = "cmp.mapping.select_next_item()";
           };
           "<C-k>" = {
-            modes = ["i" "s"];
+            modes = [ "i" "s" ];
             action = "cmp.mapping.select_prev_item()";
           };
           # "<CR>" = "cmp.mapping.confirm({ select = true })";
           "<Tab>" = "cmp.mapping.confirm({ select = true })";
         };
         sources = [
-          {name = "nvim_lsp";}
-          {name = "luasnip";}
-          {name = "look"; keywordLength = 2; option = {convert_case = true; loud = true;};}
-          {name = "path";}
-          {name = "buffer";}
-          {name = "nvim_lua";}
-          {name = "orgmode";}
-          {name = "neorg";}
+          { name = "nvim_lsp"; }
+          { name = "luasnip"; }
+          { name = "look"; keywordLength = 2; option = { convert_case = true; loud = true; }; }
+          { name = "path"; }
+          { name = "buffer"; }
+          { name = "nvim_lua"; }
+          { name = "orgmode"; }
+          { name = "neorg"; }
         ];
       };
       which-key = {
         enable = true;
-       registrations = {
+        registrations = {
           "<leader>b" = "+Buffer";
           "<leader>f" = "+Find";
           "<leader>o" = "+Org Mode";
@@ -499,10 +502,11 @@ in
     extraPlugins = with pkgs.vimPlugins; [
       friendly-snippets
       luasnip
-      orgmode
       nvim-scrollbar
-      vim-table-mode
+      orgmode
       vim-cool
+      vim-prettier
+      vim-table-mode
       # codeium-vim
       (pkgs.vimUtils.buildVimPlugin rec {
         pname = "scope-nvim";

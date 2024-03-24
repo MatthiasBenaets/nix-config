@@ -14,7 +14,6 @@
 
 [
   ./nvim.nix
-  #./emacs
-  #./emacs/doom-emacs
+  # ./emacs
+  # ./emacs/doom-emacs
 ]
-

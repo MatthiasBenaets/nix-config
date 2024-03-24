@@ -4,29 +4,29 @@
 
 {
   services = {
-    radarr = {                  #7878
+    radarr = {
       enable = true;
       user = "root";
       group = "users";
       openFirewall = true;
     };
-    sonarr = {                  #8989
+    sonarr = {
       enable = true;
       user = "root";
       group = "users";
       openFirewall = true;
     };
-    bazarr = {                  #6767
+    bazarr = {
       enable = true;
       user = "root";
       group = "users";
       openFirewall = true;
     };
-    prowlarr = {                #9696
+    prowlarr = {
       enable = true;
       openFirewall = true;
     };
-    deluge = {                  #8112
+    deluge = {
       enable = true;
       web.enable = true;
       user = "root";
@@ -43,6 +43,6 @@
 # Radarr & Sonarr: chmod 775
 # Bazarr: chmod 664
 # Prowlarr should just work
-# Deluge: 
+# Deluge:
 #   Connection Manager: localhost:58846
 #   Preferences: Change download folder and enable Plugins-label

@@ -17,36 +17,36 @@
 #               └─ default.nix
 #
 
-{ pkgs, vars, ... }:
+{ pkgs, ... }:
 
 {
   imports = [ ./hardware-configuration.nix ] ++
-            ( import ../../modules/desktops/virtualisation ) ++
-            ( import ../../modules/hardware/work );
+    (import ../../modules/desktops/virtualisation) ++
+    (import ../../modules/hardware/work);
 
-  boot = {                                      # Boot Options
+  boot = {
     loader = {
       efi = {
         canTouchEfiVariables = true;
         efiSysMountPoint = "/boot/efi";
       };
-      grub = {                                  # Grub Dual Boot
+      grub = {
         enable = true;
         devices = [ "nodev" ];
         efiSupport = true;
-        useOSProber = true;                     # Find All boot Options
+        useOSProber = true;
         configurationLimit = 2;
-        default=2;
+        default = 2;
       };
       timeout = null;
     };
   };
 
-  laptop.enable = true;                         # Laptop modules
-  hyprland.enable = true;                       # Window manager
+  laptop.enable = true;
+  hyprland.enable = true;
 
   hardware = {
-    opengl = {                                  # Hardware Accelerated Video
+    opengl = {
       enable = true;
       extraPackages = with pkgs; [
         intel-media-driver
@@ -55,27 +55,27 @@
         libvdpau-va-gl
       ];
     };
-    sane = {                                    # Scanning
+    sane = {
       enable = true;
       extraBackends = [ pkgs.sane-airscan ];
     };
   };
 
   environment = {
-    systemPackages = with pkgs; [               # System Wide Packages
-      ansible           # Automation
-      nil               # LSP
-      rclone            # Gdrive ($ rclone config | rclone mount --daemon gdrive: <mount> | fusermount -u <mount>)
-      simple-scan       # Scanning
-      sshpass           # Ansible dependency
-      wacomtablet       # Tablet
-      wdisplays         # Display Configurator
+    systemPackages = with pkgs; [
+      ansible # Automation
+      nil # LSP
+      rclone # Gdrive ($ rclone config | rclone mount --daemon gdrive: <mount> | fusermount -u <mount>)
+      simple-scan # Scanning
+      sshpass # Ansible dependency
+      wacomtablet # Tablet
+      wdisplays # Display Configurator
     ];
   };
 
-  programs.light.enable = true;                 # Monitor Brightness
+  programs.light.enable = true;
 
-  flatpak = {                                   # Flatpak Packages (see module options)
+  flatpak = {
     extraPackages = [
       "com.github.tchx84.Flatseal"
     ];

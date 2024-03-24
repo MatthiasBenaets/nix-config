@@ -2,7 +2,7 @@
 #  Mounting tool
 #
 
-{ config, lib, pkgs, vars, ... }:
+{ vars, ... }:
 
 {
   home-manager.users.${vars.user} = {

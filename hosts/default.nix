@@ -9,14 +9,14 @@
 #           └─ default.nix
 #
 
-{ lib, inputs, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager, nur, nixvim, doom-emacs, hyprland, hyprlock, hypridle, plasma-manager, vars, ... }:
+{ inputs, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager, nur, nixvim, doom-emacs, hyprland, hyprlock, hypridle, plasma-manager, vars, ... }:
 
 let
-  system = "x86_64-linux";                                  # System Architecture
+  system = "x86_64-linux";
 
   pkgs = import nixpkgs {
     inherit system;
-    config.allowUnfree = true;                              # Allow Proprietary Software
+    config.allowUnfree = true;
   };
 
   unstable = import nixpkgs-unstable {
@@ -27,9 +27,10 @@ let
   lib = nixpkgs.lib;
 in
 {
-  beelink = lib.nixosSystem {                               # Desktop Profile
+  # Desktop Profile
+  beelink = lib.nixosSystem {
     inherit system;
-    specialArgs = {                                         # Pass Flake Variable
+    specialArgs = {
       inherit inputs system unstable hyprland hyprlock hypridle vars;
       host = {
         hostName = "beelink";
@@ -37,20 +38,22 @@ in
         secondMonitor = "HDMI-A-2";
       };
     };
-    modules = [                                             # Modules Used
+    modules = [
       nur.nixosModules.nur
       nixvim.nixosModules.nixvim
       ./beelink
       ./configuration.nix
 
-      home-manager.nixosModules.home-manager {              # Home-Manager Module
+      home-manager.nixosModules.home-manager
+      {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
       }
     ];
   };
 
-  work = lib.nixosSystem {                                  # Work Profile
+  # Work Profile
+  work = lib.nixosSystem {
     inherit system;
     specialArgs = {
       inherit inputs system unstable hyprland hyprlock hypridle vars;
@@ -66,14 +69,16 @@ in
       ./work
       ./configuration.nix
 
-      home-manager.nixosModules.home-manager {
+      home-manager.nixosModules.home-manager
+      {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
       }
     ];
   };
 
-  xps = lib.nixosSystem {                                  # Work Profile
+  # Work Profile
+  xps = lib.nixosSystem {
     inherit system;
     specialArgs = {
       inherit inputs system unstable hyprland hyprlock hypridle vars;
@@ -89,14 +94,16 @@ in
       ./xps
       ./configuration.nix
 
-      home-manager.nixosModules.home-manager {
+      home-manager.nixosModules.home-manager
+      {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
       }
     ];
   };
 
-  vm = lib.nixosSystem {                                    # VM Profile
+  # VM Profile
+  vm = lib.nixosSystem {
     inherit system;
     specialArgs = {
       inherit inputs unstable vars;
@@ -111,14 +118,16 @@ in
       ./vm
       ./configuration.nix
 
-      home-manager.nixosModules.home-manager {
+      home-manager.nixosModules.home-manager
+      {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
       }
     ];
   };
 
-  h310m = lib.nixosSystem {                               # DEPRECATED Desktop Profile
+  # DEPRECATED Desktop Profile
+  h310m = lib.nixosSystem {
     inherit system;
     specialArgs = {
       inherit inputs system unstable hyprland hyprlock hypridle vars;
@@ -134,7 +143,8 @@ in
       ./h310m
       ./configuration.nix
 
-      home-manager.nixosModules.home-manager {
+      home-manager.nixosModules.home-manager
+      {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.users.${vars.user}.imports = [
@@ -144,7 +154,8 @@ in
     ];
   };
 
-  probook = lib.nixosSystem {                               # DEPRECATED HP Probook Laptop Profile
+  # DEPRECATED HP Probook Laptop Profile
+  probook = lib.nixosSystem {
     inherit system;
     specialArgs = {
       inherit inputs unstable vars;
@@ -159,7 +170,8 @@ in
       ./probook
       ./configuration.nix
 
-      home-manager.nixosModules.home-manager {
+      home-manager.nixosModules.home-manager
+      {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
       }

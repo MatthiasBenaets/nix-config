@@ -16,7 +16,7 @@
     };
   };
   services.blueman.enable = true;
-  systemd.user.services.mpris-proxy = {           # Media player controls
+  systemd.user.services.mpris-proxy = {
     description = "Mpris proxy";
     after = [ "network.target" "sound.target" ];
     wantedBy = [ "default.target" ];

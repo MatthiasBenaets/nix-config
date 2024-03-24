@@ -13,11 +13,12 @@
 # to /etc/nixos/configuration.nix instead.
 #
 
-{ config, lib, pkgs, modulesPath, host, ... }:
+{ config, lib, modulesPath, host, ... }:
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
@@ -26,17 +27,20 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/c44a8f5c-1b8e-4c0d-aa63-755a95bd5a50";
+    {
+      device = "/dev/disk/by-uuid/c44a8f5c-1b8e-4c0d-aa63-755a95bd5a50";
       fsType = "ext4";
     };
 
   fileSystems."/boot/efi" =
-    { device = "/dev/disk/by-uuid/A101-6404";
+    {
+      device = "/dev/disk/by-uuid/A101-6404";
       fsType = "vfat";
     };
 
   fileSystems."/windows" =
-    { device = "/dev/disk/by-uuid/01D9316EDB06F490";
+    {
+      device = "/dev/disk/by-uuid/01D9316EDB06F490";
       fsType = "ntfs";
       options = [ "nofail" "uid=1000" "gid=100" ];
     };
@@ -50,8 +54,6 @@
     networkmanager.enable = true;
     networkmanager.wifi.scanRandMacAddress = false;
     firewall = {
-      # if packets are still dropped, they will show up in dmesg
-      logReversePathDrops = true;
       # wireguard trips rpfilter up
       extraCommands = ''
         ip46tables -t mangle -I nixos-fw-rpfilter -p udp -m udp --sport 51820 -j RETURN
@@ -61,7 +63,10 @@
         ip46tables -t mangle -D nixos-fw-rpfilter -p udp -m udp --sport 51820 -j RETURN || true
         ip46tables -t mangle -D nixos-fw-rpfilter -p udp -m udp --dport 51820 -j RETURN || true
       '';
-    }; # To load wireguard cert in nm-applet: nmcli connection import type wireguard file <config file>
+      # If packets are still dropped, they will show up in dmesg
+      logReversePathDrops = true;
+      # To load wireguard cert in nm-applet: nmcli connection import type wireguard file <config file>
+    };
     bridges = {
       "br0" = {
         interfaces = [ "enp0s31f6" ];

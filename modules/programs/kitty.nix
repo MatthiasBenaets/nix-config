@@ -2,7 +2,7 @@
 #  Terminal Emulator
 #
 
-{ pkgs, vars, ... }:
+{ vars, ... }:
 
 let
   colors = import ../theming/colors.nix;

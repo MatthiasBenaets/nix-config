@@ -4,8 +4,6 @@
 #  This patch makes it back available to connect to legacy servers.
 #
 
-{ config, lib, pkgs, ... }:
-
 {
   nixpkgs.config.packageOverrides = pkgs: rec {
     wpa_supplicant = pkgs.wpa_supplicant.overrideAttrs (attrs: {

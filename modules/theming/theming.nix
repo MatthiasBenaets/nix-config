@@ -9,7 +9,7 @@
     home = {
       file.".config/wall.png".source = ./wall.png;
       file.".config/wall.mp4".source = ./wall.mp4;
-      pointerCursor = {                     # System-Wide Cursor
+      pointerCursor = {
         gtk.enable = true;
         #name = "Dracula-cursors";
         name = "Catppuccin-Mocha-Dark-Cursors";
@@ -19,7 +19,7 @@
       };
     };
 
-    gtk = {                                 # Theming
+    gtk = {
       enable = true;
       theme = {
         #name = "Dracula";
@@ -49,6 +49,6 @@
   };
 
   environment.variables = {
-    QT_QPA_PLATFORMTHEME="gtk2";
+    QT_QPA_PLATFORMTHEME = "gtk2";
   };
 }

@@ -13,7 +13,7 @@
 # to /etc/nixos/configuration.nix instead.
 #
 
-{ config, lib, pkgs, modulesPath, host, ... }:
+{ config, lib, host, ... }:
 
 {
   imports = [ ];
@@ -24,14 +24,15 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-label/nixos";
+    {
+      device = "/dev/disk/by-label/nixos";
       fsType = "ext4";
     };
 
   swapDevices = [ ];
 
   networking = with host; {
-    useDHCP = false;                        # Deprecated
+    useDHCP = false;
     hostName = hostName;
     interfaces = {
       enp0s3.useDHCP = true;
@@ -39,5 +40,5 @@
   };
 
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  #virtualisation.virtualbox.guest.enable = true;     #currently disabled because package is broken
+  # virtualisation.virtualbox.guest.enable = true; # currently disabled because package is broken
 }
