@@ -19,7 +19,9 @@ in
     systemPackages = with pkgs; [
       go
       nodejs
+      python3
       ripgrep
+      zig
     ];
     wordlist = {
       enable = true;
@@ -91,6 +93,7 @@ in
       swapfile = false;
       timeoutlen = 2500;
       conceallevel = 3;
+      cursorline = true;
     };
 
     colorschemes.onedark = {
@@ -366,6 +369,11 @@ in
       };
       cursorline = {
         enable = true;
+        cursorline = {
+          enable = true;
+          number = true;
+          timeout = 0;
+        };
         cursorword = {
           enable = true;
           hl = { underline = true; };
@@ -409,6 +417,7 @@ in
             ];
           };
           gopls.enable = true;
+          zls.enable = true;
         };
       };
       lsp-format.enable = true;
@@ -563,7 +572,10 @@ in
       require('onedarkpro').setup({
         colors = {
           bg = "#${bg}",
-        }
+        },
+        options = {
+          cursorline = true,
+        },
       })
     '';
   };
