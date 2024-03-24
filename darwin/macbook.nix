@@ -9,25 +9,25 @@
 #           └─ default.nix
 #
 
-{ config, pkgs, vars, ... }:
+{ pkgs, vars, ... }:
 
 {
-  imports = ( import ./modules );
+  imports = (import ./modules);
 
-  users.users.${vars.user} = {            # MacOS User
+  users.users.${vars.user} = {
     home = "/Users/${vars.user}";
-    shell = pkgs.zsh;                     # Default Shell
+    shell = pkgs.zsh;
   };
 
   networking = {
-    computerName = "MacBook";             # Host Name
+    computerName = "MacBook";
     hostName = "MacBook";
   };
 
-  skhd.enable = false;                    # Window Manager
-  yabai.enable = false;                   # Hotkeys
+  skhd.enable = false;
+  yabai.enable = false;
 
-  fonts = {                               # Fonts
+  fonts = {
     fontDir.enable = true;
     fonts = with pkgs; [
       source-code-pro
@@ -41,12 +41,12 @@
   };
 
   environment = {
-    shells = with pkgs; [ zsh ];          # Default Shell
-    variables = {                         # Environment Variables
+    shells = with pkgs; [ zsh ];
+    variables = {
       EDITOR = "${vars.editor}";
       VISUAL = "${vars.editor}";
     };
-    systemPackages = with pkgs; [         # System-Wide Packages
+    systemPackages = with pkgs; [
       # Terminal
       git
       ranger
@@ -57,14 +57,14 @@
   };
 
   programs = {
-    zsh.enable = true;                    # Shell
+    zsh.enable = true;
   };
 
   services = {
-    nix-daemon.enable = true;             # Auto-Upgrade Daemon
+    nix-daemon.enable = true;
   };
 
-  homebrew = {                            # Homebrew Package Manager
+  homebrew = {
     enable = true;
     onActivation = {
       autoUpdate = false;
@@ -82,7 +82,7 @@
 
   nix = {
     package = pkgs.nix;
-    gc = {                                # Garbage Collection
+    gc = {
       automatic = true;
       interval.Day = 7;
       options = "--delete-older-than 7d";
@@ -93,7 +93,7 @@
     '';
   };
 
-  system = {                              # Global macOS System Settings
+  system = {
     defaults = {
       NSGlobalDomain = {
         KeyRepeat = 1;
@@ -114,7 +114,7 @@
         TrackpadRightClick = true;
       };
     };
-    activationScripts.postActivation.text = ''sudo chsh -s ${pkgs.zsh}/bin/zsh''; # Set Default Shell
+    activationScripts.postActivation.text = ''sudo chsh -s ${pkgs.zsh}/bin/zsh'';
     stateVersion = 4;
   };
 
@@ -124,22 +124,20 @@
     };
 
     programs = {
-      zsh = {                             # Shell
+      zsh = {
         enable = true;
         enableAutosuggestions = true;
         syntaxHighlighting.enable = true;
         history.size = 10000;
-
-        oh-my-zsh = {                     # Plug-ins
+        oh-my-zsh = {
           enable = true;
           plugins = [ "git" ];
           custom = "$HOME/.config/zsh_nix/custom";
         };
-
         initExtra = ''
           source ${pkgs.spaceship-prompt}/share/zsh/site-functions/prompt_spaceship_setup
           autoload -U promptinit; promptinit
-        '';                               # Theming
+        '';
       };
     };
   };

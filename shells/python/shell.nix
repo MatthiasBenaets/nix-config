@@ -3,7 +3,7 @@
 #  Pip packages will be installed in the parent working directory and will be added to PATH and PYTHONPATH
 #
 
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs ? import <nixpkgs> { } }:
 
 pkgs.mkShell {
   packages = with pkgs; [

@@ -22,7 +22,7 @@
     ../../modules/desktops/virtualisation/docker.nix
   ] ++ (import ../../modules/hardware/xps);
 
-  boot = {                                  # Boot Options
+  boot = {
     consoleLogLevel = 3;
     loader = {
       systemd-boot = {
@@ -30,47 +30,46 @@
         configurationLimit = 2;
       };
       efi = {
-	canTouchEfiVariables = true;
+        canTouchEfiVariables = true;
       };
       timeout = 5;
     };
   };
 
-  hardware.sane = {                         # Scanning
+  hardware.sane = {
     enable = true;
     extraBackends = [ pkgs.sane-airscan ];
   };
 
-  laptop.enable = true;                     # Laptop Modules
-  hyprland.enable = true;                   # Window Manager
+  laptop.enable = true;
+  hyprland.enable = true;
 
   environment = {
-    systemPackages = with pkgs; [           # System-Wide Packages
-      fprintd               # Fingerprint
+    systemPackages = with pkgs; [
+      fprintd # Fingerprint
       jellyfin-media-player # Media Player
-      plex-media-player     # Media Player
-      simple-scan           # Scanning
-      moonlight-qt          # Remote Streaming
+      plex-media-player # Media Player
+      simple-scan # Scanning
+      moonlight-qt # Remote Streaming
     ];
   };
 
   services = {
-    fprintd = {                             # Fingerprint Unlock
-      enable = true;                        # $ sudo fprintd-enroll --finger right-index-finger <user>
+    fprintd = {
+      enable = true;
       tod = {
         enable = true;
         driver = pkgs.libfprint-2-tod1-goodix;
       };
-    };
+    }; # $ sudo fprintd-enroll --finger right-index-finger <user>
     logind.extraConfig = ''
       HandlePowerKey=ignore
-    '';                                     # Disable short click powerbutton
+    ''; # Disable short click powerbutton
   };
-  # security.pam.services.swaylock.fprintAuth = true; # See hyprland.nix
 
-  programs.light.enable = true;             # Monitor Brightness
+  programs.light.enable = true;
 
-  flatpak = {                               # Flatpak Packages (see module options)
+  flatpak = {
     extraPackages = [
       "com.github.tchx84.Flatseal"
       "com.stremio.Stremio"

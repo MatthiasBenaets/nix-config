@@ -4,7 +4,7 @@
 # On dualboot, disable fast startup on Windows
 #
 
-{ pkgs, ...}:
+{ pkgs, ... }:
 
 let
   linux-firmware-ax101bt = pkgs.fetchgit {
@@ -24,4 +24,3 @@ in
 {
   nixpkgs.overlays = [ ax101 ];
 }
-

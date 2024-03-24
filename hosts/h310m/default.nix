@@ -18,9 +18,9 @@
 
 {
   imports = [ ./hardware-configuration.nix ] ++
-            ( import ../../modules/desktops/virtualisation );
+    (import ../../modules/desktops/virtualisation);
 
-  boot = {                                      # Boot Options
+  boot = {
     loader = {
       systemd-boot = {
         enable = true;
@@ -29,11 +29,11 @@
       efi.canTouchEfiVariables = true;
       timeout = 1;
     };
-    initrd.kernelModules = [ "amdgpu" ];        # Video Drivers
+    initrd.kernelModules = [ "amdgpu" ];
   };
 
   hardware = {
-    opengl = {                                  # Hardware Accelerated Video
+    opengl = {
       enable = true;
       extraPackages = with pkgs; [
         intel-media-driver
@@ -48,26 +48,26 @@
       driSupport = true;
       driSupport32Bit = true;
     };
-    sane = {                                    # Scanning
+    sane = {
       enable = true;
       extraBackends = [ pkgs.sane-airscan ];
     };
   };
 
-  hyprland.enable = true;                       # Window Manager
+  hyprland.enable = true;
 
   environment = {
-    systemPackages = with pkgs; [               # System-Wide Packages
-      ansible           # Automation
-      gmtp              # Used for mounting gopro
+    systemPackages = with pkgs; [
+      ansible # Automation
+      gmtp # Used for mounting gopro
       plex-media-player # Media Player
-      simple-scan       # Scanning
-      sshpass           # Ansible Dependency
-      wacomtablet       # Tablet
+      simple-scan # Scanning
+      sshpass # Ansible Dependency
+      wacomtablet # Tablet
     ];
   };
 
-  flatpak = {                                   # Flatpak Packages (see module options)
+  flatpak = {
     extraPackages = [
       "com.github.tchx84.Flatseal"
     ];

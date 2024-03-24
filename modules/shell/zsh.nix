@@ -17,7 +17,7 @@
       enableCompletion = true;
       histSize = 100000;
 
-      ohMyZsh = {                               # Plug-ins
+      ohMyZsh = {
         enable = true;
         plugins = [ "git" ];
       };
@@ -30,7 +30,7 @@
         #emulate zsh -c "$(direnv hook zsh)"
 
         #eval "$(direnv hook zsh)"
-      '';                                       # Theming
+      '';
     };
   };
 }

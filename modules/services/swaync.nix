@@ -115,7 +115,7 @@ in
             }
           }
         '';
-        "swaync/style.css".text =  with colors.scheme.default; ''
+        "swaync/style.css".text = with colors.scheme.default; ''
           @define-color cc-bg rgba(${rgb.bg}, 0.95);
           @define-color noti-border-color rgba(255, 255, 255, 0.15);
           @define-color noti-bg rgb(17, 17, 27);

@@ -16,7 +16,7 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
-        config.allowUnfree = true;                                        # Allow Proprietary Software
+        config.allowUnfree = true;
       };
       unstable = import nixpkgs-unstable {
         inherit system;
@@ -25,7 +25,10 @@
     in
     {
       devShells.${system}.default = pkgs.mkShell {
-        packages = [ unstable.sssnake pkgs.vitetris ];
+        packages = [
+          unstable.sssnake
+          pkgs.vitetris
+        ];
       };
     };
 }

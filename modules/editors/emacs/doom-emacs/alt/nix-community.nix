@@ -16,7 +16,7 @@
 #
 
 
-{ config, pkgs, doom-emacs, vars, ... }:
+{ pkgs, doom-emacs, vars, ... }:
 
 {
   home-manager.users.${vars.user} = {

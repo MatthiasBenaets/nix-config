@@ -3,11 +3,9 @@
 #
 
 let
-  unstableTarball =
-    fetchTarball
-      https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz;
-  #pkgs = import <nixpkgs> {};
-  unstable = import unstableTarball {};
+  unstableTarball = fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
+  # pkgs = import <nixpkgs> {};
+  unstable = import unstableTarball { };
 
   shell = unstable.mkShell {
     buildInputs = [ unstable.etcher ];
@@ -15,4 +13,5 @@ let
       "electron-12.2.3"
     ];
   };
-in shell
+in
+shell

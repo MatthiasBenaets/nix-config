@@ -22,54 +22,55 @@
     ../../modules/desktops/virtualisation/docker.nix
   ];
 
-  boot = {                                  # Boot Options
+  boot = {
     loader = {
       efi = {
         canTouchEfiVariables = true;
         efiSysMountPoint = "/boot";
       };
-      grub = {                              # Grub Dual Boot
+      grub = {
         enable = true;
         devices = [ "nodev" ];
         efiSupport = true;
-        useOSProber = true;                 # Find All Boot Options
+        useOSProber = true;
         configurationLimit = 2;
       };
       timeout = 1;
     };
   };
 
-  hardware.sane = {                         # Scanning
+  hardware.sane = {
     enable = true;
     extraBackends = [ pkgs.sane-airscan ];
   };
 
-  laptop.enable = true;                     # Laptop Modules
-  bspwm.enable = true;                      # Window Manager
+  laptop.enable = true;
+  bspwm.enable = true;
 
   environment = {
-    systemPackages = with pkgs; [           # System-Wide Packages
-      simple-scan       # Scanning
+    systemPackages = with pkgs; [
+      simple-scan # Scanning
     ];
   };
 
-  programs.light.enable = true;             # Monitor Brightness
+  programs.light.enable = true;
 
   services = {
-    printing = {                            # Printing and drivers for TS5300
+    printing = {
       enable = true;
-      drivers = [ pkgs.cnijfilter2 ];
+      drivers = [ pkgs.cnijfilter2 ]; # Canon TS5300
     };
   };
 
-  flatpak = {                               # Flatpak Packages (see module options)
+  flatpak = {
     extraPackages = [
       "com.github.tchx84.Flatseal"
     ];
   };
 
-  systemd.tmpfiles.rules = [                # Temporary Bluetooth Fix
+  # Temporary Bluetooth Fix
+  systemd.tmpfiles.rules = [
     "d /var/lib/bluetooth 700 root root - -"
   ];
-  systemd.targets."bluetooth".after = ["systemd-tmpfiles-setup.service"];
+  systemd.targets."bluetooth".after = [ "systemd-tmpfiles-setup.service" ];
 }

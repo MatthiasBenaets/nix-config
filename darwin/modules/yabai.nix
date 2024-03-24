@@ -22,7 +22,7 @@ with lib;
       yabai = {
         enable = true;
         package = pkgs.yabai;
-        config = {                  # Extra Config
+        config = {
           layout = "bsp";
           auto_balance = "off";
           split_ratio = "0.50";
@@ -46,7 +46,7 @@ with lib;
           yabai -m rule --add app='Activity Monitor' manage=off layer=above
           yabai -m rule --add app='Finder' manage=off layer=above
           yabai -m rule --add app='^System Information$' manage=off layer=above
-        '';                         # Window Rules
+        '';
       };
     };
   };

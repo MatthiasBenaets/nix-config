@@ -2,7 +2,7 @@
 #  Screen Temperature
 #
 
-{ config, lib, pkgs, vars, ...}:
+{ config, lib, vars, ... }:
 
 {
   config = lib.mkIf (config.services.xserver.enable) {

@@ -13,7 +13,8 @@
 let
   version = "103.0";
   buildnumber = "r20220613094641";
-in { pkgs ? import <nixpkgs> {} }:
+in
+{ pkgs ? import <nixpkgs> { } }:
 pkgs.appimageTools.wrapType2 {
   name = "firefox-nightly";
   src = pkgs.fetchurl {
