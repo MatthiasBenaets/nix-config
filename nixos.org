@@ -512,6 +512,15 @@ D. Installed through nix-env:
   };
 #+end_src
 
+*** Troubleshooting nix store
+- First make sure it's not something wrong in your configuration.
+- If it's clearly not something like a syntax it might be a corrupted store or cache where it fails to extract something.
+- This can be often be fixed running the commands below:
+#+begin_src shell
+  $ rm -r /tmp/* $HOME/.cache/nix
+  $ sudo nix-collect-garbage && nix-collect-garbage && sudo nix-store --verify --check-contents --repair && sudo nix-store --optimise
+#+end_src
+
 * Home-Manager
 ** Introduction
 - It's like configuration.nix, but for the user environment.

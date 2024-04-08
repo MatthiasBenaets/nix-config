@@ -417,7 +417,7 @@ with host;
               "${pkgs.hyprpaper}/bin/hyprpaper"
             ] ++ (if hostName == "work" then [
               "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"
-              "${pkgs.rclone}/bin/rclone mount --daemon gdrive: /GDrive"
+              "${pkgs.rclone}/bin/rclone mount --daemon gdrive: /GDrive --vfs-cache-mode=writes"
               # "${pkgs.google-drive-ocamlfuse}/bin/google-drive-ocamlfuse /GDrive"
             ] else [ ]) ++ (if hostName == "xps" then [
               "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"
