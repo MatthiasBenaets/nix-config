@@ -262,26 +262,43 @@ in
         mode = "n";
         key = "gd";
         action = "<CMD>lua vim.lsp.buf.hover()<CR>";
+        options.desc = "Show lsp definition in floating window";
       }
       {
         mode = "n";
         key = "gD";
         action = "<CMD>lua vim.lsp.buf.definition()<CR>";
+        options.desc = "Load lsp definition in new buffer";
       }
       {
         mode = "n";
         key = "ge";
         action = "<CMD>lua vim.diagnostic.open_float()<CR>";
+        options.desc = "Show lsp diagnostic in floating window";
       }
       {
         mode = "n";
         key = "<leader>r";
         action = ":! ";
+        options.desc = "Run command";
       }
       {
         mode = "n";
         key = "<TAB>";
         action = "z=";
+        options.desc = "Get spell suggestion";
+      }
+      {
+        mode = "n";
+        key = "\\\\";
+        action = "<CMD>ToggleTerm<CR>";
+        options.desc = "Toggle terminal";
+      }
+      {
+        mode = "t";
+        key = "<esc>";
+        action = "<C-\\><C-n>";
+        options.desc = "Exit terminal mode";
       }
     ];
 
@@ -506,6 +523,14 @@ in
           "<leader>o" = "+Org Mode";
           "<leader>s" = "+Split Window";
         };
+      };
+      toggleterm = {
+        enable = true;
+        autoScroll = true;
+        closeOnExit = true;
+        direction = "horizontal";
+        persistMode = true;
+        startInInsert = true;
       };
     };
     extraPlugins = with pkgs.vimPlugins; [
