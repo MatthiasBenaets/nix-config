@@ -75,17 +75,24 @@
       # Official Hyprland Flake
       hyprland = {
         url = "github:hyprwm/Hyprland";
-        inputs.nixpkgs.follows = "nixpkgs-unstable";
-        # Requires "hyprland.nixosModules.default" to be added the host modules
       };
 
+      # Hyprlock
       hyprlock = {
         url = "github:hyprwm/hyprlock";
         inputs.nixpkgs.follows = "nixpkgs-unstable";
       };
 
+      # Hypridle
       hypridle = {
         url = "github:hyprwm/hypridle";
+        inputs.nixpkgs.follows = "nixpkgs-unstable";
+      };
+
+      # Hyprspace
+      hyprspace = {
+        url = "github:KZDKM/Hyprspace";
+        inputs.hyprland.follows = "hyprland";
         inputs.nixpkgs.follows = "nixpkgs-unstable";
       };
 
@@ -97,7 +104,7 @@
       };
     };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager, home-manager-unstable, darwin, nur, nixgl, nixvim, nixvim-unstable, doom-emacs, hyprland, hyprlock, hypridle, plasma-manager, ... }: # Function telling flake which inputs to use
+  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager, home-manager-unstable, darwin, nur, nixgl, nixvim, nixvim-unstable, doom-emacs, hyprland, hyprlock, hypridle, hyprspace, plasma-manager, ... }: # Function telling flake which inputs to use
     let
       # Variables Used In Flake
       vars = {
@@ -111,7 +118,7 @@
       nixosConfigurations = (
         import ./hosts {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-unstable nixos-hardware home-manager nur nixvim doom-emacs hyprland hyprlock hypridle plasma-manager vars; # Inherit inputs
+          inherit inputs nixpkgs nixpkgs-unstable nixos-hardware home-manager nur nixvim doom-emacs hyprland hyprlock hypridle hyprspace plasma-manager vars; # Inherit inputs
         }
       );
 

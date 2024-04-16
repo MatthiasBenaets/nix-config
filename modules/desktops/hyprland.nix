@@ -3,7 +3,7 @@
 #  Enable with "hyprland.enable = true;"
 #
 
-{ config, lib, pkgs, hyprland, hyprlock, hypridle, vars, host, ... }:
+{ config, lib, pkgs, hyprland, hyprlock, hypridle, hyprspace, vars, host, ... }:
 
 let
   colors = import ../theming/colors.nix;
@@ -75,10 +75,12 @@ with host;
 
     programs.hyprland = {
       enable = true;
+      package = hyprland.packages.${pkgs.system}.hyprland;
     };
 
     security.pam.services.hyprlock = {
-      text = "auth include system-auth";
+      # text = "auth include system-auth";
+      text = "auth include login";
       fprintAuth = if hostName == "xps" then true else false;
     };
 
@@ -130,6 +132,7 @@ with host;
 
         programs.hyprlock = {
           enable = true;
+          package = hyprlock.packages.${pkgs.system}.hyprlock;
           general = {
             hide_cursor = true;
             no_fade_in = false;
@@ -186,6 +189,7 @@ with host;
 
         services.hypridle = {
           enable = true;
+          package = hypridle.packages.${pkgs.system}.hypridle;
           beforeSleepCmd = "${pkgs.systemd}/bin/loginctl lock-session";
           afterSleepCmd = "${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on";
           ignoreDbusInhibit = true;
@@ -204,7 +208,11 @@ with host;
 
         wayland.windowManager.hyprland = with colors.scheme.default.hex; {
           enable = true;
+          package = hyprland.packages.${pkgs.system}.hyprland;
           xwayland.enable = true;
+          plugins = [
+            hyprspace.packages.${pkgs.system}.Hyprspace
+          ];
           settings = {
             general = {
               border_size = 2;
@@ -240,21 +248,21 @@ with host;
             ]);
             workspace =
               if hostName == "beelink" || hostName == "h310m" then [
-                "${toString mainMonitor},1"
-                "${toString mainMonitor},2"
-                "${toString mainMonitor},3"
-                "${toString mainMonitor},4"
-                "${toString secondMonitor},5"
-                "${toString secondMonitor},6"
-                "${toString secondMonitor},7"
-                "${toString secondMonitor},8"
+                "1, monitor:${toString mainMonitor}"
+                "2, monitor:${toString mainMonitor}"
+                "3, monitor:${toString mainMonitor}"
+                "4, monitor:${toString mainMonitor}"
+                "5, monitor:${toString secondMonitor}"
+                "6, monitor:${toString secondMonitor}"
+                "7, monitor:${toString secondMonitor}"
+                "8, monitor:${toString secondMonitor}"
               ] else if hostName == "xps" || hostName == "work" then [
-                "${toString mainMonitor},1"
-                "${toString mainMonitor},2"
-                "${toString mainMonitor},3"
-                "${toString secondMonitor},4"
-                "${toString secondMonitor},5"
-                "${toString secondMonitor},6"
+                "1, monitor:${toString mainMonitor}"
+                "2, monitor:${toString mainMonitor}"
+                "3, monitor:${toString mainMonitor}"
+                "4, monitor:${toString secondMonitor}"
+                "5, monitor:${toString secondMonitor}"
+                "6, monitor:${toString secondMonitor}"
               ] else [ ];
             animations = {
               enabled = false;
@@ -313,6 +321,7 @@ with host;
               disable_hyprland_logo = true;
               disable_splash_rendering = true;
               mouse_move_enables_dpms = true;
+              mouse_move_focuses_monitor = true;
               key_press_enables_dpms = true;
               background_color = "0x111111";
             };
@@ -382,6 +391,8 @@ with host;
               ",XF86AudioMicMute,exec,${pkgs.pamixer}/bin/pamixer --default-source -t"
               ",XF86MonBrightnessDown,exec,${pkgs.light}/bin/light -U 10"
               ",XF86MonBrightnessUP,exec,${pkgs.light}/bin/light -A 10"
+
+              "SUPER,Tab,overview:toggle"
             ];
             binde = [
               "SUPERCTRL,right,resizeactive,60 0"
