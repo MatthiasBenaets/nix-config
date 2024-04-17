@@ -56,7 +56,7 @@ in
   work = lib.nixosSystem {
     inherit system;
     specialArgs = {
-      inherit inputs system unstable hyprland hyprlock hypridle vars;
+      inherit inputs system unstable hyprland hyprlock hypridle hyprspace vars;
       host = {
         hostName = "work";
         mainMonitor = "eDP-1";
@@ -81,7 +81,7 @@ in
   xps = lib.nixosSystem {
     inherit system;
     specialArgs = {
-      inherit inputs system unstable hyprland hyprlock hypridle vars;
+      inherit inputs system unstable hyprland hyprlock hypridle hyprspace vars;
       host = {
         hostName = "xps";
         mainMonitor = "eDP-1";
@@ -130,7 +130,7 @@ in
   h310m = lib.nixosSystem {
     inherit system;
     specialArgs = {
-      inherit inputs system unstable hyprland hyprlock hypridle vars;
+      inherit inputs system unstable hyprland hyprlock hypridle hyprspace vars;
       host = {
         hostName = "h310m";
         mainMonitor = "HDMI-A-1";
