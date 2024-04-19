@@ -213,6 +213,14 @@ with host;
           plugins = [
             hyprspace.packages.${pkgs.system}.Hyprspace
           ];
+          # plugin settings
+          extraConfig = ''
+            bind=SUPER,Tab,overview:toggle
+            plugin:overview:panelHeight=150
+            plugin:overview:drawActiveWorkspace=false
+            plugin:overview:gapsIn=3
+            plugin:overview:gapsOut=6
+          '';
           settings = {
             general = {
               border_size = 2;
@@ -309,7 +317,6 @@ with host;
                 workspace_swipe_fingers = 3;
                 workspace_swipe_distance = 100;
                 workspace_swipe_create_new = true;
-                workspace_swipe_numbered = true;
               } else { };
 
             dwindle = {
@@ -391,8 +398,6 @@ with host;
               ",XF86AudioMicMute,exec,${pkgs.pamixer}/bin/pamixer --default-source -t"
               ",XF86MonBrightnessDown,exec,${pkgs.light}/bin/light -U 10"
               ",XF86MonBrightnessUP,exec,${pkgs.light}/bin/light -A 10"
-
-              "SUPER,Tab,overview:toggle"
             ];
             binde = [
               "SUPERCTRL,right,resizeactive,60 0"
