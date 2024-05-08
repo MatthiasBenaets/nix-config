@@ -2,7 +2,7 @@
 #  Bar
 #
 
-{ config, lib, pkgs, vars, host, ... }:
+{ config, lib, pkgs, unstable, vars, host, ... }:
 let
   colors = import ../theming/colors.nix;
 in
@@ -69,18 +69,18 @@ let
 in
 {
   config = lib.mkIf (config.wlwm.enable) {
-    environment.systemPackages = with pkgs; [
+    environment.systemPackages = with unstable; [
       waybar
     ];
 
     home-manager.users.${vars.user} = with colors.scheme.default; {
       programs.waybar = {
         enable = true;
-        package = pkgs.waybar;
-        systemd = {
-          enable = true;
-          target = "sway-session.target";
-        };
+        package = unstable.waybar;
+        # systemd = {
+        #   enable = true;
+        #   target = "hyprland-session.target";
+        # };
 
         style = ''
           * {
@@ -242,6 +242,7 @@ in
             };
             "hyprland/workspaces" = {
               format = "<span font='11'>{name}</span>";
+              window-rewrite = { };
             };
             clock = {
               format = "{:%b %d %H:%M}  ";

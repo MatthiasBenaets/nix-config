@@ -210,17 +210,17 @@ with host;
           enable = true;
           package = hyprland.packages.${pkgs.system}.hyprland;
           xwayland.enable = true;
-          plugins = [
-            hyprspace.packages.${pkgs.system}.Hyprspace
-          ];
-          # plugin settings
-          extraConfig = ''
-            bind=SUPER,Tab,overview:toggle
-            plugin:overview:panelHeight=150
-            plugin:overview:drawActiveWorkspace=false
-            plugin:overview:gapsIn=3
-            plugin:overview:gapsOut=6
-          '';
+          # plugins = [
+          #   hyprspace.packages.${pkgs.system}.Hyprspace
+          # ];
+          # # plugin settings
+          # extraConfig = ''
+          #   bind=SUPER,Tab,overview:toggle
+          #   plugin:overview:panelHeight=150
+          #   plugin:overview:drawActiveWorkspace=false
+          #   plugin:overview:gapsIn=3
+          #   plugin:overview:gapsOut=6
+          # '';
           settings = {
             general = {
               border_size = 2;
@@ -426,7 +426,8 @@ with host;
             exec-once = [
               "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
               "${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock"
-              "${pkgs.waybar}/bin/waybar"
+              "ln -s $XDG_RUNTIME_DIR/hypr /tmp/hypr"
+              "${pkgs.waybar}/bin/waybar -c $HOME/.config/waybar/config"
               "${pkgs.eww-wayland}/bin/eww daemon"
               # "$HOME/.config/eww/scripts/eww" # When running eww as a bar
               "${pkgs.blueman}/bin/blueman-applet"

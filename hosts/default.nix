@@ -60,8 +60,8 @@ in
       host = {
         hostName = "work";
         mainMonitor = "eDP-1";
-        secondMonitor = "HDMI-A-2";
-        thirdMonitor = "DP-1";
+        secondMonitor = "DP-4";
+        thirdMonitor = "DP-5";
       };
     };
     modules = [
