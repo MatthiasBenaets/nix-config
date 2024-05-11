@@ -239,9 +239,9 @@
 
 **** Hardware
 ***** Audio & Bluetooth
-- [[https://nixos.wiki/wiki/PulseAudio][PulseAudio Wiki]]
-- [[https://nixos.wiki/wiki/Bluetooth][Bluetooth Wifi (+ configuring it with PulseAudio)]]
-- [[https://nixos.wiki/wiki/PipeWire][PipeWire Wiki]]
+- [[https://wiki.nixos.org/wiki/PulseAudio][PulseAudio Wiki]]
+- [[https://wiki.nixos.org/wiki/Bluetooth][Bluetooth Wifi (+ configuring it with PulseAudio)]]
+- [[https://wiki.nixos.org/wiki/PipeWire][PipeWire Wiki]]
 
 ****** PulseAudio Example
 #+begin_src nix
@@ -435,7 +435,7 @@
 
 *** Overlays
 *Change packages or add new packages to existing in nix*
-- [[https://nixos.wiki/wiki/Overlays][Overlays wiki]]
+- [[https://wiki.nixos.org/wiki/Overlays][Overlays wiki]]
 #+begin_src nix
   nixpkgs.overlays = [
     (self: super: {
@@ -650,7 +650,7 @@ Configuration file:
 
 ** Getting Started
 *** Flakes Wiki
-- [[https://nixos.wiki/wiki/Flakes][Wiki]]
+- [[https://wiki.nixos.org/wiki/Flakes][Wiki]]
 
 *** Setup
 **** Configuration.nix
@@ -829,10 +829,10 @@ Afterwards you will be able to build home-manager from the flake using
 1. [[https://nixos.org/][NixOS Website]]
 2. [[https://nixos.org/learn.html/][NixOS Learn]]
 3. [[https://nixos.org/manual/nixos/stable/][NixOS Manual]]
-4. [[https://nixos.wiki/wiki/Main_Page][NixOS Wiki]]
+4. [[https://wiki.nixos.org/wiki/Main_Page][NixOS Wiki]]
 5. [[https://nixos.org/guides/nix-pills/][Nix Pills]]
 6. [[https://github.com/nix-community/home-manager/][Home-Manager Github]]
 7. [[https://nix-community.github.io/home-manager/][Home-Manager Manual]]
 8. [[https://nix-community.github.io/home-manager/options.html][Home-Manager Appendix_A]]
 9. [[https://nix-community.github.io/home-manager/nixos-options.html][Home-Manager Appendix B]]
-10. [[https://nixos.wiki/wiki/Configuration_Collection][List of reference configurations]]
+10. [[https://wiki.nixos.org/wiki/Configuration_Collection][List of reference configurations]]

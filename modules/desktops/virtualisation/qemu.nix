@@ -183,7 +183,7 @@
 # 13 Install correct video drivers
 
 #MACOS ON VIRT-MANAGER
-# General Guide: nixos.wiki/wiki/OSX-KVM
+# General Guide: wiki.nixos.org/wiki/OSX-KVM
 # Repository: github.com/kholia/OSX-KVM
 # IMPORTANT: if you wish to start the virtual machine with virt-manager gui, clone to /home/<user>/.
 # 1. git clone https://github.com/kholia/OSX-KVM
