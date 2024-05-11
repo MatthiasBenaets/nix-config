@@ -228,7 +228,7 @@ nix = {
 
 ** Getting Started
 *** Flakes Wiki
-- [[https://nixos.wiki/wiki/Flakes][Wiki]]
+- [[https://wiki.nixos.org/wiki/Flakes][Wiki]]
 
 *** Preparing the System
  *Allowing experimental features such as flake to be installed*
@@ -445,7 +445,7 @@ Since home-manager is not installed, from now you can rebuild with:
 1. [[https://nixos.org/][NixOS Website]]
 2. [[https://nixos.org/learn.html/][NixOS Learn]]
 3. [[https://nixos.org/manual/nix/stable/introduction.html][Nix Manual]]
-4. [[https://nixos.wiki/wiki/Main_Page][NixOS Wiki]]
+4. [[https://wiki.nixos.org/wiki/Main_Page][NixOS Wiki]]
 5. [[https://nixos.org/guides/nix-pills/][Nix Pills]]
 6. [[https://github.com/LnL7/nix-darwin][Nix-Darwin Github]]
 7. [[https://daiderd.com/nix-darwin/manual/index.html][Nix-Darwin Manual]]
