@@ -45,6 +45,11 @@
     gvfs.enable = true;
   };
 
+  # OpenGL in VM
+  # 1. Install virglrenderer
+  # 2. Set video to VirtIO and enable 3d acceleration
+  # 3. Under display, set Listen type to none and enable OpenGL (select correct device)
+
   # GPU Passthrough w/ vendor reset
   # boot = {
   #   kernelParams = [ "intel_iommu=on" "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd" ]; # or amd_iommu (cpu)

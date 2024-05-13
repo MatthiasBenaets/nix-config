@@ -312,13 +312,12 @@ This will rebuild the configuration and automatically activate it.
     - [[https://nixos.org/guides/nix-pills/][Nix Pills]]
     - [[https://www.ianthehenry.com/posts/how-to-learn-nix/][Some]] [[https://christine.website/blog][Blogs]]
     - [[https://wiki.nixos.org/wiki/Configuration_Collection][Config Collection]]
-    - [[https://wiki.nixos.org/wiki/Configuration_Collection][Config Collection]]
   - Home-manager
     - [[https://github.com/nix-community/home-manager][Official Repo]]
     - [[https://nix-community.github.io/home-manager/][Manual]]
-    - [[https://nix-community.github.io/home-manager/options.html][Appendix A]]
-    - [[https://nix-community.github.io/home-manager/nixos-options.html][Appendix B]]
-    - [[https://nix-community.github.io/home-manager/tools.html][Appendix D]]
+    - [[https://nix-community.github.io/home-manager/options.xhtml][Appendix A Nix]]
+    - [[https://nix-community.github.io/home-manager/nixos-options.xhtml][Appendix B HM]]
+    - [[https://nix-community.github.io/home-manager/nix-darwin-options.xhtml][Appendix C Darwin]]
     - [[https://wiki.nixos.org/wiki/Home_Manager][NixOS wiki]]
   - Flakes
     - [[https://wiki.nixos.org/wiki/Flakes][NixOS wiki]]
