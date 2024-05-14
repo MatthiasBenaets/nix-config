@@ -65,6 +65,7 @@
     logind.extraConfig = ''
       HandlePowerKey=ignore
     ''; # Disable short click powerbutton
+    hardware.bolt.enable = true;
   };
 
   programs.light.enable = true;

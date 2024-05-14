@@ -42,12 +42,16 @@ with host;
           XDG_SESSION_DESKTOP = "Hyprland";
         };
         sessionVariables =
-          if hostName == "work" then {
+          if hostName == "xps" then {
+            LIBVA_DRIVER_NAME = "nvidia";
+            __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+            NVD_BACKEND = "direct";
             # GBM_BACKEND = "nvidia-drm";
+            # EGL_PLATFORM = "wayland";
             # __GL_GSYNC_ALLOWED = "0";
             # __GL_VRR_ALLOWED = "0";
             # WLR_DRM_NO_ATOMIC = "1";
-            # __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+            # MOZ_DISABLE_RDD_SANDBOX = "1";
             # _JAVA_AWT_WM_NONREPARENTING = "1";
 
             # QT_QPA_PLATFORM = "wayland";
@@ -240,7 +244,7 @@ with host;
               drop_shadow = false;
             };
             monitor = [
-              ",preferred,auto,1,mirror,${toString mainMonitor}"
+              #",preferred,auto,1,mirror,${toString mainMonitor}"
             ] ++ (if hostName == "beelink" || hostName == "h310m" then [
               "${toString mainMonitor},1920x1080@60,1920x0,1"
               "${toString secondMonitor},1920x1080@60,0x0,1"
@@ -251,6 +255,7 @@ with host;
             ] else if hostName == "xps" then [
               "${toString mainMonitor},3840x2400@60,0x0,2"
               "${toString secondMonitor},1920x1080@60,1920x0,1"
+              "${toString thirdMonitor},1920x1080@60,3840x0,1"
             ] else [
               "${toString mainMonitor},1920x1080@60,0x0,1"
             ]);
@@ -422,6 +427,7 @@ with host;
               "move 74% 74%, title:(Firefox)"
               "pin, title:^(Firefox)$"
               "opacity 0.9, class:^(kitty)"
+              "tile,initialTitle:^WPS.*"
             ];
             exec-once = [
               "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"

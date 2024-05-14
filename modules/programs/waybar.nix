@@ -9,10 +9,10 @@ in
 with host;
 let
   output =
-    if hostName == "beelink" || hostName == "xps" || hostName == "h310m" then [
+    if hostName == "beelink" || hostName == "h310m" then [
       mainMonitor
       secondMonitor
-    ] else if hostName == "work" then [
+    ] else if hostName == "work" || hostName == "xps" then [
       mainMonitor
       secondMonitor
       thirdMonitor
@@ -164,7 +164,7 @@ in
             layer = if config.hyprland.enable then "top" else "bottom";
             position = "top";
             height = 27;
-            output = output;
+            # output = output;
 
             tray = { spacing = 5; };
             modules-left = modules-left;

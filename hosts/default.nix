@@ -86,6 +86,7 @@ in
         hostName = "xps";
         mainMonitor = "eDP-1";
         secondMonitor = "DP-4";
+        thirdMonitor = "DP-5";
       };
     };
     modules = [
