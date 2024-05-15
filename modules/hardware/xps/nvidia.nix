@@ -5,7 +5,7 @@
 #  For GeForce GTX 1650 Ti
 #
 
-{ config, pkgs, ... }:
+{ config, pkgs, unstable, ... }:
 
 let
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
@@ -21,7 +21,10 @@ in
 
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware = {
-    opengl.enable = true;
+    opengl = {
+      enable = true;
+      package = unstable.mesa.drivers;
+    };
     nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.production;
       open = false;

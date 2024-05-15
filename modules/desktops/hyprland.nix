@@ -46,7 +46,10 @@ with host;
             LIBVA_DRIVER_NAME = "nvidia";
             __GLX_VENDOR_LIBRARY_NAME = "nvidia";
             NVD_BACKEND = "direct";
-            # GBM_BACKEND = "nvidia-drm";
+            __NV_PRIME_RENDER_OFFLOAD = "1";
+            __NV_PRIME_RENDER_OFFLOAD_PROVIDER = "NVIDIA-G0";
+            __VK_LAYER_NV_optimus = "NVIDIA_only";
+            GBM_BACKEND = "nvidia";
             # EGL_PLATFORM = "wayland";
             # __GL_GSYNC_ALLOWED = "0";
             # __GL_VRR_ALLOWED = "0";
@@ -86,6 +89,7 @@ with host;
       # text = "auth include system-auth";
       text = "auth include login";
       fprintAuth = if hostName == "xps" then true else false;
+      enableGnomeKeyring = true;
     };
 
     services.greetd = {

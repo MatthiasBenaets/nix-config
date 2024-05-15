@@ -20,7 +20,9 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/desktops/virtualisation/docker.nix
-  ] ++ (import ../../modules/hardware/xps);
+  ] ++
+  (import ../../modules/hardware/xps) ++
+  (import ../../modules/desktops/virtualisation);
 
   boot = {
     consoleLogLevel = 3;
