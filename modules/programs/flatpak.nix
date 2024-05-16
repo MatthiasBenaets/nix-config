@@ -5,7 +5,7 @@
 #  Only use when you know what you're doing
 #
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, vars, ... }:
 
 with lib;
 {
@@ -72,6 +72,8 @@ with lib;
                     ${pkgs.flatpak}/bin/flatpak uninstall -y --unused
                   fi
                 done
+
+                /run/wrappers/bin/su - ${vars.user} -c "${pkgs.flatpak}/bin/flatpak override --user --filesystem=host"
               '';
           };
     };

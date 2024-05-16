@@ -248,7 +248,7 @@ with host;
               drop_shadow = false;
             };
             monitor = [
-              #",preferred,auto,1,mirror,${toString mainMonitor}"
+              ",preferred,auto,1,mirror,${toString mainMonitor}"
             ] ++ (if hostName == "beelink" || hostName == "h310m" then [
               "${toString mainMonitor},1920x1080@60,1920x0,1"
               "${toString secondMonitor},1920x1080@60,0x0,1"
@@ -256,6 +256,8 @@ with host;
               "${toString mainMonitor},1920x1080@60,0x0,1"
               "${toString secondMonitor},1920x1200@60,1920x0,1"
               "${toString thirdMonitor},1920x1200@60,3840x0,1"
+              "DP-6,1920x1200@60,1920x0,1"
+              "DP-7,1920x1200@60,3840x0,1"
             ] else if hostName == "xps" then [
               "${toString mainMonitor},3840x2400@60,0x0,2"
               "${toString secondMonitor},1920x1080@60,1920x0,1"
