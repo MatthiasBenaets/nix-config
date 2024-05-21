@@ -16,7 +16,7 @@
 #  NOTE: Dual booted with windows 11. Disable fast-boot in power plan and bios and turn off hibernate to get wifi and bluetooth working. This only works once but on reboot is borked again. So using the old school BLT dongle.
 #
 
-{ pkgs, unstable, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -70,12 +70,10 @@
       moonlight-qt # Remote Streaming
       obs-studio # Live Streaming
       plex-media-player # Media Player
+      prusa-slicer # 3D Slicer
       rclone # Gdrive ($ rclone config | rclone mount --daemon gdrive:<path> <host/path>)
       simple-scan # Scanning
-    ] ++
-    (with unstable; [
-      prusa-slicer
-    ]);
+    ];
   };
 
   flatpak = {

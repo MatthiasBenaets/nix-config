@@ -7,7 +7,7 @@
 {
   config = lib.mkIf (config.wlwm.enable) {
     environment.systemPackages = with pkgs; [
-      eww-wayland # Widgets
+      eww # Widgets
       jq # JSON Processor
       socat # Data Transfer
     ];

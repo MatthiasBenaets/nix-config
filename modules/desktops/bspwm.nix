@@ -70,20 +70,22 @@ in
       x11wm.enable = true;
 
       services = {
+        displayManager.defaultSession = "none+bspwm";
+        libinput = {
+          enable = true;
+          touchpad = {
+            tapping = true;
+            scrollMethod = "twofinger";
+            naturalScrolling = true;
+            accelProfile = "adaptive";
+            disableWhileTyping = true;
+          };
+        };
         xserver = {
           enable = true;
-
-          layout = "us";
-          xkbOptions = "eurosign:e";
-          libinput = {
-            enable = true;
-            touchpad = {
-              tapping = true;
-              scrollMethod = "twofinger";
-              naturalScrolling = true;
-              accelProfile = "adaptive";
-              disableWhileTyping = true;
-            };
+          xkb = {
+            layout = "us";
+            options = "eurosign:e";
           };
           modules = [ pkgs.xf86_input_wacom ];
           wacom.enable = true;
@@ -106,7 +108,6 @@ in
                 };
               };
             };
-            defaultSession = "none+bspwm";
           };
           windowManager.bspwm = {
             enable = true;

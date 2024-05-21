@@ -47,10 +47,10 @@
     enableIPv6 = false;
     networkmanager = {
       enable = true;
-      extraConfig = ''
-        [main]
-        rc-manager=resolvconf
-      '';
+      # extraConfig = ''
+      #   [main]
+      #   rc-manager=resolvconf
+      # '';
     };
     nameservers = [ "192.168.0.4" "1.1.1.1" ];
     firewall.enable = false;

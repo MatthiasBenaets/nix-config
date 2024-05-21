@@ -9,7 +9,7 @@
 #           └─ default.nix
 #
 
-{ inputs, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager, nur, nixvim, doom-emacs, hyprland, hyprlock, hypridle, hyprspace, plasma-manager, vars, ... }:
+{ inputs, nixpkgs, nixpkgs-stable, nixos-hardware, home-manager, nur, nixvim, doom-emacs, hyprland, hyprspace, plasma-manager, vars, ... }:
 
 let
   system = "x86_64-linux";
@@ -19,7 +19,7 @@ let
     config.allowUnfree = true;
   };
 
-  unstable = import nixpkgs-unstable {
+  stable = import nixpkgs-stable {
     inherit system;
     config.allowUnfree = true;
   };
@@ -31,11 +31,11 @@ in
   beelink = lib.nixosSystem {
     inherit system;
     specialArgs = {
-      inherit inputs system unstable hyprland hyprlock hypridle hyprspace vars;
+      inherit inputs system stable hyprland hyprspace vars;
       host = {
         hostName = "beelink";
-        mainMonitor = "HDMI-A-1";
-        secondMonitor = "HDMI-A-2";
+        mainMonitor = "HDMI-A-2";
+        secondMonitor = "HDMI-A-1";
       };
     };
     modules = [
@@ -56,7 +56,7 @@ in
   work = lib.nixosSystem {
     inherit system;
     specialArgs = {
-      inherit inputs system unstable hyprland hyprlock hypridle hyprspace vars;
+      inherit inputs system stable hyprland hyprspace vars;
       host = {
         hostName = "work";
         mainMonitor = "eDP-1";
@@ -81,7 +81,7 @@ in
   xps = lib.nixosSystem {
     inherit system;
     specialArgs = {
-      inherit inputs system unstable hyprland hyprlock hypridle hyprspace vars;
+      inherit inputs system stable hyprland hyprspace vars;
       host = {
         hostName = "xps";
         mainMonitor = "eDP-1";
@@ -107,7 +107,7 @@ in
   vm = lib.nixosSystem {
     inherit system;
     specialArgs = {
-      inherit inputs unstable vars;
+      inherit inputs system stable vars;
       host = {
         hostName = "vm";
         mainMonitor = "Virtual-1";
@@ -131,7 +131,7 @@ in
   h310m = lib.nixosSystem {
     inherit system;
     specialArgs = {
-      inherit inputs system unstable hyprland hyprlock hypridle hyprspace vars;
+      inherit inputs system stable hyprland hyprspace vars;
       host = {
         hostName = "h310m";
         mainMonitor = "HDMI-A-1";
@@ -159,7 +159,7 @@ in
   probook = lib.nixosSystem {
     inherit system;
     specialArgs = {
-      inherit inputs unstable vars;
+      inherit inputs system stable vars;
       host = {
         hostName = "probook";
         mainMonitor = "eDP-1";

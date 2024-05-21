@@ -88,7 +88,7 @@
       options = "--delete-older-than 7d";
     };
     extraOptions = ''
-      auto-optimise-store = true
+      # auto-optimise-store = true
       experimental-features = nix-command flakes
     '';
   };
@@ -126,7 +126,7 @@
     programs = {
       zsh = {
         enable = true;
-        enableAutosuggestions = true;
+        autosuggestion.enable = true;
         syntaxHighlighting.enable = true;
         history.size = 10000;
         oh-my-zsh = {
