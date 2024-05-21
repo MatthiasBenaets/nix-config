@@ -101,10 +101,14 @@
         NSAutomaticSpellingCorrectionEnabled = false;
       };
       dock = {
-        autohide = true;
+        autohide = false;
+        largesize = 36;
+        tilesize = 24;
+        magnification = true;
+        mineffect = "genie";
         orientation = "bottom";
-        showhidden = true;
-        tilesize = 40;
+        showhidden = false;
+        show-recents = false;
       };
       finder = {
         QuitMenuItem = false;
