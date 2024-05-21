@@ -22,7 +22,7 @@
 #           └─ default.nix
 #
 
-{ pkgs, unstable, inputs, vars, ... }:
+{ pkgs, stable, inputs, vars, ... }:
 
 let
   terminal = pkgs.${vars.terminal};
@@ -114,7 +114,6 @@ in
       # Video/Audio
       alsa-utils # Audio Control
       feh # Image Viewer
-      image-roll # Image Viewer
       linux-firmware # Proprietary Hardware Blob
       mpv # Media Player
       pavucontrol # Audio Control
@@ -143,9 +142,10 @@ in
       # - ./<host>/default.nix
       # - ../modules
     ] ++
-    (with unstable; [
+    (with stable; [
       # Apps
       # firefox # Browser
+      image-roll # Image Viewer
     ]);
   };
 
@@ -187,7 +187,7 @@ in
       dates = "weekly";
       options = "--delete-older-than 2d";
     };
-    package = pkgs.nixVersions.unstable;
+    # package = pkgs.nixVersions.latest;
     registry.nixpkgs.flake = inputs.nixpkgs;
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -242,7 +242,7 @@ in
       };
       desktopEntries.image-roll = {
         name = "image-roll";
-        exec = "${pkgs.image-roll}/bin/image-roll %F";
+        exec = "${stable.image-roll}/bin/image-roll %F";
         mimeType = [ "image/*" ];
       };
       desktopEntries.gmail = {

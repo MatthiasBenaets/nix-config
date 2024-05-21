@@ -1,12 +1,17 @@
-{ pkgs, ... }:
+{ config, lib, system, pkgs, stable, vars, ... }:
 
 let
   colors = import ../theming/colors.nix;
 
-  dutch = builtins.readFile (builtins.fetchurl {
-    url = "https://raw.githubusercontent.com/OpenTaal/opentaal-wordlist/master/wordlist.txt";
-    sha256 = "1gnpkb2afasbcfka6lhnpzlpafpns4k6j09h7dc0p13k7iggpr8j";
-  });
+  nvim-spell-nl-utf8-dictionary = builtins.fetchurl {
+    url = "http://ftp.vim.org/vim/runtime/spell/nl.utf-8.spl";
+    sha256 = "sha256:1v4knd9i4zf3lhacnkmhxrq0lgk9aj4iisbni9mxi1syhs4lfgni";
+  };
+
+  nvim-spell-nl-utf8-suggestions = builtins.fetchurl {
+    url = "http://ftp.vim.org/vim/runtime/spell/nl.utf-8.sug";
+    sha256 = "sha256:0clvhlg52w4iqbf5sr4bb3lzja2ch1dirl0963d5vlg84wzc809y";
+  };
 in
 {
   # # steam-run for codeium-vim
@@ -23,18 +28,11 @@ in
       ripgrep
       zig
     ];
-    wordlist = {
-      enable = true;
-      lists = {
-        WORDLIST = [
-          "${pkgs.scowl}/share/dict/words.txt"
-          (builtins.toFile "dutch" dutch)
-        ];
-      };
-    };
   };
+
   programs.nixvim = {
     enable = true;
+    enableMan = false;
     viAlias = true;
     vimAlias = true;
     autoCmd = [
@@ -74,7 +72,7 @@ in
       }
     ];
 
-    options = {
+    opts = {
       number = true;
       relativenumber = true;
       hidden = true;
@@ -94,11 +92,8 @@ in
       timeoutlen = 2500;
       conceallevel = 3;
       cursorline = true;
-    };
-
-    colorschemes.onedark = {
-      enable = true;
-      package = pkgs.vimPlugins.onedarkpro-nvim;
+      spell = true;
+      spelllang = [ "nl" "en" ];
     };
 
     clipboard = {
@@ -316,15 +311,18 @@ in
           move = { };
         };
       };
-      indent-blankline.enable = true;
+      indent-blankline = {
+        enable = true;
+        settings.scope.enabled = false;
+      };
       lastplace.enable = true;
-      comment-nvim.enable = true;
+      comment.enable = true;
       fugitive.enable = true;
       markdown-preview.enable = true;
       nvim-autopairs.enable = true;
       telescope = {
         enable = true;
-        extraOptions = {
+        settings = {
           pickers.find_files = {
             hidden = true;
           };
@@ -332,19 +330,27 @@ in
         keymaps = {
           "<leader>ff" = {
             action = "find_files";
-            desc = "Find File";
+            options = {
+              desc = "Find File";
+            };
           };
           "<leader>fg" = {
             action = "live_grep";
-            desc = "Find Via Grep";
+            options = {
+              desc = "Find Via Grep";
+            };
           };
           "<leader>fb" = {
             action = "buffers";
-            desc = "Find Buffers";
+            options = {
+              desc = "Find Buffers";
+            };
           };
           "<leader>fh" = {
             action = "help_tags";
-            desc = "Find Help";
+            options = {
+              desc = "Find Help";
+            };
           };
         };
       };
@@ -362,8 +368,10 @@ in
       };
       undotree = {
         enable = true;
-        focusOnToggle = true;
-        highlightChangedText = true;
+        settings = {
+          FocusOnToggle = true;
+          HighlightChangedText = true;
+        };
       };
       treesitter = {
         enable = true;
@@ -399,6 +407,7 @@ in
       };
       neorg = {
         enable = true;
+        package = stable.vimPlugins.neorg;
         lazyLoading = true;
         modules = {
           "core.defaults".__empty = null;
@@ -469,51 +478,34 @@ in
       cmp_luasnip.enable = true;
       cmp-nvim-lsp.enable = true;
       cmp-look.enable = true;
-      nvim-cmp = {
+      cmp = {
         enable = true;
-        snippet.expand = "luasnip";
-        mapping = {
-          "<C-d>" = "cmp.mapping.scroll_docs(-4)";
-          "<C-f>" = "cmp.mapping.scroll_docs(4)";
-          "<C-Space>" = "cmp.mapping.complete()";
-          "<C-e>" = "cmp.mapping.close()";
-          # "<Tab>" = {
-          #   modes = ["i" "s"];
-          #   action = "cmp.mapping.select_next_item()";
-          # };
-          # "<S-Tab>" = {
-          #   modes = ["i" "s"];
-          #   action = "cmp.mapping.select_prev_item()";
-          # };
-          "<Down>" = {
-            modes = [ "i" "s" ];
-            action = "cmp.mapping.select_next_item()";
+        settings = {
+          snippet.expand = "luasnip";
+          mapping = {
+            "<C-d>" = "cmp.mapping.scroll_docs(-4)";
+            "<C-f>" = "cmp.mapping.scroll_docs(4)";
+            "<C-Space>" = "cmp.mapping.complete()";
+            "<C-e>" = "cmp.mapping.close()";
+            # "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
+            # "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+            "<Down>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
+            "<Up>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+            "<C-j>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
+            "<C-k>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+            "<Tab>" = "cmp.mapping.confirm({ select = true })";
           };
-          "<Up>" = {
-            modes = [ "i" "s" ];
-            action = "cmp.mapping.select_prev_item()";
-          };
-          "<C-j>" = {
-            modes = [ "i" "s" ];
-            action = "cmp.mapping.select_next_item()";
-          };
-          "<C-k>" = {
-            modes = [ "i" "s" ];
-            action = "cmp.mapping.select_prev_item()";
-          };
-          # "<CR>" = "cmp.mapping.confirm({ select = true })";
-          "<Tab>" = "cmp.mapping.confirm({ select = true })";
+          sources = [
+            { name = "nvim_lsp"; }
+            { name = "luasnip"; }
+            { name = "look"; keywordLength = 2; option = { convert_case = true; loud = true; }; }
+            { name = "path"; }
+            { name = "buffer"; }
+            { name = "nvim_lua"; }
+            { name = "orgmode"; }
+            { name = "neorg"; }
+          ];
         };
-        sources = [
-          { name = "nvim_lsp"; }
-          { name = "luasnip"; }
-          { name = "look"; keywordLength = 2; option = { convert_case = true; loud = true; }; }
-          { name = "path"; }
-          { name = "buffer"; }
-          { name = "nvim_lua"; }
-          { name = "orgmode"; }
-          { name = "neorg"; }
-        ];
       };
       which-key = {
         enable = true;
@@ -526,11 +518,13 @@ in
       };
       toggleterm = {
         enable = true;
-        autoScroll = true;
-        closeOnExit = true;
-        direction = "horizontal";
-        persistMode = true;
-        startInInsert = true;
+        settings = {
+          autoScroll = true;
+          closeOnExit = true;
+          direction = "horizontal";
+          persistMode = true;
+          startInInsert = true;
+        };
       };
     };
     extraPlugins = with pkgs.vimPlugins; [
@@ -538,6 +532,7 @@ in
       luasnip
       nvim-scrollbar
       orgmode
+      onedarkpro-nvim
       vim-cool
       vim-prettier
       vim-table-mode
@@ -573,8 +568,7 @@ in
         };
       })
     ];
-    extraConfigLua = ''
-      require('luasnip.loaders.from_vscode').lazy_load()
+    extraConfigLua = with colors.scheme.default.hex; ''
       require('orgmode').setup({
         org_agenda_files = { '~/org/**/*' },
         org_default_notes_file = '~/org/refile.org',
@@ -588,12 +582,6 @@ in
         augroup END
       ]]
 
-      require('org-bullets').setup()
-
-      require('scrollbar').setup()
-    '';
-    extraConfigLuaPre = with colors.scheme.default.hex; ''
-      require('orgmode').setup_ts_grammar()
       require('onedarkpro').setup({
         colors = {
           bg = "#${bg}",
@@ -602,6 +590,18 @@ in
           cursorline = true,
         },
       })
+      vim.cmd[[
+        colorscheme onedark
+      ]]
+
+      require('org-bullets').setup()
+
+      require('scrollbar').setup()
     '';
+  };
+
+  home-manager.users.${vars.user} = {
+    home.file.".config/nvim/spell/nl.utf-8.spl".source = nvim-spell-nl-utf8-dictionary;
+    home.file.".config/nvim/spell/nl.utf-8.sug".source = nvim-spell-nl-utf8-suggestions;
   };
 }

@@ -2,7 +2,7 @@
 #  Bar
 #
 
-{ config, lib, pkgs, unstable, vars, host, ... }:
+{ config, lib, pkgs, vars, host, ... }:
 let
   colors = import ../theming/colors.nix;
 in
@@ -69,14 +69,14 @@ let
 in
 {
   config = lib.mkIf (config.wlwm.enable) {
-    environment.systemPackages = with unstable; [
+    environment.systemPackages = with pkgs; [
       waybar
     ];
 
     home-manager.users.${vars.user} = with colors.scheme.default; {
       programs.waybar = {
         enable = true;
-        package = unstable.waybar;
+        package = pkgs.waybar;
         # systemd = {
         #   enable = true;
         #   target = "hyprland-session.target";
@@ -176,7 +176,7 @@ in
             };
             "custom/menu" = {
               format = "<span font='16'></span>";
-              # on-click = ''${pkgs.eww-wayland}/bin/eww open --toggle menu --screen 0'';
+              # on-click = ''${pkgs.eww}/bin/eww open --toggle menu --screen 0'';
               on-click = ''sleep 0.1; .config/wofi/power.sh'';
               on-click-right = "sleep 0.1; ${pkgs.wofi}/bin/wofi --show drun";
               tooltip = false;
@@ -246,7 +246,7 @@ in
             };
             clock = {
               format = "{:%b %d %H:%M}  ";
-              on-click = "sleep 0.1; ${pkgs.eww-wayland}/bin/eww open --toggle calendar --screen 0";
+              on-click = "sleep 0.1; ${pkgs.eww}/bin/eww open --toggle calendar --screen 0";
             };
             cpu = {
               format = " {usage}% <span font='11'></span> ";
@@ -287,12 +287,12 @@ in
               tooltip-format = "{essid} {ipaddr}/{cidr}";
             };
             pulseaudio = {
-              format = "<span font='11'>{icon}</span> {volume}% {format_source} ";
-              format-bluetooth = "<span font='11'>{icon}</span> {volume}% {format_source} ";
-              format-bluetooth-muted = "<span font='11'>x</span> {volume}% {format_source} ";
-              format-muted = "<span font='11'>x</span> {volume}% {format_source} ";
-              format-source = "<span font='10'></span> ";
-              format-source-muted = "<span font='11'></span> ";
+              format = "<span font='13'>{icon}</span> {volume}% {format_source} ";
+              format-bluetooth = "<span font='13'>{icon}</span> {volume}% {format_source} ";
+              format-bluetooth-muted = "<span font='13'>x</span> {volume}% {format_source} ";
+              format-muted = "<span font='13'>x</span> {volume}% {format_source} ";
+              format-source = "<span font='14'></span> ";
+              format-source-muted = "<span font='14'></span> ";
               format-icons = {
                 default = [ "" "" "" ];
                 headphone = "";

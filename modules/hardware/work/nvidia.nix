@@ -17,13 +17,15 @@ let
   '';
 in
 {
+  nixpkgs.config.nvidia.acceptLicense = true;
+
   environment.systemPackages = [ nvidia-offload ];
 
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware = {
     opengl.enable = true;
     nvidia = {
-      package = config.boot.kernelPackages.nvidiaPackages.production;
+      package = config.boot.kernelPackages.nvidiaPackages.dc_535;
       prime = {
         offload.enable = true;
         intelBusId = "PCI:0:2:0";

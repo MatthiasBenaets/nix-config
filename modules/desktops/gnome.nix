@@ -26,12 +26,13 @@ with lib;
     };
 
     services = {
+      libinput.enable = true;
       xserver = {
         enable = true;
-
-        layout = "us";
-        xkbOptions = "eurosign:e";
-        libinput.enable = true;
+        xkb = {
+          layout = "us";
+          options = "eurosign:e";
+        };
         modules = [ pkgs.xf86_input_wacom ];
         wacom.enable = true;
 
@@ -47,6 +48,7 @@ with lib;
       systemPackages = with pkgs; [
         gnome.adwaita-icon-theme
         gnome.dconf-editor
+        gedit
         gnome.gnome-tweaks
       ];
       gnome.excludePackages = (with pkgs; [
@@ -55,7 +57,6 @@ with lib;
         atomix
         epiphany
         geary
-        gedit
         gnome-characters
         gnome-contacts
         gnome-initial-setup
@@ -98,7 +99,6 @@ with lib;
             "clipboard-indicator@tudmotu.com"
             "horizontal-workspace-indicator@tty2.io"
             "bluetooth-quick-connect@bjarosze.gmail.com"
-            "battery-indicator@jgotti.org"
             "gsconnect@andyholmes.github.io"
             "pip-on-top@rafostar.github.com"
             "forge@jmmaranan.com"
@@ -281,7 +281,7 @@ with lib;
         blur-my-shell
         removable-drive-menu
         dash-to-panel
-        battery-indicator-upower
+        upower-battery
         just-perfection
         caffeine
         clipboard-indicator

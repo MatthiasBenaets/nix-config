@@ -27,19 +27,20 @@ with lib;
     };
 
     services = {
+      displayManager = {
+        sddm.enable = true;
+        defaultSession = "plasmawayland";
+      };
+      libinput.enable = true;
       xserver = {
         enable = true;
-
-        layout = "us";
-        xkbOptions = "eurosign:e";
-        libinput.enable = true;
+        xkb = {
+          layout = "us";
+          options = "eurosign:e";
+        };
         modules = [ pkgs.xf86_input_wacom ];
         wacom.enable = true;
 
-        displayManager = {
-          sddm.enable = true;
-          defaultSession = "plasmawayland";
-        };
         desktopManager.plasma5 = {
           enable = true;
         };

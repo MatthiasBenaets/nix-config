@@ -42,10 +42,14 @@
       };
     };
 
-    qt.enable = true;
-    qt.platformTheme = "gtk";
-    qt.style.name = "adwaita-dark";
-    qt.style.package = pkgs.adwaita-qt;
+    qt = {
+      enable = true;
+      platformTheme.name = "gtk";
+      style = {
+        name = "adwaita-dark";
+        package = pkgs.adwaita-qt;
+      };
+    };
   };
 
   environment.variables = {

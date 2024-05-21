@@ -209,9 +209,9 @@
     keyMap = "...";                           # us / fr / azerty / etc...
   };
   # XServer layout (possibly also sets console now)
-  services.xserver.layout = "..."             # us / fr / be / etc..
+  services.xserver.xkb.layout = "..."             # us / fr / be / etc..
   # Extra keyboard settings:
-  services.xserver.xkbOptions = "eurosign:e"; # For example adds €
+  services.xserver.xkb.options = "eurosign:e"; # For example adds €
 #+end_src
 
 **** Display Managers/Desktop Environments/Window Managers

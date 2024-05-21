@@ -3,7 +3,7 @@
 #  Enable with "hyprland.enable = true;"
 #
 
-{ config, lib, pkgs, hyprland, hyprlock, hypridle, hyprspace, vars, host, ... }:
+{ config, lib, pkgs, hyprland, hyprspace, vars, host, ... }:
 
 let
   colors = import ../theming/colors.nix;
@@ -124,7 +124,7 @@ with host;
           ${pkgs.pipewire}/bin/pw-cli i all | ${pkgs.ripgrep}/bin/rg running
           if [ $? == 1 ]; then
             if [ "$action" == "lock" ]; then
-              ${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock
+              ${pkgs.hyprlock}/bin/hyprlock
             elif [ "$action" == "suspend" ]; then
               ${pkgs.systemd}/bin/systemctl suspend
             fi
@@ -134,84 +134,87 @@ with host;
       {
         imports = [
           hyprland.homeManagerModules.default
-          hyprlock.homeManagerModules.hyprlock
-          hypridle.homeManagerModules.hypridle
         ];
 
         programs.hyprlock = {
           enable = true;
-          package = hyprlock.packages.${pkgs.system}.hyprlock;
-          general = {
-            hide_cursor = true;
-            no_fade_in = false;
-            disable_loading_bar = true;
-            grace = 0;
+          settings = {
+            general = {
+              hide_cursor = true;
+              no_fade_in = false;
+              disable_loading_bar = true;
+              grace = 0;
+            };
+            background = [{
+              monitor = "";
+              path = "$HOME/.config/wall.png";
+              color = "rgba(25, 20, 20, 1.0)";
+              blur_passes = 1;
+              blur_size = 0;
+              brightness = 0.2;
+            }];
+            input-field = [
+              {
+                monitor = "";
+                size = "250, 60";
+                outline_thickness = 2;
+                dots_size = 0.2;
+                dots_spacing = 0.2;
+                dots_center = true;
+                outer_color = "rgba(0, 0, 0, 0)";
+                inner_color = "rgba(0, 0, 0, 0.5)";
+                font_color = "rgb(200, 200, 200)";
+                fade_on_empty = false;
+                placeholder_text = ''<i><span foreground="##cdd6f4">Input Password...</span></i>'';
+                hide_input = false;
+                position = "0, -120";
+                halign = "center";
+                valign = "center";
+              }
+            ];
+            label = [
+              {
+                monitor = "";
+                text = "$TIME";
+                font_size = 120;
+                position = "0, 80";
+                valign = "center";
+                halign = "center";
+              }
+            ];
           };
-          backgrounds = [{
-            monitor = "";
-            path = ".config/wall.png";
-            color = "rgba(25, 20, 20, 1.0)";
-            blur_passes = 1;
-            blur_size = 0;
-            brightness = 0.2;
-          }];
-          input-fields = [
-            {
-              monitor = "";
-              size = {
-                width = 250;
-                height = 60;
-              };
-              outline_thickness = 2;
-              dots_size = 0.2;
-              dots_spacing = 0.2;
-              dots_center = true;
-              outer_color = "rgba(0, 0, 0, 0)";
-              inner_color = "rgba(0, 0, 0, 0.5)";
-              font_color = "rgb(200, 200, 200)";
-              fade_on_empty = false;
-              placeholder_text = ''<i><span foreground="##cdd6f4">Input Password...</span></i>'';
-              hide_input = false;
-              position = {
-                x = 0;
-                y = -120;
-              };
-              halign = "center";
-              valign = "center";
-            }
-          ];
-          labels = [
-            {
-              monitor = "";
-              text = "$TIME";
-              font_size = 120;
-              position = {
-                x = 0;
-                y = 80;
-              };
-              valign = "center";
-              halign = "center";
-            }
-          ];
         };
 
         services.hypridle = {
           enable = true;
-          package = hypridle.packages.${pkgs.system}.hypridle;
-          beforeSleepCmd = "${pkgs.systemd}/bin/loginctl lock-session";
-          afterSleepCmd = "${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on";
-          ignoreDbusInhibit = true;
-          lockCmd = "pidof ${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock || ${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock";
-          listeners = [
-            {
-              timeout = 300;
-              onTimeout = "${lockScript.outPath} lock";
-            }
-            {
-              timeout = 1800;
-              onTimeout = "${lockScript.outPath} suspend";
-            }
-          ];
+          settings = {
+            general = {
+              before_sleep_cmd = "${pkgs.systemd}/bin/loginctl lock-session";
+              after_sleep_cmd = "${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on";
+              ignore_dbus_inhibit = true;
+              lock_cmd = "pidof ${pkgs.hyprlock}/bin/hyprlock || ${pkgs.hyprlock}/bin/hyprlock";
+            };
+            listener = [
+              {
+                timeout = 300;
+                on-timeout = "${lockScript.outPath} lock";
+              }
+              {
+                timeout = 1800;
+                on-timeout = "${lockScript.outPath} suspend";
+              }
+            ];
+          };
+        };
+
+        services.hyprpaper = {
+          enable = true;
+          settings = {
+            ipc = true;
+            splash = false;
+            preload = "$HOME/.config/wall.png";
+            wallpaper = ",$HOME/.config/wall.png";
+          };
         };
 
         wayland.windowManager.hyprland = with colors.scheme.default.hex; {
@@ -355,7 +358,7 @@ with host;
               "SUPER,Q,killactive,"
               "SUPER,Escape,exit,"
               "SUPER,S,exec,${pkgs.systemd}/bin/systemctl suspend"
-              "SUPER,L,exec,${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock"
+              "SUPER,L,exec,${pkgs.hyprlock}/bin/hyprlock"
               # "SUPER,E,exec,GDK_BACKEND=x11 ${pkgs.pcmanfm}/bin/pcmanfm"
               "SUPER,E,exec,${pkgs.pcmanfm}/bin/pcmanfm"
               "SUPER,F,togglefloating,"
@@ -437,14 +440,14 @@ with host;
             ];
             exec-once = [
               "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
-              "${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock"
+              "${pkgs.hyprlock}/bin/hyprlock"
               "ln -s $XDG_RUNTIME_DIR/hypr /tmp/hypr"
               "${pkgs.waybar}/bin/waybar -c $HOME/.config/waybar/config"
-              "${pkgs.eww-wayland}/bin/eww daemon"
+              "${pkgs.eww}/bin/eww daemon"
               # "$HOME/.config/eww/scripts/eww" # When running eww as a bar
               "${pkgs.blueman}/bin/blueman-applet"
               "${pkgs.swaynotificationcenter}/bin/swaync"
-              "${pkgs.hyprpaper}/bin/hyprpaper"
+              # "${pkgs.hyprpaper}/bin/hyprpaper"
             ] ++ (if hostName == "work" then [
               "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"
               "${pkgs.rclone}/bin/rclone mount --daemon gdrive: /GDrive --vfs-cache-mode=writes"
@@ -466,17 +469,13 @@ with host;
                 if [[ `hyprctl monitors | grep "Monitor" | wc -l` != 1 ]]; then
                   ${config.programs.hyprland.package}/bin/hyprctl keyword monitor "${toString mainMonitor}, disable"
                 else
-                  ${hyprlock.packages.${pkgs.system}.hyprlock}/bin/hyprlock
+                  ${pkgs.hyprlock}/bin/hyprlock
                   ${pkgs.systemd}/bin/systemctl suspend
                 fi
               fi
             '';
             executable = true;
           };
-          ".config/hypr/hyprpaper.conf".text = ''
-            preload = ~/.config/wall.png
-            wallpaper = ,~/.config/wall.png
-          '';
         };
       };
   };
