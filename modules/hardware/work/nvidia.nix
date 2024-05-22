@@ -25,7 +25,7 @@ in
   hardware = {
     opengl.enable = true;
     nvidia = {
-      package = config.boot.kernelPackages.nvidiaPackages.dc_535;
+      package = config.boot.kernelPackages.nvidiaPackages.production;
       prime = {
         offload.enable = true;
         intelBusId = "PCI:0:2:0";
