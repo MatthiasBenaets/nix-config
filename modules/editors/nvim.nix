@@ -92,7 +92,7 @@ in
       timeoutlen = 2500;
       conceallevel = 3;
       cursorline = true;
-      spell = true;
+      spell = false;
       spelllang = [ "nl" "en" ];
     };
 
@@ -597,11 +597,13 @@ in
       require('org-bullets').setup()
 
       require('scrollbar').setup()
+
+      vim.o.runtimepath = vim.o.runtimepath .. ',~/.local/share/nvim/site' -- set spellfile path
     '';
   };
 
   home-manager.users.${vars.user} = {
-    home.file.".config/nvim/spell/nl.utf-8.spl".source = nvim-spell-nl-utf8-dictionary;
-    home.file.".config/nvim/spell/nl.utf-8.sug".source = nvim-spell-nl-utf8-suggestions;
+    home.file.".local/share/nvim/site/spell/nl.utf-8.spl".source = nvim-spell-nl-utf8-dictionary;
+    home.file.".local/share/nvim/site/spell/nl.utf-8.sug".source = nvim-spell-nl-utf8-suggestions;
   };
 }
