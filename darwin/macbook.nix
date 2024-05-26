@@ -75,7 +75,7 @@
       # "wireguard-tools"
     ];
     casks = [
-      "jellyfin-media-player"
+      # "jellyfin-media-player"
       "plex-media-player"
     ];
   };

@@ -2,12 +2,18 @@
 #  Terminal Emulator
 #
 
-{ vars, ... }:
+{ pkgs, vars, ... }:
 
 let
   colors = import ../theming/colors.nix;
 in
 {
+  environment = {
+    systemPackages = with pkgs; [
+      kitty
+    ];
+  };
+
   home-manager.users.${vars.user} = {
     programs = {
       kitty = {
