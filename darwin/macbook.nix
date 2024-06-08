@@ -77,6 +77,7 @@
     casks = [
       # "canon-eos-utility"
       # "jellyfin-media-player"
+      "docker"
       "obs"
       "plex-media-player"
       "stremio"
