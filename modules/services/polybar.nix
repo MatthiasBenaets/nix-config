@@ -67,7 +67,29 @@ in
               font-3 = "FontAwesome6Brands:style=Regular:size=8";
               font-4 = "FiraCodeNerdFont:size=10";
               modules-left = "logo bspwm";
-              modules-right = "sink volume pad date";
+              modules-right = "memory cpu pad sink volume pad date";
+
+              wm-restack = "bspwm";
+            };
+            "bar/thi" = {
+              monitor = "${thirdMonitor}";
+              width = "100%";
+              height = 15;
+              background = "#00000000";
+              foreground = "#ccffffff";
+
+              offset-y = 2;
+              spacing = "1.5";
+              padding-right = 2;
+              module-margin-left = 1;
+
+              font-0 = "SourceCodePro:size=10";
+              font-1 = "FontAwesome6Free:style=Solid:size=8";
+              font-2 = "FontAwesome6Free:style=Regular:size=8";
+              font-3 = "FontAwesome6Brands:style=Regular:size=8";
+              font-4 = "FiraCodeNerdFont:size=10";
+              modules-left = "logo bspwm";
+              modules-right = "memory cpu pad sink volume pad date";
 
               wm-restack = "bspwm";
             };
@@ -162,16 +184,26 @@ in
               type = "internal/bspwm";
               pin-workspace = true;
 
-              ws-icon-0 = "1;";
-              ws-icon-1 = "2;";
-              ws-icon-2 = "3;";
-              ws-icon-3 = "4;";
-              ws-icon-4 = "5;";
-              ws-icon-5 = "6;";
-              ws-icon-6 = "7;";
-              ws-icon-7 = "8;";
-              ws-icon-8 = "9;";
-              ws-icon-9 = "10;";
+              # ws-icon-0 = "1;";
+              # ws-icon-1 = "2;";
+              # ws-icon-2 = "3;";
+              # ws-icon-3 = "4;";
+              # ws-icon-4 = "5;";
+              # ws-icon-5 = "6;";
+              # ws-icon-6 = "7;";
+              # ws-icon-7 = "8;";
+              # ws-icon-8 = "9;";
+              # ws-icon-9 = "10;";
+              ws-icon-0 = "1;1";
+              ws-icon-1 = "2;2";
+              ws-icon-2 = "3;3";
+              ws-icon-3 = "4;4";
+              ws-icon-4 = "5;5";
+              ws-icon-5 = "6;6";
+              ws-icon-6 = "7;7";
+              ws-icon-7 = "8;8";
+              ws-icon-8 = "9;9";
+              ws-icon-9 = "0;0";
 
               format = "<label-state> <label-mode>";
 

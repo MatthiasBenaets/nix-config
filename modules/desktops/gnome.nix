@@ -1,6 +1,7 @@
 #
 #  Gnome Configuration
 #  Enable with "gnome.enable = true;"
+#  View dconf changes with $ dconf watch /
 #
 
 { config, lib, pkgs, vars, ... }:
@@ -19,10 +20,6 @@ with lib;
   config = mkIf (config.gnome.enable) {
     programs = {
       zsh.enable = true;
-      kdeconnect = {
-        enable = true;
-        package = pkgs.gnomeExtensions.gsconnect;
-      };
     };
 
     services = {
@@ -33,36 +30,24 @@ with lib;
           layout = "us";
           options = "eurosign:e";
         };
-        modules = [ pkgs.xf86_input_wacom ];
-        wacom.enable = true;
-
         displayManager.gdm.enable = true;
         desktopManager.gnome.enable = true;
       };
-      udev.packages = with pkgs; [
-        gnome.gnome-settings-daemon
-      ];
     };
 
     environment = {
       systemPackages = with pkgs; [
-        gnome.adwaita-icon-theme
         gnome.dconf-editor
-        gedit
         gnome.gnome-tweaks
       ];
       gnome.excludePackages = (with pkgs; [
-        gnome-tour
+        # gnome-tour
       ]) ++ (with pkgs.gnome; [
-        atomix
         epiphany
         geary
-        gnome-characters
-        gnome-contacts
-        gnome-initial-setup
-        hitori
-        iagno
-        tali
+        # gnome-characters
+        # gnome-contacts
+        # gnome-initial-setup
         yelp
       ]);
     };
@@ -70,40 +55,19 @@ with lib;
     home-manager.users.${vars.user} = {
       dconf.settings = {
         "org/gnome/shell" = {
-          favorite-apps = [
-            "org.gnome.settings.desktop"
-            "alacritty.desktop"
-            "firefox.desktop"
-            "emacs.desktop"
-            "org.gnome.nautilus.desktop"
-            "com.obsproject.studio.desktop"
-            "plexmediaplayer.desktop"
-            "smartcode-stremio.desktop"
-            "discord.desktop"
-            "steam.desktop"
-            "retroarch.desktop"
-            "com.parsecgaming.parsec.desktop"
-            "org.remmina.remmina.desktop"
-            "virt-manager.desktop"
-            # "blueman-manager.desktop"
-            # "pavucontrol.desktop"
-          ];
+          # favorite-apps = [
+          #   "org.gnome.settings.desktop"
+          #   "kitty.desktop"
+          #   "firefox.desktop"
+          #   "org.gnome.nautilus.desktop"
+          #   "com.obsproject.studio.desktop"
+          # ];
           disable-user-extensions = false;
           enabled-extensions = [
-            "trayiconsreloaded@selfmade.pl"
             "blur-my-shell@aunetx"
-            "drive-menu@gnome-shell-extensions.gcampax.github.com"
-            "dash-to-panel@jderose9.github.com"
-            "just-perfection-desktop@just-perfection"
             "caffeine@patapon.info"
-            "clipboard-indicator@tudmotu.com"
-            "horizontal-workspace-indicator@tty2.io"
-            "bluetooth-quick-connect@bjarosze.gmail.com"
-            "gsconnect@andyholmes.github.io"
             "pip-on-top@rafostar.github.com"
             "forge@jmmaranan.com"
-            # "dash-to-dock@micxgx.gmail.com" # Alternative Dash-to-Panel
-            # "fullscreen-avoider@noobsai.github.com" # Dash-to-Panel Incompatable
           ];
         };
 
@@ -111,16 +75,27 @@ with lib;
           color-scheme = "prefer-dark";
           enable-hot-corners = false;
           clock-show-weekday = true;
-          # gtk-theme = "adwaita-dark";
         };
-        # "org/gnome/desktop/session" = { # Not Working
-        #   idle-delay = "uint32 900";
-        # };
         "org/gnome/desktop/privacy" = {
           report-technical-problems = "false";
         };
         "org/gnome/desktop/calendar" = {
           show-weekdate = true;
+        };
+        "org/gnome/desktop/background" = {
+          color-shading-type = "solid";
+          picture-options = "zoom";
+          picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/blobs-l.svg";
+          picture-uri-dark = "file:///run/current-system/sw/share/backgrounds/gnome/blobs-d.svg";
+          primary-color = "#241f31";
+          secondary-color = "#000000";
+        };
+        "org/gnome/desktop/screensaver" = {
+          color-shading-type = "solid";
+          picture-options = "zoom";
+          picture-uri = "file:///run-current-system/sw/share/backgrounds/gnome/blobs-l.svg";
+          primary-color = "#241f31";
+          secondary-color = "#000000";
         };
         "org/gnome/desktop/wm/preferences" = {
           action-right-click-titlebar = "toggle-maximize";
@@ -134,6 +109,8 @@ with lib;
           # unmaximize = ["<super>down"];
           maximize = [ "@as []" ]; # Tiling
           unmaximize = [ "@as []" ];
+          switch-input-source = [ "@as []" ];
+          switch-input-source-backward = [ "@as []" ];
           switch-to-workspace-left = [ "<alt>left" ];
           switch-to-workspace-right = [ "<alt>right" ];
           switch-to-workspace-1 = [ "<alt>1" ];
@@ -175,15 +152,16 @@ with lib;
             "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
             "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
           ];
+          search = [ "<super>space" ];
         };
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
           binding = "<super>return";
-          command = "alacritty";
+          command = "kitty";
           name = "open-terminal";
         };
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
           binding = "<super>t";
-          command = "emacs";
+          command = "kitty nvim";
           name = "open-editor";
         };
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
@@ -192,27 +170,6 @@ with lib;
           name = "open-file-browser";
         };
 
-        "org/gnome/shell/extension/dash-to-panel" = {
-          # Set Manually
-          panel-position = ''{"0":"top","1":"top"}'';
-          panel-sizes = ''{"0":24,"1":24}'';
-          panel-element-positions-monitors-sync = true;
-          appicon-margin = 0;
-          appicon-padding = 4;
-          dot-position = "top";
-          dot-style-focused = "solid";
-          dot-style-unfocused = "dots";
-          animate-appicon-hover = true;
-          animate-appicon-hover-animation-travel = "{'simple': 0.14999999999999999, 'ripple': 0.40000000000000002, 'plank': 0.0}";
-          isolate-monitors = true;
-        };
-        "org/gnome/shell/extensions/just-perfection" = {
-          theme = true;
-          activities-button = false;
-          app-menu = false;
-          clock-menu-position = 1;
-          clock-menu-position-offset = 7;
-        };
         "org/gnome/shell/extensions/caffeine" = {
           enable-fullscreen = true;
           restore-state = true;
@@ -229,15 +186,6 @@ with lib;
         "org/gnome/shell/extensions/blur-my-shell/overview" = {
           customize = true;
           sigma = 0;
-        };
-        "org/gnome/shell/extensions/horizontal-workspace-indicator" = {
-          widget-position = "left";
-          widget-orientation = "horizontal";
-          icons-style = "circles";
-        };
-        "org/gnome/shell/extensions/bluetooth-quick-connect" = {
-          show-battery-icon-on = true;
-          show-battery-value-on = true;
         };
         "org/gnome/shell/extensions/pip-on-top" = {
           stick = true;
@@ -261,38 +209,13 @@ with lib;
           window-swap-last-active = [ "@as []" ];
           window-toggle-float = [ "<shift><super>f" ];
         };
-        # "org/gnome/shell/extensions/dash-to-dock" = { # If Dock Preferred
-        #   multi-monitor = true;
-        #   dock-fixed = true;
-        #   dash-max-icon-size = 16;
-        #   custom-theme-shrink = true;
-        #   transparency-mode = "fixed";
-        #   background-opacity = 0.0;
-        #   show-apps-at-top = true;
-        #   show-trash = true;
-        #   hot-keys = false;
-        #   click-action = "previews";
-        #   scroll-action = "cycle-windows";
-        # };
       };
 
       home.packages = with pkgs.gnomeExtensions; [
-        tray-icons-reloaded
         blur-my-shell
-        removable-drive-menu
-        dash-to-panel
-        upower-battery
-        just-perfection
         caffeine
-        clipboard-indicator
-        workspace-indicator-2
-        bluetooth-quick-connect
-        gsconnect
         pip-on-top
-        pop-shell
         forge
-        # fullscreen-avoider
-        # dash-to-dock
       ];
     };
   };

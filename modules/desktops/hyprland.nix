@@ -40,6 +40,8 @@ with host;
           XDG_CURRENT_DESKTOP = "Hyprland";
           XDG_SESSION_TYPE = "wayland";
           XDG_SESSION_DESKTOP = "Hyprland";
+          XCURSOR = "Catppuccin-Mocha-Dark-Cursors";
+          XCURSOR_SIZE = 24;
         };
         sessionVariables =
           if hostName == "xps" then {
@@ -73,10 +75,12 @@ with host;
           };
         systemPackages = with pkgs; [
           grimblast # Screenshot
+          hyprcursor # Cursor
           hyprpaper # Wallpaper
           wl-clipboard # Clipboard
           wlr-randr # Monitor Settings
           xwayland # X session
+          nwg-look
         ];
       };
 
@@ -455,6 +459,10 @@ with host;
             ] else [ ]) ++ (if hostName == "xps" then [
               "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"
             ] else [ ]);
+            # env = [
+            #   "XCURSOR,Catppuccin-Mocha-Dark-Cursors"
+            #   "XCURSOR_SIZE,24"
+            # ];
           };
         };
 

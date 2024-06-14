@@ -43,7 +43,7 @@
   };
 
   laptop.enable = true;
-  hyprland.enable = true;
+  gnome.enable = true;
 
   hardware = {
     opengl = {
@@ -70,6 +70,8 @@
       sshpass # Ansible dependency
       wacomtablet # Tablet
       wdisplays # Display Configurator
+      ciscoPacketTracer8
+      obsidian
     ];
   };
 

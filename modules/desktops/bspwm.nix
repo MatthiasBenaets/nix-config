@@ -11,9 +11,11 @@ let
   monitor =
     if hostName == "beelink" then
       "${pkgs.xorg.xrandr}/bin/xrandr --output ${secondMonitor} --mode 1920x1080 --pos 0x0 --rotate normal --output ${mainMonitor} --primary --mode 1920x1080 --pos 1920x0 --rotate normal"
+    else if hostName == "work" then
+      "${pkgs.xorg.xrandr}/bin/xrandr --output ${mainMonitor} --mode 1920x1080 --pos 0x0 --rotate normal --primary --output ${secondMonitor} --mode 1920x1200 --pos 1920x0 --rotate normal --output ${thirdMonitor} --mode 1920x1200 --pos 3840x0 --rotate normal"
     else if hostName == "vm" || hostName == "probook" then
       "${pkgs.xorg.xrandr}/bin/xrandr --mode 1920x1080 --pos 0x0 --rotate normal"
-    else false;
+    else "";
 
   extra = ''
     killall -q polybar &
@@ -42,16 +44,18 @@ let
 
   extraConf = builtins.replaceStrings [ "WORKSPACES" ]
     [
-      (if hostName == "beelink" then ''
-        bspc monitor ${mainMonitor} -d 1 2 3 4 5
-        bspc monitor ${secondMonitor} -d 6 7 8 9 0
-        bspc wm -O ${mainMonitor} ${secondMonitor}
+      (if hostName == "beelink" || hostName == "work" then ''
+        bspc monitor ${mainMonitor} -d 1 2 3
+        bspc monitor ${secondMonitor} -d 4 5 6
+        bspc monitor ${thirdMonitor} -d 7 8 9
+        bspc wm -O ${mainMonitor} ${secondMonitor} ${thirdMonitor}
         polybar sec &
+        polybar thi &
       ''
       else if hostName == "vm" || hostName == "probook" then ''
         bspc monitor -d 1 2 3 4 5
       ''
-      else false)
+      else "")
     ]
     "${extra}";
 in
@@ -87,6 +91,8 @@ in
             layout = "us";
             options = "eurosign:e";
           };
+          autoRepeatInterval = 50;
+          autoRepeatDelay = 200;
           modules = [ pkgs.xf86_input_wacom ];
           wacom.enable = true;
 
@@ -124,6 +130,7 @@ in
 
           resolutions = [
             { x = 1920; y = 1080; }
+            { x = 1920; y = 1200; }
             { x = 1600; y = 900; }
             { x = 3840; y = 2160; }
           ];

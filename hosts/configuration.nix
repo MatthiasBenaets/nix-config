@@ -22,7 +22,7 @@
 #           └─ default.nix
 #
 
-{ pkgs, stable, inputs, vars, ... }:
+{ lib, config, pkgs, stable, inputs, vars, ... }:
 
 let
   terminal = pkgs.${vars.terminal};
@@ -95,8 +95,10 @@ in
       # Terminal
       terminal # Terminal Emulator
       btop # Resource Manager
+      cifs-utils # Samba
       coreutils # GNU Utilities
       git # Version Control
+      gvfs # Samba
       killall # Process Killer
       lshw # Hardware Config
       nano # Text Editor
@@ -214,7 +216,7 @@ in
     };
     xdg = {
       mime.enable = true;
-      mimeApps = {
+      mimeApps = lib.mkIf (config.gnome.enable == false) {
         enable = true;
         defaultApplications = {
           "image/jpeg" = [ "image-roll.desktop" "feh.desktop" ];

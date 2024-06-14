@@ -2,7 +2,7 @@
 #  GTK
 #
 
-{ pkgs, host, vars, ... }:
+{ lib, config, pkgs, host, vars, ... }:
 
 {
   home-manager.users.${vars.user} = {
@@ -11,15 +11,13 @@
       file.".config/wall.mp4".source = ./wall.mp4;
       pointerCursor = {
         gtk.enable = true;
-        #name = "Dracula-cursors";
-        name = "Catppuccin-Mocha-Dark-Cursors";
-        #package = pkgs.dracula-theme;
-        package = pkgs.catppuccin-cursors.mochaDark;
+        name = "Dracula-cursors";
+        package = pkgs.dracula-theme;
         size = if host.hostName == "xps" then 26 else 16;
       };
     };
 
-    gtk = {
+    gtk = lib.mkIf (config.gnome.enable == false) {
       enable = true;
       theme = {
         #name = "Dracula";
@@ -42,17 +40,17 @@
       };
     };
 
-    qt = {
-      enable = true;
-      platformTheme.name = "gtk";
-      style = {
-        name = "adwaita-dark";
-        package = pkgs.adwaita-qt;
-      };
-    };
+    # qt = {
+    #   enable = true;
+    #   platformTheme.name = "gtk";
+    #   style = {
+    #     name = "adwaita-dark";
+    #     package = pkgs.adwaita-qt;
+    #   };
+    # };
   };
 
-  environment.variables = {
-    QT_QPA_PLATFORMTHEME = "gtk2";
-  };
+  # environment.variables = {
+  #   QT_QPA_PLATFORMTHEME = "gtk2";
+  # };
 }

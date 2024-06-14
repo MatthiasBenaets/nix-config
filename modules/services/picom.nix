@@ -9,18 +9,18 @@
     home-manager.users.${vars.user} = {
       services.picom = {
         enable = true;
-        package = pkgs.picom.overrideAttrs (o: {
-          src = pkgs.fetchFromGitHub {
-            # repo = "picom";
-            # owner = "pijulius";
-            # rev = "982bb43e5d4116f1a37a0bde01c9bda0b88705b9";
-            # sha256 = "YiuLScDV9UfgI1MiYRtjgRkJ0VuA1TExATA2nJSJMhM=";
-            repo = "picom";
-            owner = "jonaburg";
-            rev = "e3c19cd7d1108d114552267f302548c113278d45";
-            sha256 = "4voCAYd0fzJHQjJo4x3RoWz5l3JJbRvgIXn1Kg6nz6Y=";
-          };
-        });
+        # package = pkgs.picom.overrideAttrs (o: {
+        #   src = pkgs.fetchFromGitHub {
+        #     # repo = "picom";
+        #     # owner = "pijulius";
+        #     # rev = "982bb43e5d4116f1a37a0bde01c9bda0b88705b9";
+        #     # sha256 = "YiuLScDV9UfgI1MiYRtjgRkJ0VuA1TExATA2nJSJMhM=";
+        #     repo = "picom";
+        #     owner = "jonaburg";
+        #     rev = "e3c19cd7d1108d114552267f302548c113278d45";
+        #     sha256 = "4voCAYd0fzJHQjJo4x3RoWz5l3JJbRvgIXn1Kg6nz6Y=";
+        #   };
+        # });
 
         backend = "glx";
         vSync = true;
@@ -31,15 +31,15 @@
 
         shadow = false; # Shadows
         shadowOpacity = 0.75;
-        fade = true;
-        fadeDelta = 10;
+        # fade = true;
+        # fadeDelta = 10;
         opacityRules = [
           #"100:name = 'Picture in picture'"
           #"100:name = 'Picture-in-Picture'"
           #"85:class_i ?= 'rofi'"
-          "80:class_i *= 'discord'"
-          "80:class_i *= 'emacs'"
-          "80:class_i *= 'Alacritty'"
+          "95:class_i *= 'discord'"
+          "95:class_i *= 'emacs'"
+          "95:class_i *= 'kitty'"
           #"100:fullscreen"
         ]; # Find with $ xprop | grep "WM_CLASS"
 
@@ -60,12 +60,12 @@
           # fade-out-step = 1;
 
           # Animations Jonaburg
-          transition-length = 150;
-          transition-pow-x = 0.5;
-          transition-pow-y = 0.5;
-          transition-pow-w = 0.5;
-          transition-pow-h = 0.5;
-          size-transition = true;
+          # transition-length = 150;
+          # transition-pow-x = 0.5;
+          # transition-pow-y = 0.5;
+          # transition-pow-w = 0.5;
+          # transition-pow-h = 0.5;
+          # size-transition = true;
 
           detect-rounded-corners = true;
           detect-client-opacity = false;

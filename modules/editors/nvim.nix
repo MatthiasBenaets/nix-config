@@ -424,7 +424,7 @@ in
       lsp = {
         enable = true;
         servers = {
-          nil_ls.enable = true;
+          nil-ls.enable = true;
           svelte.enable = true;
           html.enable = true;
           cssls.enable = true;
