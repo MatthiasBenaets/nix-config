@@ -79,7 +79,10 @@
       # "jellyfin-media-player"
       "docker"
       "obs"
+      "obsidian"
       "plex-media-player"
+      "prusaslicer"
+      "rectangle"
       "stremio"
       "virtualbox" # sudo codesign --force --deep --sign - /Applications/VirtualBox.app/Contents/Resources/VirtualBoxVM.app
     ];
