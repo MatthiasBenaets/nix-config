@@ -68,6 +68,7 @@ with lib;
             "caffeine@patapon.info"
             "pip-on-top@rafostar.github.com"
             "forge@jmmaranan.com"
+            "system-monitor@gnome-shell-extensions.gcampax.github.com"
           ];
         };
 
@@ -75,6 +76,7 @@ with lib;
           color-scheme = "prefer-dark";
           enable-hot-corners = false;
           clock-show-weekday = true;
+          show-battery-percentage = true;
         };
         "org/gnome/desktop/privacy" = {
           report-technical-problems = "false";
@@ -192,7 +194,7 @@ with lib;
         };
         "org/gnome/shell/extensions/forge" = {
           window-gap-size = 8;
-          dnd-center-layout = "stacked";
+          dnd-center-layout = "swap";
         };
         "org/gnome/shell/extensions/forge/keybindings" = {
           # Set Manually
@@ -214,9 +216,15 @@ with lib;
       home.packages = with pkgs.gnomeExtensions; [
         blur-my-shell
         caffeine
-        pip-on-top
         forge
+        pip-on-top
+        system-monitor
       ];
+
+      xdg.desktopEntries.GDrive = {
+        name = "GDrive";
+        exec = "${pkgs.rclone}/bin/rclone mount --daemon gdrive: /GDrive --vfs-cache-mode=writes";
+      };
     };
   };
 }

@@ -428,6 +428,7 @@ in
           svelte.enable = true;
           html.enable = true;
           cssls.enable = true;
+          eslint.enable = true;
           tsserver.enable = true;
           pyright.enable = true;
           tailwindcss = {
@@ -452,6 +453,10 @@ in
         enableLspFormat = true;
         sources = {
           formatting = {
+            prettier = {
+              enable = true;
+              disableTsServerFormatter = true;
+            };
             nixpkgs_fmt.enable = true;
             markdownlint.enable = true;
           };

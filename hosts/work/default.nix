@@ -17,7 +17,7 @@
 #               └─ default.nix
 #
 
-{ pkgs, ... }:
+{ pkgs, vars, ... }:
 
 {
   imports = [ ./hardware-configuration.nix ] ++
@@ -64,14 +64,15 @@
   environment = {
     systemPackages = with pkgs; [
       ansible # Automation
+      ciscoPacketTracer8 # Networking
+      eduvpn-client # VPN
       nil # LSP
+      obsidian # Notes
       rclone # Gdrive ($ rclone config | rclone mount --daemon gdrive: <mount> | fusermount -u <mount>)
       simple-scan # Scanning
       sshpass # Ansible dependency
+      syncthing # Sync Tool
       wacomtablet # Tablet
-      wdisplays # Display Configurator
-      ciscoPacketTracer8
-      obsidian
     ];
   };
 
@@ -81,6 +82,14 @@
     extraPackages = [
       "com.github.tchx84.Flatseal"
     ];
+  };
+
+  services = {
+    syncthing = {
+      enable = true;
+      user = "${vars.user}";
+      dataDir= "/home/${vars.user}/Sync";
+    };
   };
 
   systemd.services.NetworkManager-wait-online.enable = false;
