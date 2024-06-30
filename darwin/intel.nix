@@ -4,21 +4,12 @@
 #  flake.nix
 #   └─ ./darwin
 #       ├─ default.nix
-#       ├─ macbook.nix *
-#       └─ ./modules
-#           └─ default.nix
+#       └─ ./intel.nix *
 #
 
-{ pkgs, vars, ... }:
+{ pkgs, ... }:
 
 {
-  imports = (import ./modules);
-
-  users.users.${vars.user} = {
-    home = "/Users/${vars.user}";
-    shell = pkgs.zsh;
-  };
-
   networking = {
     computerName = "MacBook";
     hostName = "MacBook";
@@ -26,43 +17,6 @@
 
   skhd.enable = false;
   yabai.enable = false;
-
-  fonts = {
-    fontDir.enable = true;
-    fonts = with pkgs; [
-      source-code-pro
-      font-awesome
-      (nerdfonts.override {
-        fonts = [
-          "FiraCode"
-        ];
-      })
-    ];
-  };
-
-  environment = {
-    shells = with pkgs; [ zsh ];
-    variables = {
-      EDITOR = "${vars.editor}";
-      VISUAL = "${vars.editor}";
-    };
-    systemPackages = with pkgs; [
-      # Terminal
-      git
-      ranger
-
-      # Remote
-      moonlight-qt
-    ];
-  };
-
-  programs = {
-    zsh.enable = true;
-  };
-
-  services = {
-    nix-daemon.enable = true;
-  };
 
   homebrew = {
     enable = true;
@@ -75,9 +29,11 @@
       # "wireguard-tools"
     ];
     casks = [
-      # "canon-eos-utility"
-      # "jellyfin-media-player"
+      "aldente"
+      "alfred"
       "docker"
+      "moonlight"
+      "mpv"
       "obs"
       "obsidian"
       "plex-media-player"
@@ -85,20 +41,9 @@
       "rectangle"
       "stremio"
       "virtualbox" # sudo codesign --force --deep --sign - /Applications/VirtualBox.app/Contents/Resources/VirtualBoxVM.app
+      # "canon-eos-utility"
+      # "jellyfin-media-player"
     ];
-  };
-
-  nix = {
-    package = pkgs.nix;
-    gc = {
-      automatic = true;
-      interval.Day = 7;
-      options = "--delete-older-than 7d";
-    };
-    extraOptions = ''
-      # auto-optimise-store = true
-      experimental-features = nix-command flakes
-    '';
   };
 
   system = {
@@ -120,6 +65,7 @@
         orientation = "bottom";
         showhidden = false;
         show-recents = false;
+        minimize-to-application = true;
       };
       finder = {
         AppleShowAllFiles = false;
@@ -148,30 +94,5 @@
     # activationScripts.postUserActivation.text = ''
     #   /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
     # '';
-    stateVersion = 4;
-  };
-
-  home-manager.users.${vars.user} = {
-    home = {
-      stateVersion = "22.05";
-    };
-
-    programs = {
-      zsh = {
-        enable = true;
-        autosuggestion.enable = true;
-        syntaxHighlighting.enable = true;
-        history.size = 10000;
-        oh-my-zsh = {
-          enable = true;
-          plugins = [ "git" ];
-          custom = "$HOME/.config/zsh_nix/custom";
-        };
-        initExtra = ''
-          source ${pkgs.spaceship-prompt}/share/zsh/site-functions/prompt_spaceship_setup
-          autoload -U promptinit; promptinit
-        '';
-      };
-    };
   };
 }

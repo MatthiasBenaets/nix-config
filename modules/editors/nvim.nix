@@ -26,7 +26,7 @@ in
       nodejs
       python3
       ripgrep
-      zig
+      # zig
     ];
   };
 
@@ -444,7 +444,7 @@ in
             ];
           };
           gopls.enable = true;
-          zls.enable = true;
+          # zls.enable = true;
         };
       };
       lsp-format.enable = true;
