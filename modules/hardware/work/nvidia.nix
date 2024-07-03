@@ -23,7 +23,7 @@ in
 
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware = {
-    opengl.enable = true;
+    graphics.enable = true;
     nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.production;
       prime = {

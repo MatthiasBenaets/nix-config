@@ -23,7 +23,7 @@ in
 
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware = {
-    opengl = {
+    graphics = {
       enable = true;
       # package = pkgs.mesa.drivers;
     };
