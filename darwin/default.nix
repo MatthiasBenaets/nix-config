@@ -46,7 +46,7 @@ in
     };
 
   # MacBookAir10,1 M1 13" (2020)
-  MacBookM1 =
+  MacBookAirM1 =
     let
       inherit (systemConfig "aarch64-darwin") system pkgs stable;
     in

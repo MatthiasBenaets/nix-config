@@ -19,30 +19,12 @@
   yabai.enable = false;
 
   homebrew = {
-    enable = true;
-    onActivation = {
-      autoUpdate = false;
-      upgrade = false;
-      cleanup = "zap";
-    };
     brews = [
       # "wireguard-tools"
     ];
     casks = [
-      "aldente"
-      "alfred"
       "docker"
-      "moonlight"
-      "mpv"
-      "obs"
-      "obsidian"
-      "plex-media-player"
-      "prusaslicer"
-      "rectangle"
-      "stremio"
       "virtualbox" # sudo codesign --force --deep --sign - /Applications/VirtualBox.app/Contents/Resources/VirtualBoxVM.app
-      # "canon-eos-utility"
-      # "jellyfin-media-player"
     ];
   };
 

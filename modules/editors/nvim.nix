@@ -603,6 +603,7 @@ in
         },
         options = {
           cursorline = true,
+          transparency = true,
         },
       })
       vim.cmd[[
@@ -614,6 +615,8 @@ in
       require('scrollbar').setup()
 
       vim.o.runtimepath = vim.o.runtimepath .. ',~/.local/share/nvim/site' -- set spellfile path
+
+      vim.opt.fillchars:append({ eob = " " })
     '';
   };
 

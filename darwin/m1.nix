@@ -11,24 +11,7 @@
 
 {
   homebrew = {
-    enable = true;
-    onActivation = {
-      upgrade = false;
-      cleanup = "zap";
-    };
-    casks = [
-      "firefox"
-      "kitty"
-      "moonlight"
-      "obs"
-      "obsidian"
-      "plex-media-player"
-      "prusaslicer"
-      "raycast"
-      "vlc"
-    ];
     masApps = {
-      "wireguard" = 1451685025;
       "Xcode" = 497799835;
     };
   };

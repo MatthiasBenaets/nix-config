@@ -10,6 +10,10 @@
 #
 
 [
+  # ./alacritty.nix
+  ./kitty.nix
   ./skhd.nix
   ./yabai.nix
+  ./zsh.nix
+  ../../modules/editors/nvim.nix
 ]

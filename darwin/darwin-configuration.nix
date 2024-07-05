@@ -12,25 +12,11 @@
 { pkgs, vars, ... }:
 
 {
-  imports = [
-    ../modules/editors/nvim.nix
-  ] ++
-  (import ./modules);
+  imports = (import ./modules);
 
   users.users.${vars.user} = {
     home = "/Users/${vars.user}";
     shell = pkgs.zsh;
-  };
-
-  fonts = {
-    packages = with pkgs; [
-      font-awesome
-      (nerdfonts.override {
-        fonts = [
-          "FiraCode"
-        ];
-      })
-    ];
   };
 
   environment = {
@@ -39,36 +25,44 @@
       VISUAL = "${vars.editor}";
     };
     systemPackages = with pkgs; [
+      eza # Ls
       git # Version Control
       mas # Mac App Store $ mas search <app>
       ranger # File Manager
+      tldr # Help
+      zsh-powerlevel10k # Prompt
     ];
   };
 
   programs.zsh.enable = true;
 
-  home-manager.users.${vars.user} = {
-    home = {
-      stateVersion = "22.05";
+  homebrew = {
+    enable = true;
+    onActivation = {
+      upgrade = false;
+      cleanup = "zap";
     };
+    casks = [
+      "aldente"
+      "firefox"
+      "moonlight"
+      "obs"
+      "obsidian"
+      "plex-media-player"
+      "prusaslicer"
+      "raycast"
+      "stremio"
+      "vlc"
+      # "canon-eos-utility"
+      # "jellyfin-media-player"
+    ];
+    masApps = {
+      "wireguard" = 1451685025;
+    };
+  };
 
-    programs = {
-      zsh = {
-        enable = true;
-        autosuggestion.enable = true;
-        syntaxHighlighting.enable = true;
-        history.size = 10000;
-        oh-my-zsh = {
-          enable = true;
-          plugins = [ "git" ];
-          custom = "$HOME/.config/zsh_nix/custom";
-        };
-        initExtra = ''
-          source ${pkgs.spaceship-prompt}/share/zsh/site-functions/prompt_spaceship_setup
-          autoload -U promptinit; promptinit
-        '';
-      };
-    };
+  home-manager.users.${vars.user} = {
+    home.stateVersion = "22.05";
   };
 
   services.nix-daemon.enable = true;
@@ -89,5 +83,4 @@
   system = {
     stateVersion = 4;
   };
-
 }
