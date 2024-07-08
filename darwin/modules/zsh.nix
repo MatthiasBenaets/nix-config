@@ -31,6 +31,7 @@
           alias ls="${pkgs.eza}/bin/eza --icons=always --color=always"
 
           ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#757575'
+          zstyle ':completion:*' menu select
         '';
       };
     };

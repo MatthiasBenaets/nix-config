@@ -48,7 +48,7 @@
       "moonlight"
       "obs"
       "obsidian"
-      "plex-media-player"
+      "plex"
       "prusaslicer"
       "raycast"
       "stremio"
