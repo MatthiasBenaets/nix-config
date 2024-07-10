@@ -60,12 +60,6 @@ in
       }
       {
         event = "FileType";
-        pattern = [ "markdown" "org" "norg" ];
-        command = ":TableModeEnable";
-        desc = "Table Mode";
-      }
-      {
-        event = "FileType";
         pattern = [ "markdown" ];
         command = "setlocal scrolloff=30 | setlocal wrap";
         desc = "Fixed cursor location on markdown (for preview) and enable wrapping";
@@ -510,6 +504,11 @@ in
             { name = "orgmode"; }
             { name = "neorg"; }
           ];
+          window = {
+            completion.border = "rounded";
+            documentation.border = "rounded";
+          };
+          completion.completeopt = "menu,menuone,noselect,preview";
         };
       };
       which-key = {
@@ -540,7 +539,6 @@ in
       onedarkpro-nvim
       vim-cool
       vim-prettier
-      vim-table-mode
       # codeium-vim
       (pkgs.vimUtils.buildVimPlugin rec {
         pname = "scope-nvim";
@@ -606,8 +604,28 @@ in
           transparency = true,
         },
       })
+      local border = {
+        {"╭", "FloatBorder"},
+        {"─", "FloatBorder"},
+        {"╮", "FloatBorder"},
+        {"│", "FloatBorder"},
+        {"╯", "FloatBorder"},
+        {"─", "FloatBorder"},
+        {"╰", "FloatBorder"},
+        {"│", "FloatBorder"},
+      }
+      local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+      function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+        opts = opts or {}
+        opts.border = opts.border or border
+        return orig_util_open_floating_preview(contents, syntax, opts, ...)
+      end
       vim.cmd[[
         colorscheme onedark
+        highlight FloatBorder guifg=white guibg=NONE
+        highlight Pmenu guibg=NONE
+        highlight PmenuSbar guibg=NONE
+        highlight PmenuThumb guibg=white
       ]]
 
       require('org-bullets').setup()
