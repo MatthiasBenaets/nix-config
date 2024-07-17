@@ -11,6 +11,10 @@
 
 {
   homebrew = {
+    casks = [
+      "adobe-creative-cloud"
+      "darktable"
+    ];
     masApps = {
       "Xcode" = 497799835;
     };
@@ -27,12 +31,16 @@
         # "com.apple.keyboard.fnState" = true;
       };
       dock = {
-        tilesize = 28;
+        autohide = false;
+        autohide-delay = 0.2;
+        autohide-time-modifier = 0.1;
+        magnification = true;
         mineffect = "scale";
+        # minimize-to-application = true;
         orientation = "bottom";
         showhidden = false;
         show-recents = false;
-        # minimize-to-application = true;
+        tilesize = 20;
       };
       finder = {
         ShowPathbar = true;
