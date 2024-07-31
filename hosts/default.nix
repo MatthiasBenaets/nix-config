@@ -62,6 +62,8 @@ in
         mainMonitor = "eDP-1";
         secondMonitor = "DP-4";
         thirdMonitor = "DP-5";
+        secondMonitorDesc = "desc:HP Inc. HP E24i G4 6CM3071B66";
+        thirdMonitorDesc = "desc:HP Inc. HP E24i G4 6CM3071996";
       };
     };
     modules = [

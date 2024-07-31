@@ -88,7 +88,7 @@
     syncthing = {
       enable = true;
       user = "${vars.user}";
-      dataDir= "/home/${vars.user}/Sync";
+      dataDir = "/home/${vars.user}/Sync";
     };
   };
 

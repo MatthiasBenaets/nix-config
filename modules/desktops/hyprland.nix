@@ -260,11 +260,9 @@ with host;
               "${toString mainMonitor},1920x1080@60,1920x0,1"
               "${toString secondMonitor},1920x1080@60,0x0,1"
             ] else if hostName == "work" then [
-              "${toString mainMonitor},1920x1080@60,0x0,1"
-              "${toString secondMonitor},1920x1200@60,1920x0,1"
-              "${toString thirdMonitor},1920x1200@60,3840x0,1"
-              "DP-6,1920x1200@60,1920x0,1"
-              "DP-7,1920x1200@60,3840x0,1"
+              "${toString mainMonitor},preferred,0x0,1"
+              "${toString secondMonitorDesc},1920x1200@60,1920x0,1"
+              "${toString thirdMonitorDesc},1920x1200@60,3840x0,1"
             ] else if hostName == "xps" then [
               "${toString mainMonitor},3840x2400@60,0x0,2"
               "${toString secondMonitor},1920x1080@60,1920x0,1"
@@ -329,6 +327,9 @@ with host;
                   tap-to-click = true;
                 } else { };
             };
+            cursor = {
+              no_hardware_cursors = true;
+            };
             gestures =
               if hostName == "work" || hostName == "xps" || hostName == "probook" then {
                 workspace_swipe = true;
@@ -336,7 +337,6 @@ with host;
                 workspace_swipe_distance = 100;
                 workspace_swipe_create_new = true;
               } else { };
-
             dwindle = {
               pseudotile = false;
               force_split = 2;

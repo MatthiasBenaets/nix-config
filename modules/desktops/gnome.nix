@@ -37,18 +37,17 @@ with lib;
 
     environment = {
       systemPackages = with pkgs; [
-        gnome.dconf-editor
-        gnome.gnome-tweaks
-      ];
-      gnome.excludePackages = (with pkgs; [
-        # gnome-tour
-      ]) ++ (with pkgs.gnome; [
+        dconf-editor
         epiphany
         geary
         # gnome-characters
         # gnome-contacts
         # gnome-initial-setup
+        gnome-tweaks
         yelp
+      ];
+      gnome.excludePackages = (with pkgs; [
+        # gnome-tour
       ]);
     };
 
