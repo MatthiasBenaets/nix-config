@@ -44,10 +44,10 @@
     };
     casks = [
       "aldente"
+      "appcleaner"
       "firefox"
       "moonlight"
       "obs"
-      "obsidian"
       "plex"
       "prusaslicer"
       "raycast"
@@ -75,7 +75,7 @@
       options = "--delete-older-than 7d";
     };
     extraOptions = ''
-      auto-optimise-store = true
+      # auto-optimise-store = true
       experimental-features = nix-command flakes
     '';
   };

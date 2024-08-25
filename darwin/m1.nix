@@ -7,15 +7,27 @@
 #       └─ ./m1.nix *
 #
 
-{ vars, ... }:
+{ pkgs, vars, ... }:
 
 {
+  environment = {
+    systemPackages = with pkgs; [
+      python3
+    ];
+  };
+
   homebrew = {
     casks = [
       "adobe-creative-cloud"
       "darktable"
+      "google-chrome"
+      "obsidian"
+      "upscayl"
+      "xnviewmp"
     ];
     masApps = {
+      # "FileZilla Pro - FTP and Client" = 1298486723;
+      # "FileZilla Pro RemoteDrive" = -2087754162;
       "Xcode" = 497799835;
     };
   };
