@@ -20,6 +20,8 @@
     casks = [
       "adobe-creative-cloud"
       "darktable"
+      "deluge"
+      "garmin-express"
       "google-chrome"
       "obsidian"
       "upscayl"
