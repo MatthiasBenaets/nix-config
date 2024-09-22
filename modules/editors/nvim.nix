@@ -24,7 +24,9 @@ in
     systemPackages = with pkgs; [
       go
       nodejs
-      python3
+      (python3.withPackages (ps: with ps; [
+        pip
+      ]))
       ripgrep
       # zig
     ];
@@ -426,7 +428,7 @@ in
           html.enable = true;
           cssls.enable = true;
           eslint.enable = true;
-          tsserver.enable = true;
+          ts-ls.enable = true;
           pyright.enable = true;
           tailwindcss = {
             enable = true;
