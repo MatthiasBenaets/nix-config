@@ -20,6 +20,8 @@
       "adobe-creative-cloud"
       "darktable"
       "deluge"
+      "docker"
+      "docker-toolbox"
       "garmin-express"
       "google-chrome"
       "obsidian"

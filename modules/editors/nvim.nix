@@ -302,9 +302,11 @@ in
       };
       mini = {
         enable = true;
+        mockDevIcons = true;
         modules = {
           indentscope = { };
           move = { };
+          icons = { };
         };
       };
       indent-blankline = {
