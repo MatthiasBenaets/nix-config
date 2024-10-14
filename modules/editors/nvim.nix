@@ -296,17 +296,18 @@ in
     plugins = {
       lualine.enable = true;
       barbar.enable = true;
+      web-devicons.enable = true;
       gitgutter = {
         enable = true;
         defaultMaps = false;
       };
       mini = {
         enable = true;
-        mockDevIcons = true;
+        # mockDevIcons = true;
         modules = {
           indentscope = { };
           move = { };
-          icons = { };
+          # icons = { };
         };
       };
       indent-blankline = {
