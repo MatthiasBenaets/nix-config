@@ -8,7 +8,7 @@
 {
   config = lib.mkIf (host.hostName == "beelink" || host.hostName == "work" || host.hostName == "xps") {
     environment.systemPackages = with pkgs; [
-      gnome.gnome-control-center
+      gnome-control-center
       gnome-online-accounts
     ];
 
@@ -19,7 +19,7 @@
     home-manager.users.${vars.user} = {
       xdg.desktopEntries.gnome-control-center = {
         name = "Gnome Control Center";
-        exec = "env XDG_CURRENT_DESKTOP=GNOME ${pkgs.gnome.gnome-control-center}/bin/gnome-control-center";
+        exec = "env XDG_CURRENT_DESKTOP=GNOME ${pkgs.gnome-control-center}/bin/gnome-control-center";
       };
     };
   };

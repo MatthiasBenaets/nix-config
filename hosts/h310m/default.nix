@@ -59,7 +59,7 @@
   environment = {
     systemPackages = with pkgs; [
       ansible # Automation
-      gmtp # Used for mounting gopro
+      #gmtp # Used for mounting gopro
       plex-media-player # Media Player
       simple-scan # Scanning
       sshpass # Ansible Dependency

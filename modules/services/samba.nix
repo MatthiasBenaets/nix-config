@@ -8,7 +8,7 @@
   services = {
     samba = {
       enable = true;
-      shares = {
+      settings = {
         # Set Password: $ smbpasswd -a <user>
         share = {
           "path" = "/home/${vars.user}";
