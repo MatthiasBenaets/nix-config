@@ -409,7 +409,7 @@ in
       };
       neorg = {
         enable = true;
-        package = stable.vimPlugins.neorg;
+        package = pkgs.vimPlugins.neorg;
         lazyLoading = true;
         modules = {
           "core.defaults".__empty = null;
