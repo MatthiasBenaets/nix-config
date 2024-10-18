@@ -481,7 +481,15 @@ in
         };
       };
       lsp-lines.enable = true;
-      luasnip.enable = true;
+      luasnip = {
+        enable = true;
+        fromVscode = [
+          { paths = "${pkgs.vimPlugins.friendly-snippets}"; }
+        ];
+        /* fromLua = [
+          { paths = ./luasnip/snippets.lua; }
+        ]; */
+      };
       cmp_luasnip.enable = true;
       cmp-nvim-lsp.enable = true;
       cmp-look.enable = true;
@@ -555,7 +563,6 @@ in
       };
     };
     extraPlugins = with pkgs.vimPlugins; [
-      friendly-snippets
       luasnip
       nvim-scrollbar
       orgmode

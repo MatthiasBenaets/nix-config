@@ -22,6 +22,7 @@
       "deluge"
       "docker"
       "docker-toolbox"
+      "autodesk-fusion"
       "garmin-express"
       "google-chrome"
       "obsidian"
