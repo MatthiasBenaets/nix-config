@@ -102,7 +102,7 @@
     let
       # Variables Used In Flake
       vars = {
-        user = "matthias";
+        user = "nixos";
         location = "$HOME/.setup";
         terminal = "kitty";
         editor = "nvim";

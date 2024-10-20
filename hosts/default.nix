@@ -79,7 +79,7 @@ in
     ];
   };
 
-  # Work Profile
+  # XPS Profile
   xps = lib.nixosSystem {
     inherit system;
     specialArgs = {
@@ -129,6 +129,28 @@ in
       }
     ];
   };
+
+  # Work Profile
+  wsl = lib.nixosSystem {
+    inherit system;
+    specialArgs = {
+      inherit inputs system stable hyprland hyprspace vars;
+      host = {
+        hostName = "wsl";
+      };
+    };
+    modules = [
+      nixvim.nixosModules.nixvim
+      ./wsl
+      ./configuration.nix
+
+      home-manager.nixosModules.home-manager
+      {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+      }
+    ];
+  };  
 
   # DEPRECATED Desktop Profile
   h310m = lib.nixosSystem {
