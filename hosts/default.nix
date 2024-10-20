@@ -9,7 +9,7 @@
 #           └─ default.nix
 #
 
-{ inputs, nixpkgs, nixpkgs-stable, nixos-hardware, home-manager, nur, nixvim, doom-emacs, hyprland, hyprspace, plasma-manager, vars, ... }:
+{ inputs, nixpkgs, nixpkgs-stable, nixos-hardware, home-manager, nur, nixvim, doom-emacs, hyprland, hyprspace, plasma-manager, nixos-wsl, vars, ... }:
 
 let
   system = "x86_64-linux";
@@ -130,11 +130,11 @@ in
     ];
   };
 
-  # Work Profile
+  # wsl Profile
   wsl = lib.nixosSystem {
     inherit system;
     specialArgs = {
-      inherit inputs system stable hyprland hyprspace vars;
+      inherit inputs system stable hyprland hyprspace nixos-wsl vars;
       host = {
         hostName = "wsl";
       };
@@ -143,6 +143,7 @@ in
       nixvim.nixosModules.nixvim
       ./wsl
       ./configuration.nix
+      nixos-wsl.nixosModules.default
 
       home-manager.nixosModules.home-manager
       {
@@ -151,6 +152,7 @@ in
       }
     ];
   };  
+  
 
   # DEPRECATED Desktop Profile
   h310m = lib.nixosSystem {

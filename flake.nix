@@ -42,6 +42,12 @@
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
+      #Nixos Windows Linux Subsystem
+      nixos-wsl = {
+        url = "github:nix-community/NixOS-WSL";
+        # Requires nixos-wsl.nixosModules.default to be added to the host modules
+      };
+
       # NUR Community Packages
       nur = {
         url = "github:nix-community/NUR";
@@ -98,7 +104,7 @@
       };
     };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nixos-hardware, home-manager, home-manager-stable, darwin, nur, nixgl, nixvim, nixvim-stable, doom-emacs, hyprland, hyprspace, plasma-manager, ... }: # Function telling flake which inputs to use
+  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nixos-hardware, home-manager, home-manager-stable, darwin, nur, nixgl, nixvim, nixvim-stable, doom-emacs, hyprland, hyprspace, plasma-manager, nixos-wsl, ... }: # Function telling flake which inputs to use
     let
       # Variables Used In Flake
       vars = {
@@ -112,7 +118,7 @@
       nixosConfigurations = (
         import ./hosts {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-stable nixos-hardware home-manager nur nixvim doom-emacs hyprland hyprspace plasma-manager vars; # Inherit inputs
+          inherit inputs nixpkgs nixpkgs-stable nixos-hardware home-manager nur nixvim doom-emacs hyprland hyprspace plasma-manager nixos-wsl vars; # Inherit inputs
         }
       );
 
