@@ -14,12 +14,6 @@ let
   };
 in
 {
-  # # steam-run for codeium-vim
-  # # start nvim in bash first time, so the spell files can be downloaded
-  # programs.zsh.shellAliases = {
-  #   vim = "${pkgs.steam-run}/bin/steam-run nvim";
-  #   nvim = "${pkgs.steam-run}/bin/steam-run nvim";
-  # };
   environment = {
     systemPackages = with pkgs; [
       go
@@ -490,6 +484,11 @@ in
           { paths = ./luasnip/snippets.lua; }
         ]; */
       };
+      codeium-vim = {
+        enable = true;
+        package = pkgs.vimPlugins.codeium-vim;
+        settings.bin = "${pkgs.vimPlugins.codeium-vim}/bin/codeium_language_server";
+      };
       cmp_luasnip.enable = true;
       cmp-nvim-lsp.enable = true;
       cmp-look.enable = true;
@@ -569,7 +568,6 @@ in
       onedarkpro-nvim
       vim-cool
       vim-prettier
-      # codeium-vim
       (pkgs.vimUtils.buildVimPlugin rec {
         pname = "scope-nvim";
         version = "cd27af77ad61a7199af5c28d27013fb956eb0e3e";
