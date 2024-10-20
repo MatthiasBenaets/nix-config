@@ -46,12 +46,6 @@
       fsType = "tmpfs";
     };
 
-  fileSystems."/mnt/wslg/distro" =
-    { device = "";
-      fsType = "none";
-      options = [ "bind" ];
-    };
-
   fileSystems."/usr/lib/wsl/lib" =
     { device = "none";
       fsType = "overlay";

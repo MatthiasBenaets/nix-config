@@ -137,6 +137,8 @@ in
       inherit inputs system stable hyprland hyprspace nixos-wsl vars;
       host = {
         hostName = "wsl";
+        mainMonitor = ":0";
+        secondMonitor = "";
       };
     };
     modules = [

@@ -256,7 +256,7 @@ with host;
             };
             monitor = [
               ",preferred,auto,1,mirror,${toString mainMonitor}"
-            ] ++ (if hostName == "beelink" || hostName == "h310m" then [
+            ] ++ (if hostName == "beelink" || hostName == "h310m" || hostName == "wsl" then [
               "${toString mainMonitor},1920x1080@60,1920x0,1"
               "${toString secondMonitor},1920x1080@60,0x0,1"
             ] else if hostName == "work" then [
@@ -271,7 +271,7 @@ with host;
               "${toString mainMonitor},1920x1080@60,0x0,1"
             ]);
             workspace =
-              if hostName == "beelink" || hostName == "h310m" then [
+              if hostName == "beelink" || hostName == "h310m" || hostName == "wsl" then [
                 "1, monitor:${toString mainMonitor}"
                 "2, monitor:${toString mainMonitor}"
                 "3, monitor:${toString mainMonitor}"
