@@ -70,6 +70,7 @@
       # simple-scan # Scanning
       # sshpass # Ansible Dependency
       # wacomtablet # Tablet
+      starship
     ];
   };
 

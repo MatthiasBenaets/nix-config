@@ -151,6 +151,8 @@ in
       {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
+        #handle conflicting files in .config
+        home-manager.backupFileExtension = "backup";
       }
     ];
   };  
