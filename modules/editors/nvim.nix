@@ -420,12 +420,12 @@ in
       lsp = {
         enable = true;
         servers = {
-          nil-ls.enable = true;
+          nil_ls.enable = true;
           svelte.enable = true;
           html.enable = true;
           cssls.enable = true;
           eslint.enable = true;
-          ts-ls.enable = true;
+          ts_ls.enable = true;
           pyright.enable = true;
           tailwindcss = {
             enable = true;

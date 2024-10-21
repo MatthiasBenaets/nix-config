@@ -153,6 +153,10 @@ in
 
   programs = {
     dconf.enable = true;
+    nix-ld = {
+      enable = true;
+      libraries = [];
+    };
   };
 
   hardware.pulseaudio.enable = false;
