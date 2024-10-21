@@ -94,6 +94,7 @@ in
     systemPackages = with pkgs; [
       # Terminal
       terminal # Terminal Emulator
+      starship # Shell enhancer
       btop # Resource Manager
       cifs-utils # Samba
       coreutils # GNU Utilities
@@ -112,6 +113,9 @@ in
       usbutils # Manage USB
       wget # Retriever
       xdg-utils # Environment integration
+      tree # Terminal file hierarchy display
+      direnv # Folder based environments using .envrc files
+      warp-terminal # Nice ai terminal (non free!)
 
       # Video/Audio
       alsa-utils # Audio Control
@@ -213,6 +217,18 @@ in
     };
     programs = {
       home-manager.enable = true;
+      bash.enable = true;
+      starship.enable = true;
+      direnv = {
+        enable = true;
+        enableBashIntegration = true;
+        nix-direnv.enable = true;
+      };
+      git = {
+        enable = true;
+        userName  = "reinout91";
+        userEmail = "reinout91@gmail.com";
+      };
     };
     xdg = {
       mime.enable = true;
