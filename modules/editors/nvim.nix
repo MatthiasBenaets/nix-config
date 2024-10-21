@@ -24,6 +24,10 @@ in
       ripgrep
       # zig
     ];
+    variables = {
+      PATH="$HOME/.npm-packages/bin:$PATH";
+      NODE_PATH="$HOME/.npm-packages/lib/node_modules:$NODE_PATH:";
+    };
   };
 
   programs.nixvim = {
@@ -669,5 +673,6 @@ in
   home-manager.users.${vars.user} = {
     home.file.".local/share/nvim/site/spell/nl.utf-8.spl".source = nvim-spell-nl-utf8-dictionary;
     home.file.".local/share/nvim/site/spell/nl.utf-8.sug".source = nvim-spell-nl-utf8-suggestions;
+    home.file.".npmrc".text = "prefix = \${HOME}/.npm-packages";
   };
 }
