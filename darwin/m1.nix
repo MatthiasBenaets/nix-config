@@ -53,7 +53,7 @@
         # "com.apple.keyboard.fnState" = true;
       };
       dock = {
-        autohide = false;
+        autohide = true;
         autohide-delay = 0.2;
         autohide-time-modifier = 0.1;
         magnification = true;
