@@ -10,6 +10,8 @@
 { pkgs, vars, ... }:
 
 {
+  imports = [ ./modules/aerospace.nix ];
+
   environment = {
     systemPackages = with pkgs; [
     ];
