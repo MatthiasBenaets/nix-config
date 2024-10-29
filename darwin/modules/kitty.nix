@@ -55,6 +55,13 @@
           selection_foreground  #202020
 
           map f1 new_window_with_cwd
+          map cmd+t new_tab_with_cwd
+          startup_session ~/.config/kitty/startup.conf
+        '';
+      };
+      ".config/kitty/startup.conf" = {
+        text = ''
+          cd /Users/matthias/
         '';
       };
     };

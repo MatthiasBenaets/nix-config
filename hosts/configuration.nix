@@ -76,7 +76,8 @@ in
     font-awesome # Icons
     corefonts # MS
     noto-fonts # Google + Unicode
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
+    noto-fonts-cjk-serif
     noto-fonts-emoji
     (nerdfonts.override {
       fonts = [
