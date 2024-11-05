@@ -42,6 +42,18 @@ with host;
           XDG_SESSION_DESKTOP = "Hyprland";
           XCURSOR = "Catppuccin-Mocha-Dark-Cursors";
           XCURSOR_SIZE = 24;
+          NIXOS_OZONE_WL = 1;
+          SDL_VIDEODRIVER = "wayland";
+          OZONE_PLATFORM = "wayland";
+          WLR_RENDERER_ALLOW_SOFTWARE = 1;
+          CLUTTER_BACKEND = "wayland";
+          QT_QPA_PLATFORM = "wayland;xcb";
+          QT_QPA_PLATFORMTHEME = "qt6ct";
+          QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+          QT_AUTO_SCREEN_SCALE_FACTOR = 1;
+          GDK_BACKEND = "wayland";
+          WLR_NO_HARDWARE_CURSORS = "1";
+          MOZ_ENABLE_WAYLAND = "1";
         };
         sessionVariables =
           if hostName == "xps" then {
@@ -65,14 +77,7 @@ with host;
             GDK_BACKEND = "wayland";
             WLR_NO_HARDWARE_CURSORS = "1";
             MOZ_ENABLE_WAYLAND = "1";
-          } else {
-            # QT_QPA_PLATFORM = "wayland";
-            QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-
-            GDK_BACKEND = "wayland";
-            WLR_NO_HARDWARE_CURSORS = "1";
-            MOZ_ENABLE_WAYLAND = "1";
-          };
+          } else { };
         systemPackages = with pkgs; [
           grimblast # Screenshot
           hyprcursor # Cursor
@@ -319,6 +324,7 @@ with host;
               numlock_by_default = 1;
               accel_profile = "flat";
               sensitivity = 0.8;
+              natural_scroll = false;
               touchpad =
                 if hostName == "work" || hostName == "xps" || hostName == "probook" then {
                   natural_scroll = true;
@@ -326,6 +332,11 @@ with host;
                   middle_button_emulation = true;
                   tap-to-click = true;
                 } else { };
+            };
+            device = {
+              name = "matthias’s-magic-mouse";
+              sensitivity = 0.5;
+              natural_scroll = true;
             };
             cursor = {
               no_hardware_cursors = true;

@@ -14,7 +14,7 @@
 #               └─ default.nix
 #
 
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [ ./hardware-configuration.nix ] ++
@@ -29,38 +29,38 @@
       efi.canTouchEfiVariables = true;
       timeout = 1;
     };
-    initrd.kernelModules = [ "amdgpu" ];
+    kernelParams = [
+      "nvidia-drm.modeset=1"
+      "nvidia-drm.fbdev=1"
+    ];
+    kernelPackages = pkgs.linuxPackages_6_6; # Older kernel, or nvidia won't work on Hyprland
   };
+
 
   hardware = {
     graphics = {
       enable = true;
-      extraPackages = with pkgs; [
-        intel-media-driver
-        vaapiIntel
-        rocm-opencl-icd
-        rocm-opencl-runtime
-        amdvlk
-      ];
-      extraPackages32 = with pkgs; [
-        driversi686Linux.amdvlk
-      ];
-      driSupport = true;
-      driSupport32Bit = true;
     };
+    nvidia = {
+      open = false;
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
+      nvidiaSettings = true;
+      modesetting.enable = true;
+      forceFullCompositionPipeline = true;
+    };
+
     sane = {
       enable = true;
       extraBackends = [ pkgs.sane-airscan ];
     };
   };
 
+  services.xserver.videoDrivers = [ "nvidia" ];
+
   hyprland.enable = true;
 
   environment = {
     systemPackages = with pkgs; [
-      ansible # Automation
-      #gmtp # Used for mounting gopro
-      plex-media-player # Media Player
       simple-scan # Scanning
       sshpass # Ansible Dependency
       wacomtablet # Tablet

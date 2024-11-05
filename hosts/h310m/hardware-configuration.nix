@@ -27,65 +27,18 @@
 
   fileSystems."/" =
     {
-      # device = "/dev/disk/by-uuid/80e0d316-954b-4959-8c5d-06be7255a036";
-      device = "/dev/disk/by-label/nixos";
-      fsType = "ext4";
+      device = "/dev/disk/by-uuid/07367b8f-4ff8-42c9-bb85-c7b4b769ad05";
+      fsType = "btrfs";
     };
 
   fileSystems."/boot" =
     {
-      # device = "/dev/disk/by-uuid/FCCC-9ECD";
-      device = "/dev/disk/by-label/boot";
+      device = "/dev/disk/by-uuid/5449-55CC";
       fsType = "vfat";
+      options = [ "fmask=0022" "dmask=0022" ];
     };
 
-  # fileSystems."/ssd" =
-  #   {
-  #     # device = "/dev/disk/by-uuid/748e6628-0f4e-4479-8940-daa8531d3390";
-  #     device = "/dev/disk/by-label/ssd";
-  #     fsType = "ntfs";
-  #     options = [ "nofail" ];
-  #   };
-
-  # fileSystems."/hdd" =
-  #   {
-  #     # device = "/dev/disk/by-uuid/bbab0f8a-50f4-4a7c-a0d3-0ccb036f11d5";
-  #     device = "/dev/disk/by-label/hdd";
-  #     fsType = "ext4";
-  #     options = [ "nofail" ];
-  #   };
-
-  fileSystems."/mnt/toshiba1" =
-    {
-      # device = "/dev/disk/by-uuid/7491ea96-a62d-4202-ada7-8d0310dfc967";
-      device = "/dev/disk/by-label/toshiba";
-      fsType = "ext4";
-      options = [ "nofail" ];
-    };
-
-  fileSystems."/mnt/toshiba2" =
-    {
-      # device = "/dev/disk/by-uuid/21307718-de74-4a24-aaa7-dd09f7e89e32";
-      device = "/dev/disk/by-label/toshiba2";
-      fsType = "ext4";
-      options = [ "nofail" ];
-    };
-
-  fileSystems."/mnt/toshiba3" =
-    {
-      # device = "/dev/disk/by-uuid/7f5e9ea1-2bc3-44c5-9b6a-d8fe2a311b73";
-      device = "/dev/disk/by-label/toshiba3";
-      fsType = "ext4";
-      options = [ "nofail" ];
-    };
-
-  fileSystems."/mnt/maxtor" =
-    {
-      # device = "/dev/disk/by-uuid/36E6613DE660FE8D";
-      device = "/dev/disk/by-label/maxtor";
-      fsType = "ntfs";
-      options = [ "nofail" ];
-    };
+  swapDevices = [ ];
 
   fileSystems."/storage" =
     {
@@ -109,53 +62,13 @@
         [ "${automount_opts},mfsymlinks,uid=1000,gid=100,credentials=/home/${vars.user}/smb" ];
     };
 
-  # swapDevices =
-  #   [
-  #     {
-  #       # device = "/dev/disk/by-uuid/7d0c3f66-c6eb-413c-956f-dfdd8ceb0cae";
-  #       device = "/dev/disk/by-label/swap";
-  #     }
-  #   ];
-
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   networking = with host; {
-    useDHCP = false;
+    useDHCP = true;
     hostName = hostName;
     enableIPv6 = false;
-    bridges = {
-      # Bridge so interface can be used with virtual machines
-      "br0" = {
-        interfaces = [ "enp3s0" ]; # enp2s0 without 16x PCI-e populated
-      };
-    };
-    interfaces = {
-      # enp2s0 = {
-      #   # useDHCP = true;
-      #   ipv4.addresses = [{
-      #     address = "192.168.0.50";
-      #     prefixLength = 24;
-      #   }];
-      # };
-      # wlp1s0.useDHCP = true;
-      br0.ipv4.addresses = [{
-        address = "192.168.0.50";
-        prefixLength = 24;
-      }];
-    };
-    defaultGateway = "192.168.0.1";
     nameservers = [ "192.168.0.4" "1.1.1.1" ];
   };
-
-  # # Wifi hotspot
-  # services.hostapd = {
-  #   enable = true;
-  #   interface = "wlp1s0";
-  #   ssid = "h310m";
-  #   wpaPassphrase = "<password>";
-  #   extraConfig = ''
-  #     bridge=br0
-  #   '';
-  # };
 }

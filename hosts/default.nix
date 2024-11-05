@@ -130,15 +130,14 @@ in
     ];
   };
 
-  # DEPRECATED Desktop Profile
   h310m = lib.nixosSystem {
     inherit system;
     specialArgs = {
-      inherit inputs system stable hyprland hyprspace vars;
+      inherit inputs system stable hyprland vars;
       host = {
         hostName = "h310m";
-        mainMonitor = "HDMI-A-1";
-        secondMonitor = "HDMI-A-2";
+        mainMonitor = "HDMI-A-4";
+        secondMonitor = "HDMI-A-1";
       };
     };
     modules = [
