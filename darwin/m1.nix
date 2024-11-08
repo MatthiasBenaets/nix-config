@@ -20,14 +20,16 @@
   homebrew = {
     casks = [
       "adobe-creative-cloud"
+      "autodesk-fusion"
       "darktable"
       "deluge"
       "docker"
       "docker-toolbox"
-      "autodesk-fusion"
       "garmin-express"
       "google-chrome"
       "obsidian"
+      "r"
+      "rstudio"
       "upscayl"
       "xnviewmp"
     ];
