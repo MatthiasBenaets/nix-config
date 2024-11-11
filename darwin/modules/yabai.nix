@@ -21,6 +21,9 @@ with lib;
     services = {
       yabai = {
         enable = true;
+        # csrutils disable
+        # sudo nvram boot-args=-arm64e_preview_abi
+        enableScriptingAddition = true;
         package = pkgs.yabai;
         config = {
           layout = "bsp";
@@ -38,14 +41,15 @@ with lib;
           window_gap = "10";
         };
         extraConfig = ''
-          yabai -m rule --add app='^Emacs$' manage=on
-          yabai -m rule --add title='Preferences' manage=off layer=above
-          yabai -m rule --add title='^(Opening)' manage=off layer=above
-          yabai -m rule --add title='Library' manage=off layer=above
-          yabai -m rule --add app='^System Preferences$' manage=off layer=above
-          yabai -m rule --add app='Activity Monitor' manage=off layer=above
-          yabai -m rule --add app='Finder' manage=off layer=above
-          yabai -m rule --add app='^System Information$' manage=off layer=above
+          sudo yabai --load-sa
+
+          yabai -m rule --add title='^(Opening)' manage=off
+          yabai -m rule --add app="^System Settings$" manage=off
+          yabai -m rule --add app="^Calculator$" manage=off
+          yabai -m rule --add app="^App Store$" manage=off
+          yabai -m rule --add app="^Calendar$" manage=off
+          yabai -m rule --add app="^Finder$" manage=off
+          yabai -m rule --add app="^Weather$" manage=off
         '';
       };
     };

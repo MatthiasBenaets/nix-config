@@ -10,6 +10,8 @@
 { pkgs, ... }:
 
 {
+  imports = import (./modules);
+
   networking = {
     computerName = "MacBook";
     hostName = "MacBook";

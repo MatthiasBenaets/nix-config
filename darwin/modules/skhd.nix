@@ -3,7 +3,7 @@
 #  Enable with "skhd.enable = true;"
 #
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, vars, ... }:
 
 with lib;
 {
@@ -22,55 +22,74 @@ with lib;
       skhd = {
         enable = true;
         package = pkgs.skhd;
-        skhdConfig = ''
-          # Open Terminal
-          alt - return : /Applications/Alacritty.App/Contents/MacOS/alacritty
+      };
+    };
 
-          # Toggle Window
-          lalt - t : yabai -m window --toggle float && yabai -m window --grid 4:4:1:1:2:2
-          lalt - f : yabai -m window --toggle zoom-fullscreen
-          lalt - q : yabai -m window --close
+    home-manager.users.${vars.user} = {
+      xdg.configFile."skhd/kill.sh" = {
+        executable = true;
+        text = ''
+          #!/usr/bin/env bash
 
-          # Focus Window
-          lalt - up : yabai -m window --focus north
-          lalt - down : yabai -m window --focus south
-          lalt - left : yabai -m window --focus west
-          lalt - right : yabai -m window --focus east
-
-          # Swap Window
-          shift + lalt - up : yabai -m window --swap north
-          shift + lalt - down : yabai -m window --swap south
-          shift + lalt - left : yabai -m window --swap west
-          shift + lalt - right : yabai -m window --swap east
-
-          # Resize Window
-          shift + cmd - left : yabai -m window --resize left:-50:0 && yabai -m window --resize right:-50:0
-          shift + cmd - right : yabai -m window --resize left:50:0 && yabai -m window --resize right:50:0
-          shift + cmd - up : yabai -m window --resize up:-50:0 && yabai -m window --resize down:-50:0
-          shift + cmd - down : yabai -m window --resize up:-50:0 && yabai -m window --resize down:-50:0
-
-          # Focus Space
-          ctrl - 1 : yabai -m space --focus 1
-          ctrl - 2 : yabai -m space --focus 2
-          ctrl - 3 : yabai -m space --focus 3
-          ctrl - 4 : yabai -m space --focus 4
-          ctrl - 5 : yabai -m space --focus 5
-          #ctrl - left : yabai -m space --focus prev
-          #ctrl - right: yabai -m space --focus next
-
-          # Send to Space
-          shift + ctrl - 1 : yabai -m window --space 1
-          shift + ctrl - 2 : yabai -m window --space 2
-          shift + ctrl - 3 : yabai -m window --space 3
-          shift + ctrl - 4 : yabai -m window --space 4
-          shift + ctrl - 5 : yabai -m window --space 5
-          shift + ctrl - left : yabai -m window --space prev && yabai -m space --focus prev
-          shift + ctrl - right : yabai -m window --space next && yabai -m space --focus next
-
-          # Menu
-          #cmd + space : for now its using the default keybinding to open Spotlight Search
+          window_pid=$(yabai -m query --windows --window | jq -r '.pid')
+          count_pid=$(yabai -m query --windows | jq "[.[] | select(.pid == ''${window_pid})] | length")
+          if [ "$count_pid" -gt 1 ]; then
+            yabai -m window --close
+          else
+            kill "''${window_pid}"
+          fi
         '';
       };
+      xdg.configFile."skhd/skhdrc".text = ''
+        # Open Applications
+        alt - return : /Applications/kitty.app/Contents/MacOS/kitty ~
+        alt - e : open ~
+
+        # Toggle Window
+        lalt - t : yabai -m window --toggle float && yabai -m window --grid 4:4:1:1:2:2
+        lalt - f : yabai -m window --toggle zoom-fullscreen
+        lalt - q : $HOME/.config/skhd/kill.sh
+
+        # Focus Window
+        lalt - up : yabai -m window --focus north || yabai -m display --focus north
+        lalt - down : yabai -m window --focus south || yabai -m display --focus south
+        lalt - left : yabai -m window --focus west || yabai -m display --focus west
+        lalt - right : yabai -m window --focus east || yabai -m display --focus east
+
+        # Swap Window
+        # shift + lalt - up : yabai -m window --swap north
+        # shift + lalt - down : yabai -m window --swap south
+        shift + lalt - up : WIN_ID=$(yabai -m query --windows --window | jq '.id'); yabai -m window --swap north; [[ ! $? == 0 ]] && (yabai -m display --focus north; yabai -m window last --insert south; yabai -m window --focus $WIN_ID; yabai -m window --display prev; yabai -m window --focus $WIN_ID);
+        shift + lalt - down : WIN_ID=$(yabai -m query --windows --window | jq '.id'); yabai -m window --swap south; [[ ! $? == 0 ]] && (yabai -m display --focus south; yabai -m window first --insert north; yabai -m window --focus $WIN_ID; yabai -m window --display next; yabai -m window --focus $WIN_ID);
+        shift + lalt - left : WIN_ID=$(yabai -m query --windows --window | jq '.id'); yabai -m window --swap west; [[ ! $? == 0 ]] && (yabai -m display --focus west; yabai -m window last --insert east; yabai -m window --focus $WIN_ID; yabai -m window --display prev; yabai -m window --focus $WIN_ID);
+        shift + lalt - right : WIN_ID=$(yabai -m query --windows --window | jq '.id'); yabai -m window --swap east; [[ ! $? == 0 ]] && (yabai -m display --focus east; yabai -m window first --insert west; yabai -m window --focus $WIN_ID; yabai -m window --display next; yabai -m window --focus $WIN_ID);
+
+        # Resize Window
+        cmd - left : yabai -m window --resize left:-50:0 && yabai -m window --resize right:-50:0
+        cmd - right : yabai -m window --resize left:50:0 && yabai -m window --resize right:50:0
+        cmd - up : yabai -m window --resize up:-50:0 && yabai -m window --resize down:-50:0
+        cmd - down : yabai -m window --resize up:-50:0 && yabai -m window --resize down:-50:0
+
+        # Focus Space
+        ctrl + lalt - 1 : yabai -m space --focus 1
+        ctrl + lalt - 2 : yabai -m space --focus 2
+        ctrl + lalt - 3 : yabai -m space --focus 3
+        ctrl + lalt - 4 : yabai -m space --focus 4
+        ctrl + lalt - 5 : yabai -m space --focus 5
+        ctrl + lalt - 6 : yabai -m space --focus 6
+        ctrl + lalt - left : yabai -m space --focus prev
+        ctrl + lalt - right: yabai -m space --focus next
+
+        # Send to Space
+        ctrl + shift + lalt - 1 : yabai -m window --space 1
+        ctrl + shift + lalt - 2 : yabai -m window --space 2
+        ctrl + shift + lalt - 3 : yabai -m window --space 3
+        ctrl + shift + lalt - 4 : yabai -m window --space 4
+        ctrl + shift + lalt - 5 : yabai -m window --space 5
+        ctrl + shift + lalt - 6 : yabai -m window --space 6
+        ctrl + shift + lalt - left : WIN_ID=$(yabai -m query --windows --window | jq '.id'); yabai -m window --space prev && yabai -m space --focus prev; yabai -m window --focus $WIN_ID;
+        ctrl + shift + lalt - right : WIN_ID=$(yabai -m query --windows --window | jq '.id'); yabai -m window --space next && yabai -m space --focus next; yabai -m window --focus $WIN_ID;
+      '';
     };
 
     system = {

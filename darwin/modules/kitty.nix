@@ -57,6 +57,8 @@
           map f1 new_window_with_cwd
           map cmd+t new_tab_with_cwd
           startup_session ~/.config/kitty/startup.conf
+
+          shell_integration no-sudo
         '';
       };
       ".config/kitty/startup.conf" = {

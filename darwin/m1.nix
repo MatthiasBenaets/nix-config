@@ -10,7 +10,10 @@
 { pkgs, vars, ... }:
 
 {
-  imports = [ ./modules/aerospace.nix ];
+  imports = import (./modules);
+
+  yabai.enable = true;
+  skhd.enable = true;
 
   environment = {
     systemPackages = with pkgs; [

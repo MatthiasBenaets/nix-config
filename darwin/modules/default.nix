@@ -10,6 +10,7 @@
 #
 
 [
+  ./aerospace.nix
   # ./alacritty.nix
   ./kitty.nix
   ./skhd.nix
