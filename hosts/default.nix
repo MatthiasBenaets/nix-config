@@ -136,8 +136,8 @@ in
       inherit inputs system stable hyprland vars;
       host = {
         hostName = "h310m";
-        mainMonitor = "HDMI-A-4";
-        secondMonitor = "HDMI-A-1";
+        mainMonitor = "DP-2";
+        secondMonitor = "HDMI-A-4";
       };
     };
     modules = [
