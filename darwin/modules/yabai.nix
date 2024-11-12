@@ -32,7 +32,7 @@ with lib;
           window_border = "on";
           window_border_width = "2";
           window_placement = "second_child";
-          focus_follows_mouse = "autoraise";
+          # focus_follows_mouse = "autoraise";
           mouse_follows_focus = "off";
           top_padding = "10";
           bottom_padding = "10";
@@ -51,6 +51,13 @@ with lib;
           yabai -m rule --add app="^Finder$" manage=off
           yabai -m rule --add app="^Weather$" manage=off
         '';
+      };
+      jankyborders = {
+        enable = true;
+        active_color = "0xffa6a6a6";
+        inactive_color = "0x00a6a6a6";
+        style = "round";
+        width = 5.0;
       };
     };
   };
