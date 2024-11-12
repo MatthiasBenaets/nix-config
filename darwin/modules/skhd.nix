@@ -57,12 +57,10 @@ with lib;
         lalt - right : yabai -m window --focus east || yabai -m display --focus east
 
         # Swap Window
-        # shift + lalt - up : yabai -m window --swap north
-        # shift + lalt - down : yabai -m window --swap south
-        shift + lalt - up : WIN_ID=$(yabai -m query --windows --window | jq '.id'); yabai -m window --swap north; [[ ! $? == 0 ]] && (yabai -m display --focus north; yabai -m window last --insert south; yabai -m window --focus $WIN_ID; yabai -m window --display prev; yabai -m window --focus $WIN_ID);
-        shift + lalt - down : WIN_ID=$(yabai -m query --windows --window | jq '.id'); yabai -m window --swap south; [[ ! $? == 0 ]] && (yabai -m display --focus south; yabai -m window first --insert north; yabai -m window --focus $WIN_ID; yabai -m window --display next; yabai -m window --focus $WIN_ID);
-        shift + lalt - left : WIN_ID=$(yabai -m query --windows --window | jq '.id'); yabai -m window --swap west; [[ ! $? == 0 ]] && (yabai -m display --focus west; yabai -m window last --insert east; yabai -m window --focus $WIN_ID; yabai -m window --display prev; yabai -m window --focus $WIN_ID);
-        shift + lalt - right : WIN_ID=$(yabai -m query --windows --window | jq '.id'); yabai -m window --swap east; [[ ! $? == 0 ]] && (yabai -m display --focus east; yabai -m window first --insert west; yabai -m window --focus $WIN_ID; yabai -m window --display next; yabai -m window --focus $WIN_ID);
+        alt + shift - left : yabai -m window --swap west  || $(yabai -m window --display west; yabai -m display --focus west)
+        alt + shift - down : yabai -m window --swap south || $(yabai -m window --display south; yabai -m display --focus south)
+        alt + shift - up : yabai -m window --swap north   || $(yabai -m window --display north; yabai -m display --focus north)
+        alt + shift - right : yabai -m window --swap east || $(yabai -m window --display east; yabai -m display --focus east)
 
         # Resize Window
         cmd - left : yabai -m window --resize left:-50:0 && yabai -m window --resize right:-50:0
@@ -90,8 +88,15 @@ with lib;
         ctrl + shift + lalt - left : WIN_ID=$(yabai -m query --windows --window | jq '.id'); yabai -m window --space prev && yabai -m space --focus prev; yabai -m window --focus $WIN_ID;
         ctrl + shift + lalt - right : WIN_ID=$(yabai -m query --windows --window | jq '.id'); yabai -m window --space next && yabai -m space --focus next; yabai -m window --focus $WIN_ID;
       '';
+      # fixes skhd not reloading after rebuild
+      home.activation = {
+        skhd-reloader = ''
+          run skhd -r
+        '';
+      };
     };
 
+    # required for key mapping to work
     system = {
       keyboard = {
         enableKeyMapping = true;

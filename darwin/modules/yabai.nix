@@ -3,7 +3,7 @@
 #  Enable with "yabai.enable = true;"
 #
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, vars, ... }:
 
 with lib;
 {
@@ -65,6 +65,15 @@ with lib;
       casks = [
         "spaceid"
       ];
+    };
+
+    # fixes scripting additions from crashing after rebuild
+    home-manager.users.${vars.user} = {
+      home.activation = {
+        yabai-reloader = ''
+          run sudo yabai --load-sa
+        '';
+      };
     };
   };
 }
