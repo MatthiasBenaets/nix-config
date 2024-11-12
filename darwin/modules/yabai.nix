@@ -60,5 +60,11 @@ with lib;
         width = 5.0;
       };
     };
+
+    homebrew = {
+      casks = [
+        "spaceid"
+      ];
+    };
   };
 }
