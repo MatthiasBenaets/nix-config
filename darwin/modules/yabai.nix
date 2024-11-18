@@ -25,32 +25,6 @@ with lib;
         # sudo nvram boot-args=-arm64e_preview_abi
         enableScriptingAddition = true;
         package = pkgs.yabai;
-        config = {
-          layout = "bsp";
-          auto_balance = "off";
-          split_ratio = "0.50";
-          window_border = "on";
-          window_border_width = "2";
-          window_placement = "second_child";
-          # focus_follows_mouse = "autoraise";
-          mouse_follows_focus = "off";
-          top_padding = "10";
-          bottom_padding = "10";
-          left_padding = "10";
-          right_padding = "10";
-          window_gap = "10";
-        };
-        extraConfig = ''
-          sudo yabai --load-sa
-
-          yabai -m rule --add title='^(Opening)' manage=off
-          yabai -m rule --add app="^System Settings$" manage=off
-          yabai -m rule --add app="^Calculator$" manage=off
-          yabai -m rule --add app="^App Store$" manage=off
-          yabai -m rule --add app="^Calendar$" manage=off
-          yabai -m rule --add app="^Finder$" manage=off
-          yabai -m rule --add app="^Weather$" manage=off
-        '';
       };
       jankyborders = {
         enable = true;
@@ -67,13 +41,39 @@ with lib;
       ];
     };
 
-    # fixes scripting additions from crashing after rebuild
     home-manager.users.${vars.user} = {
+      # fixes yabai not reloading after rebuild (with scripting additions)
       home.activation = {
         yabai-reloader = ''
+          run yabai --restart-service
           run sudo yabai --load-sa
         '';
       };
+
+      xdg.configFile."yabai/yabairc".text = ''
+        sudo yabai --load-sa
+        yabai -m config auto_balance off
+        yabai -m config bottom_padding 10
+        yabai -m config layout bsp
+        yabai -m config left_padding 10
+        yabai -m config mouse_follows_focus off
+        yabai -m config right_padding 10
+        yabai -m config split_ratio 0.50
+        yabai -m config top_padding 10
+        yabai -m config window_border on
+        yabai -m config window_border_width 2
+        yabai -m config window_gap 10
+        yabai -m config window_placement second_child
+
+
+        yabai -m rule --add title='^(Opening)' manage=off
+        yabai -m rule --add app="^System Settings$" manage=off
+        yabai -m rule --add app="^Calculator$" manage=off
+        yabai -m rule --add app="^App Store$" manage=off
+        yabai -m rule --add app="^Calendar$" manage=off
+        yabai -m rule --add app="^Finder$" manage=off
+        yabai -m rule --add app="^Weather$" manage=off
+      '';
     };
   };
 }

@@ -46,6 +46,7 @@
       "aldente"
       "appcleaner"
       "firefox"
+      "jellyfin-media-player"
       "moonlight"
       "obs"
       "plex"
@@ -54,7 +55,6 @@
       "stremio"
       "vlc"
       # "canon-eos-utility"
-      # "jellyfin-media-player"
     ];
     masApps = {
       "wireguard" = 1451685025;
