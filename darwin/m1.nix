@@ -31,8 +31,10 @@
       "garmin-express"
       "google-chrome"
       "obsidian"
+      "openmtp"
       "r"
       "rstudio"
+      "visual-studio-code"
       "upscayl"
       "xnviewmp"
     ];

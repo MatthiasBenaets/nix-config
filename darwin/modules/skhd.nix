@@ -46,7 +46,8 @@ with lib;
         alt - e : open ~
 
         # Toggle Window
-        lalt - t : yabai -m window --toggle float && yabai -m window --grid 4:4:1:1:2:2
+        #lalt - t : yabai -m window --toggle float && yabai -m window --grid 4:4:1:1:2:2
+        lalt - t : yabai -m window --toggle float
         lalt - f : yabai -m window --toggle zoom-fullscreen
         lalt - q : $HOME/.config/skhd/kill.sh
 

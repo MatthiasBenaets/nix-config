@@ -70,9 +70,13 @@ with lib;
         yabai -m rule --add app="^System Settings$" manage=off
         yabai -m rule --add app="^Calculator$" manage=off
         yabai -m rule --add app="^App Store$" manage=off
+        yabai -m rule --add app="^Disk Utility$" manage=off
         yabai -m rule --add app="^Calendar$" manage=off
-        yabai -m rule --add app="^Finder$" manage=off
+        yabai -m rule --add app="^Activity Monitor$" manage=off
         yabai -m rule --add app="^Weather$" manage=off
+        # yabai -m rule --add app="^Finder$" manage=off
+        yabai -m rule --add app="^Garmin Express$" manage=off
+        yabai -m rule --add app="^Creative Cloud$" manage=off
       '';
     };
   };

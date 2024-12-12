@@ -25,8 +25,8 @@ in
       # zig
     ];
     variables = {
-      PATH="$HOME/.npm-packages/bin:$PATH";
-      NODE_PATH="$HOME/.npm-packages/lib/node_modules:$NODE_PATH:";
+      PATH = "$HOME/.npm-packages/bin:$PATH";
+      NODE_PATH = "$HOME/.npm-packages/lib/node_modules:$NODE_PATH:";
     };
   };
 
@@ -385,11 +385,13 @@ in
       treesitter-refactor = {
         enable = true;
       };
-      nvim-colorizer = {
+      colorizer = {
         enable = true;
-        userDefaultOptions = {
-          css = true;
-          tailwind = "both";
+        settings = {
+          user_default_options = {
+            css = true;
+            tailwind = "both";
+          };
         };
       };
       cursorline = {
