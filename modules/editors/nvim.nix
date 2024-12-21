@@ -297,7 +297,9 @@ in
       web-devicons.enable = true;
       gitgutter = {
         enable = true;
-        defaultMaps = false;
+        settings = {
+          map_keys = false;
+        };
       };
       mini = {
         enable = true;
@@ -410,8 +412,7 @@ in
       neorg = {
         enable = true;
         package = pkgs.vimPlugins.neorg;
-        lazyLoading = true;
-        modules = {
+        settings = {
           "core.defaults".__empty = null;
           "core.dirman".config = {
             workspaces = {
@@ -421,6 +422,7 @@ in
           };
           "core.concealer".__empty = null;
           "core.completion".config.engine = "nvim-cmp";
+          lazy_loading = true;
         };
       };
       lsp = {

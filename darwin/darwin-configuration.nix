@@ -49,7 +49,6 @@
       "jellyfin-media-player"
       "moonlight"
       "obs"
-      "plex"
       "prusaslicer"
       "raycast"
       "stremio"
