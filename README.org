@@ -30,7 +30,7 @@
 | *GTK Theme*     | Orchis-Dark       | Adwaita                | Orchis-Dark      | /                       |
 | *Notifications* | Swaync            | Gnome                  | Dunst            | /                       |
 | *Terminal*      | Kitty             | Kitty                  | Kitty            | Kitty                   |
-| *Used by host*  | Beelink, XPS      | Work                   | VM & Probook     | MacBook{Intel or AirM1} |
+| *Used by host*  | Beelink, XPS      | Work                   | VM & Probook     | MacBook{Intel, AirM1, AirM3} |
 
 There are some other desktop environments/window manager (See NixOS - Other). Just link to correct ~default/home.nix~ in ~./hosts/<host>/default and home.nix~.
 There is also a general Nix config with hostname ~pacman~ that can be used on pretty much any disto.

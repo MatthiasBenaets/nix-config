@@ -64,4 +64,30 @@ in
         }
       ];
     };
+
+  # MacBookAir15,12 M3 13" (2024)
+  MacBookAirM3 =
+    let
+      inherit (systemConfig "aarch64-darwin") system pkgs stable;
+    in
+    darwin.lib.darwinSystem {
+      inherit system;
+      specialArgs = { inherit inputs system pkgs stable;
+	vars = {
+	  user = "lucp10771";
+        location = "$HOME/.setup";
+        terminal = "kitty";
+        editor = "nvim";
+	};
+      };
+      modules = [
+        ./work.nix
+        nixvim.nixDarwinModules.nixvim
+        home-manager.darwinModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+        }
+      ];
+    };
 }
