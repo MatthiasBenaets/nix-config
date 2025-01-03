@@ -2,6 +2,10 @@
 #  Tiling Window Manager for MacOS
 #  Enable with "aerospace.enable = true;"
 #
+#  Fix tiny mission control windows: System settings -> Desktop & Dock -> Mission Control -> Enable "Group Windows By Application"
+#  Navigate workspaces using gestures: Install BetterTouchTool -> Create 2 and 3-finger gestures for trackpad and magic mouse ->
+#    Use "Execute Terminal Command": "/etc/profiles/per-user/${username}/bin/aerospace workspace "$(/etc/profiles/per-user/${username}/bin/aerospace list-workspaces --monitor mouse --visible)" && /etc/profiles/per-user/${username}/bin/aerospace workspace next" (use next or prev)
+#
 
 { config, lib, pkgs, vars, ... }:
 
