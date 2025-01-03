@@ -12,8 +12,7 @@
 {
   imports = import (./modules);
 
-  yabai.enable = true;
-  skhd.enable = true;
+  aerospace.enable = true;
 
   environment = {
     systemPackages = with pkgs; [
@@ -36,6 +35,7 @@
       "rstudio"
       "visual-studio-code"
       "upscayl"
+      "ultimaker-cura"
       "xnviewmp"
     ];
     masApps = {
@@ -106,7 +106,6 @@
       };
       CustomSystemPreferences = {
         # ~/Library/Preferences/
-
       };
     };
   };
