@@ -80,8 +80,10 @@ with lib;
         alt-shift-k = "move up"
         alt-shift-l = "move right"
 
-        ctrl-alt-left = "workspace --wrap-around prev"
-        ctrl-alt-right = "workspace --wrap-around next"
+        ctrl-alt-left = "workspace prev"
+        ctrl-alt-right = "workspace next"
+        # ctrl-alt-left = "workspace --wrap-around prev"
+        # ctrl-alt-right = "workspace --wrap-around next"
         ctrl-alt-1 = "workspace 1"
         ctrl-alt-2 = "workspace 2"
         ctrl-alt-3 = "workspace 3"
@@ -93,8 +95,10 @@ with lib;
         ctrl-alt-9 = "workspace 9"
         ctrl-alt-0 = "workspace 10"
 
-        ctrl-alt-shift-left = [ "move-node-to-workspace --wrap-around prev", "workspace --wrap-around prev" ]
-        ctrl-alt-shift-right = [ "move-node-to-workspace --wrap-around next", "workspace --wrap-around next" ]
+        ctrl-alt-shift-left = [ "move-node-to-workspace prev", "workspace prev" ]
+        ctrl-alt-shift-right = [ "move-node-to-workspace next", "workspace next" ]
+        # ctrl-alt-shift-left = [ "move-node-to-workspace --wrap-around prev", "workspace --wrap-around prev" ]
+        # ctrl-alt-shift-right = [ "move-node-to-workspace --wrap-around next", "workspace --wrap-around next" ]
         ctrl-alt-shift-1 = "move-node-to-workspace 1"
         ctrl-alt-shift-2 = "move-node-to-workspace 2"
         ctrl-alt-shift-3 = "move-node-to-workspace 3"
