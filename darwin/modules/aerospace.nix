@@ -23,13 +23,17 @@ with lib;
 
   config = mkIf config.aerospace.enable {
     home-manager.users.${vars.user} = {
-      home.packages = [ pkgs.aerospace ];
+      home.packages = with pkgs; [ aerospace jankyborders ];
       xdg.configFile."aerospace/aerospace.toml".text = ''
         start-at-login = true
         accordion-padding = 30
         default-root-container-layout = "tiles"
         default-root-container-orientation = "auto"
         key-mapping.preset = "qwerty"
+
+        after-startup-command = [
+          'exec-and-forget ${pkgs.jankyborders}/bin/borders active_color=0xffa6a6a6 inactive_color=0x00a6a6a6 style=round width=5.0'
+        ]
 
         [gaps]
         inner.horizontal = 8

@@ -46,6 +46,7 @@
     };
     casks = [
       # "adobe-creative-cloud"
+      # "bettertouchtool"
       "docker"
       "firefox"
       "moonlight"

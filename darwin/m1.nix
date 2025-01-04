@@ -23,6 +23,7 @@
     casks = [
       "adobe-creative-cloud"
       "autodesk-fusion"
+      # "bettertouchtool"
       # "darktable"
       "deluge"
       "docker"
