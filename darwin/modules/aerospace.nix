@@ -109,6 +109,7 @@ with lib;
         ctrl-alt-shift-8 = "move-node-to-workspace 8"
         ctrl-alt-shift-9 = "move-node-to-workspace 9"
         ctrl-alt-shift-0 = "move-node-to-workspace 10"
+        ctrl-alt-shift-z = "move-node-to-monitor --wrap-around --focus-follows-window next"
 
         alt-enter = "exec-and-forget /Applications/kitty.app/Contents/MacOS/kitty ~"
         alt-e = "exec-and-forget open ~"
@@ -146,6 +147,12 @@ with lib;
         if.app-id = "org.mozilla.firefox"
         if.window-title-regex-substring = "Picture-in-Picture"
         run = "layout floating"
+
+        [[on-window-detected]]
+        if.app-id = 'com.google.Chrome'
+        if.window-title-regex-substring = 'Picture in Picture'
+        run = 'layout floating'
+        check-further-callbacks = true
       '';
     };
   };
