@@ -47,11 +47,13 @@
     casks = [
       # "adobe-creative-cloud"
       # "bettertouchtool"
+      "cyberduck"
       "docker"
       "firefox"
       "moonlight"
       "obs"
       "raycast"
+      "scroll-reverser"
     ];
     masApps = {
       "wireguard" = 1451685025;
