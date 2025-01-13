@@ -79,11 +79,7 @@ in
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
     noto-fonts-emoji
-    (nerdfonts.override {
-      fonts = [
-        "FiraCode"
-      ];
-    })
+    nerd-fonts.fira-code
   ];
 
   environment = {
@@ -156,7 +152,7 @@ in
     dconf.enable = true;
     nix-ld = {
       enable = true;
-      libraries = [];
+      libraries = [ ];
     };
   };
 

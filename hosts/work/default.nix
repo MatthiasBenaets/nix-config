@@ -43,7 +43,7 @@
   };
 
   laptop.enable = true;
-  gnome.enable = true;
+  hyprland.enable = true;
 
   hardware = {
     graphics = {
@@ -68,11 +68,14 @@
       eduvpn-client # VPN
       nil # LSP
       obsidian # Notes
+      R
+      rstudio
       rclone # Gdrive ($ rclone config | rclone mount --daemon gdrive: <mount> | fusermount -u <mount>)
       simple-scan # Scanning
       sshpass # Ansible dependency
       syncthing # Sync Tool
       wacomtablet # Tablet
+      vscode
     ];
   };
 
