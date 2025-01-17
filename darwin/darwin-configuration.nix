@@ -30,6 +30,7 @@
       mas # Mac App Store $ mas search <app>
       ranger # File Manager
       tldr # Help
+      wget # Download
       zsh-powerlevel10k # Prompt
     ];
   };
