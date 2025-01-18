@@ -596,7 +596,7 @@ in
           sha256 = "sha256-x6S4WdgfUr7HGEHToSDy3pSHEwOPQalzWhBUipqMtnw=";
         };
       })
-      (pkgs.vimUtils.buildVimPlugin rec {
+      /* (pkgs.vimUtils.buildVimPlugin rec {
         pname = "follow-md-links.nvim";
         version = "cf081a0a8e93dd188241a570b9a700b6a546ad1c";
         src = pkgs.fetchFromGitHub {
@@ -605,7 +605,7 @@ in
           rev = version;
           sha256 = "sha256-ElgYrD+5FItPftpjDTdKAQR37XBkU8mZXs7EmAwEKJ4=";
         };
-      })
+      }) */
       (pkgs.vimUtils.buildVimPlugin rec {
         pname = "vim-plist";
         version = "60e69bec50dfca32f0a62ee2dacdfbe63fd92038";
