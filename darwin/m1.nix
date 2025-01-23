@@ -32,11 +32,11 @@
       "google-chrome"
       # "obsidian"
       "openmtp"
+      "orcaslicer"
       "r"
       "rstudio"
       "visual-studio-code"
       "upscayl"
-      "ultimaker-cura"
       "xnviewmp"
     ];
     masApps = {
