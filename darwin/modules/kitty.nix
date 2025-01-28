@@ -5,6 +5,11 @@
 { vars, ... }:
 
 {
+  programs.ssh.extraConfig = ''
+    Host *
+      SetEnv TERM=xterm-256color
+  '';
+
   homebrew.casks = [
     "kitty"
     "font-meslo-lg-nerd-font"
