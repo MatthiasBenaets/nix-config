@@ -16,6 +16,9 @@ in
 {
   environment = {
     systemPackages = with pkgs; [
+      deno
+      elixir
+      erlang
       go
       nodejs
       (python3.withPackages (ps: with ps; [
@@ -428,26 +431,28 @@ in
       lsp = {
         enable = true;
         servers = {
-          nil_ls.enable = true;
-          svelte.enable = true;
-          html.enable = true;
           cssls.enable = true;
+          elixirls.enable=true;
           eslint.enable = true;
-          ts_ls.enable = true;
+          gopls.enable = true;
+          html.enable = true;
+          nil_ls.enable = true;
           pyright.enable = true;
+          svelte.enable = true;
           tailwindcss = {
             enable = true;
             filetypes = [
+              "heex"
               "html"
               "js"
-              "ts"
               "jsx"
-              "tsx"
               "mdx"
               "svelte"
+              "ts"
+              "tsx"
             ];
           };
-          gopls.enable = true;
+          ts_ls.enable = true;
           # zls.enable = true;
         };
       };

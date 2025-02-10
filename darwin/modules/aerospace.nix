@@ -52,6 +52,8 @@ with lib;
         alt-slash = "layout tiles horizontal vertical"
         alt-comma = "layout accordion horizontal vertical"
         alt-f = "layout floating tiling"
+        ctrl-alt-h = "split horizontal"
+        ctrl-alt-v = "split vertical"
         alt-shift-f = "fullscreen"
 
         alt-tab = "workspace-back-and-forth"
