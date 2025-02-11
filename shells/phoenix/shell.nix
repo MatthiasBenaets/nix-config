@@ -1,10 +1,17 @@
-with import <nixpkgs> {}; # This should probably be pinned to something. For me it points to 24.05 channel
+# copy files to project folder
+# nix-shell (or will load by default with direnv)
+# postgres -h '' -k $PGHOST (in separate shell)
+# createuser -d postgres
+# mix archive.install hex phx_new
+# mix phx.new .
+
+with import <nixpkgs> { };
 let
   basePackages = [
-    beam.packages.erlangR26.elixir_1_15
-    beam.packages.erlangR26.erlang
+    elixir
+    erlang
     elixir_ls
-    inotify-tools
+    # inotify-tools
     nodejs
     yarn
     postgresql
@@ -13,34 +20,35 @@ let
   PROJECT_ROOT = builtins.toString ./.;
 
   hooks = ''
-    mkdir -p .nix-mix
-    mkdir -p .nix-hex
-    export MIX_HOME=${PROJECT_ROOT}/.nix-mix
-    export HEX_HOME=${PROJECT_ROOT}/.nix-hex
-    export PATH=$MIX_HOME/bin:$PATH
-    export PATH=$HEX_HOME/bin:$PATH
-    export LANG=en_NZ.UTF-8
-    export ERL_AFLAGS="-kernel shell_history enabled"
+     mkdir -p .nix-mix
+     mkdir -p .nix-hex
+     export MIX_HOME=${PROJECT_ROOT}/.nix-mix
+     export HEX_HOME=${PROJECT_ROOT}/.nix-hex
+     export PATH=$MIX_HOME/bin:$PATH
+     export PATH=$HEX_HOME/bin:$PATH
+     export LANG=en_NZ.UTF-8
+     export ERL_AFLAGS="-kernel shell_history enabled"
 
-    set -e
-    export PGDIR=${PROJECT_ROOT}/postgres
-    export PGHOST=$PGDIR
-    export PGDATA=$PGDIR/data
-    export PGLOG=$PGDIR/log
-    export DATABASE_URL="postgresql:///postgres?host=$PGDIR"
+     set -e
+     export PGDIR=${PROJECT_ROOT}/postgres
+     export PGHOST=$PGDIR
+     export PGDATA=$PGDIR/data
+     export PGLOG=$PGDIR/log
+     export DATABASE_URL="postgresql:///postgres?host=$PGDIR"
 
-    if test ! -d $PGDIR; then
-      mkdir $PGDIR
+     if test ! -d $PGDIR; then
+       mkdir $PGDIR
+     fi
+
+    if [ ! -d $PGDATA ]; then
+      echo 'Initializing postgresql database...'
+      initdb $PGDATA --auth=trust >/dev/null
     fi
 
-   if [ ! -d $PGDATA ]; then
-     echo 'Initializing postgresql database...'
-     initdb $PGDATA --auth=trust >/dev/null
-   fi
+  '';
 
-    '';
-
-  in mkShell {
-    buildInputs = basePackages;
-    shellHook = hooks;
-  }
+in
+mkShell {
+  buildInputs = basePackages;
+  shellHook = hooks;
+}
