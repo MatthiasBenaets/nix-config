@@ -431,8 +431,19 @@ in
       lsp = {
         enable = true;
         servers = {
+          emmet_ls = {
+            enable = true;
+            filetypes = [
+              "html"
+              "css"
+              "svelte"
+              "elixir"
+              "eelixir"
+              "heex"
+            ];
+          };
           cssls.enable = true;
-          elixirls.enable=true;
+          elixirls.enable = true;
           eslint.enable = true;
           gopls.enable = true;
           html.enable = true;
@@ -442,14 +453,17 @@ in
           tailwindcss = {
             enable = true;
             filetypes = [
-              "heex"
               "html"
+              "css"
               "js"
               "jsx"
               "mdx"
               "svelte"
               "ts"
               "tsx"
+              "heex"
+              "elixir"
+              "eelixir"
             ];
           };
           ts_ls.enable = true;
@@ -495,7 +509,7 @@ in
         ];
         /* fromLua = [
           { paths = ./luasnip/snippets.lua; }
-        ]; */
+                ]; */
       };
       codeium-vim = {
         enable = true;
@@ -504,7 +518,10 @@ in
       };
       cmp_luasnip.enable = true;
       cmp-nvim-lsp.enable = true;
-      cmp-look.enable = true;
+      cmp-look = {
+        enable = true;
+        autoLoad = false;
+      };
       cmp = {
         enable = true;
         settings = {
@@ -610,7 +627,7 @@ in
           rev = version;
           sha256 = "sha256-ElgYrD+5FItPftpjDTdKAQR37XBkU8mZXs7EmAwEKJ4=";
         };
-      }) */
+              }) */
       (pkgs.vimUtils.buildVimPlugin rec {
         pname = "vim-plist";
         version = "60e69bec50dfca32f0a62ee2dacdfbe63fd92038";
