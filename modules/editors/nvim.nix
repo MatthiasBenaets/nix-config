@@ -401,15 +401,17 @@ in
       };
       cursorline = {
         enable = true;
-        cursorline = {
-          enable = true;
-          number = true;
-          timeout = 0;
-        };
-        cursorword = {
-          enable = true;
-          hl = { underline = true; };
-          minLength = 3;
+        settings = {
+          cursorline = {
+            enable = true;
+            number = true;
+            timeout = 0;
+          };
+          cursorword = {
+            enable = true;
+            hl = { underline = true; };
+            minLength = 3;
+          };
         };
       };
       neorg = {
@@ -446,7 +448,16 @@ in
           elixirls.enable = true;
           eslint.enable = true;
           gopls.enable = true;
-          html.enable = true;
+          html = {
+            enable = true;
+            filetypes = [
+              "html"
+              "svelte"
+              "heex"
+              "elixir"
+              "eelixir"
+            ];
+          };
           nil_ls.enable = true;
           pyright.enable = true;
           svelte.enable = true;
@@ -465,6 +476,15 @@ in
               "elixir"
               "eelixir"
             ];
+            extraOptions = {
+              init_options = {
+                userLanguages = {
+                  elixir = "html-eex";
+                  eelixir = "html-eex";
+                  heex = "html-eex";
+                };
+              };
+            };
           };
           ts_ls.enable = true;
           # zls.enable = true;
