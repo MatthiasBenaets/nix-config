@@ -448,16 +448,7 @@ in
           elixirls.enable = true;
           eslint.enable = true;
           gopls.enable = true;
-          html = {
-            enable = true;
-            filetypes = [
-              "html"
-              "svelte"
-              "heex"
-              "elixir"
-              "eelixir"
-            ];
-          };
+          html.enable = true;
           nil_ls.enable = true;
           pyright.enable = true;
           svelte.enable = true;
@@ -482,6 +473,20 @@ in
                   elixir = "html-eex";
                   eelixir = "html-eex";
                   heex = "html-eex";
+                };
+              };
+            };
+            settings = {
+              tailwindCSS = {
+                classAttributes = [
+                  "class"
+                  "className"
+                  "class:list"
+                  "classList"
+                  "ngClass"
+                ];
+                experimental = {
+                  classRegex = ''class[:]\s*"([^"]*)"'';
                 };
               };
             };
