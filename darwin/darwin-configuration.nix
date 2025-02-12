@@ -35,7 +35,14 @@
     ];
   };
 
-  programs.zsh.enable = true;
+  programs = {
+    zsh.enable = true;
+    direnv = {
+      enable = true;
+      loadInNixShell = true;
+      nix-direnv.enable = true;
+    };
+  };
 
   homebrew = {
     enable = true;

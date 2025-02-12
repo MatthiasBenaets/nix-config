@@ -7,6 +7,8 @@
 {
   programs.ssh.extraConfig = ''
     Host *
+      UseKeychain yes
+      AddKeysToAgent yes
       SetEnv TERM=xterm-256color
   '';
 
