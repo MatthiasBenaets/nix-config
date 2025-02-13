@@ -443,6 +443,14 @@ in
               "eelixir"
               "heex"
             ];
+            onAttach = {
+              override = true;
+              function = ''
+                client.server_capabilities.documentFormattingProvider = false
+                client.server_capabilities.documentRangeFormattingProvider = false
+              '';
+
+            };
           };
           cssls.enable = true;
           elixirls.enable = true;
@@ -489,6 +497,13 @@ in
                   classRegex = ''class[:]\s*"([^"]*)"'';
                 };
               };
+            };
+            onAttach = {
+              override = true;
+              function = ''
+                client.server_capabilities.documentFormattingProvider = false
+                client.server_capabilities.documentRangeFormattingProvider = false
+              '';
             };
           };
           ts_ls.enable = true;
