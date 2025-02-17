@@ -12,6 +12,23 @@ let
     url = "https://ftp.nluug.nl/vim/runtime/spell/nl.utf-8.sug";
     sha256 = "sha256:0clvhlg52w4iqbf5sr4bb3lzja2ch1dirl0963d5vlg84wzc809y";
   };
+
+  livesvelte = pkgs.stdenv.mkDerivation {
+    name = "livesvelte";
+    buildCommand = ''
+      mkdir -p $out/queries/elixir
+      cat > $out/queries/elixir/injections.scm << 'EOF'
+      ; extends
+
+      ; Svelte
+      (sigil
+        (sigil_name) @_sigil_name
+        (quoted_content) @injection.content
+       (#eq? @_sigil_name "V")
+       (#set! injection.language "svelte"))
+      EOF
+    '';
+  };
 in
 {
   environment = {
@@ -380,6 +397,7 @@ in
         nixvimInjections = true;
         folding = false;
         nixGrammars = true;
+        grammarPackages = pkgs.vimPlugins.nvim-treesitter.passthru.allGrammars ++ [ livesvelte ];
         settings = {
           ensure_installed = "all";
           highlight.enable = true;
@@ -449,7 +467,6 @@ in
                 client.server_capabilities.documentFormattingProvider = false
                 client.server_capabilities.documentRangeFormattingProvider = false
               '';
-
             };
           };
           cssls.enable = true;
@@ -638,6 +655,7 @@ in
       onedarkpro-nvim
       vim-cool
       vim-prettier
+      livesvelte
       (pkgs.vimUtils.buildVimPlugin rec {
         pname = "scope-nvim";
         version = "cd27af77ad61a7199af5c28d27013fb956eb0e3e";
