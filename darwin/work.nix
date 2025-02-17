@@ -49,6 +49,7 @@
       # "adobe-creative-cloud"
       # "bettertouchtool"
       "cyberduck"
+      "dbeaver-community"
       "docker"
       "firefox"
       "jordanbaird-ice"
@@ -127,8 +128,6 @@
     home.stateVersion = "22.05";
   };
 
-  services.nix-daemon.enable = true;
-
   nix = {
     package = pkgs.nix;
     gc = {
@@ -143,6 +142,6 @@
   };
 
   system = {
-    stateVersion = 4;
+    stateVersion = 5;
   };
 }
