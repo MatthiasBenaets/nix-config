@@ -25,6 +25,7 @@
       "autodesk-fusion"
       # "bettertouchtool"
       # "darktable"
+      "dbeaver-community"
       "deluge"
       "docker"
       "docker-toolbox"
