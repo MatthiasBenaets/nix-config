@@ -14,14 +14,15 @@
 
   homebrew.casks = [
     "kitty"
-    "font-meslo-lg-nerd-font"
+    "font-meslo-lg-nerd-font" # MesloLGS Nerd Font Mono
+    "font-fira-code-nerd-font" # FiraCode Nerd Font Mono
   ];
 
   home-manager.users.${vars.user} = {
     home.file = {
       ".config/kitty/kitty.conf" = {
         text = ''
-          font_family MesloLGS Nerd Font Mono
+          font_family FiraCode Nerd Font Mono
           font_size 13
 
           background_opacity 0.8
