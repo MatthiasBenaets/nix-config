@@ -53,10 +53,11 @@
       "docker"
       "firefox"
       "jordanbaird-ice"
+      "linearmouse"
       "moonlight"
       "obs"
+      "postman"
       "raycast"
-      "scroll-reverser"
     ];
     masApps = {
       "wireguard" = 1451685025;
