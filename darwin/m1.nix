@@ -25,6 +25,7 @@
       "autodesk-fusion"
       # "bettertouchtool"
       "blender"
+      # "connectiq"
       # "darktable"
       "dbeaver-community"
       "deluge"

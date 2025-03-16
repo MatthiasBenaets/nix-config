@@ -37,6 +37,8 @@
           alias ls="${pkgs.eza}/bin/eza --icons=always --color=always"
           alias finder="ofd" # open find in current path.
           #cdf will change directory to active finder directory
+
+          export PATH=$PATH:`cat $HOME/Library/Application\ Support/Garmin/ConnectIQ/current-sdk.cfg`/bin
         '';
       };
     };
