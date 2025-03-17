@@ -72,13 +72,14 @@ in
     in
     darwin.lib.darwinSystem {
       inherit system;
-      specialArgs = { inherit inputs system pkgs stable;
-	vars = {
-	  user = "lucp10771";
-        location = "$HOME/.setup";
-        terminal = "kitty";
-        editor = "nvim";
-	};
+      specialArgs = {
+        inherit inputs system pkgs stable;
+        vars = {
+          user = "lucp10771";
+          location = "$HOME/.setup";
+          terminal = "kitty";
+          editor = "nvim";
+        };
       };
       modules = [
         ./work.nix

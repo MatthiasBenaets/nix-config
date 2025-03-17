@@ -7,7 +7,7 @@
 #       └─ ./m1.nix *
 #
 
-{ pkgs, vars, ... }:
+{ config, lib, pkgs, vars, ... }:
 
 {
   imports = import (./modules);
@@ -112,6 +112,16 @@
       };
       CustomSystemPreferences = {
         # ~/Library/Preferences/
+      };
+    };
+  };
+
+  home-manager.users.${vars.user} = {
+    programs = lib.mkIf (config.programs.zsh.enable) {
+      zsh = {
+        initExtra = ''
+          export PATH=$PATH:`cat $HOME/Library/Application\ Support/Garmin/ConnectIQ/current-sdk.cfg`/bin
+        '';
       };
     };
   };
