@@ -37,6 +37,8 @@
           alias ls="${pkgs.eza}/bin/eza --icons=always --color=always"
           alias finder="ofd" # open find in current path.
           #cdf will change directory to active finder directory
+
+          ssh-add --apple-load-keychain &>/dev/null
         '';
       };
     };

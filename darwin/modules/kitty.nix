@@ -5,13 +5,6 @@
 { vars, ... }:
 
 {
-  programs.ssh.extraConfig = ''
-    Host *
-      UseKeychain yes
-      AddKeysToAgent yes
-      SetEnv TERM=xterm-256color
-  '';
-
   homebrew.casks = [
     "kitty"
     "font-meslo-lg-nerd-font" # MesloLGS Nerd Font Mono
@@ -20,6 +13,14 @@
 
   home-manager.users.${vars.user} = {
     home.file = {
+      ".ssh/config" = {
+        text = ''
+          Host *
+            UseKeychain yes
+            AddKeysToAgent yes
+            SetEnv TERM=xterm-256color
+        '';
+      };
       ".config/kitty/kitty.conf" = {
         text = ''
           font_family FiraCode Nerd Font Mono
@@ -67,11 +68,6 @@
           startup_session ~/.config/kitty/startup.conf
 
           shell_integration no-sudo
-        '';
-      };
-      ".config/kitty/startup.conf" = {
-        text = ''
-          cd /Users/matthias/
         '';
       };
     };
