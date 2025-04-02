@@ -45,9 +45,12 @@
       "xnviewmp"
     ];
     masApps = {
+      "Adguard for Safari" = 1440147259;
+      "Bitwarden" = 1352778147;
       # "FileZilla Pro - FTP and Client" = 1298486723;
       # "FileZilla Pro RemoteDrive" = -2087754162;
       "Keynote" = 409183694;
+      "LanguageTool - Grammer Checker" = 1534275760;
       "Microsoft Remote Desktop" = 1295203466;
       "Numbers" = 409203825;
       "Pages" = 409201541;
