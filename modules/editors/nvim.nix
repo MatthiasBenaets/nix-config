@@ -668,12 +668,12 @@ in
       })
       (pkgs.vimUtils.buildVimPlugin rec {
         pname = "org-bullets.nvim";
-        version = "6e0d60e901bb939eb526139cb1f8d59065132fd9";
+        version = "21437cfa99c70f2c18977bffd423f912a7b832ea";
         src = pkgs.fetchFromGitHub {
-          owner = "akinsho";
+          owner = "nvim-orgmode";
           repo = "org-bullets.nvim";
           rev = version;
-          sha256 = "sha256-x6S4WdgfUr7HGEHToSDy3pSHEwOPQalzWhBUipqMtnw=";
+          sha256 = "sha256-/l8IfvVSPK7pt3Or39+uenryTM5aBvyJZX5trKNh0X0=";
         };
       })
       /* (pkgs.vimUtils.buildVimPlugin rec {
