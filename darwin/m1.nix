@@ -124,7 +124,7 @@
   home-manager.users.${vars.user} = {
     programs = lib.mkIf (config.programs.zsh.enable) {
       zsh = {
-        initExtra = ''
+        initContent = ''
           export PATH=$PATH:`cat $HOME/Library/Application\ Support/Garmin/ConnectIQ/current-sdk.cfg`/bin
         '';
       };

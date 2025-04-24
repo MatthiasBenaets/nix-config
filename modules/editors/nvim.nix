@@ -568,10 +568,10 @@ in
           { paths = ./luasnip/snippets.lua; }
                 ]; */
       };
-      codeium-vim = {
+      windsurf-vim = {
         enable = true;
-        package = pkgs.vimPlugins.codeium-vim;
-        settings.bin = "${pkgs.vimPlugins.codeium-vim}/bin/codeium_language_server";
+        package = pkgs.vimPlugins.windsurf-vim;
+        settings.bin = "${pkgs.vimPlugins.windsurf-vim}/bin/windsurf_language_server";
       };
       cmp_luasnip.enable = true;
       cmp-nvim-lsp.enable = true;
