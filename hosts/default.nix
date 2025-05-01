@@ -39,7 +39,7 @@ in
       };
     };
     modules = [
-      nur.nixosModules.nur
+      nur.modules.nixos.default
       nixvim.nixosModules.nixvim
       ./beelink
       ./configuration.nix
@@ -141,7 +141,7 @@ in
       };
     };
     modules = [
-      nur.nixosModules.nur
+      nur.modules.nixos.default
       nixvim.nixosModules.nixvim
       ./h310m
       ./configuration.nix

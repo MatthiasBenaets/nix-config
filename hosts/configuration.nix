@@ -156,7 +156,7 @@ in
     };
   };
 
-  hardware.pulseaudio.enable = false;
+
   services = {
     printing = {
       enable = true;
@@ -170,6 +170,7 @@ in
       pulse.enable = true;
       jack.enable = true;
     };
+    pulseaudio.enable = false;
     openssh = {
       enable = true;
       allowSFTP = true;

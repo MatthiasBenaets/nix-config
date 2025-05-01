@@ -32,7 +32,7 @@
 
       # Stable User Environment Manager
       home-manager-stable = {
-        url = "github:nix-community/home-manager/release-23.11";
+        url = "github:nix-community/home-manager/release-24.11";
         inputs.nixpkgs.follows = "nixpkgs-stable";
       };
 
@@ -45,7 +45,7 @@
       # NUR Community Packages
       nur = {
         url = "github:nix-community/NUR";
-        # Requires "nur.nixosModules.nur" to be added to the host modules
+        # Requires "nur.modules.nixos.default" to be added to the host modules
       };
 
       # Fixes OpenGL With Other Distros.
@@ -62,7 +62,7 @@
 
       # Neovim
       nixvim-stable = {
-        url = "github:nix-community/nixvim/nixos-23.11";
+        url = "github:nix-community/nixvim/nixos-24.11";
         inputs.nixpkgs.follows = "nixpkgs-stable";
       };
 
