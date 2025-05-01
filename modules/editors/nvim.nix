@@ -132,6 +132,12 @@ in
         options.desc = "Quit";
       }
       {
+        mode = "i";
+        key = "jj";
+        action = "<ESC>";
+        options.desc = "Exit Insert Mode";
+      }
+      {
         key = "<F2>";
         action = "<CMD>Neotree toggle<CR>";
         options.desc = "Toggle NeoTree";
