@@ -26,6 +26,7 @@ in
     graphics.enable = true;
     nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.production;
+      open = false;
       prime = {
         offload.enable = true;
         intelBusId = "PCI:0:2:0";

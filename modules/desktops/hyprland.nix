@@ -303,7 +303,7 @@ with host;
               animation = [
                 "windows, 1, 4, overshot, slide"
                 "windowsIn, 1, 2, smoothOut"
-                "windowsOut, 1, 0.5, smoothOut"
+                "windowsOut, 1, 1, smoothOut"
                 "windowsMove, 1, 3, smoothIn, slide"
                 "border, 1, 5, default"
                 "fade, 1, 4, smoothIn"
@@ -362,6 +362,9 @@ with host;
             };
             debug = {
               damage_tracking = 2;
+            };
+            ecosystem = {
+              no_update_news = true;
             };
             bindm = [
               "SUPER,mouse:272,movewindow"
