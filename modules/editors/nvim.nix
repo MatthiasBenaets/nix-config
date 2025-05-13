@@ -480,7 +480,16 @@ in
           eslint.enable = true;
           gopls.enable = true;
           html.enable = true;
-          nil_ls.enable = true;
+          nil_ls = {
+            enable = true;
+            settings = {
+              nix = {
+                flake = {
+                  autoArchive = true;
+                };
+              };
+            };
+          };
           pyright.enable = true;
           svelte.enable = true;
           tailwindcss = {
