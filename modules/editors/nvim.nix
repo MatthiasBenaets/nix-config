@@ -1,8 +1,5 @@
 { config, lib, system, pkgs, stable, vars, ... }:
-
 let
-  colors = import ../theming/colors.nix;
-
   nvim-spell-nl-utf8-dictionary = builtins.fetchurl {
     url = "https://ftp.nluug.nl/vim/runtime/spell/nl.utf-8.spl";
     sha256 = "sha256:1v4knd9i4zf3lhacnkmhxrq0lgk9aj4iisbni9mxi1syhs4lfgni";
@@ -31,80 +28,69 @@ let
   };
 in
 {
-  environment = {
-    systemPackages = with pkgs; [
-      deno
-      elixir
-      erlang
-      go
-      nodejs
-      (python3.withPackages (ps: with ps; [
-        pip
-      ]))
-      ripgrep
-      # zig
-    ];
-    variables = {
-      PATH = "$HOME/.npm-packages/bin:$PATH";
-      NODE_PATH = "$HOME/.npm-packages/lib/node_modules:$NODE_PATH:";
-    };
-  };
-
   programs.nixvim = {
     enable = true;
     enableMan = false;
     viAlias = true;
     vimAlias = true;
+
+    extraPackages = with pkgs; [
+      black
+      deno
+      elixir
+      eslint_d
+      erlang
+      go
+      isort
+      nixpkgs-fmt
+      nodejs
+      prettierd
+      (python3.withPackages (ps: with ps; [
+        pip
+      ]))
+      ripgrep
+      stylua
+      zig
+    ];
+
     autoCmd = [
       {
-        event = "VimEnter";
-        command = "set nofoldenable";
-        desc = "Unfold All";
-      }
-      {
-        event = "BufWrite";
+        event = "BufWritePre";
         command = "%s/\\s\\+$//e";
-        desc = "Remove Whitespaces";
-      }
-      {
-        event = "FileType";
-        pattern = [ "markdown" "org" "norg" ];
-        command = "setlocal conceallevel=2";
-        desc = "Conceal Syntax Attribute";
-      }
-      {
-        event = "FileType";
-        pattern = [ "markdown" "org" "norg" ];
-        command = "setlocal spell spelllang=en,nl";
-        desc = "Spell Checking";
+        desc = "Remove whitespaces on write";
       }
       {
         event = "FileType";
         pattern = [ "markdown" ];
-        command = "setlocal scrolloff=30 | setlocal wrap";
-        desc = "Fixed cursor location on markdown (for preview) and enable wrapping";
+        command = "setlocal spell spelllang=en,nl";
+        desc = "Enable spellchecking";
+      }
+      {
+        desc = "Open file at the last position it was edited earlier";
+        event = "BufReadPost";
+        pattern = "*";
+        command = "silent! normal! g`\"zv";
       }
     ];
 
     opts = {
       number = true;
       relativenumber = true;
-      hidden = true;
-      foldlevel = 99;
       shiftwidth = 2;
       tabstop = 2;
       softtabstop = 2;
       expandtab = true;
       autoindent = true;
       wrap = false;
-      scrolloff = 5;
-      sidescroll = 40;
-      completeopt = [ "menu" "menuone" "noselect" ];
+      scrolloff = 10;
+      sidescroll = 20;
+      completeopt = [ "menu" "menuone" "noinsert" ];
       pumheight = 15;
       fileencoding = "utf-8";
       swapfile = false;
-      timeoutlen = 2500;
-      conceallevel = 3;
+      undofile = true;
+      writebackup = false;
+      conceallevel = 0;
       cursorline = true;
       spell = false;
       spelllang = [ "nl" "en" ];
@@ -120,6 +106,13 @@ in
       maplocalleader = " ";
     };
 
+    diagnostic.settings = {
+      virtual_text = true;
+      signs = true;
+      underline = true;
+      update_in_insert = true;
+    };
+
     keymaps = [
       {
         key = "<C-s>";
@@ -133,29 +126,14 @@ in
       }
       {
         mode = "i";
-        key = "jj";
+        key = "jk";
         action = "<ESC>";
         options.desc = "Exit Insert Mode";
-      }
-      {
-        key = "<F2>";
-        action = "<CMD>Neotree toggle<CR>";
-        options.desc = "Toggle NeoTree";
       }
       {
         key = "<leader>e";
         action = "<CMD>Neotree toggle<CR>";
         options.desc = "Toggle NeoTree";
-      }
-      {
-        key = "<leader>fs";
-        action = "<CMD>Neotree toggle<CR>";
-        options.desc = "Toggle NeoTree";
-      }
-      {
-        key = "<F3>";
-        action = "<CMD>UndotreeToggle<CR>";
-        options.desc = "Toggle UndoTree";
       }
       {
         key = "<leader>sh";
@@ -168,42 +146,27 @@ in
         options.desc = "Split Vertical";
       }
       {
-        key = "<leader><Left>";
+        key = "<leader>sx";
+        action = "<CMD>close<CR>";
+        options.desc = "Split Close";
+      }
+      {
+        key = "<C-h>";
         action = "<C-w>h";
         options.desc = "Select Window Left";
       }
       {
-        key = "<leader>h";
-        action = "<C-w>h";
-        options.desc = "Select Window Left";
-      }
-      {
-        key = "<leader><Right>";
+        key = "<C-l>";
         action = "<C-w>l";
         options.desc = "Select Window Right";
       }
       {
-        key = "<leader>l";
-        action = "<C-w>l";
-        options.desc = "Select Window Right";
-      }
-      {
-        key = "<leader><Down>";
+        key = "<C-j>";
         action = "<C-w>j";
         options.desc = "Select Window Below";
       }
       {
-        key = "<leader>j";
-        action = "<C-w>j";
-        options.desc = "Select Window Below";
-      }
-      {
-        key = "<leader><Up>";
-        action = "<C-w>k";
-        options.desc = "Select Window Above";
-      }
-      {
-        key = "<leader>k";
+        key = "<C-k>";
         action = "<C-w>k";
         options.desc = "Select Window Above";
       }
@@ -214,27 +177,22 @@ in
       }
       {
         key = "<leader>bb";
-        action = "<CMD>BufferPick<CR>";
+        action = "<CMD>BufferLinePick<CR>";
         options.desc = "Select Buffer";
       }
       {
-        key = "<leader>bc";
-        action = "<CMD>BufferClose<CR>";
-        options.desc = "Close Current Buffer";
-      }
-      {
         key = "<leader>bk";
-        action = "<CMD>BufferClose<CR>";
-        options.desc = "Close Current Buffer";
+        action = "<CMD>BufferLinePickClose<CR>";
+        options.desc = "Close Buffer";
       }
       {
         key = "<leader>bn";
-        action = "<CMD>:bnext<CR>";
+        action = "<CMD>BufferLineCycleNext<CR>";
         options.desc = "Next Buffer";
       }
       {
         key = "<leader>bp";
-        action = "<CMD>:bprev<CR>";
+        action = "<CMD>BufferLineCyclePrev<CR>";
         options.desc = "Previous Buffer";
       }
       {
@@ -248,30 +206,6 @@ in
         key = ">";
         action = ">gv";
         options.desc = "Tab Text Left";
-      }
-      {
-        mode = "n";
-        key = "<C-/>";
-        action = "<Plug>(comment_toggle_linewise_current)";
-        options.desc = "(Un)comment in Normal Mode";
-      }
-      {
-        mode = "v";
-        key = "<C-/>";
-        action = "<Plug>(comment_toggle_linewise_visual)";
-        options.desc = "(Un)comment in Visual Mode";
-      }
-      {
-        mode = "n";
-        key = "<C-S-/>";
-        action = "<Plug>(comment_toggle_blockwise_current)";
-        options.desc = "(Un)comment in Normal Mode";
-      }
-      {
-        mode = "v";
-        key = "<C-S-/>";
-        action = "<Plug>(comment_toggle_blockwise_visual)";
-        options.desc = "(Un)comment in Visual Mode";
       }
       {
         mode = "n";
@@ -305,46 +239,96 @@ in
       }
       {
         mode = "n";
-        key = "\\\\";
-        action = "<CMD>ToggleTerm<CR>";
-        options.desc = "Toggle terminal";
+        key = "<C-/>";
+        action = "<Plug>(comment_toggle_linewise_current)";
+        options.desc = "(Un)comment in Normal Mode";
       }
       {
-        mode = "t";
-        key = "<esc>";
-        action = "<C-\\><C-n>";
-        options.desc = "Exit terminal mode";
+        mode = "v";
+        key = "<C-/>";
+        action = "<Plug>(comment_toggle_linewise_visual)";
+        options.desc = "(Un)comment in Visual Mode";
+      }
+      {
+        mode = "n";
+        key = "<C-S-/>";
+        action = "<Plug>(comment_toggle_blockwise_current)";
+        options.desc = "(Un)comment in Normal Mode";
+      }
+      {
+        mode = "v";
+        key = "<C-S-/>";
+        action = "<Plug>(comment_toggle_blockwise_visual)";
+        options.desc = "(Un)comment in Visual Mode";
+      }
+      {
+        mode = "v";
+        key = "p";
+        action = "_dP";
+        options.desc = "Don't yank pasted over text";
+      }
+      {
+        mode = "n";
+        key = "<ESC>";
+        action = "<CMD>nohlsearch<CR>";
+        options.desc = "Clear highlighting after search";
+      }
+      {
+        mode = "n";
+        key = "n";
+        action = "nzzzv";
+        options.desc = "Center cursor after search";
+      }
+      {
+        mode = "n";
+        key = "N";
+        action = "Nzzzv";
+        options.desc = "Center cursor after search";
       }
     ];
 
+    highlight = {
+      ibl-lines = {
+        fg = "#393B42";
+      };
+    };
+
     plugins = {
-      lualine.enable = true;
-      barbar.enable = true;
       web-devicons.enable = true;
-      gitgutter = {
-        enable = true;
-        settings = {
-          map_keys = false;
-        };
-      };
-      mini = {
-        enable = true;
-        # mockDevIcons = true;
-        modules = {
-          indentscope = { };
-          move = { };
-          # icons = { };
-        };
-      };
+      lualine.enable = true;
+      bufferline.enable = true;
       indent-blankline = {
         enable = true;
-        settings.scope.enabled = false;
+        settings = {
+          scope.enabled = false;
+          indent.highlight = "ibl-lines";
+        };
       };
-      lastplace.enable = true;
-      comment.enable = true;
+      nvim-autopairs.enable = true;
+      gitsigns = {
+        enable = true;
+        settings = {
+          signs = {
+            add = { text = "+"; };
+            change = { text = "~"; };
+            delete = { text = "-"; };
+            topdelete = { text = "-"; };
+            changedelete = { text = "~"; };
+            untracked = { text = "x"; };
+          };
+          signs_staged = {
+            add = { text = "+"; };
+            change = { text = "~"; };
+            delete = { text = "-"; };
+            topdelete = { text = "-"; };
+            changedelete = { text = "~"; };
+            untracked = { text = "x"; };
+          };
+        };
+      };
       fugitive.enable = true;
       markdown-preview.enable = true;
-      nvim-autopairs.enable = true;
+      comment.enable = true;
       telescope = {
         enable = true;
         settings = {
@@ -381,7 +365,7 @@ in
       };
       neo-tree = {
         enable = true;
-        window.width = 30;
+        window.width = 35;
         closeIfLastWindow = true;
         extraOptions = {
           filesystem = {
@@ -389,13 +373,6 @@ in
               visible = true;
             };
           };
-        };
-      };
-      undotree = {
-        enable = true;
-        settings = {
-          FocusOnToggle = true;
-          HighlightChangedText = true;
         };
       };
       treesitter = {
@@ -411,9 +388,6 @@ in
           indent.enable = true;
         };
       };
-      treesitter-refactor = {
-        enable = true;
-      };
       colorizer = {
         enable = true;
         settings = {
@@ -423,35 +397,27 @@ in
           };
         };
       };
-      cursorline = {
+      cmp = {
         enable = true;
         settings = {
-          cursorline = {
-            enable = true;
-            number = true;
-            timeout = 0;
+          snippet.expand = "luasnip";
+          mapping = {
+            "<C-d>" = "cmp.mapping.scroll_docs(-4)";
+            "<C-f>" = "cmp.mapping.scroll_docs(4)";
+            "<C-Space>" = "cmp.mapping.complete()";
+            "<C-e>" = "cmp.mapping.close()";
+            "<C-j>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
+            "<C-k>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+            "<CR>" = "cmp.mapping.confirm({ select = true })";
+            "<C-y>" = "cmp.mapping.confirm({ select = true })";
           };
-          cursorword = {
-            enable = true;
-            hl = { underline = true; };
-            minLength = 3;
-          };
-        };
-      };
-      neorg = {
-        enable = true;
-        package = pkgs.vimPlugins.neorg;
-        settings = {
-          "core.defaults".__empty = null;
-          "core.dirman".config = {
-            workspaces = {
-              notes = "~/notes";
-            };
-            default_workspace = "notes";
-          };
-          "core.concealer".__empty = null;
-          "core.completion".config.engine = "nvim-cmp";
-          lazy_loading = true;
+          sources = [
+            { name = "nvim_lsp"; }
+            { name = "luasnip"; }
+            { name = "path"; }
+            { name = "buffer"; }
+          ];
+          completion.completeopt = "menu,menuone,noinsert,preview";
         };
       };
       lsp = {
@@ -488,6 +454,7 @@ in
                   autoArchive = true;
                 };
               };
+              formatting.command = [ "nixpkgs-fmt" ];
             };
           };
           pyright.enable = true;
@@ -542,114 +509,36 @@ in
           # zls.enable = true;
         };
       };
-      lsp-format.enable = true;
-      none-ls = {
-        enable = true;
-        enableLspFormat = true;
-        sources = {
-          formatting = {
-            prettier = {
-              enable = true;
-              disableTsServerFormatter = true;
-            };
-            nixpkgs_fmt.enable = true;
-            markdownlint.enable = true;
-          };
-        };
-      };
-      lspkind = {
-        enable = true;
-        cmp = {
-          enable = true;
-          menu = {
-            nvim_lsp = "[LSP]";
-            nvim_lua = "[api]";
-            path = "[path]";
-            luasnip = "[snip]";
-            look = "[look]";
-            buffer = "[buffer]";
-            orgmode = "[orgmode]";
-            neorg = "[neorg]";
-          };
-        };
-      };
-      lsp-lines.enable = true;
-      luasnip = {
-        enable = true;
-        fromVscode = [
-          { paths = "${pkgs.vimPlugins.friendly-snippets}"; }
-        ];
-        /* fromLua = [
-          { paths = ./luasnip/snippets.lua; }
-                ]; */
-      };
-      windsurf-vim = {
-        enable = true;
-        package = pkgs.vimPlugins.windsurf-vim;
-        settings.bin = "${pkgs.vimPlugins.windsurf-vim}/bin/windsurf_language_server";
-      };
-      cmp_luasnip.enable = true;
-      cmp-nvim-lsp.enable = true;
-      cmp-look = {
-        enable = true;
-        autoLoad = false;
-      };
-      cmp = {
+      conform-nvim = {
         enable = true;
         settings = {
-          snippet.expand = "luasnip";
-          mapping = {
-            "<C-d>" = "cmp.mapping.scroll_docs(-4)";
-            "<C-f>" = "cmp.mapping.scroll_docs(4)";
-            "<C-Space>" = "cmp.mapping.complete()";
-            "<C-e>" = "cmp.mapping.close()";
-            # "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
-            # "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
-            "<Down>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
-            "<Up>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
-            "<C-j>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
-            "<C-k>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
-            "<Tab>" = "cmp.mapping.confirm({ select = true })";
+          formatters_by_ft = {
+            javascript = [ "prettierd" ];
+            typescript = [ "prettierd" ];
+            svelte = [ "prettierd" ];
+            css = [ "prettierd" ];
+            html = [ "prettierd" ];
+            json = [ "prettierd" ];
+            yaml = [ "prettierd" ];
+            markdown = [ "prettierd" ];
+            lua = [ "stylua" ];
+            python = [ "isort" "black" ];
+            nix = [ "nixpkgs-fmt" ];
           };
-          sources = [
-            { name = "nvim_lsp"; }
-            { name = "luasnip"; }
-            { name = "look"; keywordLength = 2; option = { convert_case = true; loud = true; }; }
-            { name = "path"; }
-            { name = "buffer"; }
-            { name = "nvim_lua"; }
-            { name = "orgmode"; }
-            { name = "neorg"; }
-          ];
-          window = {
-            completion.border = "rounded";
-            documentation.border = "rounded";
+          format_on_save = {
+            lsp_fallback = true;
+            async = false;
+            timeout_ms = 1000;
           };
-          completion.completeopt = "menu,menuone,noselect,preview";
         };
       };
-      which-key = {
+      lint = {
         enable = true;
-        settings = {
-          spec = [
-            {
-              __unkeyed-1 = "<leader>b";
-              desc = "Buffer";
-            }
-            {
-              __unkeyed-1 = "<leader>f";
-
-              desc = "Find";
-            }
-            {
-              __unkeyed-1 = "<leader>o";
-              desc = "Org Mode";
-            }
-            {
-              __unkeyed-1 = "<leader>s";
-              desc = "Split Window";
-            }
-          ];
+        lintersByFt = {
+          javascript = [ "eslint_d" ];
+          typescript = [ "eslint_d" ];
+          svelte = [ "eslint_d" ];
+          python = [ "pylint" ];
         };
       };
       toggleterm = {
@@ -660,47 +549,23 @@ in
           direction = "horizontal";
           persistMode = true;
           startInInsert = true;
+          open_mapping = "[[\\\\]]";
         };
       };
     };
     extraPlugins = with pkgs.vimPlugins; [
       luasnip
-      nvim-scrollbar
-      orgmode
-      onedarkpro-nvim
-      vim-cool
-      vim-prettier
       livesvelte
       (pkgs.vimUtils.buildVimPlugin rec {
-        pname = "scope-nvim";
-        version = "cd27af77ad61a7199af5c28d27013fb956eb0e3e";
+        pname = "kanso.nvim";
+        version = "f67db8dca6d7b5d270188023f129211856d2991c";
         src = pkgs.fetchFromGitHub {
-          owner = "tiagovla";
-          repo = "scope.nvim";
+          owner = "webhooked";
+          repo = "kanso.nvim";
           rev = version;
-          sha256 = "sha256-z1ytdhxKrLnZG8qMPEe2h+wC9tF4K/x6zplwnIojZuE=";
+          sha256 = "sha256-5f45q4SvTcmzdCwx76ChyzFg0pKm1ntUgXYbDGhunk8=";
         };
       })
-      (pkgs.vimUtils.buildVimPlugin rec {
-        pname = "org-bullets.nvim";
-        version = "21437cfa99c70f2c18977bffd423f912a7b832ea";
-        src = pkgs.fetchFromGitHub {
-          owner = "nvim-orgmode";
-          repo = "org-bullets.nvim";
-          rev = version;
-          sha256 = "sha256-/l8IfvVSPK7pt3Or39+uenryTM5aBvyJZX5trKNh0X0=";
-        };
-      })
-      /* (pkgs.vimUtils.buildVimPlugin rec {
-        pname = "follow-md-links.nvim";
-        version = "cf081a0a8e93dd188241a570b9a700b6a546ad1c";
-        src = pkgs.fetchFromGitHub {
-          owner = "jghauser";
-          repo = "follow-md-links.nvim";
-          rev = version;
-          sha256 = "sha256-ElgYrD+5FItPftpjDTdKAQR37XBkU8mZXs7EmAwEKJ4=";
-        };
-              }) */
       (pkgs.vimUtils.buildVimPlugin rec {
         pname = "vim-plist";
         version = "60e69bec50dfca32f0a62ee2dacdfbe63fd92038";
@@ -722,61 +587,31 @@ in
         };
       })
     ];
-    extraConfigLua = with colors.scheme.default.hex; ''
-      require('orgmode').setup({
-        org_agenda_files = { '~/org/**/*' },
-        org_default_notes_file = '~/org/refile.org',
-      })
-      vim.cmd[[
-        augroup orgmode_settings
-          autocmd!
-          autocmd FileType org
-          \ setlocal conceallevel=2 |
-          \ setlocal concealcursor=nc
-        augroup END
-      ]]
-
-      require('onedarkpro').setup({
-        colors = {
-          bg = "#${bg}",
-        },
-        options = {
-          cursorline = true,
-          transparency = true,
+    extraConfigLua = ''
+      require("kanso").setup({
+        undercurl = true,
+        disableItalics = true,
+        transparent = true,
+        dimInactive = false,
+        terminalColors = true,
+        theme = "zen",
+        background = {
+          dark = "zen",
+          light = "pearl",
         },
       })
-      local border = {
-        {"╭", "FloatBorder"},
-        {"─", "FloatBorder"},
-        {"╮", "FloatBorder"},
-        {"│", "FloatBorder"},
-        {"╯", "FloatBorder"},
-        {"─", "FloatBorder"},
-        {"╰", "FloatBorder"},
-        {"│", "FloatBorder"},
-      }
-      local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-      function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-        opts = opts or {}
-        opts.border = opts.border or border
-        return orig_util_open_floating_preview(contents, syntax, opts, ...)
-      end
-      vim.cmd[[
-        colorscheme onedark
-        highlight FloatBorder guifg=white guibg=NONE
-        highlight Pmenu guibg=NONE
-        highlight PmenuSbar guibg=NONE
-        highlight PmenuThumb guibg=white
-      ]]
-
-      require('org-bullets').setup()
-
-      require('scrollbar').setup()
+      vim.cmd("colorscheme kanso") --set theme
 
       vim.o.runtimepath = vim.o.runtimepath .. ',~/.local/share/nvim/site' -- set spellfile path
-
-      vim.opt.fillchars:append({ eob = " " })
+      vim.opt.fillchars:append({ eob = " " }) -- remove ~ with nothing at end of file
     '';
+  };
+
+  environment = {
+    variables = {
+      PATH = "$HOME/.npm-packages/bin:$PATH";
+      NODE_PATH = "$HOME/.npm-packages/lib/node_modules:$NODE_PATH:";
+    };
   };
 
   home-manager.users.${vars.user} = {
