@@ -285,6 +285,12 @@ in
         action = "Nzzzv";
         options.desc = "Center cursor after search";
       }
+      {
+        mode = "n";
+        key = "<TAB>";
+        action = "z=";
+        options.desc = "Get spell suggestion";
+      }
     ];
 
     highlight = {
