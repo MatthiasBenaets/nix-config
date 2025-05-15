@@ -33,6 +33,11 @@ in
     enableMan = false;
     viAlias = true;
     vimAlias = true;
+    nixpkgs = {
+      config = {
+        allowUnfree = true;
+      };
+    };
 
     extraPackages = with pkgs; [
       black
@@ -62,7 +67,12 @@ in
       {
         event = "FileType";
         pattern = [ "markdown" ];
-        command = "setlocal spell spelllang=en,nl";
+        callback = ''
+          function()
+            vim.cmd("setlocal spell spelllang=en,nl")
+            vim.keymap.set("n", "<TAB>", "z=", { noremap = true, silent = true, buffer = true })
+          end,
+        '';
         desc = "Enable spellchecking";
       }
       {
@@ -303,6 +313,7 @@ in
       web-devicons.enable = true;
       lualine.enable = true;
       bufferline.enable = true;
+      windsurf-vim.enable = true;
       indent-blankline = {
         enable = true;
         settings = {
@@ -423,6 +434,20 @@ in
             { name = "path"; }
             { name = "buffer"; }
           ];
+          formatting = {
+            format = ''
+              function(entry, vim_item)
+                local source_names = {
+                  nvim_lsp = "[LSP]",
+                  luasnip = "[SNIP]",
+                  buffer = "[BUF]",
+                  path = "[PATH]",
+                }
+                vim_item.menu = source_names[entry.source.name] or ""
+                return vim_item
+              end
+            '';
+          };
           completion.completeopt = "menu,menuone,noinsert,preview";
         };
       };
