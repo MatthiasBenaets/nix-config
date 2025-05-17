@@ -41,21 +41,11 @@ in
 
     extraPackages = with pkgs; [
       black
-      deno
-      elixir
       eslint_d
-      erlang
-      go
       isort
       nixpkgs-fmt
-      nodejs
       prettierd
-      (python3.withPackages (ps: with ps; [
-        pip
-      ]))
-      ripgrep
       stylua
-      zig
     ];
 
     autoCmd = [
@@ -639,6 +629,18 @@ in
   };
 
   environment = {
+    systemPackages = with pkgs; [
+      deno
+      elixir
+      erlang
+      go
+      nodejs
+      (python3.withPackages (ps: with ps; [
+        pip
+      ]))
+      ripgrep
+      zig
+    ];
     variables = {
       PATH = "$HOME/.npm-packages/bin:$PATH";
       NODE_PATH = "$HOME/.npm-packages/lib/node_modules:$NODE_PATH:";
