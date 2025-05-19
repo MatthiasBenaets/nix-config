@@ -291,6 +291,12 @@ in
         action = "z=";
         options.desc = "Get spell suggestion";
       }
+      {
+        mode = "t";
+        key = "<ESC>";
+        action = "<C-\\><C-n>";
+        options.desc = "Escape terminal mode";
+      }
     ];
 
     highlight = {
@@ -444,6 +450,7 @@ in
       lsp = {
         enable = true;
         servers = {
+          lua_ls.enable = true;
           emmet_ls = {
             enable = true;
             filetypes = [
