@@ -33,6 +33,7 @@
       "docker-toolbox"
       "garmin-express"
       "google-chrome"
+      "love"
       "linearmouse"
       # "obsidian"
       "openmtp"

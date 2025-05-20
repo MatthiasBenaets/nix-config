@@ -57,12 +57,14 @@ in
       {
         event = "FileType";
         pattern = [ "markdown" ];
-        callback = ''
-          function()
-            vim.cmd("setlocal spell spelllang=en,nl")
-            vim.keymap.set("n", "<TAB>", "z=", { noremap = true, silent = true, buffer = true })
-          end,
-        '';
+        callback = {
+          __raw = ''
+            function()
+              vim.cmd("setlocal spell spelllang=en,nl")
+              vim.keymap.set("n", "<TAB>", "z=", { noremap = true, silent = true, buffer = true })
+            end
+          '';
+        };
         desc = "Enable spellchecking";
       }
       {
@@ -450,7 +452,21 @@ in
       lsp = {
         enable = true;
         servers = {
-          lua_ls.enable = true;
+          lua_ls = {
+            enable = true;
+            settings = {
+              diagnostics = {
+                globals = [ "vim" "love" ];
+              };
+              workspace = {
+                checkThirdParty = false;
+                telemetry = { enable = false; };
+                library = [
+                  "\${3rd}/love2d/library"
+                ];
+              };
+            };
+          };
           emmet_ls = {
             enable = true;
             filetypes = [
