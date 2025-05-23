@@ -86,6 +86,7 @@
   };
 
   system = {
+    primaryUser = vars.user;
     stateVersion = 4;
   };
 }

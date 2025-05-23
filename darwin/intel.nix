@@ -67,10 +67,10 @@
         MouseButtonMode = "TwoButton";
       };
       # CustomUserPreferences = {
-      # # ~/Library/Preferences/
+      # # /Users/${vars.user}/Library/Preferences/
       # }
       # CustomSystemPreferences = {
-      # # ~/Library/Preferences/
+      # # /Users/${vars.user}/Library/Preferences/
       # }
     };
     activationScripts.postActivation.text = ''sudo chsh -s ${pkgs.zsh}/bin/zsh'';

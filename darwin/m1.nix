@@ -96,7 +96,7 @@
       };
 
       CustomUserPreferences = {
-        # Settings of plist in ~/Library/Preferences/
+        # Settings of plist in /Users/${vars.user}/Library/Preferences/
         "com.apple.finder" = {
           # Set home directory as startup window
           NewWindowTargetPath = "file:///Users/${vars.user}/";
@@ -112,12 +112,12 @@
           DSDontWriteUSBStores = true;
         };
         # Show battery percentage
-        "~/Library/Preferences/ByHost/com.apple.controlcenter".BatteryShowPercentage = true;
+        "/Users/${vars.user}/Library/Preferences/ByHost/com.apple.controlcenter".BatteryShowPercentage = true;
         # Privacy
         "com.apple.AdLib".allowApplePersonalizedAdvertising = false;
       };
       CustomSystemPreferences = {
-        # ~/Library/Preferences/
+        # /Users/${vars.user}/Library/Preferences/
       };
     };
   };
