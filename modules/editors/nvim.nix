@@ -299,6 +299,12 @@ in
         action = "<C-\\><C-n>";
         options.desc = "Escape terminal mode";
       }
+      {
+        mode = "n";
+        key = "<leader>tf";
+        action = "<CMD>lua vim.g.disable_autoformat = not vim.g.disable_autoformat; vim.notify('Autoformat ' .. (vim.g.disable_autoformat and 'disabled' or 'enabled'))<CR>";
+        options.desc = "Toggle autoformat";
+      }
     ];
 
     highlight = {
@@ -569,11 +575,14 @@ in
             python = [ "isort" "black" ];
             nix = [ "nixpkgs-fmt" ];
           };
-          format_on_save = {
-            lsp_fallback = true;
-            async = false;
-            timeout_ms = 1000;
-          };
+          format_on_save = ''
+            function(bufnr)
+              if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+                return
+              end
+              return { timeout_ms = 1000, lsp_fallback = true }, on_format
+             end
+          '';
         };
       };
       lint = {
