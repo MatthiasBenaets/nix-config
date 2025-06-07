@@ -462,7 +462,7 @@ in
             enable = true;
             settings = {
               diagnostics = {
-                globals = [ "vim" "love" ];
+                globals = [ "vim" ];
               };
               workspace = {
                 checkThirdParty = false;

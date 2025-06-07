@@ -41,8 +41,9 @@
       "postman"
       "r"
       "rstudio"
-      "visual-studio-code"
       "upscayl"
+      "visual-studio-code"
+      "wacom-tablet"
       "xnviewmp"
     ];
     masApps = {
