@@ -23,7 +23,8 @@ with lib;
 
   config = mkIf config.aerospace.enable {
     home-manager.users.${vars.user} = {
-      home.packages = with pkgs; [ aerospace jankyborders ];
+      # home.packages = with pkgs; [ aerospace jankyborders ];
+      home.packages = with pkgs; [ aerospace ];
       xdg.configFile."aerospace/aerospace.toml".text = ''
         start-at-login = true
         accordion-padding = 30
@@ -32,7 +33,7 @@ with lib;
         key-mapping.preset = "qwerty"
 
         after-startup-command = [
-          'exec-and-forget ${pkgs.jankyborders}/bin/borders active_color=0xffa6a6a6 inactive_color=0x00a6a6a6 style=round width=5.0'
+          # 'exec-and-forget ${pkgs.jankyborders}/bin/borders active_color=0xffa6a6a6 inactive_color=0x00a6a6a6 style=round width=5.0'
         ]
 
         [gaps]

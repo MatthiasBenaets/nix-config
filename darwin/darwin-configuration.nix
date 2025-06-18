@@ -58,7 +58,6 @@
       "moonlight"
       "obs"
       "prusaslicer"
-      "raycast"
       "stremio"
       "vlc"
       # "canon-eos-utility"
