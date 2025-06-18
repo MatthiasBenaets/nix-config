@@ -33,9 +33,10 @@ in
       inherit system;
       specialArgs = { inherit inputs system pkgs stable vars; };
       modules = [
-        ./darwin-configuration.nix
+        # ./darwin-configuration.nix
         ./intel.nix
-        ../modules/programs/kitty.nix
+        ./modules/kitty.nix
+        ./modules/zsh.nix
         nixvim.nixDarwinModules.nixvim
         home-manager.darwinModules.home-manager
         {
