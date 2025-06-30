@@ -137,6 +137,10 @@
       interval.Day = 7;
       options = "--delete-older-than 7d";
     };
+    optimise = {
+      automatic = true;
+      interval.Day = 7;
+    };
     extraOptions = ''
       # auto-optimise-store = true
       experimental-features = nix-command flakes
