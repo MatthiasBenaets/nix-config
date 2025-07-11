@@ -100,7 +100,9 @@ in
 
     clipboard = {
       register = "unnamedplus";
-      providers.wl-copy.enable = true;
+      providers.wl-copy = lib.mkIf pkgs.stdenv.isLinux {
+        enable = true;
+      };
     };
 
     globals = {
