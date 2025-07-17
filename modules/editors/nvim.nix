@@ -513,48 +513,33 @@ in
           svelte.enable = true;
           tailwindcss = {
             enable = true;
-            filetypes = [
-              "html"
-              "css"
-              "js"
-              "jsx"
-              "mdx"
-              "svelte"
-              "ts"
-              "tsx"
-              "heex"
-              "elixir"
-              "eelixir"
-            ];
-            extraOptions = {
-              init_options = {
-                userLanguages = {
-                  elixir = "html-eex";
-                  eelixir = "html-eex";
-                  heex = "html-eex";
-                };
-              };
-            };
             settings = {
-              tailwindCSS = {
-                classAttributes = [
-                  "class"
-                  "className"
-                  "class:list"
-                  "classList"
-                  "ngClass"
-                ];
-                experimental = {
-                  classRegex = ''class[:]\s*"([^"]*)"'';
-                };
+              filetypes = [
+                "html"
+                "css"
+                "js"
+                "jsx"
+                "mdx"
+                "svelte"
+                "ts"
+                "tsx"
+                "heex"
+                "elixir"
+                "eelixir"
+              ];
+              includeLanagues = {
+                elixir = "html-eex";
+                eelixir = "html-eex";
+                heex = "html-eex";
               };
-            };
-            onAttach = {
-              override = true;
-              function = ''
-                client.server_capabilities.documentFormattingProvider = false
-                client.server_capabilities.documentRangeFormattingProvider = false
-              '';
+              classAttributes = [
+                "class"
+                "className"
+                "class:list"
+                "classList"
+                "ngClass"
+                ''class[:]\s*"([^"]*)"''
+              ];
             };
           };
           ts_ls.enable = true;

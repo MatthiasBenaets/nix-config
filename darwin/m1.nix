@@ -38,7 +38,7 @@
       # "obsidian"
       "openmtp"
       "orcaslicer"
-      "postman"
+      "httpie"
       "r"
       "rstudio"
       "upscayl"
