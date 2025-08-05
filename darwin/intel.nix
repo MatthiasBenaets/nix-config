@@ -59,18 +59,21 @@
       upgrade = false;
       cleanup = "zap";
     };
+    brews = [
+      "docker-compose"
+    ];
     casks = [
       "aldente"
       "alfred"
       "appcleaner"
-      "docker"
+      "docker-desktop"
       "firefox"
       "jellyfin-media-player"
       "moonlight"
       "obs"
       "rectangle"
       "stremio"
-      "vlc" 
+      "vlc"
       # "virtualbox" # sudo codesign --force --deep --sign - /Applications/VirtualBox.app/Contents/Resources/VirtualBoxVM.app
     ];
   };

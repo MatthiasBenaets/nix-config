@@ -406,7 +406,7 @@ in
         grammarPackages = pkgs.vimPlugins.nvim-treesitter.passthru.allGrammars ++ [ livesvelte ];
         settings = {
           ensure_installed = "all";
-          highlight.enable = true;
+          highlight.enable = false;
           incremental_selection.enable = true;
           indent.enable = true;
         };
@@ -552,6 +552,7 @@ in
           formatters_by_ft = {
             javascript = [ "prettierd" ];
             typescript = [ "prettierd" ];
+            typescriptreact = [ "prettierd" ];
             svelte = [ "prettierd" ];
             css = [ "prettierd" ];
             html = [ "prettierd" ];

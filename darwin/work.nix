@@ -45,12 +45,15 @@
       upgrade = false;
       cleanup = "zap";
     };
+    brews = [
+      "docker-compose"
+    ];
     casks = [
       # "adobe-creative-cloud"
       # "bettertouchtool"
       "cyberduck"
       "dbeaver-community"
-      "docker"
+      "docker-desktop"
       "firefox"
       "jordanbaird-ice"
       "linearmouse"

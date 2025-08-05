@@ -20,6 +20,9 @@
   };
 
   homebrew = {
+    brews = [
+      "docker-compose"
+    ];
     casks = [
       "adobe-creative-cloud"
       "autodesk-fusion"
@@ -29,8 +32,7 @@
       # "darktable"
       "dbeaver-community"
       "deluge"
-      "docker"
-      "docker-toolbox"
+      "docker-desktop"
       "garmin-express"
       "google-chrome"
       "love"
@@ -38,9 +40,9 @@
       # "obsidian"
       "openmtp"
       "orcaslicer"
-      "httpie"
-      "r"
-      "rstudio"
+      "httpie-desktop"
+      # "r"
+      # "rstudio"
       "upscayl"
       "visual-studio-code"
       "wacom-tablet"

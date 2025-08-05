@@ -27,6 +27,7 @@
     systemPackages = with pkgs; [
       eza # Ls
       git # Version Control
+      iperf3 # Network
       mas # Mac App Store $ mas search <app>
       ranger # File Manager
       tldr # Help
@@ -53,6 +54,7 @@
     casks = [
       "aldente"
       "appcleaner"
+      "betterdisplay"
       "firefox"
       "jellyfin-media-player"
       "moonlight"
