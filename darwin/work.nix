@@ -46,6 +46,8 @@
       cleanup = "zap";
     };
     brews = [
+      "ansible"
+      "ansible-lint"
       "docker-compose"
     ];
     casks = [
@@ -60,7 +62,9 @@
       "moonlight"
       "obs"
       "postman"
+      "r-app"
       "raycast"
+      "rstudio"
     ];
     masApps = {
       "wireguard" = 1451685025;

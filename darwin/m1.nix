@@ -41,7 +41,7 @@
       "openmtp"
       "orcaslicer"
       "httpie-desktop"
-      # "r"
+      # "r-app"
       # "rstudio"
       "upscayl"
       "visual-studio-code"

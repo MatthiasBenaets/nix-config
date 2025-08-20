@@ -544,6 +544,7 @@ in
           };
           ts_ls.enable = true;
           # zls.enable = true;
+          ansiblels.enable = true;
         };
       };
       conform-nvim = {
