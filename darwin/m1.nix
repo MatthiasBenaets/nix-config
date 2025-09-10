@@ -21,6 +21,8 @@
 
   homebrew = {
     brews = [
+      "ansible"
+      "ansible-lint"
       "docker-compose"
     ];
     casks = [

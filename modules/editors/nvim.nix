@@ -406,7 +406,7 @@ in
         grammarPackages = pkgs.vimPlugins.nvim-treesitter.passthru.allGrammars ++ [ livesvelte ];
         settings = {
           ensure_installed = "all";
-          highlight.enable = false;
+          highlight.enable = true;
           incremental_selection.enable = true;
           indent.enable = true;
         };
