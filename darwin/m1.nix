@@ -27,7 +27,6 @@
     ];
     casks = [
       "adobe-creative-cloud"
-      "autodesk-fusion"
       # "bettertouchtool"
       "blender"
       # "connectiq"
@@ -46,6 +45,7 @@
       # "r-app"
       # "rstudio"
       "upscayl"
+      "utm"
       "visual-studio-code"
       "wacom-tablet"
       "xnviewmp"
