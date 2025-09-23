@@ -65,6 +65,7 @@
       "r-app"
       "raycast"
       "rstudio"
+      "utm"
     ];
     masApps = {
       "wireguard" = 1451685025;
