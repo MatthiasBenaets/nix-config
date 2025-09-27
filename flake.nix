@@ -96,9 +96,11 @@
         inputs.nixpkgs.follows = "nixpkgs";
         inputs.home-manager.follows = "nixpkgs";
       };
+
+      mac-app-util.url = "github:hraban/mac-app-util";
     };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nixos-hardware, home-manager, home-manager-stable, darwin, nur, nixgl, nixvim, nixvim-stable, doom-emacs, hyprland, hyprspace, plasma-manager, ... }: # Function telling flake which inputs to use
+  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nixos-hardware, home-manager, home-manager-stable, darwin, nur, nixgl, nixvim, nixvim-stable, doom-emacs, hyprland, hyprspace, plasma-manager, mac-app-util, ... }: # Function telling flake which inputs to use
     let
       # Variables Used In Flake
       vars = {
@@ -119,7 +121,7 @@
       darwinConfigurations = (
         import ./darwin {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-stable home-manager darwin nixvim vars;
+          inherit inputs nixpkgs nixpkgs-stable home-manager darwin nixvim mac-app-util vars;
         }
       );
 

@@ -8,7 +8,7 @@
 #       └─ <host>.nix
 #
 
-{ inputs, nixpkgs, nixpkgs-stable, darwin, home-manager, nixvim, vars, ... }:
+{ inputs, nixpkgs, nixpkgs-stable, darwin, home-manager, nixvim, mac-app-util, vars, ... }:
 
 let
   systemConfig = system: {
@@ -38,10 +38,14 @@ in
         ./modules/kitty.nix
         ./modules/zsh.nix
         nixvim.nixDarwinModules.nixvim
+        mac-app-util.darwinModules.default
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+          home-manager.sharedModules = [
+            mac-app-util.homeManagerModules.default
+          ];
         }
       ];
     };
