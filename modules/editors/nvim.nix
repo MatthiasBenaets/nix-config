@@ -44,7 +44,7 @@ in
       eslint_d
       isort
       nixpkgs-fmt
-      prettierd
+      prettier
       stylua
     ];
 
@@ -550,16 +550,17 @@ in
         enable = true;
         settings = {
           formatters_by_ft = {
-            javascript = [ "prettierd" ];
-            typescript = [ "prettierd" ];
-            typescriptreact = [ "prettierd" ];
-            svelte = [ "prettierd" ];
-            css = [ "prettierd" ];
-            html = [ "prettierd" ];
-            json = [ "prettierd" ];
-            yaml = [ "prettierd" ];
-            markdown = [ "prettierd" ];
+            javascript = [ "prettier" ];
+            typescript = [ "prettier" ];
+            typescriptreact = [ "prettier" ];
+            svelte = [ "prettier" ];
+            css = [ "prettier" ];
+            html = [ "prettier" ];
+            json = [ "prettier" ];
+            yaml = [ "prettier" ];
+            markdown = [ "prettier" ];
             lua = [ "stylua" ];
+            php = [ "prettier" ];
             python = [ "isort" "black" ];
             nix = [ "nixpkgs-fmt" ];
           };
