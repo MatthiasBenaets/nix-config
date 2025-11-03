@@ -599,15 +599,25 @@ in
       luasnip
       livesvelte
       (pkgs.vimUtils.buildVimPlugin rec {
-        pname = "kanso.nvim";
-        version = "f67db8dca6d7b5d270188023f129211856d2991c";
+        pname = "onedarkpro.nvim";
+        version = "eeac8847a46a02c4de4e887c4c6d34b282060b5d";
         src = pkgs.fetchFromGitHub {
-          owner = "webhooked";
-          repo = "kanso.nvim";
+          owner = "olimorris";
+          repo = "onedarkpro.nvim";
           rev = version;
-          sha256 = "sha256-5f45q4SvTcmzdCwx76ChyzFg0pKm1ntUgXYbDGhunk8=";
+          sha256 = "sha256-c9ZojAJhmwu7PlWSFj3VrHFZx4Gw8Dnza+5fH/p+ppg=";
         };
       })
+      # (pkgs.vimUtils.buildVimPlugin rec {
+      #   pname = "kanso.nvim";
+      #   version = "f67db8dca6d7b5d270188023f129211856d2991c";
+      #   src = pkgs.fetchFromGitHub {
+      #     owner = "webhooked";
+      #     repo = "kanso.nvim";
+      #     rev = version;
+      #     sha256 = "sha256-5f45q4SvTcmzdCwx76ChyzFg0pKm1ntUgXYbDGhunk8=";
+      #   };
+      # })
       (pkgs.vimUtils.buildVimPlugin rec {
         pname = "vim-plist";
         version = "60e69bec50dfca32f0a62ee2dacdfbe63fd92038";
@@ -630,19 +640,25 @@ in
       })
     ];
     extraConfigLua = ''
-      require("kanso").setup({
-        undercurl = true,
-        disableItalics = true,
-        transparent = true,
-        dimInactive = false,
-        terminalColors = true,
-        theme = "zen",
-        background = {
-          dark = "zen",
-          light = "pearl",
-        },
+      require("onedarkpro").setup({
+        options = {
+          transparency = true,
+        }
       })
-      vim.cmd("colorscheme kanso") --set theme
+      vim.cmd("colorscheme onedark")
+      -- require("kanso").setup({
+      --   undercurl = true,
+      --   disableItalics = true,
+      --   transparent = true,
+      --   dimInactive = false,
+      --   terminalColors = true,
+      --   theme = "zen",
+      --   background = {
+      --     dark = "zen",
+      --     light = "pearl",
+      --   },
+      -- })
+      -- vim.cmd("colorscheme kanso") --set theme
 
       vim.o.runtimepath = vim.o.runtimepath .. ',~/.local/share/nvim/site' -- set spellfile path
       vim.opt.fillchars:append({ eob = " " }) -- remove ~ with nothing at end of file
