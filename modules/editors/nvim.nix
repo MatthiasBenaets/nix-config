@@ -351,6 +351,8 @@ in
       };
       fugitive.enable = true;
       markdown-preview.enable = true;
+      otter.enable = if vars.user == "lucp10771" then true else false;
+      quarto.enable = if vars.user == "lucp10771" then true else false;
       comment.enable = true;
       telescope = {
         enable = true;
@@ -511,6 +513,7 @@ in
           };
           pyright.enable = true;
           svelte.enable = true;
+          vue_ls.enable = true;
           tailwindcss = {
             enable = true;
             settings = {
@@ -554,6 +557,7 @@ in
             typescript = [ "prettier" ];
             typescriptreact = [ "prettier" ];
             svelte = [ "prettier" ];
+            vue = [ "prettier" ];
             css = [ "prettier" ];
             html = [ "prettier" ];
             json = [ "prettier" ];

@@ -58,14 +58,17 @@
       "docker-desktop"
       "firefox"
       "jordanbaird-ice"
+      "local"
       "linearmouse"
       "moonlight"
       "obs"
       "postman"
+      "quarto"
       "r-app"
       "raycast"
       "rstudio"
       "utm"
+      "xquartz"
     ];
     masApps = {
       "wireguard" = 1451685025;
