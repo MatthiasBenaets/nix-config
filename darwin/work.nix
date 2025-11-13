@@ -14,7 +14,7 @@
 {
   imports = import (./modules);
 
-  aerospace.enable = true;
+  hyprspace.enable = true;
 
   users.users.${vars.user} = {
     home = "/Users/${vars.user}";
@@ -62,6 +62,7 @@
       "linearmouse"
       "moonlight"
       "obs"
+      "ollama-app"
       "postman"
       "quarto"
       "r-app"

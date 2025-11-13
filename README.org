@@ -22,7 +22,7 @@
 |                 | *NixOS - Wayland* | *NixOS - Wayland/Xorg* | *NixOS - Xorg*   | *Darwin*                |
 |-----------------+-------------------+------------------------+------------------+-------------------------|
 | *DM*            | /                 | GDM                    | LightDM          | /                       |
-| *WM/DE*         | Hyprland          | Gnome                  | Bspwm            | AeroSpace               |
+| *WM/DE*         | Hyprland          | Gnome                  | Bspwm            | HyprSpace               |
 | *Compositor*    | Hyprland          | Mutter                 | Picom (jonaburg) | /                       |
 | *Bar*           | Eww + Waybar      | /                      | Polybar          | /                       |
 | *Hotkeys*       | Hyprland          | /                      | Sxhkd            | Raycast                 |

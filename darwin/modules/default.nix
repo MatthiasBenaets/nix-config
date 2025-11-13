@@ -12,6 +12,7 @@
 [
   ./aerospace.nix
   # ./alacritty.nix
+  ./hyprspace.nix
   ./kitty.nix
   ./skhd.nix
   ./yabai.nix

@@ -12,11 +12,10 @@
 {
   imports = import (./modules);
 
-  aerospace.enable = true;
+  hyprspace.enable = true;
 
   environment = {
     systemPackages = with pkgs; [
-      aerospace
     ];
   };
 
@@ -28,6 +27,7 @@
     ];
     casks = [
       "adobe-creative-cloud"
+      "BarutSRB/tap/hyprspace"
       # "bettertouchtool"
       "blender"
       # "connectiq"
@@ -42,6 +42,7 @@
       "local"
       "linearmouse"
       # "obsidian"
+      "ollama-app"
       "openmtp"
       "orcaslicer"
       "httpie-desktop"

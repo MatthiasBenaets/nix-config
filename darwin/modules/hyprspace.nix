@@ -1,17 +1,17 @@
 #
 #  Tiling Window Manager for MacOS
-#  Enable with "aerospace.enable = true;"
+#  Enable with "hyprspace.enable = true;"
 #
 #  Fix tiny mission control windows: System settings -> Desktop & Dock -> Mission Control -> Enable "Group Windows By Application"
 #  Navigate workspaces using gestures: Install BetterTouchTool -> Create 2 and 3-finger gestures for trackpad and magic mouse ->
-#    Use "Execute Terminal Command": "/etc/profiles/per-user/${username}/bin/aerospace workspace "$(/etc/profiles/per-user/${username}/bin/aerospace list-workspaces --monitor mouse --visible)" && /etc/profiles/per-user/${username}/bin/aerospace workspace next" (use next or prev)
+#    Use "Send Keyboard Shortcut": set keyboard shortcut for switching workspaces
 #
 
 { config, lib, pkgs, vars, ... }:
 
 with lib;
 {
-  options.aerospace = {
+  options.hyprspace = {
     enable = mkOption {
       type = types.bool;
       default = false;
@@ -21,25 +21,36 @@ with lib;
     };
   };
 
-  config = mkIf config.aerospace.enable {
-    environment = {
-      systemPackages = with pkgs; [
-        aerospace
-      ];
-    };
+  config = mkIf config.hyprspace.enable {
     home-manager.users.${vars.user} = {
-      home.packages = with pkgs; [ aerospace jankyborders ];
-      xdg.configFile."aerospace/aerospace.toml".text = ''
+      home.packages = with pkgs; [ jankyborders ];
+      home.file.".hyprspace.toml".text = ''
+        # Startup & Lifecycle
         start-at-login = true
-        accordion-padding = 30
-        default-root-container-layout = "tiles"
-        default-root-container-orientation = "auto"
-        key-mapping.preset = "qwerty"
-
         after-startup-command = [
           'exec-and-forget ${pkgs.jankyborders}/bin/borders active_color=0xffa6a6a6 inactive_color=0x00a6a6a6 style=round width=5.0'
         ]
 
+        # Default Layout Settings
+        default-root-container-layout = "dwindle"
+        default-root-container-orientation = "auto"
+
+        # Dwindle Layout
+        dwindle-default-split-ratio = 1.0
+        dwindle-single-window-aspect-ratio = [0, 0]
+        dwindle-single-window-aspect-ratio-tolerance = 0.1
+        #mouse-sensitivity = 0.5
+
+        # Other Layout Settings
+        accordion-padding = 30
+
+        # Normalization Settings
+        enable-normalization-flatten-containers = true
+
+        # MacOS Integration
+        automatically-unhide-macos-hidden-apps = true
+
+        # Gaps
         [gaps]
         inner.horizontal = 8
         inner.vertical = 8
@@ -48,25 +59,31 @@ with lib;
         outer.top = 8
         outer.right = 8
 
+        # Workspace to Monitor Assignment
+        [workspace-to-monitor-force-assignment]
+        "1" = "main"
+        "2" = "main"
+        "3" = "main"
+        "4" = "main"
+        "5" = "main"
+        "6" = "secondary"
+        "7" = "secondary"
+        "8" = "secondary"
+        "9" = "secondary"
+        "10" = "secondary"
+
+        # Key Mappings
+        [key-mapping]
+        preset = "qwerty"
+
+        # Main Mode Bindings
         [mode.main.binding]
-        # alt = General and Node Focus
-        # alt-shift = Move Node
-        # ctrl-alt = Workspace Focus
-        # ctrl-alt-shift = Move Node to Workspace
+          # alt = General and Node Focus
+          # alt-shift = Move Node
+          # ctrl-alt = Workspace Focus
+          # ctrl-alt-shift = Move Node to Workspace
 
-        alt-slash = "layout tiles horizontal vertical"
-        alt-comma = "layout accordion horizontal vertical"
-        alt-f = "layout floating tiling"
-        alt-shift-f = "fullscreen"
-
-        alt-tab = "workspace-back-and-forth"
-        alt-m = [ "move-node-to-monitor --wrap-around next", "focus-monitor --wrap-around next" ]
-
-        alt-minus = "resize smart -50"
-        alt-equal = "resize smart +50"
-
-        alt-q = "close --quit-if-last-window"
-
+        ## Focus Movement
         alt-left = "focus --boundaries all-monitors-outer-frame left"
         alt-down = "focus --boundaries all-monitors-outer-frame down"
         alt-up = "focus --boundaries all-monitors-outer-frame up"
@@ -76,6 +93,7 @@ with lib;
         alt-k = "focus --boundaries all-monitors-outer-frame up"
         alt-l = "focus --boundaries all-monitors-outer-frame right"
 
+        ## Window Movement
         alt-shift-left = "move left"
         alt-shift-down = "move down"
         alt-shift-up = "move up"
@@ -85,6 +103,7 @@ with lib;
         alt-shift-k = "move up"
         alt-shift-l = "move right"
 
+        ## Workspace Switching
         ctrl-alt-left = "workspace prev"
         ctrl-alt-right = "workspace next"
         # ctrl-alt-left = "workspace --wrap-around prev"
@@ -93,13 +112,12 @@ with lib;
         ctrl-alt-2 = "workspace 2"
         ctrl-alt-3 = "workspace 3"
         ctrl-alt-4 = "workspace 4"
-        ctrl-alt-5 = "workspace 5"
+        ctrl-alt-5 = "workspace 5# "
         ctrl-alt-6 = "workspace 6"
         ctrl-alt-7 = "workspace 7"
         ctrl-alt-8 = "workspace 8"
         ctrl-alt-9 = "workspace 9"
         ctrl-alt-0 = "workspace 10"
-
         ctrl-alt-shift-left = [ "move-node-to-workspace prev", "workspace prev" ]
         ctrl-alt-shift-right = [ "move-node-to-workspace next", "workspace next" ]
         # ctrl-alt-shift-left = [ "move-node-to-workspace --wrap-around prev", "workspace --wrap-around prev" ]
@@ -115,39 +133,33 @@ with lib;
         ctrl-alt-shift-9 = "move-node-to-workspace 9"
         ctrl-alt-shift-0 = "move-node-to-workspace 10"
         ctrl-alt-shift-z = "move-node-to-monitor --wrap-around --focus-follows-window next"
+        alt-tab = "workspace-back-and-forth"
+        alt-m = [ "move-node-to-monitor --wrap-around next", "focus-monitor --wrap-around next" ]
 
+        ## Layout Command
+        alt-slash = "layout tiles horizontal vertical"
+        alt-comma = "layout accordion horizontal vertical"
+        alt-shift-f = "layout floating tiling"
+        alt-f = "fullscreen"
+
+
+        ## Window Resizing
+        alt-minus = "resize smart -100"
+        alt-equal = "resize smart +100"
+
+
+        ## Window Management
+        alt-q = "close --quit-if-last-window"
+
+        ## Exec Commands
         alt-enter = "exec-and-forget /Applications/kitty.app/Contents/MacOS/kitty ~"
         alt-e = "exec-and-forget open ~"
 
+        # Service Mode
         alt-shift-semicolon = "mode service"
-
         [mode.service.binding]
-        esc = [ "reload-config", "mode main" ]
-        r = [ "flatten-workspace-tree", "mode main" ]
-        f = [ "layout floating tiling", "mode main" ]
-        backspace = [ "close-all-windows-but-current", "mode main" ]
 
-        alt-shift-left = [ "join-with left", "mode main" ]
-        alt-shift-down = [ "join-with down", "mode main" ]
-        alt-shift-up = [ "join-with up", "mode main" ]
-        alt-shift-right = [ "join-with right", "mode main" ]
-        alt-shift-h = [ "join-with left", "mode main" ]
-        alt-shift-j = [ "join-with down", "mode main" ]
-        alt-shift-k = [ "join-with up", "mode main" ]
-        alt-shift-l = [ "join-with right", "mode main" ]
-
-        [workspace-to-monitor-force-assignment]
-        "1" = "main"
-        "2" = "main"
-        "3" = "main"
-        "4" = "main"
-        "5" = "main"
-        "6" = "secondary"
-        "7" = "secondary"
-        "8" = "secondary"
-        "9" = "secondary"
-        "10" = "secondary"
-
+        # Window Detection Rules
         [[on-window-detected]]
         if.app-id = "org.mozilla.firefox"
         if.window-title-regex-substring = "Picture-in-Picture"
