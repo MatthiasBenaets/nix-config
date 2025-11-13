@@ -52,12 +52,13 @@
     ];
     casks = [
       # "adobe-creative-cloud"
+      "BarutSRB/tap/hyprspace"
       # "bettertouchtool"
       "cyberduck"
       "dbeaver-community"
       "docker-desktop"
       "firefox"
-      "jordanbaird-ice"
+      "jordanbaird-ice@beta"
       "local"
       "linearmouse"
       "moonlight"
