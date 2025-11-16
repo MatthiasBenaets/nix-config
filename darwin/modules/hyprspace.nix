@@ -94,14 +94,14 @@ with lib;
         alt-l = "focus --boundaries all-monitors-outer-frame right"
 
         ## Window Movement
-        alt-shift-left = "move left"
-        alt-shift-down = "move down"
-        alt-shift-up = "move up"
-        alt-shift-right = "move right"
-        alt-shift-h = "move left"
-        alt-shift-j = "move down"
-        alt-shift-k = "move up"
-        alt-shift-l = "move right"
+        alt-shift-left = "move left --boundaries all-monitors-outer-frame"
+        alt-shift-down = "move down --boundaries all-monitors-outer-frame"
+        alt-shift-up = "move up --boundaries all-monitors-outer-frame"
+        alt-shift-right = "move right --boundaries all-monitors-outer-frame"
+        alt-shift-h = "move left --boundaries all-monitors-outer-frame"
+        alt-shift-j = "move down --boundaries all-monitors-outer-frame"
+        alt-shift-k = "move up --boundaries all-monitors-outer-frame"
+        alt-shift-l = "move right --boundaries all-monitors-outer-frame"
 
         ## Workspace Switching
         ctrl-alt-left = "workspace prev"
@@ -112,7 +112,7 @@ with lib;
         ctrl-alt-2 = "workspace 2"
         ctrl-alt-3 = "workspace 3"
         ctrl-alt-4 = "workspace 4"
-        ctrl-alt-5 = "workspace 5# "
+        ctrl-alt-5 = "workspace 5"
         ctrl-alt-6 = "workspace 6"
         ctrl-alt-7 = "workspace 7"
         ctrl-alt-8 = "workspace 8"

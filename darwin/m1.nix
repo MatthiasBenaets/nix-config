@@ -47,6 +47,7 @@
       "orcaslicer"
       "httpie-desktop"
       # "r-app"
+      "raycast"
       # "rstudio"
       "upscayl"
       "utm"
