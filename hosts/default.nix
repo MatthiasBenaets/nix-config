@@ -130,6 +130,7 @@ in
     ];
   };
 
+  # DEPRECATED Gigabyte H310M Desktop Profile
   h310m = lib.nixosSystem {
     inherit system;
     specialArgs = {

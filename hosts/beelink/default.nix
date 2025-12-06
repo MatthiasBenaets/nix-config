@@ -45,8 +45,8 @@
       enable = true;
       extraPackages = with pkgs; [
         intel-media-driver
-        vaapiIntel
-        vaapiVdpau
+        intel-vaapi-driver
+        libva-vdpau-driver
         libvdpau-va-gl
       ];
     };
@@ -65,11 +65,10 @@
       #gmtp # Mount GoPro
       go2tv # Casting
       google-cloud-sdk-gce # Google Cloud
-      jellyfin-media-player # Media Player
+      #jellyfin-media-player # Media Player
       kodi # Media Player
       moonlight-qt # Remote Streaming
       obs-studio # Live Streaming
-      plex-media-player # Media Player
       prusa-slicer # 3D Slicer
       rclone # Gdrive ($ rclone config | rclone mount --daemon gdrive:<path> <host/path>)
       simple-scan # Scanning

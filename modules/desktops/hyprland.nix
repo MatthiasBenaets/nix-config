@@ -91,7 +91,7 @@ with host;
 
     programs.hyprland = {
       enable = true;
-      package = hyprland.packages.${pkgs.system}.hyprland;
+      package = hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     };
 
     security.pam.services.hyprlock = {
@@ -110,7 +110,6 @@ with host;
           user = vars.user;
         };
       };
-      vt = 7;
     };
 
     systemd.sleep.extraConfig = ''
@@ -228,7 +227,7 @@ with host;
 
         wayland.windowManager.hyprland = with colors.scheme.default.hex; {
           enable = true;
-          package = hyprland.packages.${pkgs.system}.hyprland;
+          package = hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
           xwayland.enable = true;
           # plugins = [
           #   hyprspace.packages.${pkgs.system}.Hyprspace

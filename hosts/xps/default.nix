@@ -49,8 +49,7 @@
   environment = {
     systemPackages = with pkgs; [
       fprintd # Fingerprint
-      jellyfin-media-player # Media Player
-      plex-media-player # Media Player
+      #jellyfin-media-player # Media Player
       simple-scan # Scanning
       moonlight-qt # Remote Streaming
     ];
@@ -64,9 +63,9 @@
         driver = pkgs.libfprint-2-tod1-goodix;
       };
     }; # $ sudo fprintd-enroll --finger right-index-finger <user>
-    logind.extraConfig = ''
-      HandlePowerKey=ignore
-    ''; # Disable short click powerbutton
+    logind.settings.Login = {
+      HandlePowerKey = "ignore";
+    }; # Disable short click powerbutton
     hardware.bolt.enable = true;
   };
 
