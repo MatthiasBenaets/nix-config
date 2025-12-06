@@ -27,6 +27,7 @@
     ];
     casks = [
       "adobe-creative-cloud"
+      "autodesk-fusion"
       "BarutSRB/tap/hyprspace"
       # "bettertouchtool"
       "blender"
