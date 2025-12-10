@@ -11,11 +11,5 @@
 #
 
 [
-  ./bspwm.nix
-  ./gnome.nix
-  ./hyprland.nix
-  ./kde.nix
   ./options.nix
-  ./river.nix
-  ./sway.nix
 ]

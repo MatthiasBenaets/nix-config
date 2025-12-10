@@ -17,26 +17,10 @@
 
   homebrew = {
     casks = [
-      "adobe-creative-cloud"
-      "darktable"
-      "deluge"
       "docker"
       "docker-toolbox"
-      "autodesk-fusion"
-      "garmin-express"
-      "google-chrome"
-      "obsidian"
-      "upscayl"
-      "xnviewmp"
     ];
     masApps = {
-      # "FileZilla Pro - FTP and Client" = 1298486723;
-      # "FileZilla Pro RemoteDrive" = -2087754162;
-      "Keynote" = 409183694;
-      "Microsoft Remote Desktop" = 1295203466;
-      "Numbers" = 409203825;
-      "Pages" = 409201541;
-      "Xcode" = 497799835;
     };
   };
 

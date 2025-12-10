@@ -1,9 +1,0 @@
-#!/bin/sh
-
-SINK_NAME="$1"
-
-pactl list short sinks | grep "$SINK_NAME" | while read -r line
-do
-	SINK_ID=$(echo "$line" | awk '{ print $1 }')
-	pactl set-default-sink "$SINK_ID"
-done

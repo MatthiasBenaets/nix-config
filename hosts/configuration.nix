@@ -95,54 +95,13 @@ in
       # Terminal
       terminal # Terminal Emulator
       starship # Shell enhancer
-      btop # Resource Manager
-      cifs-utils # Samba
-      coreutils # GNU Utilities
       git # Version Control
-      gvfs # Samba
-      killall # Process Killer
-      lshw # Hardware Config
-      nano # Text Editor
-      nodejs # Javascript Runtime
-      nodePackages.pnpm # Package Manager
-      nix-tree # Browse Nix Store
-      pciutils # Manage PCI
-      ranger # File Manager
-      smartmontools # Disk Health
-      tldr # Helper
-      usbutils # Manage USB
-      wget # Retriever
-      xdg-utils # Environment integration
       tree # Terminal file hierarchy display
       direnv # Folder based environments using .envrc files
-      warp-terminal # Nice ai terminal (non free!)
-
-      # Video/Audio
-      alsa-utils # Audio Control
-      feh # Image Viewer
-      linux-firmware # Proprietary Hardware Blob
-      mpv # Media Player
-      pavucontrol # Audio Control
-      pipewire # Audio Server/Control
-      pulseaudio # Audio Server/Control
-      qpwgraph # Pipewire Graph Manager
-      vlc # Media Player
 
       # Apps
       appimage-run # Runs AppImages on NixOS
-      firefox # Browser
-      google-chrome # Browser
-      remmina # XRDP & VNC Client
 
-      # File Management
-      file-roller # Archive Manager
-      pcmanfm # File Browser
-      p7zip # Zip Encryption
-      rsync # Syncer - $ rsync -r dir1/ dir2/
-      unzip # Zip Files
-      unrar # Rar Files
-      wpsoffice # Office
-      zip # Zip
 
       # Other Packages Found @
       # - ./<host>/default.nix
@@ -150,7 +109,6 @@ in
     ] ++
     (with stable; [
       # Apps
-      # firefox # Browser
       image-roll # Image Viewer
     ]);
   };
@@ -237,9 +195,9 @@ in
         defaultApplications = {
           "image/jpeg" = [ "image-roll.desktop" "feh.desktop" ];
           "image/png" = [ "image-roll.desktop" "feh.desktop" ];
-          "text/plain" = "nvim.desktop";
-          "text/html" = "nvim.desktop";
-          "text/csv" = "nvim.desktop";
+          "text/plain" = "code.desktop";
+          "text/html" = "code.desktop";
+          "text/csv" = "code.desktop";
           "application/pdf" = [ "wps-office-pdf.desktop" "firefox.desktop" "google-chrome.desktop" ];
           "application/zip" = "org.gnome.FileRoller.desktop";
           "application/x-tar" = "org.gnome.FileRoller.desktop";

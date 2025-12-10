@@ -30,7 +30,6 @@
       mas # Mac App Store $ mas search <app>
       ranger # File Manager
       tldr # Help
-      zsh-powerlevel10k # Prompt
     ];
   };
 
@@ -43,18 +42,6 @@
       cleanup = "zap";
     };
     casks = [
-      "aldente"
-      "appcleaner"
-      "firefox"
-      "moonlight"
-      "obs"
-      "plex"
-      "prusaslicer"
-      "raycast"
-      "stremio"
-      "vlc"
-      # "canon-eos-utility"
-      # "jellyfin-media-player"
     ];
     masApps = {
       "wireguard" = 1451685025;

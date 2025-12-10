@@ -28,7 +28,6 @@ in
       package = config.boot.kernelPackages.nvidiaPackages.production;
       prime = {
         offload.enable = true;
-        intelBusId = "PCI:0:2:0";
         nvidiaBusId = "PCI:45:0:0";
       };
       modesetting.enable = true;

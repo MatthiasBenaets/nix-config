@@ -11,14 +11,7 @@
 #
 
 [
-  ./alacritty.nix
   ./accounts.nix
-  ./eww.nix
   ./flatpak.nix
   ./kitty.nix
-  ./obs.nix
-  ./rofi.nix
-  ./waybar.nix
-  ./wofi.nix
-  # ./games.nix
 ]

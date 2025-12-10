@@ -48,84 +48,36 @@
         # Requires nixos-wsl.nixosModules.default to be added to the host modules
       };
 
-      # NUR Community Packages
-      nur = {
-        url = "github:nix-community/NUR";
-        # Requires "nur.nixosModules.nur" to be added to the host modules
-      };
-
       # Fixes OpenGL With Other Distros.
       nixgl = {
         url = "github:guibou/nixGL";
         inputs.nixpkgs.follows = "nixpkgs";
       };
 
-      # Neovim
-      nixvim = {
-        url = "github:nix-community/nixvim";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
-
-      # Neovim
-      nixvim-stable = {
-        url = "github:nix-community/nixvim/nixos-23.11";
-        inputs.nixpkgs.follows = "nixpkgs-stable";
-      };
-
-      # Emacs Overlays
-      emacs-overlay = {
-        url = "github:nix-community/emacs-overlay";
-        flake = false;
-      };
-
-      # Nix-Community Doom Emacs
-      doom-emacs = {
-        url = "github:nix-community/nix-doom-emacs";
-        inputs.nixpkgs.follows = "nixpkgs";
-        inputs.emacs-overlay.follows = "emacs-overlay";
-      };
-
-      # Official Hyprland Flake
-      hyprland = {
-        url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-      };
-
-      # Hyprspace
-      hyprspace = {
-        url = "github:KZDKM/Hyprspace";
-        inputs.hyprland.follows = "hyprland";
-      };
-
-      # KDE Plasma User Settings Generator
-      plasma-manager = {
-        url = "github:pjones/plasma-manager";
-        inputs.nixpkgs.follows = "nixpkgs";
-        inputs.home-manager.follows = "nixpkgs";
-      };
     };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nixos-hardware, home-manager, home-manager-stable, darwin, nur, nixgl, nixvim, nixvim-stable, doom-emacs, hyprland, hyprspace, plasma-manager, nixos-wsl, ... }: # Function telling flake which inputs to use
+  outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nixos-hardware, home-manager, home-manager-stable, darwin, nixgl, hyprland, hyprspace, plasma-manager, nixos-wsl, ... }: # Function telling flake which inputs to use
     let
       # Variables Used In Flake
       vars = {
         user = "nixos";
         location = "$HOME/.setup";
         terminal = "kitty";
-        editor = "nvim";
+        editor = "nano";
       };
     in
     {
       nixosConfigurations = (
         import ./hosts {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-stable nixos-hardware home-manager nur nixvim doom-emacs hyprland hyprspace plasma-manager nixos-wsl vars; # Inherit inputs
+          inherit inputs nixpkgs nixpkgs-stable nixos-hardware home-manager doom-emacs hyprland hyprspace plasma-manager nixos-wsl vars; # Inherit inputs
         }
       );
 
       darwinConfigurations = (
         import ./darwin {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-stable home-manager darwin nixvim vars;
+          inherit inputs nixpkgs nixpkgs-stable home-manager darwin vars;
         }
       );
 

@@ -1,3 +1,0 @@
-(defvar headphones "alsa_output.pci-0000_00_1f.3.analog-stereo")
-(defvar speaker "bluez_output.9F_55_3B_F4_A5_70.1")
-;peripherals in /eww/modules/peripheral.yuck
