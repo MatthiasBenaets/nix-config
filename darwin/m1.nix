@@ -42,7 +42,7 @@
       "love"
       "local"
       "linearmouse"
-      "mkvtoolnix"
+      "mkvtoolnix-app"
       # "obsidian"
       "ollama-app"
       "openmtp"

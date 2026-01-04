@@ -139,8 +139,8 @@ with lib;
         ## Layout Command
         alt-slash = "layout tiles horizontal vertical"
         alt-comma = "layout accordion horizontal vertical"
-        alt-shift-f = "layout floating tiling"
-        alt-f = "fullscreen"
+        alt-f = "layout floating tiling"
+        alt-shift-f = "fullscreen"
 
 
         ## Window Resizing
