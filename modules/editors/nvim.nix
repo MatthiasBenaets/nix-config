@@ -351,8 +351,8 @@ in
       };
       fugitive.enable = true;
       markdown-preview.enable = true;
-      otter.enable = if vars.user == "lucp10771" then true else false;
-      quarto.enable = if vars.user == "lucp10771" then true else false;
+      #otter.enable = if vars.user == "lucp10771" then true else false;
+      #quarto.enable = if vars.user == "lucp10771" then true else false;
       comment.enable = true;
       telescope = {
         enable = true;
