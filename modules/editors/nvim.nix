@@ -12,6 +12,7 @@ let
 
   livesvelte = pkgs.stdenv.mkDerivation {
     name = "livesvelte";
+    version = "v0.16.0";
     buildCommand = ''
       mkdir -p $out/queries/elixir
       cat > $out/queries/elixir/injections.scm << 'EOF'
