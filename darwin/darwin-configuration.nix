@@ -52,7 +52,6 @@
       cleanup = "zap";
     };
     casks = [
-      "aldente"
       "appcleaner"
       "betterdisplay"
       "firefox"

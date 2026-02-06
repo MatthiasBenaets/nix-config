@@ -52,7 +52,6 @@
     ];
     casks = [
       # "adobe-creative-cloud"
-      "BarutSRB/tap/hyprspace"
       # "bettertouchtool"
       "cyberduck"
       "dbeaver-community"

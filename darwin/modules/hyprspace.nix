@@ -22,6 +22,12 @@ with lib;
   };
 
   config = mkIf config.hyprspace.enable {
+    homebrew = {
+      casks = [
+        "BarutSRB/tap/hyprspace"
+      ];
+    };
+
     home-manager.users.${vars.user} = {
       home.packages = with pkgs; [ jankyborders ];
       home.file.".hyprspace.toml".text = ''
