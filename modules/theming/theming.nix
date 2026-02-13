@@ -13,7 +13,7 @@
         gtk.enable = true;
         name = "Dracula-cursors";
         package = pkgs.dracula-theme;
-        size = if host.hostName == "xps" then 26 else 16;
+        size = 16;
       };
     };
 

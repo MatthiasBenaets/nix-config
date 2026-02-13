@@ -9,10 +9,10 @@ in
 with host;
 let
   output =
-    if hostName == "beelink" || hostName == "h310m" then [
+    if hostName == "beelink" then [
       mainMonitor
       secondMonitor
-    ] else if hostName == "work" || hostName == "xps" then [
+    ] else if hostName == "work" then [
       mainMonitor
       secondMonitor
       thirdMonitor
@@ -30,7 +30,7 @@ let
     ] else [ ];
 
   modules-right =
-    if hostName == "beelink" || hostName == "h310m" then [
+    if hostName == "beelink" then [
       "custom/ds4"
       "custom/mouse"
       "custom/kb"
@@ -329,7 +329,7 @@ in
               tooltip = false;
             };
             tray = {
-              icon-size = if hostName == "xps" then 16 else 13;
+              icon-size = 13;
             };
           };
         };
@@ -337,7 +337,7 @@ in
       home.file = {
         ".config/waybar/script/sink.sh" = {
           text =
-            if hostName == "beelink" || hostName == "h310m" then ''
+            if hostName == "beelink" then ''
               #!/bin/sh
 
               HEAD=$(awk '/ ${headset}/ { print $2 }' <(${pkgs.wireplumber}/bin/wpctl status | grep "*") | head -n 1)
@@ -365,7 +365,7 @@ in
         };
         ".config/waybar/script/switch.sh" = {
           text =
-            if hostName == "beelink" || hostName == "h310m" then ''
+            if hostName == "beelink" then ''
               #!/bin/sh
 
               ID1=$(awk '/ ${headset}/ {sub(/.$/,"",$2); print $2 }' <(${pkgs.wireplumber}/bin/wpctl status) | head -n 1)

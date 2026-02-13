@@ -55,29 +55,6 @@ with host;
           WLR_NO_HARDWARE_CURSORS = "1";
           MOZ_ENABLE_WAYLAND = "1";
         };
-        sessionVariables =
-          if hostName == "xps" then {
-            LIBVA_DRIVER_NAME = "nvidia";
-            __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-            NVD_BACKEND = "direct";
-            __NV_PRIME_RENDER_OFFLOAD = "1";
-            __NV_PRIME_RENDER_OFFLOAD_PROVIDER = "NVIDIA-G0";
-            __VK_LAYER_NV_optimus = "NVIDIA_only";
-            GBM_BACKEND = "nvidia";
-            # EGL_PLATFORM = "wayland";
-            # __GL_GSYNC_ALLOWED = "0";
-            # __GL_VRR_ALLOWED = "0";
-            # WLR_DRM_NO_ATOMIC = "1";
-            # MOZ_DISABLE_RDD_SANDBOX = "1";
-            # _JAVA_AWT_WM_NONREPARENTING = "1";
-
-            # QT_QPA_PLATFORM = "wayland";
-            QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-
-            GDK_BACKEND = "wayland";
-            WLR_NO_HARDWARE_CURSORS = "1";
-            MOZ_ENABLE_WAYLAND = "1";
-          } else { };
         systemPackages = with pkgs; [
           grimblast # Screenshot
           hyprcursor # Cursor
@@ -97,7 +74,6 @@ with host;
     security.pam.services.hyprlock = {
       # text = "auth include system-auth";
       text = "auth include login";
-      fprintAuth = if hostName == "xps" then true else false;
       enableGnomeKeyring = true;
     };
 
@@ -127,7 +103,7 @@ with host;
 
     home-manager.users.${vars.user} =
       let
-        lid = if hostName == "xps" then "LID0" else "LID";
+        lid = "LID";
         lockScript = pkgs.writeShellScript "lock-script" ''
           action=$1
           ${pkgs.pipewire}/bin/pw-cli i all | ${pkgs.ripgrep}/bin/rg running
@@ -260,22 +236,18 @@ with host;
             };
             monitor = [
               ",preferred,auto,1,mirror,${toString mainMonitor}"
-            ] ++ (if hostName == "beelink" || hostName == "h310m" then [
+            ] ++ (if hostName == "beelink" then [
               "${toString mainMonitor},1920x1080@60,1920x0,1"
               "${toString secondMonitor},1920x1080@60,0x0,1"
             ] else if hostName == "work" then [
               "${toString mainMonitor},preferred,0x0,1"
               "${toString secondMonitorDesc},1920x1200@60,1920x0,1"
               "${toString thirdMonitorDesc},1920x1200@60,3840x0,1"
-            ] else if hostName == "xps" then [
-              "${toString mainMonitor},3840x2400@60,0x0,2"
-              "${toString secondMonitor},1920x1080@60,1920x0,1"
-              "${toString thirdMonitor},1920x1080@60,3840x0,1"
             ] else [
               "${toString mainMonitor},1920x1080@60,0x0,1"
             ]);
             workspace =
-              if hostName == "beelink" || hostName == "h310m" then [
+              if hostName == "beelink" then [
                 "1, monitor:${toString mainMonitor}"
                 "2, monitor:${toString mainMonitor}"
                 "3, monitor:${toString mainMonitor}"
@@ -284,7 +256,7 @@ with host;
                 "6, monitor:${toString secondMonitor}"
                 "7, monitor:${toString secondMonitor}"
                 "8, monitor:${toString secondMonitor}"
-              ] else if hostName == "xps" || hostName == "work" then [
+              ] else if hostName == "work" then [
                 "1, monitor:${toString mainMonitor}"
                 "2, monitor:${toString mainMonitor}"
                 "3, monitor:${toString mainMonitor}"
@@ -325,7 +297,7 @@ with host;
               sensitivity = 0.8;
               natural_scroll = false;
               touchpad =
-                if hostName == "work" || hostName == "xps" || hostName == "probook" then {
+                if hostName == "work" then {
                   natural_scroll = true;
                   scroll_factor = 0.2;
                   middle_button_emulation = true;
@@ -341,7 +313,7 @@ with host;
               no_hardware_cursors = true;
             };
             gestures =
-              if hostName == "work" || hostName == "xps" || hostName == "probook" then {
+              if hostName == "work" then {
                 workspace_swipe = true;
                 workspace_swipe_fingers = 3;
                 workspace_swipe_distance = 100;
@@ -437,7 +409,7 @@ with host;
               "SUPERCTRL,down,resizeactive,0 60"
             ];
             bindl =
-              if hostName == "xps" || hostName == "work" then [
+              if hostName == "work" then [
                 ",switch:Lid Switch,exec,$HOME/.config/hypr/script/clamshell.sh"
               ] else [ ];
             windowrule = [
@@ -459,8 +431,6 @@ with host;
               "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"
               "${pkgs.rclone}/bin/rclone mount --daemon gdrive: /GDrive --vfs-cache-mode=writes"
               # "${pkgs.google-drive-ocamlfuse}/bin/google-drive-ocamlfuse /GDrive"
-            ] else [ ]) ++ (if hostName == "xps" then [
-              "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"
             ] else [ ]);
             # env = [
             #   "XCURSOR,Catppuccin-Mocha-Dark-Cursors"
