@@ -439,20 +439,10 @@ with host;
               if hostName == "xps" || hostName == "work" then [
                 ",switch:Lid Switch,exec,$HOME/.config/hypr/script/clamshell.sh"
               ] else [ ];
-            windowrulev2 = [
-              "float,title:^(Volume Control)$"
-              "keepaspectratio,class:^(firefox)$,title:^(Picture-in-Picture)$"
-              "noborder,class:^(firefox)$,title:^(Picture-in-Picture)$"
-              "float, title:^(Picture-in-Picture)$"
-              "size 24% 24%, title:(Picture-in-Picture)"
-              "move 75% 75%, title:(Picture-in-Picture)"
-              "pin, title:^(Picture-in-Picture)$"
-              "float, title:^(Firefox)$"
-              "size 24% 24%, title:(Firefox)"
-              "move 74% 74%, title:(Firefox)"
-              "pin, title:^(Firefox)$"
-              "opacity 0.9, class:^(kitty)"
-              "tile,initialTitle:^WPS.*"
+            windowrule = [
+              "match:title ^(Volume Control)$, float on"
+              "match:class ^(firefox)$, match:title ^(Picture-in-Picture)$, keep_aspect_ratio on, border_size 0, float on, size 24% 24%, move 75% 75%, pin on"
+              "match:class ^(kitty)$, opacity 0.9"
             ];
             exec-once = [
               "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"

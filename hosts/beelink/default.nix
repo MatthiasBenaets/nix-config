@@ -23,7 +23,6 @@
     ./hardware-configuration.nix
     ../../modules/programs/games.nix
   ] ++
-  (import ../../modules/hardware/beelink) ++
   (import ../../modules/desktops/virtualisation);
 
   # Boot Options
@@ -60,17 +59,13 @@
 
   environment = {
     systemPackages = with pkgs; [
-      discord # Messaging
-      gimp # Image Editor
-      #gmtp # Mount GoPro
+      # gmtp # Mount GoPro
       go2tv # Casting
       google-cloud-sdk-gce # Google Cloud
-      #jellyfin-media-player # Media Player
-      kodi # Media Player
+      jellyfin-media-player # Media Player
       moonlight-qt # Remote Streaming
       obs-studio # Live Streaming
-      prusa-slicer # 3D Slicer
-      rclone # Gdrive ($ rclone config | rclone mount --daemon gdrive:<path> <host/path>)
+      orca-slicer # 3D Slicer
       simple-scan # Scanning
     ];
   };
@@ -82,17 +77,4 @@
       "com.stremio.Stremio"
     ];
   };
-
-  # nixpkgs.overlays = [
-  #   (final: prev: {
-  #     discord = prev.discord.overrideAttrs (
-  #       _: {
-  #         src = builtins.fetchTarball {
-  #           url = "https://discord.com/api/download?platform=linux&format=tar.gz";
-  #           sha256 = "sha256:0njwcnrn2br47dzqvmlazcmf63bblx68775f0kv8djwxfvg977im";
-  #         };
-  #       }
-  #     );
-  #   })
-  # ];
 }
