@@ -34,7 +34,7 @@ in
       inherit inputs system stable hyprland hyprspace vars;
       host = {
         hostName = "beelink";
-        mainMonitor = "HDMI-A-2";
+        mainMonitor = "DP-2";
         secondMonitor = "HDMI-A-1";
       };
     };

@@ -68,19 +68,30 @@ in
     sudo.wheelNeedsPassword = false;
   };
 
-  fonts.packages = with pkgs; [
-    carlito # NixOS
-    vegur # NixOS
-    source-code-pro
-    jetbrains-mono
-    font-awesome # Icons
-    corefonts # MS
-    noto-fonts # Google + Unicode
-    noto-fonts-cjk-sans
-    noto-fonts-cjk-serif
-    noto-fonts-color-emoji
-    nerd-fonts.fira-code
-  ];
+  fonts =
+    {
+      packages = with pkgs; [
+        carlito # NixOS
+        vegur # NixOS
+        source-code-pro
+        jetbrains-mono
+        font-awesome # Icons
+        corefonts # MS
+        noto-fonts # Google + Unicode
+        noto-fonts-cjk-sans
+        noto-fonts-cjk-serif
+        noto-fonts-color-emoji
+        nerd-fonts.fira-code
+      ];
+
+      fontconfig = {
+        defaultFonts = {
+          serif = [ "Noto Serif" ];
+          sansSerif = [ "Noto Sans" ];
+          monospace = [ "Noto Sans Mono" ];
+        };
+      };
+    };
 
   environment = {
     variables = {
@@ -94,6 +105,7 @@ in
       btop # Resource Manager
       cifs-utils # Samba
       coreutils # GNU Utilities
+      gemini-cli-bin # AI
       git # Version Control
       gvfs # Samba
       killall # Process Killer

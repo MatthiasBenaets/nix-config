@@ -66,6 +66,7 @@
       moonlight-qt # Remote Streaming
       obs-studio # Live Streaming
       orca-slicer # 3D Slicer
+      portfolio # Stocks
       simple-scan # Scanning
     ];
   };

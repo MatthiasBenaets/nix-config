@@ -25,7 +25,7 @@ with host;
 
     environment =
       let
-        exec = "exec dbus-launch Hyprland";
+        exec = "exec dbus-launch start-hyprland";
       in
       {
         loginShellInit = ''
@@ -121,6 +121,7 @@ with host;
 
     nix.settings = {
       substituters = [ "https://hyprland.cachix.org" ];
+      trusted-substituters = [ "https://hyprland.cachix.org" ];
       trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
     };
 
@@ -393,30 +394,30 @@ with host;
               "SUPERSHIFT,right,movewindow,r"
               "SUPERSHIFT,up,movewindow,u"
               "SUPERSHIFT,down,movewindow,d"
-              "ALT,1,workspace,1"
-              "ALT,2,workspace,2"
-              "ALT,3,workspace,3"
-              "ALT,4,workspace,4"
-              "ALT,5,workspace,5"
-              "ALT,6,workspace,6"
-              "ALT,7,workspace,7"
-              "ALT,8,workspace,8"
-              "ALT,9,workspace,9"
-              "ALT,0,workspace,10"
-              "ALT,right,workspace,+1"
-              "ALT,left,workspace,-1"
-              "ALTSHIFT,1,movetoworkspace,1"
-              "ALTSHIFT,2,movetoworkspace,2"
-              "ALTSHIFT,3,movetoworkspace,3"
-              "ALTSHIFT,4,movetoworkspace,4"
-              "ALTSHIFT,5,movetoworkspace,5"
-              "ALTSHIFT,6,movetoworkspace,6"
-              "ALTSHIFT,7,movetoworkspace,7"
-              "ALTSHIFT,8,movetoworkspace,8"
-              "ALTSHIFT,9,movetoworkspace,9"
-              "ALTSHIFT,0,movetoworkspace,10"
-              "ALTSHIFT,right,movetoworkspace,+1"
-              "ALTSHIFT,left,movetoworkspace,-1"
+              "SUPERALT,1,workspace,1"
+              "SUPERALT,2,workspace,2"
+              "SUPERALT,3,workspace,3"
+              "SUPERALT,4,workspace,4"
+              "SUPERALT,5,workspace,5"
+              "SUPERALT,6,workspace,6"
+              "SUPERALT,7,workspace,7"
+              "SUPERALT,8,workspace,8"
+              "SUPERALT,9,workspace,9"
+              "SUPERALT,0,workspace,10"
+              "SUPERALT,right,workspace,+1"
+              "SUPERALT,left,workspace,-1"
+              "SUPERALTSHIFT,1,movetoworkspace,1"
+              "SUPERALTSHIFT,2,movetoworkspace,2"
+              "SUPERALTSHIFT,3,movetoworkspace,3"
+              "SUPERALTSHIFT,4,movetoworkspace,4"
+              "SUPERALTSHIFT,5,movetoworkspace,5"
+              "SUPERALTSHIFT,6,movetoworkspace,6"
+              "SUPERALTSHIFT,7,movetoworkspace,7"
+              "SUPERALTSHIFT,8,movetoworkspace,8"
+              "SUPERALTSHIFT,9,movetoworkspace,9"
+              "SUPERALTSHIFT,0,movetoworkspace,10"
+              "SUPERALTSHIFT,right,movetoworkspace,+1"
+              "SUPERALTSHIFT,left,movetoworkspace,-1"
 
               "SUPER,Z,layoutmsg,togglesplit"
               ",print,exec,${pkgs.grimblast}/bin/grimblast --notify --freeze --wait 1 copysave area ~/Pictures/$(date +%Y-%m-%dT%H%M%S).png"
