@@ -62,7 +62,7 @@
       # gmtp # Mount GoPro
       go2tv # Casting
       google-cloud-sdk-gce # Google Cloud
-      jellyfin-media-player # Media Player
+      jellyfin-desktop # Media Player
       moonlight-qt # Remote Streaming
       obs-studio # Live Streaming
       orca-slicer # 3D Slicer

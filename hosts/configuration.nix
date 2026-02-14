@@ -141,7 +141,8 @@ in
 
       # File Management
       file-roller # Archive Manager
-      pcmanfm # File Browser
+      #pcmanfm # File Browser
+      thunar # File Browser
       p7zip # Zip Encryption
       rsync # Syncer - $ rsync -r dir1/ dir2/
       unzip # Zip Files
@@ -190,6 +191,7 @@ in
         HostKeyAlgorithms +ssh-rsa
       '';
     };
+    tumbler.enable = true;
   };
 
   flatpak.enable = true;

@@ -293,7 +293,7 @@ with host;
               follow_mouse = 2;
               repeat_delay = 250;
               numlock_by_default = 1;
-              accel_profile = "flat";
+              accel_profile = "adaptive";
               sensitivity = 0.8;
               natural_scroll = false;
               touchpad =
@@ -348,8 +348,7 @@ with host;
               "SUPER,Escape,exit,"
               "SUPER,S,exec,${pkgs.systemd}/bin/systemctl suspend"
               "SUPER,L,exec,${pkgs.hyprlock}/bin/hyprlock"
-              # "SUPER,E,exec,GDK_BACKEND=x11 ${pkgs.pcmanfm}/bin/pcmanfm"
-              "SUPER,E,exec,${pkgs.pcmanfm}/bin/pcmanfm"
+              "SUPER,E,exec,${pkgs.thunar}/bin/thunar"
               "SUPER,F,togglefloating,"
               "SUPER,Space,exec, pkill wofi || ${pkgs.wofi}/bin/wofi --show drun"
               "SUPER,P,pseudo,"
