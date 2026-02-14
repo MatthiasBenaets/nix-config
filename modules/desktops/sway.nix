@@ -3,10 +3,10 @@
 #  Enable with "sway.enable = true;"
 #
 
-{ config, lib, pkgs, vars, host, ... }:
+{ config, lib, pkgs, vars, ... }:
 
 with lib;
-with host;
+with vars;
 {
   options = {
     sway = {
@@ -45,13 +45,13 @@ with host;
       };
     };
 
-    home-manager.users.${vars.user} = {
+    home-manager.users.${user} = {
       wayland.windowManager.sway = {
         enable = true;
         systemd.enable = true;
         config = rec {
           modifier = "Mod4";
-          terminal = "${pkgs.${vars.terminal}}/bin/${vars.terminal}";
+          terminal = "${pkgs.${terminal}}/bin/${terminal}";
           menu = "${pkgs.wofi}/bin/wofi --show drun";
 
           startup = [

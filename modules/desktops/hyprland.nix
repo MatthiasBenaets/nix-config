@@ -1,19 +1,16 @@
-#
-#  Hyprland Configuration
-#  Enable with "hyprland.enable = true;"
-#
-
-{ config, lib, pkgs, hyprland, hyprspace, vars, host, ... }:
+{ config, inputs, lib, pkgs, vars, ... }:
 
 let
   colors = import ../theming/colors.nix;
+  hyprland = inputs.hyprland;
 in
 with lib;
-with host;
+with vars;
 {
   options = {
     hyprland = {
       enable = mkOption {
+        description = "Enable Hyprland as Wayland window manager";
         type = types.bool;
         default = false;
       };
@@ -206,17 +203,6 @@ with host;
           enable = true;
           package = hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
           xwayland.enable = true;
-          # plugins = [
-          #   hyprspace.packages.${pkgs.system}.Hyprspace
-          # ];
-          # # plugin settings
-          # extraConfig = ''
-          #   bind=SUPER,Tab,overview:toggle
-          #   plugin:overview:panelHeight=150
-          #   plugin:overview:drawActiveWorkspace=false
-          #   plugin:overview:gapsIn=3
-          #   plugin:overview:gapsOut=6
-          # '';
           settings = {
             general = {
               border_size = 2;

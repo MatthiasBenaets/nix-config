@@ -1,106 +1,75 @@
-#
-#  These are the different profiles that can be used when building NixOS.
-#
-#  flake.nix
-#   └─ ./hosts
-#       ├─ default.nix *
-#       ├─ configuration.nix
-#       └─ ./<host>.nix
-#           └─ default.nix
-#
-
-{ inputs, nixpkgs, nixpkgs-stable, nixos-hardware, home-manager, nur, nixvim, doom-emacs, hyprland, hyprspace, plasma-manager, vars, ... }:
+{ inputs, overlays, vars, ... }:
 
 let
-  system = "x86_64-linux";
+  lib = inputs.nixpkgs.lib;
 
-  pkgs = import nixpkgs {
-    inherit system;
-    config.allowUnfree = true;
-  };
+  mkHost = { name, system, extraModules ? [ ], hostVars, description ? "Default config" }:
+    lib.nixosSystem {
+      inherit system;
 
-  stable = import nixpkgs-stable {
-    inherit system;
-    config.allowUnfree = true;
-  };
+      specialArgs = {
+        inherit inputs system;
+        vars = vars // { hostName = name; } // hostVars;
+      };
 
-  lib = nixpkgs.lib;
+      modules =
+        [
+          {
+            nixpkgs.overlays = overlays;
+            nixpkgs.config.allowUnfree = true;
+            system.stateVersion = "22.05";
+          }
+          ./configuration.nix
+          inputs.home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+          }
+          inputs.nixvim.nixosModules.nixvim
+        ]
+        ++ extraModules;
+    };
 in
 {
-  # Desktop Profile
-  beelink = lib.nixosSystem {
-    inherit system;
-    specialArgs = {
-      inherit inputs system stable hyprland hyprspace vars;
-      host = {
-        hostName = "beelink";
-        mainMonitor = "HDMI-A-2";
-        secondMonitor = "HDMI-A-1";
-      };
-    };
-    modules = [
-      nur.modules.nixos.default
-      nixvim.nixosModules.nixvim
+  description = "Below the different profiles that can be used when building NixOS";
+
+  beelink = mkHost {
+    description = "Config for Beelink EQ12 Pro";
+    name = "beelink";
+    system = "x86_64-linux";
+    extraModules = [
+      inputs.nur.modules.nixos.default
       ./beelink
-      ./configuration.nix
-
-      home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-      }
     ];
+    hostVars = {
+      mainMonitor = "HDMI-A-2";
+      secondMonitor = "HDMI-A-1";
+    };
   };
 
-  # Work Profile
-  work = lib.nixosSystem {
-    inherit system;
-    specialArgs = {
-      inherit inputs system stable hyprland hyprspace vars;
-      host = {
-        hostName = "work";
-        mainMonitor = "eDP-1";
-        secondMonitor = "DP-4";
-        thirdMonitor = "DP-5";
-        secondMonitorDesc = "desc:HP Inc. HP E24i G4 6CM3071B66";
-        thirdMonitorDesc = "desc:HP Inc. HP E24i G4 6CM3071996";
-      };
+  work = mkHost {
+    description = "Config for Work Lenovo T15";
+    name = "work";
+    system = "x86_64-linux";
+    extraModules = [ ./work ];
+    hostVars = {
+      mainMonitor = "eDP-1";
+      secondMonitor = "DP-4";
+      thirdMonitor = "DP-5";
+      secondMonitorDesc = "desc:HP Inc. HP E24i G4 6CM3071B66";
+      thirdMonitorDesc = "desc:HP Inc. HP E24i G4 6CM3071996";
     };
-    modules = [
-      nixvim.nixosModules.nixvim
-      ./work
-      ./configuration.nix
-
-      home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-      }
-    ];
   };
 
-  # VM Profile
-  vm = lib.nixosSystem {
-    inherit system;
-    specialArgs = {
-      inherit inputs system stable vars;
-      host = {
-        hostName = "vm";
-        mainMonitor = "Virtual-1";
-        secondMonitor = "";
-        thirdMonitor = "";
-      };
+  vm = mkHost {
+    description = "Config for Virtual Machines";
+    name = "vm";
+    system = "x86_64-linux";
+    extraModules = [ ./vm ];
+    hostVars = {
+      mainMonitor = "Virtual-1";
+      secondMonitor = "";
+      thirdMonitor = "";
     };
-    modules = [
-      nixvim.nixosModules.nixvim
-      ./vm
-      ./configuration.nix
-
-      home-manager.nixosModules.home-manager
-      {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-      }
-    ];
   };
 }

@@ -22,7 +22,7 @@
 #           └─ default.nix
 #
 
-{ lib, config, pkgs, stable, inputs, vars, ... }:
+{ lib, config, pkgs, inputs, vars, ... }:
 
 let
   terminal = pkgs.${vars.terminal};
@@ -149,16 +149,12 @@ in
       unrar # Rar Files
       wpsoffice # Office
       zip # Zip
+      stable.image-roll
 
       # Other Packages Found @
       # - ./<host>/default.nix
       # - ../modules
-    ] ++
-    (with stable; [
-      # Apps
-      # firefox # Browser
-      image-roll # Image Viewer
-    ]);
+    ];
   };
 
   programs = {
@@ -213,15 +209,6 @@ in
       keep-derivations      = true
     '';
   };
-  nixpkgs.config.allowUnfree = true;
-
-  system = {
-    # autoUpgrade = {
-    #   enable = true;
-    #   channel = "https://nixos.org/channels/nixos-unstable";
-    # };
-    stateVersion = "22.05";
-  };
 
   home-manager.users.${vars.user} = {
     home = {
@@ -260,7 +247,7 @@ in
       };
       desktopEntries.image-roll = {
         name = "image-roll";
-        exec = "${stable.image-roll}/bin/image-roll %F";
+        exec = "${pkgs.stable.image-roll}/bin/image-roll %F";
         mimeType = [ "image/*" ];
       };
       desktopEntries.gmail = {

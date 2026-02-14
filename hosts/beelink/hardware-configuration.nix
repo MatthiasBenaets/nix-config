@@ -12,7 +12,7 @@
 # to /etc/nixos/configuration.nix instead.
 #
 
-{ config, lib, modulesPath, vars, host, ... }:
+{ config, lib, modulesPath, vars, ... }:
 
 {
   imports =
@@ -66,9 +66,9 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  networking = with host; {
+  networking = {
     useDHCP = lib.mkDefault true;
-    hostName = hostName;
+    hostName = vars.hostName;
     bridges = {
       "br0" = {
         interfaces = [ "enp1s0" ];

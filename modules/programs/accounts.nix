@@ -3,10 +3,10 @@
 # Mainly used for online accounts
 #
 
-{ lib, pkgs, vars, host, ... }:
+{ lib, pkgs, vars, ... }:
 
 {
-  config = lib.mkIf (host.hostName == "beelink" || host.hostName == "work") {
+  config = lib.mkIf (vars.hostName == "beelink" || vars.hostName == "work") {
     environment.systemPackages = with pkgs; [
       gnome-control-center
       gnome-online-accounts

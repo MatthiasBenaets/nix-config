@@ -13,7 +13,7 @@
 # to /etc/nixos/configuration.nix instead.
 #
 
-{ config, lib, host, ... }:
+{ config, lib, vars, ... }:
 
 {
   imports = [ ];
@@ -31,9 +31,9 @@
 
   swapDevices = [ ];
 
-  networking = with host; {
+  networking = {
     useDHCP = false;
-    hostName = hostName;
+    hostName = vars.hostName;
     interfaces = {
       enp0s3.useDHCP = true;
     };

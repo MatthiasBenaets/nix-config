@@ -13,7 +13,7 @@
 # to /etc/nixos/configuration.nix instead.
 #
 
-{ config, lib, modulesPath, host, ... }:
+{ config, lib, modulesPath, vars, ... }:
 
 {
   imports =
@@ -47,9 +47,9 @@
 
   swapDevices = [ ];
 
-  networking = with host; {
+  networking = {
     useDHCP = lib.mkDefault true;
-    hostName = hostName;
+    hostName = vars.hostName;
     enableIPv6 = false;
     networkmanager.enable = true;
     networkmanager.wifi.scanRandMacAddress = false;

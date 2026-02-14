@@ -2,11 +2,11 @@
 #  Bar
 #
 
-{ config, lib, pkgs, vars, host, ... }:
+{ config, lib, pkgs, vars, ... }:
 let
   colors = import ../theming/colors.nix;
 in
-with host;
+with vars;
 let
   output =
     if hostName == "beelink" then [
@@ -73,7 +73,7 @@ in
       waybar
     ];
 
-    home-manager.users.${vars.user} = with colors.scheme.default; {
+    home-manager.users.${user} = with colors.scheme.default; {
       programs.waybar = {
         enable = true;
         package = pkgs.waybar;

@@ -3,10 +3,10 @@
 #  Enable with "river.enable = true;"
 #
 
-{ config, lib, pkgs, vars, host, ... }:
+{ config, lib, pkgs, vars, ... }:
 
 with lib;
-with host;
+with vars;
 {
   options = {
     river = {
@@ -46,7 +46,7 @@ with host;
       wlr.enable = true;
     };
 
-    home-manager.users.${vars.user} =
+    home-manager.users.${user} =
       let
         monitor =
           if hostName == "vm" then

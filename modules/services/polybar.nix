@@ -2,9 +2,9 @@
 #  Bar
 #
 
-{ config, lib, pkgs, vars, host, ... }:
+{ config, lib, pkgs, vars, ... }:
 
-with host;
+with vars;
 let
   polybar = pkgs.polybar.override {
     alsaSupport = true;
@@ -13,7 +13,7 @@ let
 in
 {
   config = lib.mkIf (config.x11wm.enable) {
-    home-manager.users.${vars.user} = {
+    home-manager.users.${user} = {
       services = {
         polybar = {
           enable = true;
@@ -309,7 +309,7 @@ in
               menu-1-4-exec = "sleep 0.5; systemctl reboot";
 
               menu-2-0 = "";
-              menu-2-0-exec = "${vars.terminal} &";
+              menu-2-0-exec = "${terminal} &";
               menu-2-1 = "";
               menu-2-1-exec = "firefox &";
               menu-2-2 = "";

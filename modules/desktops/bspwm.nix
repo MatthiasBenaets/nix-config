@@ -3,10 +3,10 @@
 #  Enable with "bspwm.enable = true;"
 #
 
-{ config, lib, pkgs, vars, host, ... }:
+{ config, lib, pkgs, vars, ... }:
 
 with lib;
-with host;
+with vars;
 let
   monitor =
     if hostName == "beelink" then
@@ -147,7 +147,7 @@ in
         xterm # Terminal
       ];
 
-      home-manager.users.${vars.user} = {
+      home-manager.users.${user} = {
         xsession = {
           enable = true;
           numlock.enable = true;
