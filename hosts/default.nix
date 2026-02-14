@@ -3,7 +3,7 @@
 let
   lib = inputs.nixpkgs.lib;
 
-  mkHost = { name, system, extraModules ? [ ], hostVars, description ? "Default config" }:
+  mkHost = { name, system, extraModules ? [ ], hostVars ? { }, description ? "Default config" }:
     lib.nixosSystem {
       inherit system;
 

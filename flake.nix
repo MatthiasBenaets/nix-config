@@ -64,7 +64,7 @@
         import ./darwin {
           description = "MacOS configurations";
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-stable home-manager darwin nixvim mac-app-util vars;
+          inherit inputs overlays vars;
         }
       );
 

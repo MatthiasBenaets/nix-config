@@ -1,99 +1,67 @@
-#
-#  These are the different profiles that can be used when building on MacOS
-#
-#  flake.nix
-#   └─ ./darwin
-#       ├─ default.nix *
-#       ├─ darwin-configuraiton.nix
-#       └─ <host>.nix
-#
-
-{ inputs, nixpkgs, nixpkgs-stable, darwin, home-manager, nixvim, mac-app-util, vars, ... }:
+{ inputs, overlays, vars, ... }:
 
 let
-  systemConfig = system: {
-    system = system;
-    pkgs = import nixpkgs {
+  mkHost = { name, system, extraModules ? [ ], hostVars ? { }, description ? "Default Config" }:
+    inputs.darwin.lib.darwinSystem {
       inherit system;
-      config.allowUnfree = true;
+
+      specialArgs = {
+        inherit inputs system;
+        vars = vars // { hostName = name; } // hostVars;
+      };
+
+      modules =
+        [
+          {
+            nixpkgs.overlays = overlays;
+            nixpkgs.config.allowUnfree = true;
+          }
+          # ./darwin-configuration.nix
+          inputs.home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.sharedModules = [
+              inputs.mac-app-util.homeManagerModules.default
+            ];
+          }
+          inputs.mac-app-util.darwinModules.default
+          inputs.nixvim.nixDarwinModules.nixvim
+        ]
+        ++ extraModules;
     };
-    stable = import nixpkgs-stable {
-      inherit system;
-      config.allowUnfree = true;
-    };
-  };
 in
 {
-  # MacBook8,1 "Core M" 1.2 12" (2015) A1534
-  MacBookIntel =
-    let
-      inherit (systemConfig "x86_64-darwin") system pkgs stable;
-    in
-    darwin.lib.darwinSystem {
-      inherit system;
-      specialArgs = { inherit inputs system pkgs stable vars; };
-      modules = [
-        # ./darwin-configuration.nix
-        ./intel.nix
-        ./modules/kitty.nix
-        ./modules/zsh.nix
-        nixvim.nixDarwinModules.nixvim
-        mac-app-util.darwinModules.default
-        home-manager.darwinModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.sharedModules = [
-            mac-app-util.homeManagerModules.default
-          ];
-        }
-      ];
-    };
+  MacBookIntel = mkHost {
+    description = "MacBook8,1 'Core M' 1.2 12 inch (2015) A1534";
+    name = "MacBookIntel";
+    system = "x86_64-darwin";
+    extraModules = [
+      ./intel.nix
+      ./modules/kitty.nix
+      ./modules/zsh.nix
+    ];
+  };
 
-  # MacBookAir10,1 M1 13" (2020)
-  MacBookAirM1 =
-    let
-      inherit (systemConfig "aarch64-darwin") system pkgs stable;
-    in
-    darwin.lib.darwinSystem {
-      inherit system;
-      specialArgs = { inherit inputs system pkgs stable vars; };
-      modules = [
-        ./darwin-configuration.nix
-        ./m1.nix
-        nixvim.nixDarwinModules.nixvim
-        home-manager.darwinModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-        }
-      ];
-    };
+  MacBookAirM1 = mkHost {
+    description = "MacBookAir10,1 M1 13 inch (2020)";
+    name = "MacBookAirM1";
+    system = "aarch64-darwin";
+    extraModules = [
+      ./darwin-configuration.nix
+      ./m1.nix
+    ];
+  };
 
-  # MacBookAir15,12 M3 13" (2024)
-  MacBookAirM3 =
-    let
-      inherit (systemConfig "aarch64-darwin") system pkgs stable;
-    in
-    darwin.lib.darwinSystem {
-      inherit system;
-      specialArgs = {
-        inherit inputs system pkgs stable;
-        vars = {
-          user = "lucp10771";
-          location = "$HOME/.setup";
-          terminal = "kitty";
-          editor = "nvim";
-        };
-      };
-      modules = [
-        ./work.nix
-        nixvim.nixDarwinModules.nixvim
-        home-manager.darwinModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-        }
-      ];
+  MacBookAirM3 = mkHost {
+    description = "Work MacBookAir15,12 M3 13 inch (2024)";
+    name = "MacBookAirM3";
+    system = "aarch64-darwin";
+    extraModules = [
+      ./work.nix
+    ];
+    hostVars = {
+      user = "lucp10771";
     };
+  };
 }
