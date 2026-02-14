@@ -72,7 +72,7 @@
         import ./nix {
           description = "Nix configurations";
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-stable home-manager nixgl vars;
+          inherit inputs overlays vars;
         }
       );
     };

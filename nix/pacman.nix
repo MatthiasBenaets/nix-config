@@ -1,18 +1,9 @@
-#
-#  Nix Setup using Home-manager
-#
-#  flake.nix
-#   └─ ./nix
-#       ├─ default.nix
-#       └─ pacman.nix *
-#
-
-{ inputs, pkgs, nixgl, vars, ... }:
+{ inputs, pkgs, vars, ... }:
 
 {
   home = {
     packages = [
-      (import nixgl { inherit pkgs; }).nixGLIntel # OpenGL for GUI apps
+      (import inputs.nixgl { inherit pkgs; }).nixGLIntel # OpenGL for GUI apps
       #.nixVulkanIntel
       pkgs.hello
     ];
