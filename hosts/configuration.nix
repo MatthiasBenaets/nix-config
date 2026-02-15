@@ -84,13 +84,13 @@ in
         nerd-fonts.fira-code
       ];
 
-      fontconfig = {
-        defaultFonts = {
-          serif = [ "Noto Serif" ];
-          sansSerif = [ "Noto Sans" ];
-          monospace = [ "Noto Sans Mono" ];
-        };
-      };
+      # fontconfig = {
+      #   defaultFonts = {
+      #     serif = [ "Noto Serif" ];
+      #     sansSerif = [ "Noto Sans" ];
+      #     monospace = [ "Noto Sans Mono" ];
+      #   };
+      # };
     };
 
   environment = {

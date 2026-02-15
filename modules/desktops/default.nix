@@ -15,6 +15,7 @@
   ./gnome.nix
   ./hyprland.nix
   ./kde.nix
+  ./niri.nix
   ./options.nix
   ./river.nix
   ./sway.nix

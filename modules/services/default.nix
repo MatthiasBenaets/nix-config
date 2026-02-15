@@ -19,5 +19,5 @@
   ./samba.nix
   ./swaync.nix
   ./sxhkd.nix
-  ./udiskie.nix
+  # ./udiskie.nix
 ]

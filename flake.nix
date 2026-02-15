@@ -36,6 +36,14 @@
         inputs.home-manager.follows = "nixpkgs";
       };
       mac-app-util.url = "github:hraban/mac-app-util";
+      noctalia = {
+        url = "github:noctalia-dev/noctalia-shell";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+      stylix = {
+        url = "github:nix-community/stylix";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
     };
 
   outputs = inputs @ { self, nixpkgs, nixpkgs-stable, nixos-hardware, home-manager, darwin, nur, nixgl, nixvim, doom-emacs, hyprland, plasma-manager, mac-app-util, ... }: # Function telling flake which inputs to use

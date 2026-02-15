@@ -18,7 +18,7 @@
   ./kitty.nix
   ./obs.nix
   ./rofi.nix
-  ./waybar.nix
+  #./waybar.nix
   ./wofi.nix
   # ./games.nix
 ]

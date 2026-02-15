@@ -27,6 +27,8 @@ let
       "sway/workspaces"
       "sway/window"
       "sway/mode"
+    ] else if niri.enable == true then [
+      "niri/workspaces"
     ] else [ ];
 
   modules-right =

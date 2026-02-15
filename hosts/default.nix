@@ -24,6 +24,7 @@ let
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "bak";
           }
           inputs.nixvim.nixosModules.nixvim
         ]
@@ -39,6 +40,7 @@ in
     system = "x86_64-linux";
     extraModules = [
       inputs.nur.modules.nixos.default
+      inputs.stylix.nixosModules.stylix
       ./beelink
     ];
     hostVars = {

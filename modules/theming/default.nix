@@ -11,5 +11,5 @@
 #
 
 [
-  ./theming.nix
+  ./stylix.nix
 ]
