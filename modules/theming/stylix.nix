@@ -51,6 +51,7 @@
       alacritty.enable = false;
       kitty.enable = false;
       neovim.enable = false;
+      nixvim.enable = false;
     };
   };
 }
