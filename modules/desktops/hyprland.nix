@@ -159,8 +159,8 @@ with vars;
                 monitor = "";
                 text = "$TIME";
                 font_size = 120;
-                position = "0, 80";
-                valign = "center";
+                position = "0, 200";
+                # valign = "center";
                 halign = "center";
               }
             ];
