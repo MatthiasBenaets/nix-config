@@ -89,6 +89,10 @@
             audio = {
               visualizerType = "mirrored";
             };
+            hooks = {
+              enabled = true;
+              startup = "noctalia-shell ipc call lockScreen lock";
+            };
           };
         };
       };

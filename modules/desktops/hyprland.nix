@@ -106,7 +106,8 @@ with vars;
           ${pkgs.pipewire}/bin/pw-cli i all | ${pkgs.ripgrep}/bin/rg running
           if [ $? == 1 ]; then
             if [ "$action" == "lock" ]; then
-              ${pkgs.hyprlock}/bin/hyprlock
+              # ${pkgs.hyprlock}/bin/hyprlock
+              "noctalia-shell ipc call lockScreen lock"
             elif [ "$action" == "suspend" ]; then
               ${pkgs.systemd}/bin/systemctl suspend
             fi
@@ -119,7 +120,7 @@ with vars;
         ];
 
         programs.hyprlock = {
-          enable = true;
+          enable = false;
           settings = {
             general = {
               hide_cursor = true;
@@ -174,12 +175,14 @@ with vars;
               before_sleep_cmd = "${pkgs.systemd}/bin/loginctl lock-session";
               after_sleep_cmd = "${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on";
               ignore_dbus_inhibit = true;
-              lock_cmd = "pidof ${pkgs.hyprlock}/bin/hyprlock || ${pkgs.hyprlock}/bin/hyprlock";
+              # lock_cmd = "pidof ${pkgs.hyprlock}/bin/hyprlock || ${pkgs.hyprlock}/bin/hyprlock";
+              lock_cmd = "noctalia-shell ipc call lockScreen lock";
             };
             listener = [
               {
                 timeout = 300;
-                on-timeout = "${lockScript.outPath} lock";
+                # on-timeout = "${lockScript.outPath} lock";
+                on-timeout = "noctalia-shell ipc call lockScreen lock";
               }
               {
                 timeout = 1800;
@@ -332,8 +335,10 @@ with vars;
               "SUPER,Return,exec,${pkgs.${vars.terminal}}/bin/${vars.terminal}"
               "SUPER,Q,killactive,"
               "SUPER,Escape,exit,"
-              "SUPER,S,exec,${pkgs.systemd}/bin/systemctl suspend"
-              "SUPER,L,exec,${pkgs.hyprlock}/bin/hyprlock"
+              #"SUPER,S,exec,${pkgs.systemd}/bin/systemctl suspend"
+              #"SUPER,L,exec,${pkgs.hyprlock}/bin/hyprlock"
+              "SUPER,S,exec,noctalia-shell ipc call lockScreen lock && ${pkgs.systemd}/bin/systemctl suspend"
+              "SUPER,L,exec,noctalia-shell ipc call lockScreen lock"
               "SUPER,E,exec,${pkgs.thunar}/bin/thunar"
               "SUPER,F,togglefloating,"
               # "SUPER,Space,exec, pkill wofi || ${pkgs.wofi}/bin/wofi --show drun"
@@ -405,7 +410,7 @@ with vars;
             ];
             exec-once = [
               "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
-              "${pkgs.hyprlock}/bin/hyprlock"
+              # "${pkgs.hyprlock}/bin/hyprlock"
               "ln -s $XDG_RUNTIME_DIR/hypr /tmp/hypr"
               # "${pkgs.waybar}/bin/waybar -c $HOME/.config/waybar/config"
               # "${pkgs.eww}/bin/eww daemon"
@@ -438,7 +443,7 @@ with vars;
                 if [[ `hyprctl monitors | grep "Monitor" | wc -l` != 1 ]]; then
                   ${config.programs.hyprland.package}/bin/hyprctl keyword monitor "${toString mainMonitor}, disable"
                 else
-                  ${pkgs.hyprlock}/bin/hyprlock
+                noctalia-shell ipc call lockScreen lock
                   ${pkgs.systemd}/bin/systemctl suspend
                 fi
               fi
