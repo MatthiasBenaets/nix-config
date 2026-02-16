@@ -1,4 +1,4 @@
-{ config, inputs, lib, pkgs, vars, ... }:
+{ config, lib, pkgs, vars, ... }:
 
 with lib;
 {
@@ -20,12 +20,6 @@ with lib;
       fi
     '';
 
-    environment.systemPackages = with pkgs; [
-      inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
-      quickshell
-    ];
-
-
     # services.greetd = {
     #   enable = true;
     #   settings = {
@@ -37,80 +31,9 @@ with lib;
     # };
 
     programs.niri.enable = true;
+
     home-manager.users.${vars.user} =
       {
-        imports = [
-          inputs.noctalia.homeModules.default
-        ];
-        programs.noctalia-shell = {
-          enable = true;
-          settings = {
-            bar = {
-              barType = "simple";
-              position = "top";
-              density = "default";
-              showCapsule = true;
-              capsuleColorKey = "none";
-              outerCorners = false;
-              widgets = {
-                left = [
-                  {
-                    id = "Launcher";
-                  }
-                  {
-                    id = "Taskbar";
-                  }
-                ];
-                center = [
-                  {
-                    id = "Workspace";
-                  }
-                ];
-                right = [
-                  {
-                    id = "MediaMini";
-                  }
-                  {
-                    id = "Tray";
-                  }
-                  {
-                    id = "Bluetooth";
-                  }
-                  {
-                    id = "Volume";
-                  }
-                  {
-                    id = "NotificationHistory";
-                  }
-                  {
-                    id = "ControlCenter";
-                  }
-                  {
-                    id = "Clock";
-                  }
-                ];
-              };
-            };
-            location = {
-              name = "Hasselt";
-            };
-            dock = {
-              enabled = false;
-              position = "bottom";
-              displayMode = "auto_hide";
-              colorizeIcons = true;
-              animationSpeed = 2;
-            };
-            colorSchemes = {
-              useWallpaperColors = true;
-              darkMode = true;
-              generationMethod = "tonal-spot";
-            };
-            audio = {
-              visualizerType = "mirrored";
-            };
-          };
-        };
         services.polkit-gnome.enable = true; # polkit
         xdg.configFile."niri/config.kdl".text = ''
           // This config is in the KDL format: https://kdl.dev
@@ -779,8 +702,5 @@ with lib;
           }
         '';
       };
-
-
-
   };
 }

@@ -1,26 +1,6 @@
 #
 #  Main system configuration. More information available in configuration.nix(5) man page.
 #
-#  flake.nix
-#   ├─ ./hosts
-#   │   ├─ default.nix
-#   │   └─ configuration.nix *
-#   └─ ./modules
-#       ├─ ./desktops
-#       │   └─ default.nix
-#       ├─ ./editors
-#       │   └─ default.nix
-#       ├─ ./hardware
-#       │   └─ default.nix
-#       ├─ ./programs
-#       │   └─ default.nix
-#       ├─ ./services
-#       │   └─ default.nix
-#       ├─ ./shell
-#       │   └─ default.nix
-#       └─ ./theming
-#           └─ default.nix
-#
 
 { lib, config, pkgs, inputs, vars, ... }:
 
@@ -118,6 +98,7 @@ in
       ranger # File Manager
       smartmontools # Disk Health
       tldr # Helper
+      trash-cli # Recycle Bin
       usbutils # Manage USB
       wget # Retriever
       xdg-utils # Environment integration

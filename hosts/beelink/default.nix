@@ -55,8 +55,8 @@
     };
   };
 
-  # hyprland.enable = true;
-  niri.enable = true;
+  hyprland.enable = true;
+  # niri.enable = true;
 
   environment = {
     systemPackages = with pkgs; [

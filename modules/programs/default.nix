@@ -13,9 +13,10 @@
 [
   ./alacritty.nix
   ./accounts.nix
-  ./eww.nix
+  # ./eww.nix
   ./flatpak.nix
   ./kitty.nix
+  ./noctalia.nix
   ./obs.nix
   ./rofi.nix
   #./waybar.nix

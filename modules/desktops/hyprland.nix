@@ -31,27 +31,27 @@ with vars;
           fi
         '';
 
-        variables = {
-          # WLR_NO_HARDWARE_CURSORS="1"; # Needed for VM
-          # WLR_RENDERER_ALLOW_SOFTWARE="1";
-          XDG_CURRENT_DESKTOP = "Hyprland";
-          XDG_SESSION_TYPE = "wayland";
-          XDG_SESSION_DESKTOP = "Hyprland";
-          XCURSOR = "Catppuccin-Mocha-Dark-Cursors";
-          XCURSOR_SIZE = 24;
-          NIXOS_OZONE_WL = 1;
-          SDL_VIDEODRIVER = "wayland";
-          OZONE_PLATFORM = "wayland";
-          WLR_RENDERER_ALLOW_SOFTWARE = 1;
-          CLUTTER_BACKEND = "wayland";
-          QT_QPA_PLATFORM = "wayland;xcb";
-          QT_QPA_PLATFORMTHEME = "qt6ct";
-          QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-          QT_AUTO_SCREEN_SCALE_FACTOR = 1;
-          GDK_BACKEND = "wayland";
-          WLR_NO_HARDWARE_CURSORS = "1";
-          MOZ_ENABLE_WAYLAND = "1";
-        };
+        # variables = {
+        #   # WLR_NO_HARDWARE_CURSORS="1"; # Needed for VM
+        #   # WLR_RENDERER_ALLOW_SOFTWARE="1";
+        #   XDG_CURRENT_DESKTOP = "Hyprland";
+        #   XDG_SESSION_TYPE = "wayland";
+        #   XDG_SESSION_DESKTOP = "Hyprland";
+        #   XCURSOR = "Catppuccin-Mocha-Dark-Cursors";
+        #   XCURSOR_SIZE = 24;
+        #   NIXOS_OZONE_WL = 1;
+        #   SDL_VIDEODRIVER = "wayland";
+        #   OZONE_PLATFORM = "wayland";
+        #   WLR_RENDERER_ALLOW_SOFTWARE = 1;
+        #   CLUTTER_BACKEND = "wayland";
+        #   QT_QPA_PLATFORM = "wayland;xcb";
+        #   QT_QPA_PLATFORMTHEME = "qt6ct";
+        #   QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+        #   QT_AUTO_SCREEN_SCALE_FACTOR = 1;
+        #   GDK_BACKEND = "wayland";
+        #   WLR_NO_HARDWARE_CURSORS = "1";
+        #   MOZ_ENABLE_WAYLAND = "1";
+        # };
         systemPackages = with pkgs; [
           grimblast # Screenshot
           hyprcursor # Cursor
@@ -127,33 +127,33 @@ with vars;
               disable_loading_bar = true;
               grace = 0;
             };
-            background = [{
-              monitor = "";
-              path = "$HOME/.config/wall.png";
-              color = "rgba(25, 20, 20, 1.0)";
-              blur_passes = 1;
-              blur_size = 0;
-              brightness = 0.2;
-            }];
-            input-field = [
-              {
-                monitor = "";
-                size = "250, 60";
-                outline_thickness = 2;
-                dots_size = 0.2;
-                dots_spacing = 0.2;
-                dots_center = true;
-                outer_color = "rgba(0, 0, 0, 0)";
-                inner_color = "rgba(0, 0, 0, 0.5)";
-                font_color = "rgb(200, 200, 200)";
-                fade_on_empty = false;
-                placeholder_text = ''<i><span foreground="##cdd6f4">Input Password...</span></i>'';
-                hide_input = false;
-                position = "0, -120";
-                halign = "center";
-                valign = "center";
-              }
-            ];
+            # background = [{
+            #   monitor = "";
+            #   path = "$HOME/.config/wall.png";
+            #   color = "rgba(25, 20, 20, 1.0)";
+            #   blur_passes = 1;
+            #   blur_size = 0;
+            #   brightness = 0.2;
+            # }];
+            # input-field = [
+            #   {
+            #     monitor = "";
+            #     size = "250, 60";
+            #     outline_thickness = 2;
+            #     dots_size = 0.2;
+            #     dots_spacing = 0.2;
+            #     dots_center = true;
+            #     outer_color = "rgba(0, 0, 0, 0)";
+            #     inner_color = "rgba(0, 0, 0, 0.5)";
+            #     font_color = "rgb(200, 200, 200)";
+            #     fade_on_empty = false;
+            #     placeholder_text = ''<i><span foreground="##cdd6f4">Input Password...</span></i>'';
+            #     hide_input = false;
+            #     position = "0, -120";
+            #     halign = "center";
+            #     valign = "center";
+            #   }
+            # ];
             label = [
               {
                 monitor = "";
@@ -190,7 +190,7 @@ with vars;
         };
 
         services.hyprpaper = {
-          enable = true;
+          enable = false;
           settings = {
             ipc = true;
             splash = false;
@@ -208,8 +208,8 @@ with vars;
               border_size = 2;
               gaps_in = 3;
               gaps_out = 6;
-              "col.active_border" = "0x99${active}";
-              "col.inactive_border" = "0x66${inactive}";
+              # "col.active_border" = "0x99${active}";
+              # "col.inactive_border" = "0x66${inactive}";
               resize_on_border = true;
               hover_icon_on_border = false;
               layout = "dwindle";
@@ -280,7 +280,7 @@ with vars;
               repeat_delay = 250;
               numlock_by_default = 1;
               accel_profile = "adaptive";
-              sensitivity = 0.8;
+              sensitivity = 0.5;
               natural_scroll = false;
               touchpad =
                 if hostName == "work" then {
@@ -316,7 +316,7 @@ with vars;
               mouse_move_enables_dpms = true;
               mouse_move_focuses_monitor = true;
               key_press_enables_dpms = true;
-              background_color = "0x111111";
+              # background_color = "0x111111";
             };
             debug = {
               damage_tracking = 2;
@@ -336,7 +336,8 @@ with vars;
               "SUPER,L,exec,${pkgs.hyprlock}/bin/hyprlock"
               "SUPER,E,exec,${pkgs.thunar}/bin/thunar"
               "SUPER,F,togglefloating,"
-              "SUPER,Space,exec, pkill wofi || ${pkgs.wofi}/bin/wofi --show drun"
+              # "SUPER,Space,exec, pkill wofi || ${pkgs.wofi}/bin/wofi --show drun"
+              "SUPER,Space,exec, noctalia-shell ipc call launcher toggle"
               "SUPER,P,pseudo,"
               ",F11,fullscreen,"
               "SUPER,R,forcerendererreload"
@@ -406,11 +407,13 @@ with vars;
               "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
               "${pkgs.hyprlock}/bin/hyprlock"
               "ln -s $XDG_RUNTIME_DIR/hypr /tmp/hypr"
-              "${pkgs.waybar}/bin/waybar -c $HOME/.config/waybar/config"
-              "${pkgs.eww}/bin/eww daemon"
+              # "${pkgs.waybar}/bin/waybar -c $HOME/.config/waybar/config"
+              # "${pkgs.eww}/bin/eww daemon"
+              "noctalia-shell"
+              # "${pkgs.swayidle}/bin/swayidle -w timeout 300 noctalia-shell ipc call lockScreen lock before-sleep noctalia-shell ipc call lockScreen lock"
               # "$HOME/.config/eww/scripts/eww" # When running eww as a bar
-              "${pkgs.blueman}/bin/blueman-applet"
-              "${pkgs.swaynotificationcenter}/bin/swaync"
+              # "${pkgs.blueman}/bin/blueman-applet"
+              # "${pkgs.swaynotificationcenter}/bin/swaync"
               # "${pkgs.hyprpaper}/bin/hyprpaper"
             ] ++ (if hostName == "work" then [
               "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator"
