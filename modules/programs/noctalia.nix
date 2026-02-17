@@ -49,6 +49,17 @@
                 right = [
                   {
                     id = "MediaMini";
+                    hideMode = "hidden";
+                    hideWhenIdle = true;
+                    maxWidth = 30;
+                    useFixedWidth = true;
+                    showVisualizer = true;
+                    visualizerType = "mirrored";
+                    showAlbumArt = true;
+                    showProgressRing = true;
+                    compactMode = true;
+                    compactShowAlbumArt = true;
+                    compactShowVisualizer = true;
                   }
                   {
                     id = "Tray";

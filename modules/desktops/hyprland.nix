@@ -319,6 +319,7 @@ with vars;
               mouse_move_enables_dpms = true;
               mouse_move_focuses_monitor = true;
               key_press_enables_dpms = true;
+              focus_on_activate = true;
               # background_color = "0x111111";
             };
             debug = {
@@ -387,7 +388,7 @@ with vars;
               ",XF86AudioLowerVolume,exec,${pkgs.pamixer}/bin/pamixer -d 10"
               ",XF86AudioRaiseVolume,exec,${pkgs.pamixer}/bin/pamixer -i 10"
               ",XF86AudioMute,exec,${pkgs.pamixer}/bin/pamixer -t"
-              "SUPER_L,c,exec,${pkgs.pamixer}/bin/pamixer --default-source -t"
+              #"SUPER_L,c,exec,${pkgs.pamixer}/bin/pamixer --default-source -t"
               "CTRL,F10,exec,${pkgs.pamixer}/bin/pamixer -t"
               ",XF86AudioMicMute,exec,${pkgs.pamixer}/bin/pamixer --default-source -t"
               ",XF86MonBrightnessDown,exec,${pkgs.light}/bin/light -U 10"

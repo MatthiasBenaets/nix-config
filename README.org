@@ -24,11 +24,11 @@
 | *DM*            | /                 | GDM                    | LightDM          | /                       |
 | *WM/DE*         | Hyprland          | Gnome                  | Bspwm            | HyprSpace               |
 | *Compositor*    | Hyprland          | Mutter                 | Picom (jonaburg) | /                       |
-| *Bar*           | Eww + Waybar      | /                      | Polybar          | /                       |
+| *Bar*           | Noctalia          | /                      | Polybar          | /                       |
 | *Hotkeys*       | Hyprland          | /                      | Sxhkd            | Raycast                 |
-| *Launcher*      | Wofi              | Gnome                  | Rofi             | Raycast                 |
-| *GTK Theme*     | Orchis-Dark       | Adwaita                | Orchis-Dark      | /                       |
-| *Notifications* | Swaync            | Gnome                  | Dunst            | /                       |
+| *Launcher*      | Noctalia          | Gnome                  | Rofi             | Raycast                 |
+| *GTK Theme*     | Seti              | Adwaita                | Orchis-Dark      | /                       |
+| *Notifications* | Noctalia          | Gnome                  | Dunst            | /                       |
 | *Terminal*      | Kitty             | Kitty                  | Kitty            | Kitty                   |
 | *Used by host*  | Beelink           | Work                   | VM               | MacBook{Intel, AirM1, AirM3} |
 
