@@ -1,17 +1,6 @@
-#
-#  Hardware
-#
-#  flake.nix
-#   ├─ ./hosts
-#   │   └─ default.nix
-#   └─ ./modules
-#       └─ ./hardware
-#           ├─ default.nix *
-#           └─ ...
-#
-
 [
   ./bluetooth.nix
   ./dslr.nix
+  ./keyboard.nix
   ./power.nix
 ]

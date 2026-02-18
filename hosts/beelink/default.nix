@@ -37,6 +37,9 @@
       };
       timeout = 5;
     };
+    extraModprobeConfig = ''
+      options hid_apple fnmode=1
+    '';
   };
 
   hardware = {

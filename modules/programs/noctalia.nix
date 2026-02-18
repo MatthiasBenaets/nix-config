@@ -48,6 +48,15 @@
                   ] else [ ];
                 right = [
                   {
+                    id = "plugin:privacy-indicator";
+                    defaultSettings = {
+                      activeColor = "primary";
+                      hideInactive = true;
+                      inactiveColor = "none";
+                      removeMargins = false;
+                    };
+                  }
+                  {
                     id = "MediaMini";
                     hideMode = "hidden";
                     hideWhenIdle = true;
@@ -103,6 +112,28 @@
             hooks = {
               enabled = true;
               startup = "noctalia-shell ipc call lockScreen lock";
+            };
+            plugins = {
+              sources = [
+                {
+                  enabled = true;
+                  name = "Official Noctalia Plugins";
+                  url = "https://github.com/noctalia-dev/noctalia-plugins";
+                }
+              ];
+              states = {
+                privacy-indicator = {
+                  enabled = true;
+                  sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+                };
+              };
+              version = 1;
+            };
+            pluginSettings = {
+              privacy-indicator = {
+                hideInactive = true;
+                removeMargins = true;
+              };
             };
           };
         };

@@ -103,11 +103,10 @@ with vars;
         lid = "LID";
         lockScript = pkgs.writeShellScript "lock-script" ''
           action=$1
-          ${pkgs.pipewire}/bin/pw-cli i all | ${pkgs.ripgrep}/bin/rg running
-          if [ $? == 1 ]; then
+          if ! ${pkgs.pipewire}/bin/pw-cli i all | ${pkgs.ripgrep}/bin/rg -q "state: \"running\""; then
             if [ "$action" == "lock" ]; then
               # ${pkgs.hyprlock}/bin/hyprlock
-              "noctalia-shell ipc call lockScreen lock"
+              noctalia-shell ipc call lockscreen lock
             elif [ "$action" == "suspend" ]; then
               ${pkgs.systemd}/bin/systemctl suspend
             fi
@@ -174,19 +173,18 @@ with vars;
             general = {
               before_sleep_cmd = "${pkgs.systemd}/bin/loginctl lock-session";
               after_sleep_cmd = "${config.programs.hyprland.package}/bin/hyprctl dispatch dpms on";
-              ignore_dbus_inhibit = true;
+              ignore_dbus_inhibit = false;
               # lock_cmd = "pidof ${pkgs.hyprlock}/bin/hyprlock || ${pkgs.hyprlock}/bin/hyprlock";
               lock_cmd = "noctalia-shell ipc call lockScreen lock";
             };
             listener = [
               {
                 timeout = 300;
-                # on-timeout = "${lockScript.outPath} lock";
-                on-timeout = "noctalia-shell ipc call lockScreen lock";
+                on-timeout = "${lockScript} lock";
               }
               {
                 timeout = 1800;
-                on-timeout = "${lockScript.outPath} suspend";
+                on-timeout = "${lockScript} suspend";
               }
             ];
           };
@@ -341,7 +339,7 @@ with vars;
               "SUPER,S,exec,noctalia-shell ipc call lockScreen lock && ${pkgs.systemd}/bin/systemctl suspend"
               "SUPER,L,exec,noctalia-shell ipc call lockScreen lock"
               "SUPER,E,exec,${pkgs.thunar}/bin/thunar"
-              "SUPER,F,togglefloating,"
+              "SUPERSHIFT,F,togglefloating,"
               # "SUPER,Space,exec, pkill wofi || ${pkgs.wofi}/bin/wofi --show drun"
               "SUPER,Space,exec, noctalia-shell ipc call launcher toggle"
               "SUPER,P,pseudo,"
@@ -408,6 +406,7 @@ with vars;
               "match:title ^(Volume Control)$, float on"
               "match:class ^(firefox)$, match:title ^(Picture-in-Picture)$, keep_aspect_ratio on, border_size 0, float on, size 24% 24%, move 75% 75%, pin on"
               "match:class ^(kitty)$, opacity 0.9"
+              "match:class (.*), idle_inhibit fullscreen"
             ];
             exec-once = [
               "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
