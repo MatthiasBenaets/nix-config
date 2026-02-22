@@ -1,4 +1,12 @@
-{ config, lib, system, pkgs, stable, vars, ... }:
+{
+  config,
+  lib,
+  system,
+  pkgs,
+  stable,
+  vars,
+  ...
+}:
 let
   nvim-spell-nl-utf8-dictionary = builtins.fetchurl {
     url = "https://ftp.nluug.nl/vim/runtime/spell/nl.utf-8.spl";
@@ -44,7 +52,7 @@ in
       black
       eslint_d
       isort
-      nixpkgs-fmt
+      nixfmt
       prettier
       stylua
     ];
@@ -87,7 +95,11 @@ in
       wrap = false;
       scrolloff = 10;
       sidescroll = 20;
-      completeopt = [ "menu" "menuone" "noinsert" ];
+      completeopt = [
+        "menu"
+        "menuone"
+        "noinsert"
+      ];
       pumheight = 15;
       fileencoding = "utf-8";
       swapfile = false;
@@ -96,7 +108,10 @@ in
       conceallevel = 0;
       cursorline = true;
       spell = false;
-      spelllang = [ "nl" "en" ];
+      spelllang = [
+        "nl"
+        "en"
+      ];
     };
 
     clipboard = {
@@ -333,20 +348,44 @@ in
         enable = true;
         settings = {
           signs = {
-            add = { text = "+"; };
-            change = { text = "~"; };
-            delete = { text = "-"; };
-            topdelete = { text = "-"; };
-            changedelete = { text = "~"; };
-            untracked = { text = "x"; };
+            add = {
+              text = "+";
+            };
+            change = {
+              text = "~";
+            };
+            delete = {
+              text = "-";
+            };
+            topdelete = {
+              text = "-";
+            };
+            changedelete = {
+              text = "~";
+            };
+            untracked = {
+              text = "x";
+            };
           };
           signs_staged = {
-            add = { text = "+"; };
-            change = { text = "~"; };
-            delete = { text = "-"; };
-            topdelete = { text = "-"; };
-            changedelete = { text = "~"; };
-            untracked = { text = "x"; };
+            add = {
+              text = "+";
+            };
+            change = {
+              text = "~";
+            };
+            delete = {
+              text = "-";
+            };
+            topdelete = {
+              text = "-";
+            };
+            changedelete = {
+              text = "~";
+            };
+            untracked = {
+              text = "x";
+            };
           };
         };
       };
@@ -471,7 +510,9 @@ in
               };
               workspace = {
                 checkThirdParty = false;
-                telemetry = { enable = false; };
+                telemetry = {
+                  enable = false;
+                };
                 library = [
                   "\${3rd}/love2d/library"
                 ];
@@ -509,7 +550,7 @@ in
                   autoArchive = true;
                 };
               };
-              formatting.command = [ "nixpkgs-fmt" ];
+              formatting.command = [ "nixfmt" ];
             };
           };
           pyright.enable = true;
@@ -566,8 +607,11 @@ in
             markdown = [ "prettier" ];
             lua = [ "stylua" ];
             php = [ "prettier" ];
-            python = [ "isort" "black" ];
-            nix = [ "nixpkgs-fmt" ];
+            python = [
+              "isort"
+              "black"
+            ];
+            nix = [ "nixfmt" ];
           };
           format_on_save = ''
             function(bufnr)
@@ -677,9 +721,11 @@ in
       erlang
       go
       nodejs
-      (python3.withPackages (ps: with ps; [
-        pip
-      ]))
+      (python3.withPackages (
+        ps: with ps; [
+          pip
+        ]
+      ))
       ripgrep
       zig
     ];

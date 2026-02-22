@@ -22,8 +22,8 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/programs/games.nix
-  ] ++
-  (import ../../modules/desktops/virtualisation);
+  ]
+  ++ (import ../../modules/desktops/virtualisation);
 
   # Boot Options
   boot = {

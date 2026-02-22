@@ -2,19 +2,28 @@
 #  Main system configuration. More information available in configuration.nix(5) man page.
 #
 
-{ lib, config, pkgs, inputs, vars, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  inputs,
+  vars,
+  ...
+}:
 
 let
   terminal = pkgs.${vars.terminal};
 in
 {
-  imports = (import ../modules/desktops ++
-    import ../modules/editors ++
-    import ../modules/hardware ++
-    import ../modules/programs ++
-    import ../modules/services ++
-    import ../modules/shell ++
-    import ../modules/theming);
+  imports = (
+    import ../modules/desktops
+    ++ import ../modules/editors
+    ++ import ../modules/hardware
+    ++ import ../modules/programs
+    ++ import ../modules/services
+    ++ import ../modules/shell
+    ++ import ../modules/theming
+  );
 
   boot = {
     tmp = {
@@ -26,7 +35,15 @@ in
 
   users.users.${vars.user} = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "camera" "networkmanager" "lp" "scanner" ];
+    extraGroups = [
+      "wheel"
+      "video"
+      "audio"
+      "camera"
+      "networkmanager"
+      "lp"
+      "scanner"
+    ];
   };
 
   time.timeZone = "Europe/Brussels";
@@ -48,30 +65,29 @@ in
     sudo.wheelNeedsPassword = false;
   };
 
-  fonts =
-    {
-      packages = with pkgs; [
-        carlito # NixOS
-        vegur # NixOS
-        source-code-pro
-        jetbrains-mono
-        font-awesome # Icons
-        corefonts # MS
-        noto-fonts # Google + Unicode
-        noto-fonts-cjk-sans
-        noto-fonts-cjk-serif
-        noto-fonts-color-emoji
-        nerd-fonts.fira-code
-      ];
+  fonts = {
+    packages = with pkgs; [
+      carlito # NixOS
+      vegur # NixOS
+      source-code-pro
+      jetbrains-mono
+      font-awesome # Icons
+      corefonts # MS
+      noto-fonts # Google + Unicode
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      noto-fonts-color-emoji
+      nerd-fonts.fira-code
+    ];
 
-      # fontconfig = {
-      #   defaultFonts = {
-      #     serif = [ "Noto Serif" ];
-      #     sansSerif = [ "Noto Sans" ];
-      #     monospace = [ "Noto Sans Mono" ];
-      #   };
-      # };
-    };
+    # fontconfig = {
+    #   defaultFonts = {
+    #     serif = [ "Noto Serif" ];
+    #     sansSerif = [ "Noto Sans" ];
+    #     monospace = [ "Noto Sans Mono" ];
+    #   };
+    # };
+  };
 
   environment = {
     variables = {
@@ -146,7 +162,6 @@ in
     };
   };
 
-
   services = {
     printing = {
       enable = true;
@@ -203,20 +218,42 @@ in
       mimeApps = lib.mkIf (config.gnome.enable == false) {
         enable = true;
         defaultApplications = {
-          "image/jpeg" = [ "image-roll.desktop" "feh.desktop" ];
-          "image/png" = [ "image-roll.desktop" "feh.desktop" ];
+          "image/jpeg" = [
+            "image-roll.desktop"
+            "feh.desktop"
+          ];
+          "image/png" = [
+            "image-roll.desktop"
+            "feh.desktop"
+          ];
           "text/plain" = "nvim.desktop";
           "text/html" = "nvim.desktop";
           "text/csv" = "nvim.desktop";
-          "application/pdf" = [ "wps-office-pdf.desktop" "firefox.desktop" "google-chrome.desktop" ];
+          "application/pdf" = [
+            "wps-office-pdf.desktop"
+            "firefox.desktop"
+            "google-chrome.desktop"
+          ];
           "application/zip" = "org.gnome.FileRoller.desktop";
           "application/x-tar" = "org.gnome.FileRoller.desktop";
           "application/x-bzip2" = "org.gnome.FileRoller.desktop";
           "application/x-gzip" = "org.gnome.FileRoller.desktop";
-          "x-scheme-handler/http" = [ "firefox.desktop" "google-chrome.desktop" ];
-          "x-scheme-handler/https" = [ "firefox.desktop" "google-chrome.desktop" ];
-          "x-scheme-handler/about" = [ "firefox.desktop" "google-chrome.desktop" ];
-          "x-scheme-handler/unknown" = [ "firefox.desktop" "google-chrome.desktop" ];
+          "x-scheme-handler/http" = [
+            "firefox.desktop"
+            "google-chrome.desktop"
+          ];
+          "x-scheme-handler/https" = [
+            "firefox.desktop"
+            "google-chrome.desktop"
+          ];
+          "x-scheme-handler/about" = [
+            "firefox.desktop"
+            "google-chrome.desktop"
+          ];
+          "x-scheme-handler/unknown" = [
+            "firefox.desktop"
+            "google-chrome.desktop"
+          ];
           "x-scheme-handler/mailto" = [ "gmail.desktop" ];
           "audio/mp3" = "mpv.desktop";
           "audio/x-matroska" = "mpv.desktop";

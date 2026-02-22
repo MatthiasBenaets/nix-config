@@ -1,9 +1,21 @@
-{ inputs, overlays, vars, ... }:
+{
+  inputs,
+  overlays,
+  vars,
+  ...
+}:
 
 let
   lib = inputs.nixpkgs.lib;
 
-  mkHost = { name, system, extraModules ? [ ], hostVars ? { }, description ? "Default config" }:
+  mkHost =
+    {
+      name,
+      system,
+      extraModules ? [ ],
+      hostVars ? { },
+      description ? "Default config",
+    }:
     lib.nixosSystem {
       inherit system;
 
@@ -12,23 +24,22 @@ let
         vars = vars // { hostName = name; } // hostVars;
       };
 
-      modules =
-        [
-          {
-            nixpkgs.overlays = overlays;
-            nixpkgs.config.allowUnfree = true;
-            system.stateVersion = "22.05";
-          }
-          ./configuration.nix
-          inputs.home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupCommand = "trash";
-          }
-          inputs.nixvim.nixosModules.nixvim
-        ]
-        ++ extraModules;
+      modules = [
+        {
+          nixpkgs.overlays = overlays;
+          nixpkgs.config.allowUnfree = true;
+          system.stateVersion = "22.05";
+        }
+        ./configuration.nix
+        inputs.home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.backupCommand = "trash";
+        }
+        inputs.nixvim.nixosModules.nixvim
+      ]
+      ++ extraModules;
     };
 in
 {
