@@ -297,6 +297,7 @@ with vars;
               natural_scroll = true;
             };
             cursor = {
+              no_warps = true;
               no_hardware_cursors = true;
             };
             gestures =

@@ -73,7 +73,7 @@ with lib;
                   fi
                 done
 
-                /run/wrappers/bin/su - ${vars.user} -c "${pkgs.flatpak}/bin/flatpak override --user --filesystem=host"
+                /run/wrappers/bin/su - ${vars.user} -c "${pkgs.flatpak}/bin/flatpak override --user --filesystem=host --filesystem=/nix/store:ro"
               '';
           };
     };

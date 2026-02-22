@@ -168,7 +168,7 @@ in
         HostKeyAlgorithms +ssh-rsa
       '';
     };
-    tumbler.enable = true;
+    envfs.enable = true;
   };
 
   flatpak.enable = true;

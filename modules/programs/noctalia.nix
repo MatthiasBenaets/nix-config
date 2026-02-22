@@ -1,3 +1,4 @@
+# get bar config with $ noctalia-shell ipc call state all | jq .settings.bar.widgets
 { config, inputs, lib, pkgs, vars, ... }:
 
 {
@@ -31,6 +32,10 @@
                     }
                     {
                       id = "Taskbar";
+                      showApplications = true;
+                      colorizeIcons = true;
+                      hideUnoccupied = false;
+                      showLabelsOnlyWhenOccupied = false;
                     }
                   ] else [
                     {
@@ -72,6 +77,7 @@
                   }
                   {
                     id = "Tray";
+                    drawerEnabled = false;
                   }
                   {
                     id = "Bluetooth";
