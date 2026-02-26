@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   ...
 }:
@@ -20,6 +21,13 @@ in
   default = mkShell {
     packages = with pkgs; [
       vim
+      git
+    ];
+  };
+
+  neovim = mkShell {
+    packages = with pkgs; [
+      config.packages.neovim
       git
     ];
   };

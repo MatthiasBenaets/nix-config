@@ -4,6 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    import-tree.url = "github:vic/import-tree";
+
+    nixvim.url = "github:nix-community/nixvim";
+    nixvim.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -16,8 +20,18 @@
         "aarch64-darwin"
       ];
 
+      imports = [
+        inputs.flake-parts.flakeModules.modules
+        (inputs.import-tree ./modules)
+      ];
+
       perSystem =
-        { pkgs, system, ... }:
+        {
+          config,
+          pkgs,
+          system,
+          ...
+        }:
         {
           _module.args.pkgs = import inputs.nixpkgs {
             inherit system;
@@ -27,7 +41,12 @@
           };
 
           devShells = import ./shells {
-            inherit inputs pkgs system;
+            inherit
+              config
+              inputs
+              pkgs
+              system
+              ;
           };
         };
     };
