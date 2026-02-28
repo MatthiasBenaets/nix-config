@@ -46,4 +46,21 @@
         };
       };
     };
+
+  flake.modules.homeManager.base =
+    {
+      config,
+      pkgs,
+      host,
+      ...
+    }:
+    {
+      nix.package = pkgs.nix;
+      home = {
+        username = "${host.user.name}";
+        homeDirectory = "/home/${host.user.name}";
+        packages = [ pkgs.home-manager ];
+        stateVersion = host.state.version;
+      };
+    };
 }
