@@ -18,13 +18,31 @@
           osConfig = config;
         };
         users.${config.host.user.name} = {
-          home = {
-            stateVersion = config.host.state.version;
-          };
+          home.stateVersion = config.host.state.version;
 
           programs = {
             home-manager.enable = true;
           };
+        };
+      };
+    };
+
+  flake.modules.darwin.base =
+    { config, ... }:
+    {
+      imports = [
+        inputs.home-manager.darwinModules.home-manager
+      ];
+
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        extraSpecialArgs = {
+          inherit (config) host;
+          osConfig = config;
+        };
+        users.${config.host.user.name} = {
+          home.stateVersion = config.host.state.version;
         };
       };
     };

@@ -2,6 +2,7 @@
   lib,
   ...
 }:
+
 with lib;
 let
   hostOptions = {
@@ -18,10 +19,22 @@ let
       description = "Host username";
     };
 
-    state.version = mkOption {
-      type = types.str;
-      example = "22.05";
-      description = "NixOS state version";
+    state = mkOption {
+      type = types.submodule {
+        options = {
+          version = mkOption {
+            type = types.str;
+            example = "22.05";
+            description = "NixOS state version";
+
+          };
+          darwin = mkOption {
+            type = types.int;
+            example = 4;
+            description = "Nix-Darwin state version";
+          };
+        };
+      };
     };
 
     system = mkOption {
@@ -80,6 +93,10 @@ let
 in
 {
   flake.modules.nixos.base = {
+    options.host = hostOptions;
+  };
+
+  flake.modules.darwin.base = {
     options.host = hostOptions;
   };
 }
