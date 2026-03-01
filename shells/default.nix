@@ -4,31 +4,17 @@
   ...
 }:
 
-let
-  mkShell =
-    {
-      packages ? [ ],
-      env ? { },
-      shellHook ? "",
-    }:
-    pkgs.mkShell {
-      packages = packages;
-      env = env;
-      shellHook = shellHook;
-    };
-in
 {
-  default = mkShell {
+  default = pkgs.mkShell {
     packages = with pkgs; [
       vim
       git
     ];
   };
 
-  neovim = mkShell {
-    packages = with pkgs; [
-      config.packages.neovim
-      git
-    ];
-  };
+  neovim = pkgs.mkShell (import ./neovim.nix { inherit config pkgs; });
+
+  python = pkgs.mkShell (import ./python.nix { inherit pkgs; });
+
+  nodejs = pkgs.mkShell (import ./nodejs.nix { inherit pkgs; });
 }

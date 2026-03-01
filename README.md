@@ -197,29 +197,49 @@ This structure allows you to keep your host-specific configurations isolated whi
 
 ---
 
-## Running Applications
+## Packages
 
-Standalone packages (like neovim) can be run directly without installing:
+Standalone packages can be run directly without installing them system-wide.
+
+| Package  | Description                  |
+| -------- | ---------------------------- |
+| `neovim` | Neovim configured via nixvim |
 
 ```bash
+# Run directly
 nix run .#neovim
-```
 
-Or from anywhere using the flake URL:
-
-```bash
+# Run from anywhere using the flake URL
 nix run github:matthiasbenaets/nixos-config#neovim
+
+# Add temporarily to PATH
+nix shell .#neovim
 ```
 
 ---
 
 ## Dev Shells
 
-Enter a development shell:
+Pre-configured development environments with all relevant tools available.
+
+| Shell     | Tools                                        |
+| --------- | -------------------------------------------- |
+| `default` | `vim`, `git`                                 |
+| `neovim`  | Configured neovim + `git`                    |
+| `python`  | Python tooling                               |
+| `nodejs`  | `nodejs`, `npm` with local prefix configured |
 
 ```bash
-nix develop <path/to/flake>#<shell>
+# Enter a shell
+nix develop .#<shell>
+
+# Examples
+nix develop .#nodejs
+nix develop .#python
+nix develop            # enters default shell
 ```
+
+> **Note:** Dev shells use `nix develop`. `nix run` and `nix shell` are for packages, not dev shells.
 
 ---
 
