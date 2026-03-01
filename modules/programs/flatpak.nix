@@ -23,9 +23,16 @@
         enable = true;
         overrides = {
           global = {
-            Context.filesystems = [
-              "/nix/store:ro"
-            ];
+            Context = {
+              filesystems = [
+                "/nix/store:ro"
+              ];
+              sockets = [
+                "wayland"
+                "x11"
+                "fallback-x11"
+              ];
+            };
           };
         };
         packages = [
