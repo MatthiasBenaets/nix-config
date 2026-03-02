@@ -4,6 +4,35 @@
   ...
 }:
 
+let
+  nixvimConfig = pkgs: {
+    enable = true;
+    nixpkgs.pkgs = pkgs;
+    imports = [ config.flake.modules.editors.nixvim ];
+  };
+
+  environment = pkgs: {
+    systemPackages = with pkgs; [
+      deno
+      elixir
+      erlang
+      git
+      go
+      nodejs
+      (python3.withPackages (
+        ps: with ps; [
+          pip
+        ]
+      ))
+      ripgrep
+      zig
+    ];
+    variables = {
+      PATH = "$HOME/.npm-packages/bin:$PATH";
+      NODE_PATH = "$HOME/.npm-packages/lib/node_modules:$NODE_PATH:";
+    };
+  };
+in
 {
   perSystem =
     { inputs', pkgs, ... }:
@@ -20,11 +49,8 @@
       imports = [
         inputs.nixvim.nixosModules.nixvim
       ];
-      programs.nixvim = {
-        enable = true;
-        nixpkgs.pkgs = pkgs;
-        imports = [ config.flake.modules.editors.nixvim ];
-      };
+      programs.nixvim = nixvimConfig pkgs;
+      environment = environment pkgs;
     };
 
   flake.modules.darwin.nixvim =
@@ -33,10 +59,7 @@
       imports = [
         inputs.nixvim.nixDarwinModules.nixvim
       ];
-      programs.nixvim = {
-        enable = true;
-        nixpkgs.pkgs = pkgs;
-        imports = [ config.flake.modules.editors.nixvim ];
-      };
+      programs.nixvim = nixvimConfig pkgs;
+      environment = environment pkgs;
     };
 }

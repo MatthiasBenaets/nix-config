@@ -1,12 +1,10 @@
 {
   config,
-  pkgs,
   ...
 }:
 
 {
-  packages = with pkgs; [
+  packages = [
     config.packages.neovim
-    git
   ];
 }
