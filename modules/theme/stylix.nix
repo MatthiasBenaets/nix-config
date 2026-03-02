@@ -14,6 +14,7 @@
       stylix = {
         enable = true;
         base16Scheme = "${pkgs.base16-schemes}/share/themes/seti.yaml";
+        polarity = "dark";
         cursor = {
           package = pkgs.capitaine-cursors;
           name = "capitaine-cursors";
@@ -47,12 +48,6 @@
           light = "Papirus-Light";
         };
         targets = {
-          gnome.enable = false;
-        };
-      };
-
-      home-manager.users.${config.host.user.name} = {
-        stylix.targets = {
           gnome.enable = false;
         };
       };
