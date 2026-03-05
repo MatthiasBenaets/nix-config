@@ -30,6 +30,8 @@ let
     variables = {
       PATH = "$HOME/.npm-packages/bin:$PATH";
       NODE_PATH = "$HOME/.npm-packages/lib/node_modules:$NODE_PATH:";
+      EDITOR = "nvim";
+      VISUAL = "nvim";
     };
   };
 in
