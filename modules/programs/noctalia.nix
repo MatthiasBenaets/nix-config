@@ -130,7 +130,7 @@
           };
           hooks = {
             enabled = true;
-            startup = "noctalia-shell ipc call lockScreen lock";
+            startup = "${pkgs.noctalia-shell}/bin/noctalia-shell ipc call lockScreen lock";
           };
           plugins = {
             sources = [
