@@ -94,13 +94,19 @@ in
       lid = "LID";
       lockScript = pkgs.writeShellScript "lock-script" ''
         action=$1
-        if ! ${pkgs.pipewire}/bin/pw-cli i all | ${pkgs.ripgrep}/bin/rg -q "state: \"running\""; then
-          if [ "$action" == "lock" ]; then
-            # ${pkgs.hyprlock}/bin/hyprlock
-            noctalia-shell ipc call lockscreen lock
-          elif [ "$action" == "suspend" ]; then
-            ${pkgs.systemd}/bin/systemctl suspend
-          fi
+
+        if ${hyprland}/bin/hyprctl -j clients | ${pkgs.jq}/bin/jq -e 'any(.[]; .fullscreen != 0 or .inhibitingIdle == true)' > /dev/null; then
+          exit 0
+        fi
+
+        if ${pkgs.playerctl}/bin/playerctl -a status 2>/dev/null | ${pkgs.ripgrep}/bin/rg -q "Playing"; then
+          exit 0
+        fi
+
+        if [ "$action" == "lock" ]; then
+          ${pkgs.noctalia-shell}/bin/noctalia-shell ipc call lockScreen lock
+        elif [ "$action" == "suspend" ]; then
+          ${pkgs.systemd}/bin/systemctl suspend
         fi
       '';
     in
@@ -109,36 +115,15 @@ in
         inputs.hyprland.homeManagerModules.default
       ];
 
-      programs.hyprlock = {
-        enable = false;
-        settings = {
-          general = {
-            hide_cursor = true;
-            no_fade_in = false;
-            disable_loading_bar = true;
-            grace = 0;
-          };
-          label = [
-            {
-              monitor = "";
-              text = "$TIME";
-              font_size = 120;
-              position = "0, 200";
-              # valign = "center";
-              halign = "center";
-            }
-          ];
-        };
-      };
-
       services.hypridle = {
         enable = true;
         settings = {
           general = {
-            before_sleep_cmd = "${pkgs.systemd}/bin/loginctl lock-session";
+            # before_sleep_cmd = "${pkgs.systemd}/bin/loginctl lock-session";
+            # before_sleep_cmd = "${pkgs.noctalia-shell}/bin/noctalia-shell ipc call lockScreen lock";
             after_sleep_cmd = "${hyprland}/bin/hyprctl dispatch dpms on";
-            ignore_dbus_inhibit = false;
-            lock_cmd = "noctalia-shell ipc call lockScreen lock";
+            # lock_cmd = "${pkgs.noctalia-shell}/bin/noctalia-shell ipc call lockScreen lock";
+            before_sleep_cmd = "${lockScript} lock";
           };
           listener = [
             {
@@ -312,11 +297,11 @@ in
             "SUPER,Return,exec,${pkgs.kitty}/bin/kitty"
             "SUPER,Q,killactive,"
             "SUPER,Escape,exit,"
-            "SUPER,S,exec,noctalia-shell ipc call lockScreen lock && ${pkgs.systemd}/bin/systemctl suspend"
-            "SUPER,L,exec,noctalia-shell ipc call lockScreen lock"
+            "SUPER,S,exec,${pkgs.noctalia-shell}/bin/noctalia-shell ipc call lockScreen lock && ${pkgs.systemd}/bin/systemctl suspend"
+            "SUPER,L,exec,${pkgs.noctalia-shell}/bin/noctalia-shell ipc call lockScreen lock"
             "SUPER,E,exec,${pkgs.thunar}/bin/thunar"
             "SUPERSHIFT,F,togglefloating,"
-            "SUPER,Space,exec, noctalia-shell ipc call launcher toggle"
+            "SUPER,Space,exec,${pkgs.noctalia-shell}/bin/noctalia-shell ipc call launcher toggle"
             "SUPER,P,pseudo,"
             ",F11,fullscreen,"
             "SUPER,R,forcerendererreload"
@@ -389,7 +374,7 @@ in
           exec-once = [
             "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
             "ln -s $XDG_RUNTIME_DIR/hypr /tmp/hypr"
-            "noctalia-shell"
+            "${pkgs.noctalia-shell}/bin/noctalia-shell"
           ]
           ++ (
             if host.name == "work" then
@@ -414,7 +399,7 @@ in
               if [[ `hyprctl monitors | grep "Monitor" | wc -l` != 1 ]]; then
                 ${hyprland}/bin/hyprctl keyword monitor "${m0.name}, disable"
               else
-              noctalia-shell ipc call lockScreen lock
+              ${pkgs.noctalia-shell}/bin/noctalia-shell ipc call lockScreen lock
                 ${pkgs.systemd}/bin/systemctl suspend
               fi
             fi

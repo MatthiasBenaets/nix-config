@@ -1,6 +1,7 @@
 # Matthias' Nix Configuration Flake
 
-A modular, multi-platform Nix flake managing NixOS, Nix-Darwin, and standalone Home Manager configurations using [flake-parts](https://flake.parts) and the [dendritic pattern](https://github.com/mightyiam/dendritic).
+A modular, multi-platform Nix flake managing NixOS, Nix-Darwin, and standalone Home Manager configurations using [flake-parts](https://flake.parts) and the [dendritic pattern](https://github.com/mightyiam/dendritic).\
+Check out the [vanilla branch](https://github.com/MatthiasBenaets/nix-config/tree/vanilla) for a more "vanilla" Nix Flake setup.
 
 ---
 
