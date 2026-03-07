@@ -28,8 +28,8 @@ let
       zig
     ];
 
-  environment = {
-    systemPackages = packages;
+  environment = pkgs: {
+    systemPackages = packages pkgs;
     variables = {
       PATH = "$HOME/.npm-packages/bin:$PATH";
       NODE_PATH = "$HOME/.npm-packages/lib/node_modules:$NODE_PATH:";
