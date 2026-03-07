@@ -59,7 +59,7 @@ The flake uses [flake-parts](https://flake.parts) with [import-tree](https://git
 
 ```bash
 # Clone the repo
-git clone https://github.com/matthiasbenaets/nixos-config ~/.setup
+git clone https://github.com/matthiasbenaets/nix-config ~/.setup
 cd ~/.setup
 
 # Switch to a host configuration
@@ -74,7 +74,7 @@ sudo nixos-rebuild switch --flake .#beelink
 First install Nix if not present:
 
 ```bash
-sh <(curl -L https://nixos.org/nix/install)
+sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install)
 ```
 
 Enable flakes:
@@ -88,40 +88,35 @@ First build (darwin-rebuild not yet in PATH):
 
 ```bash
 nix-env -iA nixpkgs.git
-git clone https://github.com/matthiasbenaets/nixos-config ~/.setup
+git clone https://github.com/matthiasbenaets/nix-config ~/.setup
 cd ~/.setup
 nix build .#darwinConfigurations.<host>.system
-./result/sw/bin/darwin-rebuild switch --flake <path/to/flake>#<host>
+./result/sw/bin/darwin-rebuild switch --flake ~/.setup#<host>
 ```
 
 Subsequent rebuilds:
 
 ```bash
-darwin-rebuild switch --flake <path/to/flake>#<host>
+darwin-rebuild switch --flake ~/.setup#<host>
 ```
 
 ### Standalone Home Manager
 
-First install Nix:
+First install Nix and Home Manager:
 
 ```bash
-sh <(curl -L https://nixos.org/nix/install) --daemon
+sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --daemon
+nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+nix-channel --update
 ```
 
-Initial build:
+Get and rebuild:
 
 ```bash
 nix-env -iA nixpkgs.git
-git clone https://github.com/matthiasbenaets/nixos-config ~/.setup
+git clone https://github.com/matthiasbenaets/nix-config ~/.setup
 cd ~/.setup
-nix build --extra-experimental-features 'nix-command flakes' <path/to/flake>#homeConfigurations.<host>.activationPackage
-./result/activate
-```
-
-Subsequent rebuilds:
-
-```bash
-home-manager switch --flake <path/to/flake>#<host>
+home-manager switch --extra-experimental-features 'nix-command flakes' --flake ~/.setup#<host> --impure
 ```
 
 ---
@@ -211,7 +206,7 @@ Standalone packages can be run directly without installing them system-wide.
 nix run .#neovim
 
 # Run from anywhere using the flake URL
-nix run github:matthiasbenaets/nixos-config#neovim
+nix run github:matthiasbenaets/nix-config#neovim
 
 # Add temporarily to PATH
 nix shell .#neovim
