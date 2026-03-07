@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.pacman =
+  flake.modules.homeManager.ubuntu =
     { pkgs, ... }:
     {
       home = {

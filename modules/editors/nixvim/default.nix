@@ -11,8 +11,8 @@ let
     imports = [ config.flake.modules.editors.nixvim ];
   };
 
-  environment = pkgs: {
-    systemPackages = with pkgs; [
+  packages =
+    pkgs: with pkgs; [
       deno
       elixir
       erlang
@@ -27,6 +27,9 @@ let
       ripgrep
       zig
     ];
+
+  environment = {
+    systemPackages = packages;
     variables = {
       PATH = "$HOME/.npm-packages/bin:$PATH";
       NODE_PATH = "$HOME/.npm-packages/lib/node_modules:$NODE_PATH:";
@@ -53,6 +56,16 @@ in
       ];
       programs.nixvim = nixvimConfig pkgs;
       environment = environment pkgs;
+    };
+
+  flake.modules.homeManager.nixvim =
+    { pkgs, ... }:
+    {
+      imports = [
+        inputs.nixvim.homeModules.nixvim
+      ];
+      programs.nixvim = nixvimConfig pkgs;
+      home.packages = packages pkgs;
     };
 
   flake.modules.darwin.nixvim =

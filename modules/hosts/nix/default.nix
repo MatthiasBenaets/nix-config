@@ -10,24 +10,19 @@
 
       home = {
         packages = [
-          (import inputs.nixgl { inherit pkgs; }).nixGLIntel # OpenGL for GUI apps
-          #.nixVulkanIntel
+          inputs.nixgl.packages.${pkgs.stdenv.hostPlatform.system}.nixGLDefault # nixGL will infer the correct nixGL package. The --impure flag will be required during switch command.
+          # Specifying a specific nixGL package will not require the impure flag.
         ];
-
-        # Example
-        # file.".bash_aliases".text = ''
-        #   alias alacritty="nixGLIntel ${pkgs.alacritty}/bin/alacritty"
-        # ''; # Aliases for package using openGL (nixGL). home.shellAliases does not work
 
         activation = {
           linkDesktopApplications = {
-            # Add Packages To System Menu by updating database
+            # Add Packages To System Menu by updating database (might require relogging)
             after = [
               "writeBoundary"
               "createXdgUserDirectories"
             ];
             before = [ ];
-            data = "sudo /usr/bin/update-desktop-database";
+            data = "/usr/bin/sudo /usr/bin/update-desktop-database";
           };
         };
       };

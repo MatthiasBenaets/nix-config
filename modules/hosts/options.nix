@@ -89,14 +89,39 @@ let
       example = "hyprland";
       description = "Graphical Shell";
     };
+
+    isNixOS = mkOption {
+      type = types.bool;
+      default = false;
+      description = "If NixOS";
+    };
+
+    isDarwin = mkOption {
+      type = types.bool;
+      default = false;
+      description = "If Darwin";
+    };
+
+    isHomeManager = mkOption {
+      type = types.bool;
+      default = false;
+      description = "If Home Manager";
+    };
   };
 in
 {
   flake.modules.nixos.base = {
     options.host = hostOptions;
+    config.host.isNixOS = lib.mkDefault true;
   };
 
   flake.modules.darwin.base = {
     options.host = hostOptions;
+    config.host.isDarwin = lib.mkDefault true;
+  };
+
+  flake.modules.homeManager.base = {
+    options.host = hostOptions;
+    config.host.isHomeManager = lib.mkDefault true;
   };
 }

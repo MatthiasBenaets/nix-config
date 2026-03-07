@@ -388,24 +388,28 @@ in
         };
       };
 
-      home.file = {
-        ".config/hypr/script/clamshell.sh" = {
-          text = ''
-            #!/bin/sh
+      home.file =
+        if host.name == "work" then
+          {
+            ".config/hypr/script/clamshell.sh" = {
+              text = ''
+                #!/bin/sh
 
-            if grep open /proc/acpi/button/lid/${lid}/state; then
-              ${hyprland}/bin/hyprctl keyword monitor "${m0.name}, ${m0.w}x${m0.h}, ${m0.x}x${m0.y}, 1"
-            else
-              if [[ `hyprctl monitors | grep "Monitor" | wc -l` != 1 ]]; then
-                ${hyprland}/bin/hyprctl keyword monitor "${m0.name}, disable"
-              else
-              ${pkgs.noctalia-shell}/bin/noctalia-shell ipc call lockScreen lock
-                ${pkgs.systemd}/bin/systemctl suspend
-              fi
-            fi
-          '';
-          executable = true;
-        };
-      };
+                if grep open /proc/acpi/button/lid/${lid}/state; then
+                  ${hyprland}/bin/hyprctl keyword monitor "${m0.name}, ${m0.w}x${m0.h}, ${m0.x}x${m0.y}, 1"
+                else
+                  if [[ `hyprctl monitors | grep "Monitor" | wc -l` != 1 ]]; then
+                    ${hyprland}/bin/hyprctl keyword monitor "${m0.name}, disable"
+                  else
+                  ${pkgs.noctalia-shell}/bin/noctalia-shell ipc call lockScreen lock
+                    ${pkgs.systemd}/bin/systemctl suspend
+                  fi
+                fi
+              '';
+              executable = true;
+            };
+          }
+        else
+          { };
     };
 }
