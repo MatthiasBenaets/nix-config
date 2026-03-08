@@ -66,15 +66,6 @@
                   [ ];
               right = [
                 {
-                  id = "plugin:privacy-indicator";
-                  defaultSettings = {
-                    activeColor = "primary";
-                    hideInactive = true;
-                    inactiveColor = "none";
-                    removeMargins = false;
-                  };
-                }
-                {
                   id = "MediaMini";
                   hideMode = "hidden";
                   hideWhenIdle = true;
@@ -100,6 +91,15 @@
                 }
                 {
                   id = "NotificationHistory";
+                }
+                {
+                  id = "plugin:privacy-indicator";
+                  defaultSettings = {
+                    activeColor = "primary";
+                    hideInactive = true;
+                    inactiveColor = "none";
+                    removeMargins = false;
+                  };
                 }
                 {
                   id = "ControlCenter";

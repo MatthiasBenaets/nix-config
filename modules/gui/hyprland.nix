@@ -99,7 +99,10 @@ in
           exit 0
         fi
 
-        if ${pkgs.playerctl}/bin/playerctl -a status 2>/dev/null | ${pkgs.ripgrep}/bin/rg -q "Playing"; then
+        DBUS_SESSION_BUS_ADDRESS=$(for pid in $(${pkgs.procps}/bin/pgrep -u "$USER"); do cat /proc/$pid/environ 2>/dev/null | tr '\0' '\n' | grep 'DBUS_SESSION_BUS_ADDRESS=unix:path=/tmp/dbus'; done | head -1 | cut -d= -f2-)
+
+        if [ -n "$DBUS_SESSION_BUS_ADDRESS" ] && \
+           DBUS_SESSION_BUS_ADDRESS="$DBUS_SESSION_BUS_ADDRESS" ${pkgs.playerctl}/bin/playerctl -a status 2>/dev/null | ${pkgs.ripgrep}/bin/rg -q "Playing"; then
           exit 0
         fi
 
@@ -120,9 +123,7 @@ in
         settings = {
           general = {
             # before_sleep_cmd = "${pkgs.systemd}/bin/loginctl lock-session";
-            # before_sleep_cmd = "${pkgs.noctalia-shell}/bin/noctalia-shell ipc call lockScreen lock";
             after_sleep_cmd = "${hyprland}/bin/hyprctl dispatch dpms on";
-            # lock_cmd = "${pkgs.noctalia-shell}/bin/noctalia-shell ipc call lockScreen lock";
             before_sleep_cmd = "${lockScript} lock";
           };
           listener = [
@@ -373,7 +374,6 @@ in
           ];
           exec-once = [
             "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
-            "ln -s $XDG_RUNTIME_DIR/hypr /tmp/hypr"
             "${pkgs.noctalia-shell}/bin/noctalia-shell"
           ]
           ++ (
