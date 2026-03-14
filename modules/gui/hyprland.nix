@@ -59,12 +59,12 @@ in
         };
       };
 
-      systemd.sleep.extraConfig = ''
-        AllowSuspend=yes
-        AllowHibernation=no
-        AllowSuspendThenHibernate=no
-        AllowHybridSleep=yes
-      ''; # Clamshell Mode
+      systemd.sleep.settings.Sleep = {
+        AllowSuspend = "yes";
+        AllowHibernation = "no";
+        AllowSuspendThenHibernate = "no";
+        AllowHybridSleep = "yes";
+      }; # Clamshell Mode
 
       nix.settings = {
         substituters = [ "https://hyprland.cachix.org" ];
@@ -350,8 +350,8 @@ in
             ",XF86AudioMute,exec,${pkgs.pamixer}/bin/pamixer -t"
             "CTRL,F10,exec,${pkgs.pamixer}/bin/pamixer -t"
             ",XF86AudioMicMute,exec,${pkgs.pamixer}/bin/pamixer --default-source -t"
-            ",XF86MonBrightnessDown,exec,${pkgs.light}/bin/light -U 10"
-            ",XF86MonBrightnessUP,exec,${pkgs.light}/bin/light -A 10"
+            ",XF86MonBrightnessDown,exec,${pkgs.brightnessctl}/bin/brightnessctl set +10%"
+            ",XF86MonBrightnessUP,exec,${pkgs.brightnessctl}/bin/brightnessctl set 10%-"
           ];
           binde = [
             "SUPERALT,right,resizeactive,60 0"

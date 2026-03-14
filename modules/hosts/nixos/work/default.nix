@@ -35,7 +35,7 @@ in
       base
       work
 
-      light
+      screen
       audio
       bluetooth
       keyboard
