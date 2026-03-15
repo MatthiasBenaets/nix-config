@@ -3,8 +3,8 @@
     { pkgs, ... }:
     {
       home = {
-        packages = [
-          pkgs.hello
+        packages = with pkgs; [
+          hello
         ];
       };
     };

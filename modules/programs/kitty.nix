@@ -6,22 +6,9 @@
       osConfig ? null,
       ...
     }:
-    let
-      kitty =
-        if !(osConfig.host.isNixOS or config.host.isNixOS or false) then
-          pkgs.makeDesktopItem {
-            name = "kitty";
-            desktopName = "Kitty";
-            exec = "nixGL ${pkgs.kitty}/bin/kitty";
-            icon = "${pkgs.kitty}/share/icons/hicolor/256x256/apps/kitty.png";
-          }
-        else
-          pkgs.kitty;
-    in
     {
       programs = {
         kitty = {
-          package = kitty;
           enable = true;
           settings = {
             confirm_os_window_close = 0;
@@ -30,8 +17,6 @@
           };
         };
       };
-
-      # home.file.".bash_aliases".text = "alias kitty='nixGL ${pkgs.kitty}/bin/kitty'";
     };
 
   flake.modules.darwin.kitty =

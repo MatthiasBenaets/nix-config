@@ -116,7 +116,14 @@ Get and rebuild:
 nix-env -iA nixpkgs.git
 git clone https://github.com/matthiasbenaets/nix-config ~/.setup
 cd ~/.setup
-home-manager switch --extra-experimental-features 'nix-command flakes' --flake ~/.setup#<host> --impure
+home-manager switch --extra-experimental-features 'nix-command flakes' --flake ~/.setup#<host>
+```
+
+NixGL is no longer required when running home-manager on a generic Linux host.\
+However on first rebuild, you might need to run the command below to link the GPU using a service.
+
+```bash
+sudo /nix/store/<sha>-non-nixos-gpu/bin/non-nixos-gpu-setup
 ```
 
 ---
