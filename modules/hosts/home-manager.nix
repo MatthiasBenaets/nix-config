@@ -43,6 +43,7 @@
         };
         users.${config.host.user.name} = {
           home.stateVersion = config.host.state.version;
+          targets.darwin.linkApps.enable = true;
         };
       };
     };

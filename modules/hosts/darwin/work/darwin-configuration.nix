@@ -1,5 +1,5 @@
 {
-  flake.modules.darwin.m3 =
+  flake.modules.darwin.work =
     { config, pkgs, ... }:
     {
       system = {
