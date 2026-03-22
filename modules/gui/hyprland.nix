@@ -254,8 +254,9 @@ in
           };
           device = {
             name = "matthias’s-magic-mouse";
-            sensitivity = 0.5;
+            sensitivity = -0.5;
             natural_scroll = true;
+            accel_profile = "adaptive";
           };
           cursor = {
             no_warps = true;
