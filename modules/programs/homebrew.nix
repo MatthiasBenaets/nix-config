@@ -112,6 +112,7 @@
         "cyberduck"
         "dbeaver-community"
         "docker-desktop"
+        "handbrake-app"
         "jordanbaird-ice@beta"
         "local"
         "linearmouse"
