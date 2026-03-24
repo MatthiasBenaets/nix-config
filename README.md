@@ -102,12 +102,18 @@ darwin-rebuild switch --flake ~/.setup#<host>
 
 ### Standalone Home Manager
 
-First install Nix and Home Manager:
+First install Nix and Home Manager (and Flatpak):
 
 ```bash
 sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --daemon
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --update
+nix-shell '<home-manager>' -A install
+
+# Ubuntu for flatpak
+echo "kernel.unprivileged_userns_clone=1" | sudo tee /etc/sysctl.d/99-userns.conf \
+&& echo "kernel.apparmor_restrict_unprivileged_userns=0" | sudo tee /etc/sysctl.d/99-flatpak.conf \
+&& sudo sysctl --system
 ```
 
 Get and rebuild:

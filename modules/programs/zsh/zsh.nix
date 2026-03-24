@@ -45,7 +45,7 @@
 
   flake.modules.homeManager.zsh =
     {
-      osConfig,
+      host,
       lib,
       pkgs,
       ...
@@ -65,6 +65,7 @@
           syntaxHighlighting.enable = true;
           enableCompletion = true;
           history.size = 10000;
+          # dotDir = "${config.xdg.configHome}/zsh";
           oh-my-zsh = {
             enable = true;
             plugins = [
@@ -80,10 +81,11 @@
             alias ls="${pkgs.eza}/bin/eza --icons=always --color=always"
             alias finder="ofd" # open find in current path.
             #cdf will change directory to active finder directory
-
+          ''
+          + lib.optionalString (host.system == "aarch64-darwin") ''
             ssh-add --apple-load-keychain &>/dev/null
           ''
-          + lib.optionalString (osConfig.host.user.name == "m1") ''
+          + lib.optionalString (host.name == "MacbookAirM1") ''
             export PATH=$PATH:`cat $HOME/Library/Application\ Support/Garmin/ConnectIQ/current-sdk.cfg`/bin
           '';
         };

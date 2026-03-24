@@ -7,8 +7,9 @@
 
 let
   host = {
+    name = "Ubuntu";
     user.name = "matthias";
-    state.version = "25.11";
+    state.version = "26.05";
     system = "x86_64-linux";
   };
 in
@@ -21,6 +22,8 @@ in
       ubuntu
       nixvim
       kitty
+      flatpak
+      zsh
     ];
   };
 }

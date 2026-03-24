@@ -59,7 +59,8 @@
       nix.package = pkgs.nix;
       home = {
         username = "${host.user.name}";
-        homeDirectory = "/home/${host.user.name}";
+        homeDirectory =
+          if pkgs.stdenv.isDarwin then "/Users/${host.user.name}" else "/home/${host.user.name}";
         packages = [ pkgs.home-manager ];
         stateVersion = host.state.version;
       };
