@@ -28,15 +28,24 @@ let
       zig
     ];
 
-  environment = pkgs: {
-    systemPackages = packages pkgs;
-    variables = {
-      PATH = "$HOME/.npm-packages/bin:$PATH";
-      NODE_PATH = "$HOME/.npm-packages/lib/node_modules:$NODE_PATH:";
-      EDITOR = "nvim";
-      VISUAL = "nvim";
+  npmEnvironment =
+    { config, ... }:
+    {
+      home.file.".npmrc".text = ''
+        prefix=${config.home.homeDirectory}/.npm-packages
+      '';
+
+      home.sessionPath = [
+        "${config.home.homeDirectory}/.npm-packages/bin"
+      ];
+
+      home.sessionVariables = {
+        PATH = "${config.home.homeDirectory}/.npm-packages/bin:$PATH";
+        NODE_PATH = "${config.home.homeDirectory}/.npm-packages/lib/node_modules:$NODE_PATH:";
+        EDITOR = "nvim";
+        VISUAL = "nvim";
+      };
     };
-  };
 in
 {
   perSystem =
@@ -55,14 +64,18 @@ in
         inputs.nixvim.nixosModules.nixvim
       ];
       programs.nixvim = nixvimConfig pkgs;
-      environment = environment pkgs;
+      environment.packages = packages pkgs;
+      home-manager.users.${config.host.user.name} = {
+        imports = [ npmEnvironment ];
+      };
     };
 
   flake.modules.homeManager.nixvim =
-    { pkgs, ... }:
+    { config, pkgs, ... }:
     {
       imports = [
         inputs.nixvim.homeModules.nixvim
+        npmEnvironment
       ];
       programs.nixvim = nixvimConfig pkgs;
       home.packages = packages pkgs;
@@ -75,6 +88,9 @@ in
         inputs.nixvim.nixDarwinModules.nixvim
       ];
       programs.nixvim = nixvimConfig pkgs;
-      environment = environment pkgs;
+      environment.packages = packages pkgs;
+      home-manager.users.${config.host.user.name} = {
+        imports = [ npmEnvironment ];
+      };
     };
 }

@@ -9,3 +9,11 @@
       };
     };
 }
+
+# Native
+# - chrome
+# - docker
+# - firefox
+# - gnome-browser-connector
+#   - Forge
+# - gnome-tweaks
