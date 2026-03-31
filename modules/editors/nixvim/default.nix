@@ -58,13 +58,13 @@ in
     };
 
   flake.modules.nixos.nixvim =
-    { pkgs, ... }:
+    { config, pkgs, ... }:
     {
       imports = [
         inputs.nixvim.nixosModules.nixvim
       ];
       programs.nixvim = nixvimConfig pkgs;
-      environment.packages = packages pkgs;
+      environment.systemPackages = packages pkgs;
       home-manager.users.${config.host.user.name} = {
         imports = [ npmEnvironment ];
       };
@@ -82,13 +82,13 @@ in
     };
 
   flake.modules.darwin.nixvim =
-    { pkgs, ... }:
+    { config, pkgs, ... }:
     {
       imports = [
         inputs.nixvim.nixDarwinModules.nixvim
       ];
       programs.nixvim = nixvimConfig pkgs;
-      environment.packages = packages pkgs;
+      environment.systemPackages = packages pkgs;
       home-manager.users.${config.host.user.name} = {
         imports = [ npmEnvironment ];
       };
