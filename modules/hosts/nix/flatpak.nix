@@ -28,12 +28,18 @@
               ];
             };
           };
+          "org.freecad.FreeCAD" = {
+            Environment = {
+              QT_QPA_PLATFORM = "wayland";
+            };
+          };
         };
         packages = [
           "com.github.tchx84.Flatseal"
           "com.moonlight_stream.Moonlight"
           "com.stremio.Stremio"
           "info.portfolio_performance.PortfolioPerformance"
+          "org.freecad.FreeCAD"
           "org.jellyfin.JellyfinDesktop"
         ];
       };
