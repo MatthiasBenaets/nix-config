@@ -108,6 +108,7 @@
       casks = [
         # "adobe-creative-cloud"
         # "bettertouchtool"
+        "claude-code"
         "copilot-cli"
         "cyberduck"
         "dbeaver-community"

@@ -5,9 +5,12 @@
 }:
 
 let
-  nixvimConfig = pkgs: {
+  nixvimConfig = pkgs: host: osConfig: {
     enable = true;
     nixpkgs.pkgs = pkgs;
+    _module.args = {
+      inherit host osConfig;
+    };
     imports = [ config.flake.modules.editors.nixvim ];
   };
 
@@ -53,7 +56,15 @@ in
     {
       packages.neovim = inputs'.nixvim.legacyPackages.makeNixvimWithModule {
         inherit pkgs;
-        module = config.flake.modules.editors.nixvim;
+        module = {
+          imports = [ config.flake.modules.editors.nixvim ];
+          _module.args = {
+            host = {
+              name = "default";
+            };
+            osConfig = null;
+          };
+        };
       };
     };
 
@@ -63,7 +74,7 @@ in
       imports = [
         inputs.nixvim.nixosModules.nixvim
       ];
-      programs.nixvim = nixvimConfig pkgs;
+      programs.nixvim = nixvimConfig pkgs config.host config;
       environment.systemPackages = packages pkgs;
       home-manager.users.${config.host.user.name} = {
         imports = [ npmEnvironment ];
@@ -71,13 +82,19 @@ in
     };
 
   flake.modules.homeManager.nixvim =
-    { config, pkgs, ... }:
+    {
+      config,
+      host,
+      osConfig ? null,
+      pkgs,
+      ...
+    }:
     {
       imports = [
         inputs.nixvim.homeModules.nixvim
         npmEnvironment
       ];
-      programs.nixvim = nixvimConfig pkgs;
+      programs.nixvim = nixvimConfig pkgs host osConfig;
       home.packages = packages pkgs;
     };
 
@@ -87,7 +104,7 @@ in
       imports = [
         inputs.nixvim.nixDarwinModules.nixvim
       ];
-      programs.nixvim = nixvimConfig pkgs;
+      programs.nixvim = nixvimConfig pkgs config.host config;
       environment.systemPackages = packages pkgs;
       home-manager.users.${config.host.user.name} = {
         imports = [ npmEnvironment ];
