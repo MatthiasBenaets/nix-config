@@ -20,6 +20,7 @@
             sources = [
               { name = "nvim_lsp"; }
               { name = "luasnip"; }
+              { name = "codeium"; }
               { name = "path"; }
               { name = "buffer"; }
             ];
@@ -31,6 +32,7 @@
                     luasnip = "[SNIP]",
                     buffer = "[BUF]",
                     path = "[PATH]",
+                    codeium = "[AI]",
                   }
                   vim_item.menu = source_names[entry.source.name] or ""
                   return vim_item

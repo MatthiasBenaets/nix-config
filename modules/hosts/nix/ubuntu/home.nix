@@ -4,7 +4,7 @@
     {
       home = {
         packages = with pkgs; [
-          claude-code
+          master.claude-code
           hello
         ];
       };
