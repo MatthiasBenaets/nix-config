@@ -23,10 +23,10 @@ in
       base
       m1
 
-      nixvim
-      hyprspace
       homebrewM1
+      hyprspace
       kitty
+      nixvim
     ];
   };
 
@@ -34,6 +34,7 @@ in
     inherit host;
     home-manager.users.${host.user.name} = {
       imports = with config.flake.modules.homeManager; [
+        claude
         zsh
       ];
     };

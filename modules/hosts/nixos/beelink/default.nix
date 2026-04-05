@@ -56,6 +56,7 @@ in
       imports = with config.flake.modules.homeManager; [
         mime
 
+        claude
         kitty
         obs
 

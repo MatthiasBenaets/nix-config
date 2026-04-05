@@ -20,9 +20,11 @@ in
     modules = with config.flake.modules.homeManager; [
       base
       ubuntu
-      nixvim
-      kitty
+
+      claude
       flatpak
+      kitty
+      nixvim
       zsh
     ];
   };

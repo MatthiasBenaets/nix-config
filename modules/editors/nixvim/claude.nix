@@ -1,6 +1,6 @@
 {
   flake.modules.editors.nixvim =
-    { host, pkgs, ... }:
+    { pkgs, ... }:
     {
       plugins.snacks.enable = true;
       extraPlugins = [
@@ -74,18 +74,6 @@
       ];
 
       extraConfigLua = ''
-        vim.env.ANTHROPIC_BASE_URL = "${
-          if host.name == "Ubuntu" then
-            "http://192.168.0.40:11434"
-          else if host.name == "MacBookAirM3" then
-            "http://simlab-d1.dhcp.uhasselt.be"
-          else
-            "https://api.anthropic.com"
-        }"
-        vim.env.ANTHROPIC_AUTH_TOKEN = "ollama"
-        vim.env.ANTHROPIC_MODEL = "qwen3.5:9b"
-        vim.env.CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1"
-
         require("claudecode").setup()
       '';
     };
