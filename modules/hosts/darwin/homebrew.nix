@@ -120,12 +120,14 @@
         "moonlight"
         "obs"
         "ollama-app"
+        "positron"
         "postman"
         "quarto"
         "r-app"
         "raycast"
         "rstudio"
         "utm"
+        "visual-studio-code"
         "xquartz"
       ];
     };
