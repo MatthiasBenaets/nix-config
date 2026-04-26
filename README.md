@@ -36,8 +36,8 @@ The flake uses [flake-parts](https://flake.parts) with [import-tree](https://git
 | Host    | WM        | Shell | System         | Notes          |
 | ------- | --------- | ----- | -------------- | -------------- |
 | `intel` | None      | Zsh   | x86_64-darwin  | MacBook Intel  |
-| `m1`    | HyprSpace | Zsh   | aarch64-darwin | MacBook Air M1 |
-| `work`  | HyprSpace | Zsh   | aarch64-darwin | MacBook Air M3 |
+| `m1`    | AeroSpace | Zsh   | aarch64-darwin | MacBook Air M1 |
+| `work`  | AeroSpace | Zsh   | aarch64-darwin | MacBook Air M3 |
 
 ### Standalone Home Manager
 

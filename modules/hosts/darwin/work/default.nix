@@ -24,7 +24,7 @@ in
       work
 
       nixvim
-      hyprspace
+      aerospace
       homebrewWork
       kitty
     ];

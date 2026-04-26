@@ -24,7 +24,7 @@ in
       m1
 
       homebrewM1
-      hyprspace
+      aerospace
       kitty
       nixvim
     ];
