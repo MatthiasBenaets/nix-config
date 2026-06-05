@@ -11,7 +11,7 @@
             owner = "coder";
             repo = "claudecode.nvim";
             rev = version;
-            sha256 = "sha256-r8hAUpSsr8zNm+av8Mu5oILaTfEsXEnJmkzRmvi9pF8=";
+            sha256 = "sha256-l/PcQlCSQKr0aSfnPUwRf7rY6QAx9u5twYsSX72B4xI=";
           };
         })
       ];
