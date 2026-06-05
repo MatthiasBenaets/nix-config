@@ -8,6 +8,7 @@
         nixfmt
         prettier
         stylua
+        phpPackages.php-cs-fixer
       ];
 
       plugins = {
@@ -26,7 +27,7 @@
               yaml = [ "prettier" ];
               markdown = [ "prettier" ];
               lua = [ "stylua" ];
-              php = [ "prettier" ];
+              php = [ "php_cs_fixer" ];
               python = [
                 "isort"
                 "black"
