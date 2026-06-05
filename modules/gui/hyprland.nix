@@ -153,6 +153,7 @@ in
         enable = true;
         package = hyprland;
         xwayland.enable = true;
+        configType = "hyprlang";
         settings = {
           general = {
             border_size = 2;

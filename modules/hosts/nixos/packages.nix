@@ -20,7 +20,7 @@
           lshw # Hardware Config
           nano # Text Editor
           nodejs # Javascript Runtime
-          nodePackages.pnpm # Package Manager
+          pnpm # Package Manager
           nix-tree # Browse Nix Store
           pciutils # Manage PCI
           ranger # File Manager
