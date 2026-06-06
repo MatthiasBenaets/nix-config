@@ -61,11 +61,11 @@
               inputs.nur.overlays.default
               (final: prev: {
                 stable = import inputs.nixpkgs-stable {
-                  system = prev.system;
+                  system = prev.stdenv.hostPlatform.system;
                   config.allowUnfree = true;
                 };
                 master = import inputs.nixpkgs-master {
-                  system = prev.system;
+                  system = prev.stdenv.hostPlatform.system;
                   config.allowUnfree = true;
                 };
               })
