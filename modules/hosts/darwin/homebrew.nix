@@ -4,7 +4,7 @@
       enable = true;
       onActivation = {
         upgrade = false;
-        cleanup = "zap";
+        # cleanup = "zap";
       };
       casks = [
         "appcleaner"
@@ -19,6 +19,10 @@
         "wireguard" = 1451685025;
       };
     };
+
+    environment.systemPath = [
+      "/opt/homebrew/bin"
+    ];
   };
 
   flake.modules.darwin.homebrewIntel = {
@@ -83,16 +87,20 @@
       masApps = {
         "Adguard for Safari" = 1440147259; # Safari
         "Bitwarden" = 1352778147; # Safari
-        # "FileZilla Pro - FTP and Client" = 1298486723;
-        # "FileZilla Pro RemoteDrive" = -2087754162;
-        "Keynote" = 409183694;
+        "Connective Plugin" = 1428740565; # Eid
+        "Developer" = 640199958; # Apple
+        "Keynote" = 361285480; # Office
         "LanguageTool - Grammer Checker" = 1534275760; # Safari
+        "Photomator" = 1444636541; # Photo
         "Microsoft Remote Desktop" = 1295203466;
-        "Numbers" = 409203825;
-        "Pages" = 409201541;
+        "Numbers" = 361304891; # Office
+        "Pages" = 361309726; # Office
+        "RemoteDrive" = 6502180430; # Filezilla
         "Sauce for Strava™" = 1570922521; # Safari
         "Userscripts" = 1463298887; # Safari
-        "Xcode" = 497799835;
+        "Windows App" = 1295203466; # RDP
+        "Wireguard" = 1451685025; # VPN
+        "Xcode" = 497799835; # IDE
       };
     };
   };
