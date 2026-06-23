@@ -111,10 +111,11 @@
         "ansible"
         "ansible-lint"
         "docker-compose"
-        "gemini-cli"
+        # "gemini-cli"
       ];
       casks = [
         # "adobe-creative-cloud"
+        "antigravity-cli"
         # "bettertouchtool"
         "claude-code"
         "copilot-cli"
