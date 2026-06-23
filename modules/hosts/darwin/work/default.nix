@@ -27,6 +27,7 @@ in
       aerospace
       homebrewWork
       kitty
+      pandoc
     ];
   };
 
