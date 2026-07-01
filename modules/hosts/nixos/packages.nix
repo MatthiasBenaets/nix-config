@@ -13,7 +13,6 @@
           btop # Resource Manager
           cifs-utils # Samba
           coreutils # GNU Utilities
-          gemini-cli-bin # AI
           git # Version Control
           jq # JSON Manipulation
           killall # Process Killer

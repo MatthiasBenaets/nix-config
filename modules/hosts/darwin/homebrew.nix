@@ -111,7 +111,6 @@
         "ansible"
         "ansible-lint"
         "docker-compose"
-        # "gemini-cli"
       ];
       casks = [
         # "adobe-creative-cloud"
