@@ -4,6 +4,7 @@
     {
       extraPackages = with pkgs; [
         eslint_d
+        pylint
       ];
 
       plugins = {

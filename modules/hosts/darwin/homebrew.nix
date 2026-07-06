@@ -66,7 +66,6 @@
         "handbrake-app"
         "jellyfin-media-player"
         "love"
-        "local"
         "linearmouse"
         "mkvtoolnix-app"
         # "obsidian"
