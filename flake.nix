@@ -29,6 +29,8 @@
 
     noctalia.url = "github:noctalia-dev/noctalia-shell";
     noctalia.inputs.nixpkgs.follows = "nixpkgs";
+
+    zig.url = "github:mitchellh/zig-overlay";
   };
 
   outputs =

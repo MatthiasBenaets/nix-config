@@ -17,8 +17,8 @@ let
   packages =
     pkgs: with pkgs; [
       deno
-      elixir
-      erlang
+      beamPackages.elixir
+      beamPackages.erlang
       git
       go
       nodejs
@@ -28,7 +28,8 @@ let
         ]
       ))
       ripgrep
-      zig
+      # zig
+      inputs.zig.packages.${pkgs.stdenv.hostPlatform.system}.master
     ];
 
   npmEnvironment =
