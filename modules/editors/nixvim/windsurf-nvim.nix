@@ -1,7 +1,7 @@
 {
   flake.modules.editors.nixvim = {
     plugins.windsurf-nvim = {
-      enable = true;
+      # enable = true;
       settings = {
         virtual_text.enabled = true;
         keymaps = {
