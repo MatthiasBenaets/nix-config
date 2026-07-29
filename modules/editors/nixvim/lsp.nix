@@ -56,6 +56,11 @@
             };
           };
           pyright.enable = true;
+          rust_analyzer = {
+            enable = true;
+            installCargo = true;
+            installRustc = true;
+          };
           svelte.enable = true;
           vue_ls.enable = true;
           tailwindcss = {

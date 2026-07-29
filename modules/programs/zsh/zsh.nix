@@ -85,7 +85,7 @@
           + lib.optionalString (host.system == "aarch64-darwin") ''
             ssh-add --apple-load-keychain &>/dev/null
           ''
-          + lib.optionalString (host.name == "MacbookAirM1") ''
+          + lib.optionalString (host.name == "MacBookAirM1") ''
             export PATH=$PATH:`cat $HOME/Library/Application\ Support/Garmin/ConnectIQ/current-sdk.cfg`/bin
           '';
         };

@@ -7,8 +7,9 @@
         isort
         nixfmt
         prettier
-        stylua
         phpPackages.php-cs-fixer
+        rustfmt
+        stylua
       ];
 
       plugins = {
@@ -16,23 +17,27 @@
           enable = true;
           settings = {
             formatters_by_ft = {
-              javascript = [ "prettier" ];
-              typescript = [ "prettier" ];
-              typescriptreact = [ "prettier" ];
-              svelte = [ "prettier" ];
-              vue = [ "prettier" ];
               css = [ "prettier" ];
               html = [ "prettier" ];
+              javascript = [ "prettier" ];
               json = [ "prettier" ];
-              yaml = [ "prettier" ];
-              markdown = [ "prettier" ];
               lua = [ "stylua" ];
+              markdown = [ "prettier" ];
+              nix = [ "nixfmt" ];
               php = [ "php_cs_fixer" ];
               python = [
                 "isort"
                 "black"
               ];
-              nix = [ "nixfmt" ];
+              rust = {
+                __unkeyed-1 = "rustfmt";
+                lsp_fallback = true;
+              };
+              svelte = [ "prettier" ];
+              typescript = [ "prettier" ];
+              typescriptreact = [ "prettier" ];
+              vue = [ "prettier" ];
+              yaml = [ "prettier" ];
             };
             format_on_save = ''
               function(bufnr)

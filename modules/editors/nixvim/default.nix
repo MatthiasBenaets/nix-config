@@ -16,6 +16,7 @@ let
 
   packages =
     pkgs: with pkgs; [
+      cargo
       deno
       beamPackages.elixir
       beamPackages.erlang
@@ -28,6 +29,7 @@ let
         ]
       ))
       ripgrep
+      rustc
       # zig
       inputs.zig.packages.${pkgs.stdenv.hostPlatform.system}.master
     ];
