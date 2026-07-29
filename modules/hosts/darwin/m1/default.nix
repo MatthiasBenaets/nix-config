@@ -35,6 +35,7 @@ in
     home-manager.users.${host.user.name} = {
       imports = with config.flake.modules.homeManager; [
         claude
+        opencode
         zsh
       ];
     };

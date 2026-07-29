@@ -49,7 +49,6 @@
         "ansible"
         "ansible-lint"
         "docker-compose"
-        "opencode"
       ];
       casks = [
         "adobe-creative-cloud"
@@ -111,7 +110,6 @@
         "ansible"
         "ansible-lint"
         "docker-compose"
-        "opencode"
       ];
       casks = [
         # "adobe-creative-cloud"
