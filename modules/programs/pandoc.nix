@@ -2,12 +2,10 @@
 let
   tex =
     pkgs:
-    pkgs.texlive.combine {
-      inherit (pkgs.texlive)
-        scheme-medium
-        framed
-        ;
-    };
+    pkgs.texliveSmall.withPackages (p: with p; [
+      scheme-medium
+      framed
+    ]);
 
   mermaidFilter =
     pkgs:

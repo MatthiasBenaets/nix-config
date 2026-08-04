@@ -8,6 +8,26 @@
           edit = "ask";
           bash = "ask";
         };
+        lsp = true;
+      };
+
+      ollamaProvider = {
+        ollama = {
+          npm = "@ai-sdk/openai-compatible";
+          name = "Ollama";
+          options.baseURL = "http://192.168.0.40:11434/v1";
+          models."qwen3.5:9b" = {
+            name = "qwen3.5";
+            modelID = "qwen3.5:9b";
+            tools = true;
+          };
+          models."hf.co/unsloth/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL" = {
+            name = "gemma-4-26b-a4b-it-qat-GGUF:UD-Q4_K_XL";
+            modelID = "gemma-4-26b-a4b-it-qat-GGUF:UD-Q4_K_XL";
+            think = "high";
+            tools = true;
+          };
+        };
       };
 
       providerConfig =
@@ -18,19 +38,10 @@
             "beelink"
           ]
         then
-          {
-            ollama = {
-              npm = "@ai-sdk/openai-compatible";
-              name = "Ollama";
-              options.baseURL = "http://192.168.0.40:11434/v1";
-              models."qwen3.5:9b" = {
-                tools = true;
-                reasoning = false;
-              };
-            };
-          }
+          ollamaProvider
         else if host.name == "MacBookAirM3" then
-          {
+          ollamaProvider
+          // {
             vllm = {
               npm = "@ai-sdk/openai-compatible";
               name = "vllm";

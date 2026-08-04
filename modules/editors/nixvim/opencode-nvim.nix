@@ -2,7 +2,21 @@
   flake.modules.editors.nixvim = {
     plugins = {
       snacks.enable = true;
-      opencode.enable = true;
+      opencode = {
+        enable = true;
+        settings = {
+          server.start.__raw = ''
+            function()
+              require("snacks.terminal").open("opencode --port", {
+                win = {
+                  position = "right",
+                  enter = false,
+                },
+              })
+            end
+          '';
+        };
+      };
     };
 
     keymaps = [
