@@ -17,14 +17,21 @@
           name = "Ollama";
           options.baseURL = "http://192.168.0.40:11434/v1";
           models."qwen3.5:9b" = {
-            name = "qwen3.5";
+            name = "qwen3.5:9b";
             modelID = "qwen3.5:9b";
             tools = true;
           };
+          models."hf.co/unsloth/Qwen3.6-35B-A3B-MTP-GGUF:UD-IQ4_NL" = {
+            name = "Qwen3.6-35B-A3B-MTP-GGUF:UD-IQ4_NL";
+            modelID = "Qwen3.6-35B-A3B-MTP-GGUF:UD-IQ4_NL";
+            options = {
+              reasoningEffort = "high";
+            };
+            tools = true;
+          };
           models."hf.co/unsloth/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL" = {
-            name = "gemma-4-26b-a4b-it-qat-GGUF:UD-Q4_K_XL";
-            modelID = "gemma-4-26b-a4b-it-qat-GGUF:UD-Q4_K_XL";
-            think = "high";
+            name = "gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL";
+            modelID = "gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL";
             tools = true;
           };
         };
