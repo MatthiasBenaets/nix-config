@@ -84,5 +84,36 @@
           theme = "dark";
         };
       };
+
+      home = {
+        file = pkgs.lib.mkIf (providerConfig != null) {
+          ".pi/agent/extensions/confirm-edit.ts".text = ''
+            import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+
+            export default function (pi: ExtensionAPI) {
+              pi.on("tool_call", async (event, ctx) => {
+                if (!ctx.hasUI) return;
+
+                const toolsToConfirm = ["write", "edit"];
+                if (!toolsToConfirm.includes(event.toolName)) return;
+
+                let description = "";
+                if (event.toolName === "write") {
+                  const path = (event.input as any)?.path;
+                  description = `Write to $\{path}`;
+                } else if (event.toolName === "edit") {
+                  const path = (event.input as any)?.path;
+                  description = `Edit $\{path}`;
+                }
+
+                const ok = await ctx.ui.confirm("File Change", `$\{description}?\nAllow this change?`);
+                if (!ok) {
+                  return { block: true, reason: "Blocked by user" };
+                }
+              });
+            }
+          '';
+        };
+      };
     };
 }
