@@ -100,13 +100,13 @@
                 let description = "";
                 if (event.toolName === "write") {
                   const path = (event.input as any)?.path;
-                  description = `Write to $\{path}`;
+                  description = `Write to ''${path}`;
                 } else if (event.toolName === "edit") {
                   const path = (event.input as any)?.path;
-                  description = `Edit $\{path}`;
+                  description = `Edit ''${path}`;
                 }
 
-                const ok = await ctx.ui.confirm("File Change", `$\{description}?\nAllow this change?`);
+                const ok = await ctx.ui.confirm("File Change", `''${description}?\nAllow this change?`);
                 if (!ok) {
                   return { block: true, reason: "Blocked by user" };
                 }
