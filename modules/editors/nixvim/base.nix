@@ -7,6 +7,7 @@
       vimAlias = true;
 
       opts = {
+        autoread = true;
         number = true;
         relativenumber = true;
         shiftwidth = 2;

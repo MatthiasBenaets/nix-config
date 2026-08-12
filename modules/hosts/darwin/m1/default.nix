@@ -13,6 +13,10 @@ let
       version = "22.05";
     };
     system = "aarch64-darwin";
+    tools = [
+      "opencode"
+      "pi"
+    ];
   };
 in
 {
@@ -33,11 +37,12 @@ in
   flake.modules.darwin.m1 = {
     inherit host;
     home-manager.users.${host.user.name} = {
-      imports = with config.flake.modules.homeManager; [
-        claude
-        opencode
-        zsh
-      ];
+      imports =
+        with config.flake.modules.homeManager;
+        [
+          zsh
+        ]
+        ++ map (m: config.flake.modules.homeManager.${m}) host.tools;
     };
   };
 }

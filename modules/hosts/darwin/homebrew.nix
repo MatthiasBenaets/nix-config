@@ -115,7 +115,6 @@
         # "adobe-creative-cloud"
         "antigravity-cli"
         # "bettertouchtool"
-        "claude-code"
         "copilot-cli"
         "cyberduck"
         "dbeaver-community"

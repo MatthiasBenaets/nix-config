@@ -84,6 +84,18 @@ let
       );
     };
 
+    tools = mkOption {
+      type = types.listOf (
+        types.enum [
+          "claude"
+          "opencode"
+          "pi"
+        ]
+      );
+      default = [ "opencode" ];
+      description = "Active AI tool";
+    };
+
     shell = mkOption {
       type = types.str;
       example = "hyprland";
