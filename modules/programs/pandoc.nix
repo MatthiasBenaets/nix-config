@@ -2,10 +2,12 @@
 let
   tex =
     pkgs:
-    pkgs.texliveSmall.withPackages (p: with p; [
-      scheme-medium
-      framed
-    ]);
+    pkgs.texliveSmall.withPackages (
+      p: with p; [
+        scheme-medium
+        framed
+      ]
+    );
 
   mermaidFilter =
     pkgs:
@@ -25,17 +27,27 @@ let
 
   buildScript =
     pkgs:
-    pkgs.writeShellScriptBin "build" ''
-      if [ -z "$1" ]; then
-        echo "Please provide a markdown file path."
-        echo "Usage: build document.md"
-        exit 1
-      fi
-      input_file="$1"
-      output_file="''${input_file%.*}.pdf"
-      echo "Compiling $input_file to $output_file..."
-      pandoc "$input_file" -F mermaid-filter -o "$output_file"
-    '';
+    pkgs.writeShellApplication {
+      name = "build";
+
+      runtimeInputs = [
+        pkgs.pandoc
+        (mermaidFilter pkgs)
+        (tex pkgs)
+      ];
+
+      text = ''
+        if [ -z "''${1:-}" ]; then
+          echo "Please provide a markdown file path."
+          echo "Usage: build document.md"
+          exit 1
+        fi
+        input_file="$1"
+        output_file="''${input_file%.*}.pdf"
+        echo "Compiling $input_file to $output_file..."
+        pandoc "$input_file" -F mermaid-filter -o "$output_file"
+      '';
+    };
 
   pandocEnvironment = {
     home.sessionVariables = {
@@ -52,21 +64,6 @@ in
         tex = tex pkgs;
         mermaid-filter-nix = mermaidFilter pkgs;
         pandoc = buildScript pkgs;
-      };
-      devShells.default = pkgs.mkShell {
-        packages = [
-          pkgs.pandoc
-          (mermaidFilter pkgs)
-          (tex pkgs)
-          (buildScript pkgs)
-        ];
-        shellHook = ''
-          # export PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-          export MERMAID_FILTER_FORMAT="png"
-          export MERMAID_FILTER_SCALE="4"
-          echo "Pandoc environment loaded!"
-          echo "Run 'build <filename.md>' to compile your document."
-        '';
       };
     };
 
