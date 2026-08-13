@@ -64,6 +64,7 @@ in
           _module.args = {
             host = {
               name = "default";
+              tools = [ "opencode" ];
             };
             osConfig = null;
           };

@@ -6,7 +6,7 @@
       lib,
       ...
     }:
-    lib.mkIf (builtins.elem "opencode" (config.host.tools or [ ])) {
+    lib.mkIf (builtins.elem "opencode" (host.tools or [ ])) {
       plugins = {
         snacks.enable = true;
         opencode = {

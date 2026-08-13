@@ -7,7 +7,7 @@
       pkgs,
       ...
     }:
-    lib.mkIf (builtins.elem "pi" (config.host.tools or [ ])) {
+    lib.mkIf (builtins.elem "pi" (host.tools or [ ])) {
       extraPlugins = [
         (pkgs.vimUtils.buildVimPlugin rec {
           pname = "pi.nvim";

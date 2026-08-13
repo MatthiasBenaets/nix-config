@@ -7,7 +7,7 @@
       pkgs,
       ...
     }:
-    lib.mkIf (builtins.elem "claude" (config.host.tools or [ ])) {
+    lib.mkIf (builtins.elem "claude" (host.tools or [ ])) {
       plugins.snacks.enable = true;
       extraPlugins = [
         (pkgs.vimUtils.buildVimPlugin rec {
