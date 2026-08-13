@@ -1,12 +1,13 @@
 {
   flake.modules.editors.nixvim =
     {
+      config,
       host,
       lib,
       pkgs,
       ...
     }:
-    lib.mkIf (builtins.elem "claude" host.tools) {
+    lib.mkIf (builtins.elem "claude" (config.host.tools or [ ])) {
       plugins.snacks.enable = true;
       extraPlugins = [
         (pkgs.vimUtils.buildVimPlugin rec {

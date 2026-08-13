@@ -1,12 +1,13 @@
 {
   flake.modules.editors.nixvim =
     {
+      config,
       host,
       lib,
       pkgs,
       ...
     }:
-    lib.mkIf (builtins.elem "pi" host.tools) {
+    lib.mkIf (builtins.elem "pi" (config.host.tools or [ ])) {
       extraPlugins = [
         (pkgs.vimUtils.buildVimPlugin rec {
           pname = "pi.nvim";

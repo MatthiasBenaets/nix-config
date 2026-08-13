@@ -1,7 +1,12 @@
 {
   flake.modules.editors.nixvim =
-    { host, lib, ... }:
-    lib.mkIf (builtins.elem "opencode" host.tools) {
+    {
+      config,
+      host,
+      lib,
+      ...
+    }:
+    lib.mkIf (builtins.elem "opencode" (config.host.tools or [ ])) {
       plugins = {
         snacks.enable = true;
         opencode = {
