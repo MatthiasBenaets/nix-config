@@ -41,6 +41,20 @@
     {
       programs.pi-coding-agent = {
         enable = true;
+        extraPackages = with pkgs; [
+          nodejs
+        ];
+        context = ''
+          ## Web search
+          Every `web_search` tool call must include `numResults: 10` as a parameter. Always pass it explicitly, regardless of query type or how many sources seem sufficient.
+
+          ## Uncertainty and errors
+          If you are unsure of an answer, encounter an error you can't immediately resolve, or get stuck on a task, do not guess or make assumptions. Instead:
+          1. Check if an available MCP tool or extension can provide the needed information or resolve the issue directly.
+          2. If no MCP tool fits, use web_search to look up current, authoritative information before answering.
+          3. Only fall back to stating your own best guess if both of the above fail to resolve the uncertainty — and clearly flag it as a guess when you do.
+          Do not silently proceed with unverified assumptions, especially for anything involving current facts, tool usage, error messages, or configuration syntax.
+        '';
         models.providers = providerConfig;
         settings = {
           compaction = {
@@ -77,6 +91,11 @@
           defaultProjectTrust = "ask";
           defaultThinkingLevel = "high";
           enableAnalytics = false;
+          packages = [
+            "npm:pi-mcp-adapter"
+            "npm:pi-web-access"
+            "npm:@gotgenes/pi-permission-system"
+          ];
           retry = {
             enabled = true;
             maxRetries = 3;
@@ -87,30 +106,18 @@
 
       home = {
         file = pkgs.lib.mkIf (providerConfig != null) {
-          ".pi/agent/extensions/confirm-edit.ts".text = ''
-            import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-
-            export default function (pi: ExtensionAPI) {
-              pi.on("tool_call", async (event, ctx) => {
-                if (!ctx.hasUI) return;
-
-                const toolsToConfirm = ["write", "edit"];
-                if (!toolsToConfirm.includes(event.toolName)) return;
-
-                let description = "";
-                if (event.toolName === "write") {
-                  const path = (event.input as any)?.path;
-                  description = `Write to ''${path}`;
-                } else if (event.toolName === "edit") {
-                  const path = (event.input as any)?.path;
-                  description = `Edit ''${path}`;
-                }
-
-                const ok = await ctx.ui.confirm("File Change", `''${description}?\nAllow this change?`);
-                if (!ok) {
-                  return { block: true, reason: "Blocked by user" };
-                }
-              });
+          ".pi/web-search.json".text = ''
+            {
+              "provider": "searxng",
+              "searxngBaseUrl": "http://127.0.0.1:8080",
+              "ssrf": {
+                "allowRanges": ["127.0.0.1/32"]
+              },
+              "workflow": "none",
+                "searchRouting": {
+              "providers": ["searxng", "duckduckgo"],
+                "fallbackOn": ["transient", "network"]
+              }
             }
           '';
         };
