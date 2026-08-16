@@ -8,7 +8,10 @@
           api = "openai-completions";
           apiKey = "key";
           models = [
-            { id = "gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL"; }
+            # { id = "gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL"; }
+            # { id = "Qwen3.6-35B-A3B-MTP-GGUF:UD-IQ4_NL"; }
+            { id = "unsloth/gemma-4-26B-A4B-it-qat-GGUF:Q4_K_XL"; }
+            { id = "unsloth/Qwen3.6-35B-A3B-MTP-GGUF:IQ4_NL"; }
           ];
         };
       };
