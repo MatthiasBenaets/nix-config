@@ -146,6 +146,33 @@
               }
             }
           '';
+          ".pi/agent/extensions/pi-permission-system/config.json".text = ''
+            {
+              "permission": {
+                "*": "ask",
+                "path": {
+                  "*": "allow",
+                  "*.env": "deny",
+                  "*.env.*": "allow"
+                },
+                "read": "allow",
+                "write": "ask",
+                "edit": "ask",
+                "bash": {
+                  "*": "ask",
+                  "ls *": "allow",
+                  "cat *": "allow",
+                  "grep *": "allow",
+                  "find *": "allow",
+                  "head *": "allow",
+                  "tail *": "allow",
+                  "file *": "allow",
+                  "diff *": "allow"
+                },
+                "external_directory": "ask"
+              }
+            }
+          '';
         };
       };
     };
