@@ -48,15 +48,38 @@
           nodejs
         ];
         context = ''
-          ## Web search
-          Every `web_search` tool call must include `numResults: 10` as a parameter. Always pass it explicitly, regardless of query type or how many sources seem sufficient.
+          ## General
+          - Be concise and practical.
+          - Prefer small, focused changes.
+          - Avoid unrelated refactors.
+
+          ## Workflow
+          1. Read relevant files before editing.
+          2. Explain intent briefly.
+          3. Make the smallest change that solves the task.
+          4. Validate with tests/commands when available.
+
+          ## Code quality
+          - Keep naming clear and code readable.
+          - Update docs when behavior changes.
+          - Preserve existing style unless asked otherwise.
+
+          ## Safety
+          - Do not delete or run destructive commands unless explicitly requested.
+          - Ask befoer making broad or risky changes.
 
           ## Uncertainty and errors
-          If you are unsure of an answer, encounter an error you can't immediately resolve, or get stuck on a task, do not guess or make assumptions. Instead:
-          1. Check if an available MCP tool or extension can provide the needed information or resolve the issue directly.
-          2. If no MCP tool fits, use web_search to look up current, authoritative information before answering.
-          3. Only fall back to stating your own best guess if both of the above fail to resolve the uncertainty — and clearly flag it as a guess when you do.
-          Do not silently proceed with unverified assumptions, especially for anything involving current facts, tool usage, error messages, or configuration syntax.
+          - If you are unsure of an answer, encounter an error you can't immediately resolve, or get stuck on a task, do not guess or make assumptions. Instead:
+            1. Check if an available MCP tool or extension can provide the needed information or resolve the issue directly.
+            2. If no MCP tool fits, use web_search to look up current, authoritative information before answering.
+            3. Only fall back to stating your own best guess if both of the above fail to resolve the uncertainty and clearly flag it as a guess when you do.
+          - Do not silently proceed with unverified assumptions, especially for anything involving current facts, tool usage, error messages, or configuration syntax.
+
+          ## Tools
+          - Every `web_search` tool call must include `numResults: 10` as a parameter. Always pass it explicitly, regardless of query type or how many sources seem sufficient.
+
+          ## Notes
+          - Repository-local `AGENTS.md` files can add or override project-specific guidance.
         '';
         models.providers = providerConfig;
         settings = {
