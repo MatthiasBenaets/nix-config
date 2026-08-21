@@ -25,24 +25,6 @@
     ];
   };
 
-  flake.modules.darwin.homebrewIntel = {
-    homebrew = {
-      brews = [
-        "docker-compose"
-      ];
-      casks = [
-        "aldente"
-        "alfred"
-        "docker-desktop"
-        "jellyfin-media-player"
-        "moonlight"
-        "rectangle"
-        "stremio"
-        # "virtualbox" # sudo codesign --force --deep --sign - /Applications/VirtualBox.app/Contents/Resources/VirtualBoxVM.app
-      ];
-    };
-  };
-
   flake.modules.darwin.homebrewM1 = {
     homebrew = {
       brews = [
