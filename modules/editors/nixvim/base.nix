@@ -39,7 +39,7 @@
 
       clipboard = {
         register = "unnamedplus";
-        providers.wl-copy = lib.mkIf pkgs.stdenv.isLinux {
+        providers.wl-copy = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
           enable = true;
         };
       };
