@@ -6,7 +6,6 @@
 {
   packages = with pkgs; [
     nodejs
-    npm
   ];
 
   shellHook = ''
