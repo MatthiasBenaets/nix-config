@@ -61,8 +61,8 @@ in
     { pkgs, ... }:
     {
       packages = {
-        tex = tex pkgs;
-        mermaid-filter-nix = mermaidFilter pkgs;
+        # tex = tex pkgs;
+        # mermaid-filter-nix = mermaidFilter pkgs;
         pandoc = buildScript pkgs;
       };
     };
@@ -79,6 +79,18 @@ in
       home-manager.users.${config.host.user.name} = {
         imports = [ pandocEnvironment ];
       };
+    };
+
+  flake.modules.homeManager.pandoc =
+    { config, pkgs, ... }:
+    {
+      imports = [ pandocEnvironment ];
+      home.packages = [
+        pkgs.pandoc
+        (mermaidFilter pkgs)
+        (tex pkgs)
+        (buildScript pkgs)
+      ];
     };
 
   flake.modules.darwin.pandoc =
