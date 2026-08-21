@@ -109,7 +109,7 @@
                 "beelink"
               ]
             then
-              "gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL"
+              "unsloth/Qwen3.6-35B-A3B-MTP-GGUF:IQ4_NL"
             else if host.name == "MacBookAirM3" then
               "qwen3.6-27b-nvfp4"
             else
