@@ -1,3 +1,5 @@
 result
 ./darwin/result
 **/.direnv
+.venv
+.ipynb_checkpoints

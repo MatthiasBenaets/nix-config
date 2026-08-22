@@ -19,4 +19,6 @@
   neovim = pkgs.mkShell (import ./neovim.nix { inherit config pkgs; });
 
   nodejs = pkgs.mkShell (import ./nodejs.nix { inherit pkgs; });
+
+  notebook = pkgs.mkShell (import ./notebook.nix { inherit pkgs; });
 }
