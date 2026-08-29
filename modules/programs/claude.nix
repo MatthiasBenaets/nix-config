@@ -3,6 +3,7 @@
     {
       config,
       host,
+      osConfig,
       pkgs,
       ...
     }:
@@ -13,7 +14,7 @@
         ];
         sessionVariables = {
           ANTHROPIC_API_KEY = "";
-          ANTHROPIC_AUTH_TOKEN = "ollama";
+          ANTHROPIC_AUTH_TOKEN = "$(cat ${osConfig.sops.secrets.llama-api.path})";
           ANTHROPIC_BASE_URL = "${
             if host.name == "Ubuntu" || host.name == "MacBookAirM1" || host.name == "beelink" then
               "http://192.168.0.40:11434"

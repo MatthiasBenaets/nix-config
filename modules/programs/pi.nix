@@ -1,12 +1,18 @@
 {
   flake.modules.homeManager.pi =
-    { host, pkgs, ... }:
+    {
+      config,
+      host,
+      osConfig,
+      pkgs,
+      ...
+    }:
     let
       ollamaProvider = {
         ollama = {
           baseUrl = "http://192.168.0.40:8080/v1";
           api = "openai-completions";
-          apiKey = "key";
+          apiKey = "$LLAMA_API_KEY";
           models = [
             # { id = "gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL"; }
             # { id = "Qwen3.6-35B-A3B-MTP-GGUF:UD-IQ4_NL"; }
@@ -131,6 +137,9 @@
       };
 
       home = {
+        sessionVariables = {
+          LLAMA_API_KEY = "$(cat ${osConfig.sops.secrets.llama-api.path})";
+        };
         file = pkgs.lib.mkIf (providerConfig != null) {
           ".pi/web-search.json".text = ''
             {

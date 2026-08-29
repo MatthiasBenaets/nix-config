@@ -3,6 +3,7 @@
     {
       host,
       lib,
+      osConfig,
       pkgs,
       ...
     }:
@@ -20,11 +21,23 @@
         "llama.cpp" = {
           npm = "@ai-sdk/openai-compatible";
           name = "Ollama";
-          options.baseURL = "http://192.168.0.40:8080/v1";
-          models."hf.co/unsloth/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL" = {
-            name = "gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL";
-            modelID = "gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL";
-            tools = true;
+          options = {
+            baseURL = "http://192.168.0.40:8080/v1";
+            apiKey = "{env:LLAMA_API_KEY}";
+          };
+          models = {
+            # "hf.co/unsloth/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL" = {
+            "unsloth/gemma-4-26B-A4B-it-qat-GGUF:Q4_K_XL" = {
+              name = "gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL";
+              modelID = "gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL";
+              tools = true;
+            };
+            # "hf.co/unsloth/Qwen3.6-35B-A3B-MTP-GGUF:UD-IQ4_NL" = {
+            "unsloth/Qwen3.6-35B-A3B-MTP-GGUF:IQ4_NL" = {
+              name = "Qwen3.6-35B-A3B-MTP-GGUF:UD-IQ4_NL";
+              modelID = "Qwen3.6-35B-A3B-MTP-GGUF:UD-IQ4_NL";
+              tools = true;
+            };
           };
         };
       };
@@ -58,6 +71,10 @@
     in
     {
       home = {
+        sessionVariables = {
+          LLAMA_API_KEY = "$(cat ${osConfig.sops.secrets.llama-api.path})";
+        };
+
         packages = [ pkgs.opencode ];
 
         file = pkgs.lib.mkIf (providerConfig != null) {

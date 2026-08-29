@@ -1,0 +1,7 @@
+keys:
+  - &matthias age1yy3ualaawlr6mp3z7erl4ymj4r05qr8ask0pj8gpgqkgeeka547q5aan8q
+creation_rules:
+  - path_regex: secrets.yaml$
+    key_groups:
+      - age:
+          - *matthias
