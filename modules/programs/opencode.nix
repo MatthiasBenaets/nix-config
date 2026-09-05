@@ -23,7 +23,7 @@
           name = "Ollama";
           options = {
             baseURL = "http://192.168.0.40:8080/v1";
-            apiKey = "{env:LLAMA_API_KEY}";
+            apiKey = "{env:LLAMA_API}";
           };
           models = {
             # "hf.co/unsloth/gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL" = {
@@ -57,10 +57,27 @@
             vllm = {
               npm = "@ai-sdk/openai-compatible";
               name = "vllm";
-              options.baseURL = "http://node1.ai.dsi.dhcp.uhasselt.be:8000/v1";
-              models."qwen3.6-27b-nvfp4" = {
-                name = "qwen3.6-27b-nvfp4";
-                modelID = "qwen3.6-27b-nvfp4";
+              options = {
+                baseURL = "http://node1.ai.dsi.dhcp.uhasselt.be:8000/v1";
+                apiKey = "{env:WORK_VLLM_API}";
+              };
+              models."unsloth/Qwen3.8-27B-NVFP4" = {
+                name = "unsloth/Qwen3.8-27B-NVFP4";
+                modelID = "unsloth/Qwen3.8-27B-NVFP4";
+                think = "high";
+                tools = true;
+              };
+            };
+            litellm = {
+              npm = "@ai-sdk/openai-compatible";
+              name = "vllm";
+              options = {
+                baseURL = "http://simlab.dhcp.uhasselt.be:8082/v1";
+                apiKey = "{env:WORK_LITELLM_USER_API}";
+              };
+              models."unsloth/Qwen3.8-27B-NVFP4" = {
+                name = "unsloth/Qwen3.8-27B-NVFP4";
+                modelID = "unsloth/Qwen3.8-27B-NVFP4";
                 think = "high";
                 tools = true;
               };
@@ -72,7 +89,10 @@
     {
       home = {
         sessionVariables = {
-          LLAMA_API_KEY = "$(cat ${osConfig.sops.secrets.llama-api.path})";
+          LLAMA_API = "$(cat ${osConfig.sops.secrets.llama-api.path})";
+          WORK_VLLM_API = "$(cat ${osConfig.sops.secrets.work-vllm-api.path})";
+          WORK_LITELLM_ADMIN_API = "$(cat ${osConfig.sops.secrets.work-litellm-admin-api.path})";
+          WORK_LITELLM_USER_API = "$(cat ${osConfig.sops.secrets.work-litellm-user-api.path})";
         };
 
         packages = [ pkgs.opencode ];

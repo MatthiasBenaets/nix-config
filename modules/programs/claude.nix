@@ -14,16 +14,28 @@
         ];
         sessionVariables = {
           ANTHROPIC_API_KEY = "";
-          ANTHROPIC_AUTH_TOKEN = "$(cat ${osConfig.sops.secrets.llama-api.path})";
+          ANTHROPIC_AUTH_TOKEN =
+            if host.name == "Ubuntu" || host.name == "MacBookAirM1" || host.name == "beelink" then
+              "$(cat ${osConfig.sops.secrets.llama-api.path})"
+            else if host.name == "MacBookAirM3" then
+              "$(cat ${osConfig.sops.secrets.work-vllm-api.path})"
+            else
+              "";
           ANTHROPIC_BASE_URL = "${
             if host.name == "Ubuntu" || host.name == "MacBookAirM1" || host.name == "beelink" then
               "http://192.168.0.40:11434"
             else if host.name == "MacBookAirM3" then
-              "http://simlab-d1.dhcp.uhasselt.be"
+              "http://node1.ai.dsi.dhcp.uhasselt.be:8000/v1"
             else
               "https://api.anthropic.com"
           }";
-          ANTHROPIC_MODEL = "qwen3.5:9b";
+          ANTHROPIC_MODEL =
+            if host.name == "Ubuntu" || host.name == "MacBookAirM1" || host.name == "beelink" then
+              "unsloth/Qwen3.6-35B-A3B-MTP-GGUF:IQ4_NL"
+            else if host.name == "MacBookAirM3" then
+              "unsloth/Qwen3.8-27B-NVFP4"
+            else
+              "";
           CLAUDE_CODE_ATTRIBUTION_HEADER = "0";
           CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1";
           DISABLE_TELEMETRY = "1";

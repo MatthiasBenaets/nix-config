@@ -12,7 +12,7 @@
         ollama = {
           baseUrl = "http://192.168.0.40:8080/v1";
           api = "openai-completions";
-          apiKey = "$LLAMA_API_KEY";
+          apiKey = "$LLAMA_API";
           models = [
             # { id = "gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL"; }
             # { id = "Qwen3.6-35B-A3B-MTP-GGUF:UD-IQ4_NL"; }
@@ -26,9 +26,17 @@
         vllm = {
           baseUrl = "http://node1.ai.dsi.dhcp.uhasselt.be:8000/v1";
           api = "openai-completions";
-          apiKey = "key";
+          apiKey = "$WORK_VLLM_API";
           models = [
-            { id = "qwen3.6-27b-nvfp4"; }
+            { id = "unsloth/Qwen3.8-27B-NVFP4"; }
+          ];
+        };
+        litellm = {
+          baseUrl = "http://simlab.dhcp.uhasselt.be:8082/v1";
+          api = "openai-completions";
+          apiKey = "$WORK_LITELLM_USER_API";
+          models = [
+            { id = "unsloth/Qwen3.8-27B-NVFP4"; }
           ];
         };
       };
@@ -117,7 +125,7 @@
             then
               "unsloth/Qwen3.6-35B-A3B-MTP-GGUF:IQ4_NL"
             else if host.name == "MacBookAirM3" then
-              "qwen3.6-27b-nvfp4"
+              "unsloth/Qwen3.8-27B-NVFP4"
             else
               "";
           defaultProjectTrust = "ask";
@@ -138,7 +146,10 @@
 
       home = {
         sessionVariables = {
-          LLAMA_API_KEY = "$(cat ${osConfig.sops.secrets.llama-api.path})";
+          LLAMA_API = "$(cat ${osConfig.sops.secrets.llama-api.path})";
+          WORK_VLLM_API = "$(cat ${osConfig.sops.secrets.work-vllm-api.path})";
+          WORK_LITELLM_ADMIN_API = "$(cat ${osConfig.sops.secrets.work-litellm-admin-api.path})";
+          WORK_LITELLM_USER_API = "$(cat ${osConfig.sops.secrets.work-litellm-user-api.path})";
         };
         file = pkgs.lib.mkIf (providerConfig != null) {
           ".pi/web-search.json".text = ''
@@ -174,8 +185,10 @@
                   "grep *": "allow",
                   "sed *": "allow",
                   "awk *": "allow",
+                  "echo *": "allow",
                   "wc *": "allow",
                   "find *": "allow",
+                  "sort *": "allow",
                   "head *": "allow",
                   "tail *": "allow",
                   "file *": "allow",

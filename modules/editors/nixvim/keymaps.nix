@@ -143,13 +143,13 @@
       }
       {
         mode = "n";
-        key = "<C-S-/>";
+        key = "<leader>/";
         action = "<Plug>(comment_toggle_blockwise_current)";
         options.desc = "(Un)comment in Normal Mode";
       }
       {
         mode = "v";
-        key = "<C-S-/>";
+        key = "<leader>/";
         action = "<Plug>(comment_toggle_blockwise_visual)";
         options.desc = "(Un)comment in Visual Mode";
       }

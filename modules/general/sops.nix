@@ -23,6 +23,18 @@
             owner = config.host.user.name;
             group = "staff";
           };
+          work-vllm-api = {
+            owner = config.host.user.name;
+            group = "staff";
+          };
+          work-litellm-admin-api = {
+            owner = config.host.user.name;
+            group = "staff";
+          };
+          work-litellm-user-api = {
+            owner = config.host.user.name;
+            group = "staff";
+          };
         };
       };
 
