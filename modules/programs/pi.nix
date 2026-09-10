@@ -135,6 +135,7 @@
             "npm:pi-mcp-adapter"
             "npm:pi-web-access"
             "npm:@gotgenes/pi-permission-system"
+            "npm:pi-nvim"
           ];
           retry = {
             enabled = true;

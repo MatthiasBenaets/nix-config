@@ -43,22 +43,22 @@
         options.desc = "Split Close";
       }
       {
-        key = "<C-h>";
+        key = "<leader>h";
         action = "<C-w>h";
         options.desc = "Select Window Left";
       }
       {
-        key = "<C-l>";
+        key = "<leader>l";
         action = "<C-w>l";
         options.desc = "Select Window Right";
       }
       {
-        key = "<C-j>";
+        key = "<leader>j";
         action = "<C-w>j";
         options.desc = "Select Window Below";
       }
       {
-        key = "<C-k>";
+        key = "<leader>k";
         action = "<C-w>k";
         options.desc = "Select Window Above";
       }
