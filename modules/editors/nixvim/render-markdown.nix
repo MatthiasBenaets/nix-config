@@ -3,7 +3,15 @@
     plugins.render-markdown = {
       enable = true;
       settings = {
-        indent.enabled = true;
+        heading = {
+          sign = false;
+          position = "inline";
+          border = true;
+        };
+        indent = {
+          enabled = true;
+          skip_heading = true;
+        };
       };
     };
   };
