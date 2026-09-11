@@ -28,6 +28,7 @@
           folding.enable = false;
           nixGrammars = true;
           grammarPackages = pkgs.vimPlugins.nvim-treesitter.passthru.allGrammars ++ [ livesvelte ];
+          languageRegister.markdown = "vimwiki";
           settings = {
             ensure_installed = "all";
             highlight.enable = true;
