@@ -63,7 +63,7 @@
         options.desc = "Select Window Above";
       }
       {
-        key = "<leader>t";
+        key = "<leader>tw";
         action = "<C-w>w";
         options.desc = "Cycle Between Windows";
       }
