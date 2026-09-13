@@ -7,12 +7,12 @@
           # name = "blocks.nvim";
           # src = /Users/matthias/Documents/Projects/blocks.nvim;
           pname = "blocks.nvim";
-          version = "648d04109fc368eae6e496e74acc7e601abd55a4";
+          version = "c2b7afe12fa158d08bc3377d58278d5e74d5e191";
           src = pkgs.fetchFromGitHub {
             owner = "matthiasbenaets";
             repo = "blocks.nvim";
             rev = version;
-            sha256 = "sha256-ZHQncyH9UFg2gxh47eFJVMEVi5qtrecrCaeDgf3ybfQ=";
+            sha256 = "sha256-T8KW9+17qCOd7CwWzYIytX/KjOMrYmVDNJcKUNxRGTM=";
           };
         })
       ];
