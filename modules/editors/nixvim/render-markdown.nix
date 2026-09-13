@@ -3,6 +3,9 @@
     plugins.render-markdown = {
       enable = true;
       settings = {
+        code = {
+          sign = false;
+        };
         heading = {
           sign = false;
           position = "inline";
