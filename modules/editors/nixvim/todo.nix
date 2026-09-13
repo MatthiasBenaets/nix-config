@@ -7,12 +7,12 @@
           # name = "todo.nvim";
           # src = /Users/matthias/Documents/Projects/todo.nvim;
           pname = "todo.nvim";
-          version = "45ba3706526cea7eff78cd1de20255abcc834e07";
+          version = "15a1eb4075793527d05a691cc641eb4bed8508f7";
           src = pkgs.fetchFromGitHub {
             owner = "matthiasbenaets";
             repo = "todo.nvim";
             rev = version;
-            sha256 = "sha256-mMaF0MNKOvgbNOVjQ3dKOlWkNtL8tpY7/gI0Mb+MvjY=";
+            sha256 = "sha256-A8fKVCbPN++UVr8Mgm3jQjMqLD2IyS7TnfALvHONc7g=";
           };
         })
       ];
