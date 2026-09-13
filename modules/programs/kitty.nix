@@ -87,6 +87,9 @@
               color15               #f5f5f5
               selection_foreground  #202020
 
+              map ctrl+space no_op
+              map cmd+f no_op
+
               map f1 new_window_with_cwd
               map cmd+t new_tab_with_cwd
               startup_session ~/.config/kitty/startup.conf
