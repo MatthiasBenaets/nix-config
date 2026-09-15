@@ -25,6 +25,24 @@
         pattern = "*";
         command = "silent! normal! g`\"zv";
       }
+      {
+
+        event = "Filetype";
+        pattern = [
+          "markdown"
+          "vimwiki"
+        ];
+        callback = {
+          __raw = ''
+            function()
+              local opts = { buffer = true }
+              vim.keymap.set("i", "<Tab>", "<C-t>", opts)
+              vim.keymap.set("i", "<S-Tab>", "<C-d>", opts)
+            end
+          '';
+        };
+        desc = "Tab indents a listitem in markdown files";
+      }
     ];
   };
 }
