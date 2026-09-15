@@ -50,8 +50,8 @@
               font_family FiraCode Nerd Font Mono
               font_size 13
 
-              # background_opacity 0.8
-              # background_blur 16
+              background_opacity 0.9
+              background_blur 16
 
               window_margin_width 4
               single_window_margin_width 0
