@@ -141,7 +141,7 @@
             enabled = true;
             maxRetries = 3;
           };
-          skills = [ "$HOME/Documents/codex/skills" ];
+          skills = [ "~/Documents/codex/skills" ];
           theme = "dark";
         };
       };
