@@ -18,6 +18,7 @@ let
 
       set -g status-style bg=default,fg=blue,bright
     '';
+    terminal = "xterm-256color";
   };
 in
 {
