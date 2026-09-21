@@ -18,7 +18,7 @@ let
 
       set -g status-style bg=default,fg=blue,bright
     '';
-    terminal = "xterm-256color";
+    terminal = "screen-256color";
   };
 in
 {
