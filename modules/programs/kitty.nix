@@ -132,6 +132,7 @@
 
               map ctrl+space no_op
               map cmd+f no_op
+              map ctrl+shift+/ no_op
 
               map f1 new_window_with_cwd
               map cmd+t new_tab_with_cwd

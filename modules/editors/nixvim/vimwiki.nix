@@ -12,5 +12,17 @@
         ];
       };
     };
+
+    keymaps = [
+      {
+        mode = "n";
+        key = "<leader>tc";
+        action = ":VimwikiToggleListItem<CR>";
+        options = {
+          desc = "Toggle checkbox";
+          silent = true;
+        };
+      }
+    ];
   };
 }
