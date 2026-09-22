@@ -31,6 +31,11 @@
         "ansible"
         "ansible-lint"
         "docker-compose"
+        "opentofu"
+        {
+          name = "syncthing";
+          restart_service = true;
+        }
       ];
       casks = [
         "adobe-creative-cloud"
@@ -92,6 +97,11 @@
         "ansible"
         "ansible-lint"
         "docker-compose"
+        "opentofu"
+        {
+          name = "syncthing";
+          restart_service = true;
+        }
       ];
       casks = [
         # "adobe-creative-cloud"
