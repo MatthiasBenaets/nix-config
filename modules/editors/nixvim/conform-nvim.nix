@@ -10,6 +10,7 @@
         phpPackages.php-cs-fixer
         rustfmt
         stylua
+        opentofu
       ];
 
       plugins = {
@@ -34,6 +35,8 @@
                 lsp_fallback = true;
               };
               svelte = [ "prettier" ];
+              terraform = [ "tofu_fmt" ];
+              tf = [ "tofu_fmt" ];
               typescript = [ "prettier" ];
               typescriptreact = [ "prettier" ];
               vue = [ "prettier" ];
