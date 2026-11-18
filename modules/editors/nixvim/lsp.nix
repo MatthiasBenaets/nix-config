@@ -94,7 +94,8 @@
               ];
             };
           };
-          terraformls.enable = true;
+          # terraformls.enable = true;
+          tofu_ls.enable = true;
           ts_ls.enable = true;
           zls.enable = true;
         };

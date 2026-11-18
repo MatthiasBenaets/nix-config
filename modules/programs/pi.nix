@@ -28,7 +28,13 @@
           api = "openai-completions";
           apiKey = "$WORK_VLLM_API";
           models = [
-            { id = "unsloth/Qwen3.8-27B-NVFP4"; }
+            {
+              id = "unsloth/Qwen3.8-27B-NVFP4";
+              input = [
+                "text"
+                "image"
+              ];
+            }
           ];
         };
         litellm = {
@@ -36,7 +42,13 @@
           api = "openai-completions";
           apiKey = "$WORK_LITELLM_USER_API";
           models = [
-            { id = "unsloth/Qwen3.8-27B-NVFP4"; }
+            {
+              id = "unsloth/Qwen3.8-27B-NVFP4";
+              input = [
+                "text"
+                "image"
+              ];
+            }
           ];
         };
       };
@@ -132,7 +144,7 @@
           defaultThinkingLevel = "high";
           enableAnalytics = false;
           packages = [
-            "npm:pi-mcp-adapter"
+            # "npm:pi-mcp-adapter"
             "npm:pi-web-access"
             "npm:@gotgenes/pi-permission-system"
             "npm:pi-nvim"
@@ -197,6 +209,16 @@
                   "diff *": "allow"
                 },
                 "external_directory": "ask"
+              }
+            }
+          '';
+          ".pi/agent/mcp.json".text = ''
+            {
+              "mcpServers": {
+                "slidev": {
+                  "transport": "streamable-http",
+                  "url": "http://localhost:3030/__mcp"
+                }
               }
             }
           '';
