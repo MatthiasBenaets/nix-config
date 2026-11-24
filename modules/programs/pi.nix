@@ -8,16 +8,36 @@
       ...
     }:
     let
+      defaultReasoning = true;
+
+      defaultThinkingLevelMap = {
+        off = null;
+        minimal = "minimal";
+        low = "low";
+        medium = "medium";
+        high = "high";
+        xhigh = "xhigh";
+      };
+
+      withDefaults =
+        model:
+        {
+          reasoning = defaultReasoning;
+          thinkingLevelMap = defaultThinkingLevelMap // (model.thinkingLevelMap or { });
+        }
+        // model;
+
       ollamaProvider = {
         ollama = {
           baseUrl = "http://192.168.0.40:8080/v1";
           api = "openai-completions";
           apiKey = "$LLAMA_API";
-          models = [
+          models = builtins.map withDefaults [
             # { id = "gemma-4-26B-A4B-it-qat-GGUF:UD-Q4_K_XL"; }
             # { id = "Qwen3.6-35B-A3B-MTP-GGUF:UD-IQ4_NL"; }
             { id = "unsloth/gemma-4-26B-A4B-it-qat-GGUF:Q4_K_XL"; }
             { id = "unsloth/Qwen3.6-35B-A3B-MTP-GGUF:IQ4_NL"; }
+            { id = "ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF:IQ3_XXS"; }
           ];
         };
       };
@@ -27,14 +47,13 @@
           baseUrl = "http://node1.ai.dsi.dhcp.uhasselt.be:8000/v1";
           api = "openai-completions";
           apiKey = "$WORK_VLLM_API";
-          models = [
+          models = builtins.map withDefaults [
             {
               id = "unsloth/Qwen3.8-27B-NVFP4";
               input = [
                 "text"
                 "image"
               ];
-              reasoning = true;
               thinkingLevelMap = {
                 off = null;
                 minimal = null;
@@ -50,13 +69,21 @@
           baseUrl = "http://simlab.dhcp.uhasselt.be:8082/v1";
           api = "openai-completions";
           apiKey = "$WORK_LITELLM_USER_API";
-          models = [
+          models = builtins.map withDefaults [
             {
               id = "unsloth/Qwen3.8-27B-NVFP4";
               input = [
                 "text"
                 "image"
               ];
+              thinkingLevelMap = {
+                off = null;
+                minimal = null;
+                low = "low";
+                medium = "medium";
+                high = null;
+                xhigh = "xhigh";
+              };
             }
           ];
         };
