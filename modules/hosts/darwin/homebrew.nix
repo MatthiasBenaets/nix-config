@@ -31,6 +31,7 @@
         "ansible"
         "ansible-lint"
         "docker-compose"
+        "mole"
         "opentofu"
         {
           name = "syncthing";
@@ -51,15 +52,16 @@
         "garmin-express"
         "google-chrome"
         "handbrake-app"
+        "httpie-desktop"
         "jellyfin-media-player"
         "love"
         "linearmouse"
+        "macusb"
         "mkvtoolnix-app"
         # "obsidian"
         "openmtp"
         "orcaslicer"
         "portfolioperformance"
-        "httpie-desktop"
         # "r-app"
         "raycast"
         # "rstudio"
@@ -67,6 +69,7 @@
         "upscayl"
         "utm"
         "visual-studio-code"
+        "vorssaint"
         "wacom-tablet"
         "xnviewmp"
       ];
