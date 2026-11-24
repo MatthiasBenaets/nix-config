@@ -34,6 +34,15 @@
                 "text"
                 "image"
               ];
+              reasoning = true;
+              thinkingLevelMap = {
+                off = null;
+                minimal = null;
+                low = "low";
+                medium = "medium";
+                high = null;
+                xhigh = "xhigh";
+              };
             }
           ];
         };
@@ -141,7 +150,7 @@
             else
               "";
           defaultProjectTrust = "ask";
-          defaultThinkingLevel = "high";
+          defaultThinkingLevel = "xhigh";
           enableAnalytics = false;
           packages = [
             # "npm:pi-mcp-adapter"
